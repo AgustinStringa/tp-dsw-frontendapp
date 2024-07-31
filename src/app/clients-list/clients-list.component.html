@@ -1,0 +1,17 @@
+<div class="usersListContainer">
+  <p>users-list works!</p>
+  <button (click)="getClients()">GetUsers!</button>
+
+  @if (users.length > 0) {
+  <ul>
+    @for (user of users; track user.username) {
+    <li>
+      <p>username: {{ user.username }}</p>
+      <p>email : {{ user.email }}</p>
+      <p>firstName: {{ user.firstName }}</p>
+      <p>lastName: {{ user.lastName }}</p>
+    </li>
+    }
+  </ul>
+  }
+</div>
