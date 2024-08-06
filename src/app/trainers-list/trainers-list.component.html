@@ -1,0 +1,18 @@
+<div class="trainers-list-container">
+  <button (click)="getTrainers()">Obtain All Trainers!</button>
+
+  @if (users.length > 0) {
+  <ul class="trainers-list">
+    @for (trainer of users; track trainer.username) {
+    <li  class="trainer-item">
+      <p class="trainer-detail">trainername: {{ trainer.username }}</p>
+      <p class="trainer-detail">email : {{ trainer.email }}</p>
+      <p class="trainer-detail">firstName: {{ trainer.firstName }}</p>
+      <p class="trainer-detail">lastName: {{ trainer.lastName }}</p>
+    </li>
+    }
+  </ul>
+  } @else {
+  <p>No trainers found!</p>
+  }
+</div>
