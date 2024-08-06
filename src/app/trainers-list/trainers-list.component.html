@@ -1,0 +1,17 @@
+<div class="trainersListContainer">
+  <p>trainers-list works!</p>
+  <button (click)="getTrainers()">Gettrainers!</button>
+
+  @if (users.length > 0) {
+  <ul>
+    @for (trainer of users; track trainer.username) {
+    <li>
+      <p>trainername: {{ trainer.username }}</p>
+      <p>email : {{ trainer.email }}</p>
+      <p>firstName: {{ trainer.firstName }}</p>
+      <p>lastName: {{ trainer.lastName }}</p>
+    </li>
+    }
+  </ul>
+  }
+</div>
