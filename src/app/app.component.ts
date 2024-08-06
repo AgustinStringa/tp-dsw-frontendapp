@@ -6,6 +6,8 @@ import { FooterComponent } from './footer/footer.component';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatToolbarModule } from '@angular/material/toolbar';
+import { SignupComponent } from './signup/signup.component.js';
+
 @Component({
   selector: 'app-root',
   standalone: true,
@@ -17,6 +19,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
     MatIconModule,
     MatButtonModule,
     MatToolbarModule,
+    SignupComponent
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
