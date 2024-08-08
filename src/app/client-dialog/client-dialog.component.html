@@ -1,0 +1,32 @@
+<div>
+  <h1>{{title}}</h1>
+  <button type="button" (click)="closeModal()" class="btn-close"></button>
+</div>
+
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+  <div>
+    <label for="firstName">Nombre</label>
+    <input type="text" formControlName="firstName" id="firstName">
+  </div>
+  <div>
+    <label for="lastName">Apellido</label>
+    <input type="text" formControlName="lastName" id="lastName">
+  </div>
+  <div>
+    <label for="email">Correo electrónico</label>
+    <input type="emai" formControlName="email" id="email">
+  </div>
+  <div>
+    <label for="username">Usuario</label>
+    <input type="text" formControlName="username" id="username">
+  </div>
+  <div>
+    <label for="password">Contraseña</label>
+    <input type="password" formControlName="password" id="password">
+  </div>
+
+  <div>
+    <button type="submit" [disabled]="!form.valid">Guardar</button>
+    <button type="button" (click)="closeModal()">Cancelar</button>
+  </div>
+</form>

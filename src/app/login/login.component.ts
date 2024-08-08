@@ -6,18 +6,17 @@ import { FormsModule } from '@angular/forms';
   standalone: true,
   imports: [FormsModule],
   templateUrl: './login.component.html',
-  styleUrl: './login.component.css'
+  styleUrl: './login.component.css',
 })
 export class LoginComponent {
-  email: string = ''; // 
-  password: string = ''; 
+  email: string = ''; //
+  password: string = '';
 
   isEmailEmpty(): boolean {
     return this.email.length === 0;
   }
+
   isPasswordEmpty(): boolean {
     return this.password.length === 0;
   }
-
-
 }

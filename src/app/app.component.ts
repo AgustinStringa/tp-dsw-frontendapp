@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { RouterLink, RouterOutlet } from '@angular/router';
 import { LoginComponent } from './login/login.component.js';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { FooterComponent } from './footer/footer.component';
@@ -19,7 +19,8 @@ import { SignupComponent } from './signup/signup.component.js';
     MatIconModule,
     MatButtonModule,
     MatToolbarModule,
-    SignupComponent
+    SignupComponent,
+    RouterLink,
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
