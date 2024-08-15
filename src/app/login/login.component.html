@@ -1,57 +1,104 @@
 <!-- Section: Design Block -->
 <section class="text-center text-lg-start">
-  <style>
-    .cascading-right {
-      margin-right: -50px;
-    }
-
-    @media (max-width: 991.98px) {
-      .cascading-right {
-        margin-right: 0;
-      }
-    }
-  </style>
 
   <!-- Jumbotron -->
   <div class="container py-4">
     <div class="row g-0 align-items-center">
       <div class="col-lg-6 mb-5 mb-lg-0">
-        <div class="card cascading-right bg-body-tertiary" style="
-            backdrop-filter: blur(30px);
-            ">
-          <div class="card-body p-5 shadow-5 text-center">
+        <div class="card cascading-right bg-body-tertiary" style="backdrop-filter: blur(30px);">
+          
+          <!--Formulario login-->
+          
+          <div [ngClass]="isLoginVisible ? '' : 'disabled'" class="card-body p-5 shadow-5 text-center">
             <h2 class="fw-bold mb-5">Ingresar</h2>
+            
             <form action="" method="post">
-              <!-- 2 column grid layout with text inputs for the first and last names -->
-
-              <!-- Email input -->
               <div data-mdb-input-init class="form-outline mb-4">
-
-                <!-- <input type="email" id="form3Example3" class="form-control" />
-                <label class="form-label" for="form3Example3">Correo electrónico</label> -->
-                <input type="email" id="form3Example3" class="form-control" [(ngModel)]="email" name="email" required />
-                <label class="form-label" for="form3Example3" [style.opacity]="isEmailEmpty() ? '1' : '0'"> Correo electrónico </label>
+                <input type="email" id="loginEmail" class="form-control" [(ngModel)]="email" name="email" required>
+                <label class="form-label" for="loginEmail" [style.opacity]="isEmailEmpty() ? '1' : '0'">Correo electrónico</label>
               </div>
 
-              <!-- Password input -->
               <div data-mdb-input-init class="form-outline mb-4">
-
-                <!-- <input type="password" id="form3Example4" class="form-control" />
-                <label class="form-label" for="form3Example4">Contraseña</label> -->
-
-                <input type ="password" id=" forms3Example4" class ="form-control" [(ngModel)]="password" name ="password" required/>
-                <label class="form-label" for="form3Example4"[style.opacity]="isPasswordEmpty() ? '1' : '0'">Contraseña</label>
-
-
+                <input type ="password" id="loginPassword" class ="form-control" [(ngModel)]="password" name ="password" required>
+                <label class="form-label" for="loginPassword" [style.opacity]="isPasswordEmpty() ? '1' : '0'">Contraseña</label>
               </div>
 
-              <!-- Submit button -->
               <button type="submit" data-mdb-button-init data-mdb-ripple-init class="btn btn-primary btn-block mb-4">
                 Aceptar
-              </button>
-              
+              </button>  
             </form>
+            <a (click)="isLoginVisible = !isLoginVisible" href="#"><p>Todavía no eres un miembro? Regístrate ahora!</p></a>
           </div>
+
+          <!--Formulario signup-->
+
+          <div [ngClass]="isLoginVisible ? 'disabled' : ''" class="card-body p-5 shadow-5 text-center">
+            <h2 class="fw-bold mb-5">Regístrate ahora!</h2>
+
+            <form>
+              <div class="row">
+                
+                <div class="col-md-6 mb-4">
+                  <div data-mdb-input-init class="form-outline">
+                    <input type="text" id="signupName" class="form-control">
+                    <label class="form-label" for="signupFirstName">Nombre</label>
+                  </div>
+                </div>
+                
+                <div class="col-md-6 mb-4">
+                  <div data-mdb-input-init class="form-outline">
+                    <input type="text" id="signupLastName" class="form-control">
+                    <label class="form-label" for="signupLastName">Apellido</label>
+                  </div>
+                </div>
+              
+              </div>
+          
+              <div data-mdb-input-init class="form-outline mb-4">
+                <input type="email" id="signupEmail" class="form-control">
+                <label class="form-label" for="signupEmail">Correo electrónico</label>
+              </div>
+          
+              <div class="row">
+              
+                <div class="col-md-6 mb-4">
+                  <div data-mdb-input-init class="form-outline">
+                    <input type="text" id="signupUser" class="form-control">
+                    <label class="form-label" for="signupUser">Usuario</label>
+                  </div>
+                </div>
+              
+                <div class="col-md-6 mb-4">
+                  <div data-mdb-input-init class="form-outline">
+                    <input type="password" id="signupPassword" class="form-control">
+                    <label class="form-label" for="signupPassword">Contraseña</label>
+                  </div>
+                </div>
+              
+              </div>
+
+              <button type="submit" data-mdb-button-init data-mdb-ripple-init class="btn btn-primary btn-block mb-4">
+                Registrarme
+              </button>
+          
+              <!-- Register buttons -->
+              <div class="text-center">
+                <p>o registrarme con:</p>
+                <button type="button" data-mdb-button-init data-mdb-ripple-init class="btn btn-link btn-floating mx-1">
+                  <i class="fab fa-facebook-f"></i>
+                </button>
+          
+                <button type="button" data-mdb-button-init data-mdb-ripple-init class="btn btn-link btn-floating mx-1">
+                  <i class="fab fa-google"></i>
+                </button>
+          
+              </div>
+            </form>
+            <a (click)="isLoginVisible = !isLoginVisible" href="#"><p>Posees una cuenta? Ingresa aquí!</p></a>
+          </div>
+
+          <!--Fin formulario signup-->
+
         </div>
       </div>
 
