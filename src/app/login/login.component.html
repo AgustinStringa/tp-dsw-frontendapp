@@ -3,15 +3,15 @@
     <div class="row g-0 align-items-center">
       
       <!--Imagen izquierda-->
-      <div [ngClass]="isLoginVisible ? 'd-none' : 'd-none d-lg-block col-lg-6 mb-5 mb-lg-0'">
-        <img src="https://mdbootstrap.com/img/new/ecommerce/vertical/004.jpg" class="w-100 rounded-4 shadow-4" alt="">
+      <div [ngClass]="isLoginVisible ? 'col-0' : 'd-none d-lg-block col-lg-6 mb-5 mb-lg-0'" style="position: relative; overflow: hidden;">
+        <img src="https://mdbootstrap.com/img/new/ecommerce/vertical/004.jpg" class="w-100 rounded-4 shadow-4" alt="" [ngClass]="isLoginVisible ? 'active' : ''" id="leftImage">
       </div>
 
       <div class="col-lg-6 mb-5 mb-lg-0">
         <div class="card cascading-right bg-body-tertiary" style="backdrop-filter: blur(30px);">
           
           <!--Formulario login-->
-          <div [ngClass]="isLoginVisible ? '' : 'disabled'" class="card-body p-5 shadow-5 text-center">
+          <div id="login" [ngClass]="{'col-0': !isLoginVisible, 'active': isLoginVisible}" class="card-body p-5 shadow-5 text-center">
             <h2 class="fw-bold mb-5">Ingresar</h2>
             
             <form action="" method="post">
@@ -33,8 +33,7 @@
           </div>
 
           <!--Formulario signup-->
-
-          <div [ngClass]="isLoginVisible ? 'disabled' : ''" class="card-body p-5 shadow-5 text-center">
+          <div id="signup" [ngClass]="{'col-0': isLoginVisible, 'active': !isLoginVisible}" class="card-body p-5 shadow-5 text-center">
             <h2 class="fw-bold mb-5">Regístrate ahora!</h2>
 
             <form>
@@ -98,15 +97,14 @@
             </form>
             <a (click)="isLoginVisible = !isLoginVisible" href="#"><p>Posees una cuenta? Ingresa aquí!</p></a>
           </div>
-
           <!--Fin formulario signup-->
-
+          
         </div>
       </div>
       
       <!--Imagen derecha-->
-      <div [ngClass]="isLoginVisible ? 'd-none d-lg-block col-lg-6 mb-5 mb-lg-0' : 'd-none'">
-        <img src="https://mdbootstrap.com/img/new/ecommerce/vertical/004.jpg" class="w-100 rounded-4 shadow-4" alt="">
+      <div [ngClass]="isLoginVisible ? 'd-none d-lg-block col-lg-6 mb-5 mb-lg-0' : 'col-0'" style="position: relative; overflow: hidden;"><!--Los estilos se pueden sacar. Ver que queda mejor-->
+        <img src="https://mdbootstrap.com/img/new/ecommerce/vertical/004.jpg" class="w-100 rounded-4 shadow-4" alt="" [ngClass]="isLoginVisible ? 'active' : ''" id="rightImage">
       </div>
       
     </div>
