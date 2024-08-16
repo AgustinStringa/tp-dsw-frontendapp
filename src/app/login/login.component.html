@@ -15,12 +15,12 @@
             <form action="" method="post">
               <div data-mdb-input-init class="form-outline mb-4">
                 <input type="email" id="loginEmail" class="form-control" [(ngModel)]="email" name="email" required>
-                <label class="form-label" for="loginEmail" [style.opacity]="isEmailEmpty() ? '1' : '0'">Correo electrónico</label>
+                <label class="form-label" for="loginEmail" [style.opacity]="isFieldEmpty('email') ? '1' : '0'">Correo electrónico</label>
               </div>
 
               <div data-mdb-input-init class="form-outline mb-4">
                 <input type ="password" id="loginPassword" class ="form-control" [(ngModel)]="password" name ="password" required>
-                <label class="form-label" for="loginPassword" [style.opacity]="isPasswordEmpty() ? '1' : '0'">Contraseña</label>
+                <label class="form-label" for="loginPassword" [style.opacity]="isFieldEmpty('password') ? '1' : '0'">Contraseña</label>
               </div>
 
               <button type="submit" data-mdb-button-init data-mdb-ripple-init class="btn btn-primary btn-block mb-4">
@@ -40,38 +40,38 @@
                 
                 <div class="col-md-6 mb-4">
                   <div data-mdb-input-init class="form-outline">
-                    <input type="text" id="signupName" class="form-control">
-                    <label class="form-label" for="signupFirstName">Nombre</label>
+                    <input type="text" id="signupName" class="form-control" [(ngModel)]="firstName" name="firstName" required>
+                    <label class="form-label" for="signupFirstName" [style.opacity]="isFieldEmpty('firstName') ? '1' : '0'">Nombre</label>
                   </div>
                 </div>
                 
                 <div class="col-md-6 mb-4">
                   <div data-mdb-input-init class="form-outline">
-                    <input type="text" id="signupLastName" class="form-control">
-                    <label class="form-label" for="signupLastName">Apellido</label>
+                    <input type="text" id="signupLastName" class="form-control" [(ngModel)]="lastName" name="lastName" required>
+                    <label class="form-label" for="signupLastName" [style.opacity]="isFieldEmpty('lastName') ? '1' : '0'">Apellido</label>
                   </div>
                 </div>
               
               </div>
           
               <div data-mdb-input-init class="form-outline mb-4">
-                <input type="email" id="signupEmail" class="form-control">
-                <label class="form-label" for="signupEmail">Correo electrónico</label>
+                <input type="email" id="signupEmail" class="form-control" [(ngModel)]="email" name="email" required>
+                <label class="form-label" for="signupEmail" [style.opacity]="isFieldEmpty('email') ? '1' : '0'">Correo electrónico</label>
               </div>
           
               <div class="row">
               
                 <div class="col-md-6 mb-4">
                   <div data-mdb-input-init class="form-outline">
-                    <input type="text" id="signupUser" class="form-control">
-                    <label class="form-label" for="signupUser">Usuario</label>
+                    <input type="text" id="signupUser" class="form-control" [(ngModel)]="user" name="user" required>
+                    <label class="form-label" for="signupUser" [style.opacity]="isFieldEmpty('user') ? '1' : '0'">Usuario</label>
                   </div>
                 </div>
               
                 <div class="col-md-6 mb-4">
                   <div data-mdb-input-init class="form-outline">
-                    <input type="password" id="signupPassword" class="form-control">
-                    <label class="form-label" for="signupPassword">Contraseña</label>
+                    <input type="password" id="signupPassword" class="form-control" [(ngModel)]="password" name="password" required>
+                    <label class="form-label" for="signupPassword" [style.opacity]="isFieldEmpty('password') ? '1' : '0'">Contraseña</label>
                   </div>
                 </div>
               

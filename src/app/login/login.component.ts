@@ -10,15 +10,15 @@ import { FormsModule } from '@angular/forms';
   styleUrl: './login.component.css',
 })
 export class LoginComponent {
-  email: string = ''; //
+  email: string = '';
   password: string = '';
+  firstName: string = '';
+  lastName: string = '';
+  user: string = '';
+
   isLoginVisible: boolean = true;
 
-  isEmailEmpty(): boolean {
-    return this.email.length === 0;
-  }
-
-  isPasswordEmpty(): boolean {
-    return this.password.length === 0;
+  isFieldEmpty(fieldName: string): boolean {
+    return (this as any)[fieldName].length === 0;
   }
 }
