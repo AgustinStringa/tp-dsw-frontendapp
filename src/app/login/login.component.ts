@@ -1,22 +1,24 @@
+import { NgClass } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [FormsModule],
+  imports: [FormsModule, NgClass],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css',
 })
 export class LoginComponent {
-  email: string = ''; //
+  email: string = '';
   password: string = '';
+  firstName: string = '';
+  lastName: string = '';
+  user: string = '';
 
-  isEmailEmpty(): boolean {
-    return this.email.length === 0;
-  }
+  isLoginVisible: boolean = true;
 
-  isPasswordEmpty(): boolean {
-    return this.password.length === 0;
+  isFieldEmpty(fieldName: string): boolean {
+    return (this as any)[fieldName].length === 0;
   }
 }

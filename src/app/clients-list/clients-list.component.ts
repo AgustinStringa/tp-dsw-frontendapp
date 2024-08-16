@@ -56,7 +56,7 @@ export class ClientsListComponent {
       data: {
         title: 'Eliminar cliente',
         id: '66b552c5d412bf2b5503505c',
-        entity: 'clint',
+        entity: 'client',
       },
     });
 

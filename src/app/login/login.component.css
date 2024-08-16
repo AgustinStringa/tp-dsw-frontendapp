@@ -1,0 +1,38 @@
+.cascading-right {
+  margin-right: -50px;
+}
+
+@media (max-width: 991.98px) {
+  .cascading-right {
+    margin-right: 0;
+  }
+}
+
+#rightImage, #signup {
+  transform: translateX(-100%); /* Empieza desde fuera del contenedor */
+  transition: transform 0.5s ease-in-out;
+}
+
+#leftImage {
+  transform: translateX(0%);
+  transition: transform 0.5s ease-in-out;
+}
+
+#login {
+  transform: translateX(100%);
+  transition: transform 0.5s ease-in-out;
+}
+
+#rightImage.active, #login.active, #signup.active {
+  transform: translateX(0); /* Mueve el elemento al interior del contenedor */
+}
+
+#leftImage.active {
+  transform: translateX(100%);
+}
+
+.col-0{
+  width: 0;
+  height: 0;
+  visibility: hidden;
+}
