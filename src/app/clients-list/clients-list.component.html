@@ -1,6 +1,6 @@
 <div class="usersListContainer">
 
-@if (users.length > 0) {
+@if (clients.length > 0) {
   <table>
     <thead>
       <tr>
@@ -8,22 +8,31 @@
         <th>Nombre</th>
         <th>Usuario</th>
         <th>Correo electrónico</th>
+        <th></th>
+        <th></th>
       </tr>
     </thead>
-
-  @for (user of users; track user.username) {
-    <tr>
-      <td>{{ user.lastName }}</td>
-      <td>{{ user.firstName }}</td>
-      <td>{{ user.username }}</td>
-      <td>{{ user.email }}</td>
-    </tr>
+    
+    <tbody>
+  @for (c of clients; track c) {
+      <tr>
+        <td>{{ c.lastName }}</td>
+        <td>{{ c.firstName }}</td>
+        <td>{{ c.username }}</td>
+        <td>{{ c.email }}</td>
+        <td>
+          <button type="button" (click)="updateUser(c.id)">Modificar</button>
+        </td>
+        <td>
+          <button type="button" (click)="deleteUser(c.id)">Eliminar</button>
+        </td>
+      </tr>
   }
+    </tbody>
   </table>
 } @else {
   <p>No se pudieron cargar los clientes</p>
 }
 </div>
 
-<button (click)="openDialog()">Nuevo cliente</button>
-<button (click)="openDeleteDialog()">Eliminar</button>
+<button (click)="addUser()">Nuevo cliente</button>

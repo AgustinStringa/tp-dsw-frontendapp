@@ -20,10 +20,13 @@
     <label for="username">Usuario</label>
     <input type="text" formControlName="username" id="username">
   </div>
+
+  @if (action === 'post') {
   <div>
     <label for="password">Contraseña</label>
     <input type="password" formControlName="password" id="password">
   </div>
+  }
 
   <div>
     <button type="submit" [disabled]="!form.valid">Guardar</button>

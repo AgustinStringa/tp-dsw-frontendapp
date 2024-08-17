@@ -7,6 +7,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { User } from '../core/interfaces/user.interface';
 
 @Component({
   selector: 'app-client-dialog',
@@ -18,43 +19,68 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 export class ClientDialogComponent {
   title: string = '';
   action: string = '';
+  clientId: string | undefined;
+
   form = new FormGroup({
     firstName: new FormControl('', [Validators.required]),
     lastName: new FormControl('', [Validators.required]),
     email: new FormControl('', [Validators.required, Validators.email]),
     username: new FormControl('', [Validators.required]),
+
     password: new FormControl('', [
       Validators.required,
-      Validators.minLength(6),
+      Validators.minLength(4),
     ]),
   });
 
   constructor(
+    @Inject(MAT_DIALOG_DATA)
+    public data: { title: string; action: string; client: User },
     public dialogRef: MatDialogRef<ClientDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: any,
     private http: HttpClient
   ) {
     this.title = data.title;
     this.action = data.action;
+
+    if (data.client !== undefined) {
+      const form = this.form.controls;
+      this.clientId = data.client.id;
+
+      form.firstName.setValue(data.client.firstName);
+      form.lastName.setValue(data.client.lastName);
+      form.email.setValue(data.client.email);
+      form.username.setValue(data.client.username);
+      form.password.disable();
+    }
   }
 
   onSubmit(): void {
-    const data = {
+    let data: Record<string, any> = {
       firstName: this.form.get('firstName')?.value,
       lastName: this.form.get('lastName')?.value,
       email: this.form.get('email')?.value,
       username: this.form.get('username')?.value,
-      password: this.form.get('password')?.value,
     };
+
+    if (this.form.controls.password.enabled === true)
+      data['password'] = this.form.get('password')?.value;
 
     if (this.action === 'post') {
       try {
         this.http.post<any>('//localhost:3000/api/clients', data).subscribe();
-        this.dialogRef.close();
+        this.closeModal();
       } catch (error: any) {
         console.log(error);
       }
-    } else if (this.action === '') {
+    } else if (this.action === 'put') {
+      try {
+        this.http
+          .put<any>('//localhost:3000/api/clients/' + this.clientId, data)
+          .subscribe();
+        this.closeModal();
+      } catch (error: any) {
+        console.log(error);
+      }
     }
   }
 

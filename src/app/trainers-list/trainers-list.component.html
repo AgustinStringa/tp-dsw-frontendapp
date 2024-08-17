@@ -1,9 +1,9 @@
 <div class="trainers-list-container">
   <button (click)="getTrainers()">Obtain All Trainers!</button>
 
-  @if (users.length > 0) {
+  @if (trainers.length > 0) {
   <ul class="trainers-list">
-    @for (trainer of users; track trainer.username) {
+    @for (trainer of trainers; track trainer.username) {
     <li  class="trainer-item">
       <p class="trainer-detail">trainername: {{ trainer.username }}</p>
       <p class="trainer-detail">email : {{ trainer.email }}</p>
