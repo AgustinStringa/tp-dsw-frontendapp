@@ -1,0 +1,11 @@
+<div class = "class-types-list-container">
+  <button (click)="getClassTypes()">Obtain All Type Clases!</button>
+  @if (this.classtype.length > 0) {
+    <ul class="class-types-list">
+      @for (i of this.classtype; track i.name) {
+      <li  class="classtype-item">
+        <p class="classtype-detail">classtypename: {{ i.name }}</p>
+        <p class="classtype-detail">description : {{ i.description }}</p>
+      </li>}
+      </ul>
+      }
