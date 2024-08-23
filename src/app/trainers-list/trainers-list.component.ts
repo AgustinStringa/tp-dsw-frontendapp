@@ -1,7 +1,7 @@
+import User from '../core/interfaces/user.interface';
 import { NgFor, NgIf } from '@angular/common';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { Component } from '@angular/core';
-import { User } from '../core/interfaces/user.interface';
 
 @Component({
   selector: 'app-trainers-list',

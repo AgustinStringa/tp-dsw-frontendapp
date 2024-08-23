@@ -3,9 +3,9 @@
 
   @if (trainers.length > 0) {
   <ul class="trainers-list">
-    @for (trainer of trainers; track trainer.username) {
+    @for (trainer of trainers; track trainer.dni) {
     <li  class="trainer-item">
-      <p class="trainer-detail">trainername: {{ trainer.username }}</p>
+      <p class="trainer-detail">trainername: {{ trainer.dni }}</p>
       <p class="trainer-detail">email : {{ trainer.email }}</p>
       <p class="trainer-detail">firstName: {{ trainer.firstName }}</p>
       <p class="trainer-detail">lastName: {{ trainer.lastName }}</p>

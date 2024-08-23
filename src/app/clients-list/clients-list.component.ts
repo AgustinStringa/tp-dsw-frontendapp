@@ -1,10 +1,10 @@
+import User from '../core/interfaces/user.interface';
 import { Component } from '@angular/core';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { NgFor, NgIf } from '@angular/common';
-import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { MatDialog } from '@angular/material/dialog';
 import { ClientDialogComponent } from '../client-dialog/client-dialog.component';
 import { DeleteDialogComponent } from '../delete-dialog/delete-dialog.component';
-import { User } from '../core/interfaces/user.interface';
 import { ComponentType } from '@angular/cdk/portal';
 
 @Component({
