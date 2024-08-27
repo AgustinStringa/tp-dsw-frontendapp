@@ -1,42 +1,76 @@
-<div class = "class-types-list-container">
-  <button (click)="getClassTypes()">Obtain All Type Clases!</button>
+<div class="class-type-list-container">
   @if (this.classtype.length > 0) {
-    <ul class="class-types-list">
-      @for (i of this.classtype; track i.name) {
-      <li  class="classtype-item">
-        <p class="classtype-detail">classtypename: {{ i.name }}</p>
-        <p class="classtype-detail">description : {{ i.description }}</p>
-        <input type="checkbox" [checked]="selectedClassType === i" (change)="selectClassType(i)">
-      </li>}
-      </ul>
+  <table class="class-type-table">
+    <thead>
+      <tr>
+        <th>ClassType</th>
+        <th>Description</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (c of classtype; track c.name) {
+      <tr [class.selected]="selectedClassType === c">
+        <td>{{ c.name }}</td>
+        <td>{{ c.description }}</td>
+        <td>
+          <button type="button" [class.selected]="selectedClassType === c" (click)="selectClassType(c)">
+            Seleccionar
+          </button>
+        </td>
+      </tr>
+      }
+    </tbody>
+  </table>
   } @else {
-  <p>No Class Types available.</p>
+  <p>No se pudieron cargar los Tipos de Clase</p>
   }
-<div class = "selected-class-type-info">
+</div>
+
+<div class="selected-class-type-info">
   @if (this.selectedClassType) {
-    <h3>Selected Class Type Information:</h3>
+  <div class="class-type-details">
+    <h2>Selected Class Type Information:</h2>
     <p><strong>Name:</strong> {{ selectedClassType.name }}</p>
     <p><strong>Description:</strong> {{ selectedClassType.description }}</p>
-  }
+  </div>
 
-  <div>
-    @if (selectedClassType && selectedClassType.classes && selectedClassType.classes.length > 0 ) {
-      <h3>Classes:</h3>
-      <ul>
+  @if (selectedClassType.classes && selectedClassType.classes.length > 0) {
+  <div class="classes-container">
+    <h3>Classes:</h3>
+    <table class="classes-table">
+      <thead>
+        <tr>
+          <th>Day</th>
+          <th>Start Time</th>
+          <th>End Time</th>
+          <th>Capacity</th>
+          <th>Location</th>
+          <th>Trainer</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
         @for (i of selectedClassType.classes; track i.id) {
-        <li>
-          <p><strong>Day:</strong> {{ i.day }}</p>
-          <p><strong>Start Time:</strong> {{ i.startTime }}</p>
-          <p><strong>End Time:</strong> {{ i.endTime }}</p>
-          <p><strong>Capacity:</strong> {{ i.maxCapacity }}</p>
-          <p><strong>Location:</strong> {{ i.location }}</p>
-          <!-- <p><strong>Trainer:</strong> {{ getTrainerName(i.trainer)}} </p> -->
-          <p><strong>Trainer:</strong> {{i.trainer}} </p>
-        </li>
+        <tr>
+          <td>{{ i.day }}</td>
+          <td>{{ i.startTime }}</td>
+          <td>{{ i.endTime }}</td>
+          <td>{{ i.maxCapacity }}</td>
+          <td>{{ i.location }}</td>
+          <td>{{ i.trainer.firstName }} {{ i.trainer.lastName }}</td>
+          <td>
+            <button type="button" [class.selected]="selectedClass === i" (click)="selectClass(i)">
+              Seleccionar Clase
+            </button>
+          </td>
+        </tr>
         }
-      </ul>
-    } @else {
-      <p>No classes available.</p>
-
-    }
-
+      </tbody>
+    </table>
+  </div>
+  } @else {
+  <p>No classes available.</p>
+  }
+  }
+</div>

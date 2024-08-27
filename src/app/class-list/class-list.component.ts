@@ -3,6 +3,8 @@ import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { ClassType } from '../core/interfaces/classType.interface.js';
 import { User } from '../core/interfaces/user.interface.js';
+import { MatDialog } from '@angular/material/dialog/index.js';
+import { Class } from '../core/interfaces/class.interface.js';
 
 @Component({
   selector: 'app-class-list',
@@ -14,38 +16,14 @@ import { User } from '../core/interfaces/user.interface.js';
 export class ClassListComponent {
   urlClass: string = '';
   classtype: ClassType[] = [];
+  selectedClass: Class | null = null;
   selectedClassType: ClassType | null = null;
   urlClassType: string = 'http://localhost:3000/api/classes/types';
-  urlTrainer: string = 'http://localhost:3000/api/trainers'; // URL para obtener trainers
-  trainers: { [id: string]: User } = {}; // Mapa para almacenar trainers por ID
 
   constructor(private http: HttpClient) {
     this.getClassTypes();
   }
-  /*
-  async loadTrainers() {
-    try {
-      const response = await this.http.get<any>(this.urlTrainer).toPromise();
-      response.data.forEach((trainer: User) => {
-        this.trainers[trainer.id] = trainer;
-      });
-    } catch (error) {
-      console.error('Error loading trainers:', error);
-    }
-  }
 
-  trackByClassId(index: number, item: any): string {
-    return item.id;
-  }
-  async getTrainerName(trainerId: string): Promise<string> {
-    try {
-      const response = await this.trainers[trainerId]?.firstName;
-      return response;
-    } catch (error) {
-      return 'Unknown Trainer';
-    }
-  }
-*/
   async getClassTypes() {
     try {
       this.http.get<any>(this.urlClassType).subscribe((res) => {
@@ -60,12 +38,13 @@ export class ClassListComponent {
     this.selectedClassType = classType;
   }
 
-  getClassTypeInfo() {
-    if (this.selectedClassType) {
-      console.log('Selected Class Type:', this.selectedClassType);
-      // TO DO
+  selectClass(classItem: Class) {
+    this.selectedClass = classItem;
+    if (this.selectedClass) {
+      console.log(`Inscrito en la clase: ${this.selectedClass.id}`);
+      // TO DO: Logica para inscribirse a una clase
     } else {
-      console.log('No Class Type selected');
+      console.log('No se ha seleccionado ninguna clase.');
     }
   }
 }
