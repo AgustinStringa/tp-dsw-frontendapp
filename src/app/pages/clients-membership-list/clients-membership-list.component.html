@@ -1,0 +1,42 @@
+<div class="table-container">
+  <table class="table align-middle mb-0 bg-white">
+    <thead class="bg-light">
+      <tr>
+        <th>Name</th>
+        <th>Dni</th>
+        <th>Last Membership Date</th>
+        <th>Membership Type</th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (c of clientList; track c) {
+      <tr>
+        <td>
+          <div class="d-flex align-items-center">
+            <img
+              src="https://mdbootstrap.com/img/new/avatars/8.jpg"
+              alt=""
+              style="width: 45px; height: 45px"
+              class="rounded-circle"
+            />
+            <div class="ms-3">
+              <p class="fw-bold mb-1">{{ c.firstName + " " + c.lastName }}</p>
+              <p class="text-muted mb-0">{{ c.email }}</p>
+            </div>
+          </div>
+        </td>
+        <td>
+          <p class="fw-normal mb-1">{{ c.dni || "there is no dni yet" }}</p>
+        </td>
+        <td>{{ c.getCurrentMembership().dateFrom }}</td>
+        <td>
+          <span class="badge badge-success rounded-pill d-inline">{{
+            c.getCurrentMembership().type.name
+          }}</span>
+        </td>
+      </tr>
+
+      }
+    </tbody>
+  </table>
+</div>

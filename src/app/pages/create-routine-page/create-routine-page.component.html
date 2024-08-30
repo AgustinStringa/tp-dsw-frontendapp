@@ -1,0 +1,99 @@
+<app-clients-membership-list
+  [clientList]="clientsWithmembership"
+></app-clients-membership-list>
+
+<div class="form-container">
+  <form action="">
+    <label mdbLabel class="form-label" for="form1">Date from:</label>
+    <input
+      mdbValidate
+      mdbInput
+      type="date"
+      id=""
+      class="form-control"
+      formControlName="input"
+      required
+    />
+
+    <p class="display-6 my-5" for="">
+      <span><strong> Date to:</strong></span>
+      {{
+        today.getDate() + "/" + today.getMonth() + 1 + "/" + today.getFullYear()
+      }}
+    </p>
+  </form>
+
+  <div class="d-grid gap-2 col-6 mx-auto my-3">
+    <button class="btn btn-primary" type="button" mdbRipple (click)="addweek()">
+      Add Week
+    </button>
+  </div>
+
+  <div class="accordion" id="accordionExample">
+    <div class="accordion-item">
+      <h2 class="accordion-header">
+        <button
+          class="accordion-button"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#collapseOne"
+          aria-expanded="true"
+          aria-controls="collapseOne"
+        >
+          Accordion Item #1
+        </button>
+      </h2>
+      <div
+        id="collapseOne"
+        class="accordion-collapse collapse show"
+        data-bs-parent="#accordionExample"
+      >
+        <div class="accordion-body">
+          <strong>This is the first item's accordion body.</strong> It is shown
+          by default, until the collapse plugin adds the appropriate classes
+          that we use to style each element. These classes control the overall
+          appearance, as well as the showing and hiding via CSS transitions. You
+          can modify any of this with custom CSS or overriding our default
+          variables. It's also worth noting that just about any HTML can go
+          within the <code>.accordion-body</code>, though the transition does
+          limit overflow.
+        </div>
+      </div>
+    </div>
+  </div>
+  <cdk-accordion class="example-accordion">
+    @for (item of weeks; track item; let index = $index) {
+    <cdk-accordion-item
+      #accordionItem="cdkAccordionItem"
+      class="example-accordion-item"
+      role="button"
+      tabindex="0"
+      [attr.id]="'accordion-header-' + index"
+      [attr.aria-expanded]="accordionItem.expanded"
+      [attr.aria-controls]="'accordion-body-' + index"
+    >
+      <div
+        class="example-accordion-item-header"
+        (click)="accordionItem.toggle()"
+      >
+        {{ item }}
+        <span class="example-accordion-item-description">
+          Click to {{ accordionItem.expanded ? "close" : "open" }}
+        </span>
+      </div>
+      <div
+        class="example-accordion-item-body"
+        role="region"
+        [style.display]="accordionItem.expanded ? '' : 'none'"
+        [attr.id]="'accordion-body-' + index"
+        [attr.aria-labelledby]="'accordion-header-' + index"
+      >
+        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Perferendis
+        excepturi incidunt ipsum deleniti labore, tempore non nam doloribus
+        blanditiis veritatis illo autem iure aliquid ullam rem tenetur deserunt
+        velit culpa?
+      </div>
+    </cdk-accordion-item>
+    }
+  </cdk-accordion>
+</div>
