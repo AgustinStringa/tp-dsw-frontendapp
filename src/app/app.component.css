@@ -1,0 +1,19 @@
+nav, a {
+  display: inline-block;
+  color: forestgreen;
+  font-size: 16px;/* Tamaño del texto */
+  margin-right: 20px;/* Espaciado entre los enlaces */
+  transition: color 0.3s ease,;/* Transición suave */
+}
+
+nav a:hover {
+  color: darkgreen;
+}
+
+/* Centrar el menú */
+nav {
+  display: flex;
+  padding: 10px; 
+  background-color: rgba(181, 255, 160, 0.689);
+  margin-bottom: 10px;
+}
