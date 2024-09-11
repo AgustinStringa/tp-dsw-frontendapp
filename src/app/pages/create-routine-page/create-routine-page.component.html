@@ -1,99 +1,166 @@
+<div class="mx-auto w-75 my-5">
+  <p class="display-5">Click a client to assign a routine</p>
+</div>
 <app-clients-membership-list
   [clientList]="clientsWithmembership"
+  (clientChange)="setSelectedClient($event)"
 ></app-clients-membership-list>
 
 <div class="form-container">
-  <form action="">
-    <label mdbLabel class="form-label" for="form1">Date from:</label>
+  <form action="" [formGroup]="routineForm" (ngSubmit)="onSubmit()">
+    <label class="form-label" for="inputDateFrom">Date from:</label>
     <input
-      mdbValidate
-      mdbInput
+      matInput
       type="date"
-      id=""
+      id="inputDateFrom"
       class="form-control"
-      formControlName="input"
-      required
+      formControlName="dateFrom"
+      required=""
+      (input)="setDateTo()"
     />
+    @if (routineForm.controls.dateFrom.invalid) {
+    <mat-error>{{ "Selecciona una fecha" }}</mat-error>
+    }
 
     <p class="display-6 my-5" for="">
       <span><strong> Date to:</strong></span>
-      {{
-        today.getDate() + "/" + today.getMonth() + 1 + "/" + today.getFullYear()
-      }}
+      {{ this.routineForm.value.dateTo?.toDateString() }}
     </p>
-  </form>
 
-  <div class="d-grid gap-2 col-6 mx-auto my-3">
-    <button class="btn btn-primary" type="button" mdbRipple (click)="addweek()">
-      Add Week
-    </button>
-  </div>
-
-  <div class="accordion" id="accordionExample">
-    <div class="accordion-item">
-      <h2 class="accordion-header">
-        <button
-          class="accordion-button"
-          type="button"
-          data-bs-toggle="collapse"
-          data-bs-target="#collapseOne"
-          aria-expanded="true"
-          aria-controls="collapseOne"
-        >
-          Accordion Item #1
-        </button>
-      </h2>
-      <div
-        id="collapseOne"
-        class="accordion-collapse collapse show"
-        data-bs-parent="#accordionExample"
+    <div class="d-grid gap-2 col-6 mx-auto my-3">
+      <button
+        class="btn btn-primary"
+        type="button"
+        mdbRipple
+        (click)="addweek()"
       >
-        <div class="accordion-body">
-          <strong>This is the first item's accordion body.</strong> It is shown
-          by default, until the collapse plugin adds the appropriate classes
-          that we use to style each element. These classes control the overall
-          appearance, as well as the showing and hiding via CSS transitions. You
-          can modify any of this with custom CSS or overriding our default
-          variables. It's also worth noting that just about any HTML can go
-          within the <code>.accordion-body</code>, though the transition does
-          limit overflow.
-        </div>
-      </div>
+        Add Week
+      </button>
     </div>
-  </div>
-  <cdk-accordion class="example-accordion">
-    @for (item of weeks; track item; let index = $index) {
-    <cdk-accordion-item
-      #accordionItem="cdkAccordionItem"
-      class="example-accordion-item"
-      role="button"
-      tabindex="0"
-      [attr.id]="'accordion-header-' + index"
-      [attr.aria-expanded]="accordionItem.expanded"
-      [attr.aria-controls]="'accordion-body-' + index"
-    >
-      <div
-        class="example-accordion-item-header"
-        (click)="accordionItem.toggle()"
-      >
-        {{ item }}
-        <span class="example-accordion-item-description">
-          Click to {{ accordionItem.expanded ? "close" : "open" }}
-        </span>
+
+    <p class="display-5">Weeks:</p>
+    <cdk-accordion class="example-accordion">
+      @for (item of weeks; track item; let index = $index) {
+      <div class="week-container">
+        <cdk-accordion-item
+          #accordionItem="cdkAccordionItem"
+          class="example-accordion-item"
+          role="button"
+          tabindex="0"
+          [attr.id]="'accordion-header-' + index"
+          [attr.aria-expanded]="accordionItem.expanded"
+          [attr.aria-controls]="'accordion-body-' + index"
+        >
+          <div
+            class="example-accordion-item-header"
+            (click)="accordionItem.toggle()"
+          >
+            {{ item.text }}
+            <span class="example-accordion-item-description">
+              Click to {{ accordionItem.expanded ? "close" : "open" }}
+            </span>
+          </div>
+          <div
+            class="example-accordion-item-body"
+            role="region"
+            [style.display]="accordionItem.expanded ? '' : 'none'"
+            [attr.id]="'accordion-body-' + index"
+            [attr.aria-labelledby]="'accordion-header-' + index"
+          >
+            <!-- ARRAY DE DIAS -->
+            @for (day of item.days; track day; let ind = $index) {
+            <cdk-accordion class="example-accordion">
+              <cdk-accordion-item
+                #accordionItem="cdkAccordionItem"
+                class="example-accordion-item"
+                role="button"
+                tabindex="0"
+                [attr.id]="'accordion-header-' + ind"
+                [attr.aria-expanded]="accordionItem.expanded"
+                [attr.aria-controls]="'accordion-body-' + ind"
+              >
+                <div
+                  class="example-accordion-item-header"
+                  (click)="accordionItem.toggle()"
+                >
+                  {{ "Day " + day.number }}
+                  <span class="example-accordion-item-description">
+                    Click to {{ accordionItem.expanded ? "close" : "open" }}
+                  </span>
+                </div>
+                <div class="day-container">
+                  <div
+                    class="example-accordion-item-body"
+                    role="region"
+                    [style.display]="accordionItem.expanded ? '' : 'none'"
+                    [attr.id]="'accordion-body-' + ind"
+                    [attr.aria-labelledby]="'accordion-header-' + ind"
+                  >
+                    @for (ex of day.exercisesRoutine; track ex; let ind =
+                    $index) {
+                    <div>
+                      <p>exercise: {{ ex.exercise?.name }}</p>
+                      <p>series: {{ ex.series }}</p>
+                      <p>reps: {{ ex.reps }}</p>
+                      <div class="example-button-container">
+                        <button
+                          mat-fab
+                          aria-label="Example icon button with a delete icon"
+                        >
+                          <mat-icon (click)="removeExercise(day, ex)"
+                            >delete</mat-icon
+                          >
+                        </button>
+                      </div>
+                    </div>
+                    }@empty {
+                    <p>Add an exercise to start!</p>
+                    }
+                    <button
+                      type="button"
+                      (click)="addExercise(day)"
+                      class="btn btn-primary my-5"
+                      data-mdb-ripple-init
+                    >
+                      Add Exercise
+                    </button>
+                  </div>
+                  @if (day.number == item.days.length) {
+                  <button type="button" (click)="removeDay(day)">x</button>
+                  }
+                </div>
+              </cdk-accordion-item>
+            </cdk-accordion>
+            }
+
+            <div>
+              <button
+                type="button"
+                (click)="addDay(item)"
+                class="btn btn-primary my-5"
+                data-mdb-ripple-init
+                [ngClass]="item.days.length <= 6 ? '' : 'disabled'"
+              >
+                Add Day
+              </button>
+            </div>
+          </div>
+        </cdk-accordion-item>
+        @if (item.number == weeks.length) {
+        <button type="button" (click)="removeWeek(item)">x</button>
+        }
       </div>
-      <div
-        class="example-accordion-item-body"
-        role="region"
-        [style.display]="accordionItem.expanded ? '' : 'none'"
-        [attr.id]="'accordion-body-' + index"
-        [attr.aria-labelledby]="'accordion-header-' + index"
+      }
+    </cdk-accordion>
+
+    <div class="text-end my-5">
+      <button
+        type="submit"
+        [disabled]="!routineForm.valid"
+        class="btn btn-success btn-lg"
       >
-        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Perferendis
-        excepturi incidunt ipsum deleniti labore, tempore non nam doloribus
-        blanditiis veritatis illo autem iure aliquid ullam rem tenetur deserunt
-        velit culpa?
-      </div>
-    </cdk-accordion-item>
-    }
-  </cdk-accordion>
+        Save Routine
+      </button>
+    </div>
+  </form>
 </div>
