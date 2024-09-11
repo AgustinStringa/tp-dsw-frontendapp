@@ -9,8 +9,11 @@
       </tr>
     </thead>
     <tbody>
-      @for (c of clientList; track c) {
-      <tr>
+      @for (c of clientForRoutineList; track c) {
+      <tr
+        (click)="toggleSelected(c)"
+        [ngClass]="c.selected ? 'selected' : null"
+      >
         <td>
           <div class="d-flex align-items-center">
             <img
