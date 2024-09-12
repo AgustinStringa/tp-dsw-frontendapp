@@ -25,6 +25,7 @@
     "mdb-angular-ui-kit": "^6.1.0",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
+    "webpack": "^5.94.0",
     "zone.js": "~0.14.3"
   },
   "devDependencies": {
