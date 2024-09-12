@@ -1,4 +1,7 @@
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { throwError } from 'rxjs';
+import { catchError } from 'rxjs/operators';
 import {
   startOfWeek,
   addDays,
@@ -20,10 +23,14 @@ import {
 import { NgClass } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 import { CdkAccordionModule } from '@angular/cdk/accordion';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
-import { ClientsMembershipListComponent } from '../clients-membership-list/clients-membership-list.component';
-import Client from '../../core/interfaces/client.js';
-import Exercise from '../../core/interfaces/exercise.interface.js';
+import {
+  HttpClient,
+  HttpClientModule,
+  HttpErrorResponse,
+} from '@angular/common/http';
+import { ClientsMembershipListComponent } from '../clients-membership-list/clients-membership-list.component.js';
+import Client from '../../../core/Classes/client.js';
+import IExercise from '../../../core/interfaces/IExercise.interface.js';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogNewExerciseRoutineComponent } from '../dialog-new-exercise-routine/dialog-new-exercise-routine.component.js';
 interface Day {
@@ -37,13 +44,13 @@ interface Week {
   number: number;
 }
 export interface DialogData {
-  exercises: Exercise[];
-  exerciseSelected: Exercise;
+  exercises: IExercise[];
+  exerciseSelected: IExercise;
   series: number;
   reps: number;
 }
 export interface ExerciseRoutine {
-  exercise: Exercise | null;
+  exercise: IExercise | null;
   series: number;
   reps: number;
   internalIndex?: number;
@@ -76,13 +83,7 @@ export class CreateRoutinePageComponent implements AfterViewInit {
       [Validators.minLength(1), Validators.required]
     ),
   });
-  weeks: Week[] = [
-    {
-      number: 1,
-      text: 'WEEK 1',
-      days: [{ weekNumber: 1, number: 1, exercisesRoutine: [] }],
-    },
-  ];
+  weeks: Week[] = [];
   expandedIndex = 0;
   urlClientsWithMembership: string = '';
   urlCreateRoutine: string = '';
@@ -91,6 +92,8 @@ export class CreateRoutinePageComponent implements AfterViewInit {
   exercises: Object[] = [];
   today: Date = new Date();
   readonly dialog = inject(MatDialog);
+  private _snackBar = inject(MatSnackBar);
+
   constructor(private http: HttpClient) {
     this.urlClientsWithMembership =
       'http://localhost:3000/api/clients/membership-active';
@@ -99,9 +102,11 @@ export class CreateRoutinePageComponent implements AfterViewInit {
     this.getClientsWithMembership();
     this.getExercises();
   }
+
   public ngAfterViewInit(): void {
     this.startUpDatePicker();
   }
+
   async getClientsWithMembership() {
     try {
       this.http
@@ -116,7 +121,7 @@ export class CreateRoutinePageComponent implements AfterViewInit {
                 u.firstName,
                 u.dni,
                 u.email,
-                u.memberships
+                u.currentMembership
               ),
             ];
           });
@@ -125,6 +130,7 @@ export class CreateRoutinePageComponent implements AfterViewInit {
       console.log(error);
     }
   }
+
   async getExercises() {
     try {
       this.http.get<any>(this.urlExercise).subscribe((res: any) => {
@@ -134,6 +140,7 @@ export class CreateRoutinePageComponent implements AfterViewInit {
       console.log(error);
     }
   }
+
   setDateTo() {
     const weeksToAdd = this.weeks.length;
     if (
@@ -154,6 +161,17 @@ export class CreateRoutinePageComponent implements AfterViewInit {
       });
     }
   }
+
+  getDateToWithFormat() {
+    if (
+      this.routineForm.value.dateTo != null &&
+      this.routineForm.value.dateTo != undefined &&
+      this.weeks.length > 0
+    ) {
+      return lightFormat(this.routineForm.value.dateTo, 'dd/MM/yyy');
+    } else return '';
+  }
+
   startUpDatePicker() {
     const inputDateFrom = document.querySelector(
       '#inputDateFrom'
@@ -166,18 +184,21 @@ export class CreateRoutinePageComponent implements AfterViewInit {
     inputDateFrom.step = '7';
     this.setDateTo();
   }
+
   addweek() {
     this.weeks.push({
       number: this.weeks.length + 1,
-      text: 'WEEK ' + (this.weeks.length + 1),
+      text: 'SEMANA ' + (this.weeks.length + 1),
       days: [],
     });
     this.setDateTo();
   }
+
   removeWeek(week: Week) {
     this.weeks = this.weeks.filter((w) => w.number != week.number);
     this.setDateTo();
   }
+
   addExercise(day: Day) {
     const dialogRef = this.dialog.open(DialogNewExerciseRoutineComponent, {
       data: {
@@ -210,11 +231,13 @@ export class CreateRoutinePageComponent implements AfterViewInit {
       }
     });
   }
+
   removeExercise(day: Day, exercise: ExerciseRoutine) {
     day.exercisesRoutine = day.exercisesRoutine?.filter(
       (exr) => exr.internalIndex != exercise.internalIndex
     );
   }
+
   addDay(week: Week) {
     if (week.days.length < 7) {
       week.days.push({
@@ -224,17 +247,20 @@ export class CreateRoutinePageComponent implements AfterViewInit {
       });
     }
   }
+
   removeDay(day: Day) {
     const week = this.weeks.find((w) => w.number == day.weekNumber);
     if (week) {
       week.days = week?.days.filter((d) => d.number != day.number);
     }
   }
+
   setSelectedClient(newSelectedClient: Client | null) {
     this.routineForm.patchValue({
       client: newSelectedClient,
     });
   }
+
   async onSubmit() {
     //validaciones variadas
     /**
@@ -261,11 +287,25 @@ export class CreateRoutinePageComponent implements AfterViewInit {
     try {
       this.http
         .post<any>(this.urlCreateRoutine, newRoutine)
+        .pipe(
+          catchError((error: HttpErrorResponse) => {
+            if (error.status === 400) {
+              this._snackBar.open('Error al crear la rutina', 'cerrar', {
+                duration: 3000,
+                panelClass: ['snackbar_error'],
+              });
+            }
+            return throwError(
+              () => new Error(error.message || 'Error desconocido')
+            );
+          })
+        )
         .subscribe((res: any) => {
-          console.log(res);
+          this._snackBar.open('Rutina creada correctamente', 'cerrar', {
+            duration: 3000,
+            panelClass: ['snackbar_success'],
+          });
         });
-    } catch (error: any) {
-      console.log(error);
-    }
+    } catch (error: any) {}
   }
 }

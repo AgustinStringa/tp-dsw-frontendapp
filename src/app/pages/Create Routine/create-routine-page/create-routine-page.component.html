@@ -1,5 +1,5 @@
 <div class="mx-auto w-75 my-5">
-  <p class="display-5">Click a client to assign a routine</p>
+  <p class="display-5">Clickea un cliente para asginar la rutina</p>
 </div>
 <app-clients-membership-list
   [clientList]="clientsWithmembership"
@@ -8,7 +8,10 @@
 
 <div class="form-container">
   <form action="" [formGroup]="routineForm" (ngSubmit)="onSubmit()">
-    <label class="form-label" for="inputDateFrom">Date from:</label>
+    <label class="form-label display-6 fw-bold" for="inputDateFrom"
+      >Fecha desde:</label
+    >
+
     <input
       matInput
       type="date"
@@ -22,23 +25,12 @@
     <mat-error>{{ "Selecciona una fecha" }}</mat-error>
     }
 
-    <p class="display-6 my-5" for="">
-      <span><strong> Date to:</strong></span>
-      {{ this.routineForm.value.dateTo?.toDateString() }}
+    <p class="display-6 my-5 fw-bold" for="">
+      Fecha Hasta:
+      {{ getDateToWithFormat() }}
     </p>
 
-    <div class="d-grid gap-2 col-6 mx-auto my-3">
-      <button
-        class="btn btn-primary"
-        type="button"
-        mdbRipple
-        (click)="addweek()"
-      >
-        Add Week
-      </button>
-    </div>
-
-    <p class="display-5">Weeks:</p>
+    <p class="display-5">Semanas:</p>
     <cdk-accordion class="example-accordion">
       @for (item of weeks; track item; let index = $index) {
       <div class="week-container">
@@ -57,7 +49,7 @@
           >
             {{ item.text }}
             <span class="example-accordion-item-description">
-              Click to {{ accordionItem.expanded ? "close" : "open" }}
+              Click para {{ accordionItem.expanded ? "cerrar" : "abrir" }}
             </span>
           </div>
           <div
@@ -83,9 +75,9 @@
                   class="example-accordion-item-header"
                   (click)="accordionItem.toggle()"
                 >
-                  {{ "Day " + day.number }}
+                  {{ "Día " + day.number }}
                   <span class="example-accordion-item-description">
-                    Click to {{ accordionItem.expanded ? "close" : "open" }}
+                    Click para {{ accordionItem.expanded ? "cerrar" : "abrir" }}
                   </span>
                 </div>
                 <div class="day-container">
@@ -99,9 +91,16 @@
                     @for (ex of day.exercisesRoutine; track ex; let ind =
                     $index) {
                     <div>
-                      <p>exercise: {{ ex.exercise?.name }}</p>
-                      <p>series: {{ ex.series }}</p>
-                      <p>reps: {{ ex.reps }}</p>
+                      <p>
+                        <span class="fw-bold">Ejercicio:</span>
+                        {{ ex.exercise?.name }}
+                      </p>
+                      <p>
+                        <span class="fw-bold">series:</span> {{ ex.series }}
+                      </p>
+                      <p>
+                        <span class="fw-bold">repeticiones:</span> {{ ex.reps }}
+                      </p>
                       <div class="example-button-container">
                         <button
                           mat-fab
@@ -114,7 +113,7 @@
                       </div>
                     </div>
                     }@empty {
-                    <p>Add an exercise to start!</p>
+                    <p>Agrega un ejercicio para comenzar!</p>
                     }
                     <button
                       type="button"
@@ -122,7 +121,7 @@
                       class="btn btn-primary my-5"
                       data-mdb-ripple-init
                     >
-                      Add Exercise
+                      Agregar Ejercicio
                     </button>
                   </div>
                   @if (day.number == item.days.length) {
@@ -141,7 +140,7 @@
                 data-mdb-ripple-init
                 [ngClass]="item.days.length <= 6 ? '' : 'disabled'"
               >
-                Add Day
+                Agregar Día
               </button>
             </div>
           </div>
@@ -153,13 +152,23 @@
       }
     </cdk-accordion>
 
+    <div class="d-grid gap-2 col-6 mx-auto my-3">
+      <button
+        class="btn btn-primary"
+        type="button"
+        mdbRipple
+        (click)="addweek()"
+      >
+        Agregar Semana
+      </button>
+    </div>
     <div class="text-end my-5">
       <button
         type="submit"
         [disabled]="!routineForm.valid"
         class="btn btn-success btn-lg"
       >
-        Save Routine
+        Guardar Rutina
       </button>
     </div>
   </form>

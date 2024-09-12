@@ -2,10 +2,10 @@
   <table class="table align-middle mb-0 bg-white">
     <thead class="bg-light">
       <tr>
-        <th>Name</th>
+        <th>Nombre</th>
         <th>Dni</th>
-        <th>Last Membership Date</th>
-        <th>Membership Type</th>
+        <th>Fecha de la última membresía</th>
+        <th>Tipo de Membresía</th>
       </tr>
     </thead>
     <tbody>
@@ -31,10 +31,10 @@
         <td>
           <p class="fw-normal mb-1">{{ c.dni || "there is no dni yet" }}</p>
         </td>
-        <td>{{ c.getCurrentMembership().dateFrom }}</td>
+        <td>{{ c.currentMembership.dateFrom }}</td>
         <td>
           <span class="badge badge-success rounded-pill d-inline">{{
-            c.getCurrentMembership().type.name
+            c.currentMembership.type.name
           }}</span>
         </td>
       </tr>

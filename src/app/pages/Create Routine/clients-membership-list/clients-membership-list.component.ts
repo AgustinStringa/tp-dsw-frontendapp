@@ -7,11 +7,10 @@ import {
   signal,
   WritableSignal,
 } from '@angular/core';
-import ClientClass from '../../core/interfaces/client.js';
-import Client from '../../core/interfaces/client.js';
+import Client from '../../../core/Classes/client.js';
 import { NgClass } from '@angular/common';
 import { SimpleChanges } from '@angular/core';
-import CurrentMembership from '../../core/interfaces/currentMembership.interface.js';
+import ICurrentMembership from '../../../core/interfaces/ICurrentMembership.interface.js';
 class ClientForRoutine extends Client {
   public selected: boolean;
   constructor(
@@ -20,9 +19,9 @@ class ClientForRoutine extends Client {
     firstName: string,
     dni: string,
     email: string,
-    memberships: CurrentMembership[]
+    currentMembership: ICurrentMembership
   ) {
-    super(id, lastName, firstName, dni, email, memberships);
+    super(id, lastName, firstName, dni, email, currentMembership);
     this.selected = false;
   }
 }
@@ -34,7 +33,7 @@ class ClientForRoutine extends Client {
   styleUrl: './clients-membership-list.component.css',
 })
 export class ClientsMembershipListComponent implements OnChanges {
-  @Input() clientList: ClientClass[] = [];
+  @Input() clientList: Client[] = [];
   @Output() clientChange = new EventEmitter<Client | null>();
   clientForRoutineList: ClientForRoutine[] = [];
   selectedClient: WritableSignal<ClientForRoutine | null> = signal(null);
@@ -48,12 +47,13 @@ export class ClientsMembershipListComponent implements OnChanges {
           c.firstName,
           c.dni,
           c.email,
-          c.memberships
+          c.currentMembership
         );
         this.clientForRoutineList.push(newClient);
       });
     }
   }
+
   toggleSelected(c: ClientForRoutine) {
     if (this.selectedClient() == null || !c.selected) {
       this.clientForRoutineList.forEach((c) => (c.selected = false));
@@ -65,7 +65,7 @@ export class ClientsMembershipListComponent implements OnChanges {
         c.firstName,
         c.dni,
         c.email,
-        c.memberships
+        c.currentMembership
       );
       this.clientChange.emit(clientToEmit);
       return;
