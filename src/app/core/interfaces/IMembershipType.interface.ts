@@ -1,4 +1,4 @@
-export default interface MembershipType {
+export default interface IMembershipType {
   name: string;
   description: string;
   price: number;
