@@ -1,5 +1,5 @@
 <div class="class-type-list-container">
-  @if (this.classtype.length > 0) {
+  @if (this.classtypes.length > 0) {
   <table class="class-type-table">
     <thead>
       <tr>
@@ -9,7 +9,7 @@
       </tr>
     </thead>
     <tbody>
-      @for (c of classtype; track c.name) {
+      @for (c of classtypes; track c.name) {
       <tr [class.selected]="selectedClassType === c">
         <td>{{ c.name }}</td>
         <td>{{ c.description }}</td>

@@ -6,4 +6,6 @@ export const environment = {
   membershipsUrl: 'http://localhost:3000/api/memberships',
   routinesUrl: 'http://localhost:3000/api/routines',
   trainersUrl: 'http://localhost:3000/api/trainers',
+  ClassType: 'http://localhost:3000/api/classes/types',
+  Registration: 'http://localhost:3000/api/classes/registration',
 };

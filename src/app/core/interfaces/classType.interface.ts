@@ -1,4 +1,4 @@
-import { User } from './user.interface.js';
+import User from './user.interface.js';
 import { Class } from './class.interface.js';
 
 export interface ClassType {

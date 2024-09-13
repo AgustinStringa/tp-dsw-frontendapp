@@ -4,7 +4,7 @@ import { Component } from '@angular/core';
 import { ClassType } from '../core/interfaces/classType.interface.js';
 import { Class } from '../core/interfaces/class.interface.js';
 import { Registration } from '../core/interfaces/registration.interface.js';
-
+import { environment } from '../../environments/environment.js';
 @Component({
   selector: 'app-class-list',
   standalone: true,
@@ -14,11 +14,11 @@ import { Registration } from '../core/interfaces/registration.interface.js';
 })
 export class ClassListComponent {
   urlClass: string = '';
-  classtype: ClassType[] = [];
+  classtypes: ClassType[] = [];
   selectedClass: Class | null = null;
   selectedClassType: ClassType | null = null;
-  urlClassType: string = 'http://localhost:3000/api/classes/types';
-  urlRegistration: string = 'http://localhost:3000/api/classes/registration';
+  urlClassType: string = environment.ClassType;
+  urlRegistration: string = environment.Registration;
 
   private userId = '66ce147975ef00a40ff511f1'; // ID hardcodeado del usuario
 
@@ -29,7 +29,7 @@ export class ClassListComponent {
   async getClassTypes() {
     try {
       this.http.get<any>(this.urlClassType).subscribe((res) => {
-        this.classtype = res.data;
+        this.classtypes = res.data;
       });
     } catch (error: any) {
       console.log(error);
