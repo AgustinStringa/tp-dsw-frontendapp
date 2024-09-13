@@ -6,6 +6,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { ClientDialogComponent } from '../client-dialog/client-dialog.component';
 import { DeleteDialogComponent } from '../delete-dialog/delete-dialog.component';
 import { ComponentType } from '@angular/cdk/portal';
+import { environment } from '../../environments/environment';
 
 @Component({
   selector: 'app-clients-list',
@@ -19,7 +20,7 @@ export class ClientsListComponent {
   clients: User[] = [];
 
   constructor(private http: HttpClient, private dialog: MatDialog) {
-    this.url = 'http://localhost:3000/api/clients';
+    this.url = environment.clientsUrl;
     this.getClients();
   }
 
