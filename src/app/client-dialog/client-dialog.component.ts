@@ -1,3 +1,4 @@
+import User from '../core/interfaces/user.interface';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { Component, Inject } from '@angular/core';
 import {
@@ -7,7 +8,6 @@ import {
   Validators,
 } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { User } from '../core/interfaces/user.interface';
 
 @Component({
   selector: 'app-client-dialog',
@@ -24,8 +24,11 @@ export class ClientDialogComponent {
   form = new FormGroup({
     firstName: new FormControl('', [Validators.required]),
     lastName: new FormControl('', [Validators.required]),
+    dni: new FormControl('', [
+      Validators.required,
+      Validators.pattern(/^\d{8}$/),
+    ]),
     email: new FormControl('', [Validators.required, Validators.email]),
-    username: new FormControl('', [Validators.required]),
 
     password: new FormControl('', [
       Validators.required,
@@ -48,8 +51,8 @@ export class ClientDialogComponent {
 
       form.firstName.setValue(data.client.firstName);
       form.lastName.setValue(data.client.lastName);
+      form.dni.setValue(data.client.dni);
       form.email.setValue(data.client.email);
-      form.username.setValue(data.client.username);
       form.password.disable();
     }
   }
@@ -58,8 +61,8 @@ export class ClientDialogComponent {
     let data: Record<string, any> = {
       firstName: this.form.get('firstName')?.value,
       lastName: this.form.get('lastName')?.value,
+      dni: this.form.get('dni')?.value,
       email: this.form.get('email')?.value,
-      username: this.form.get('username')?.value,
     };
 
     if (this.form.controls.password.enabled === true)
