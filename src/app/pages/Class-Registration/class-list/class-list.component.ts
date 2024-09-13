@@ -1,10 +1,10 @@
 import { NgFor, NgIf } from '@angular/common';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
-import { ClassType } from '../core/interfaces/classType.interface.js';
-import { Class } from '../core/interfaces/class.interface.js';
-import { Registration } from '../core/interfaces/registration.interface.js';
-import { environment } from '../../environments/environment.js';
+import { ClassType } from '../../../core/interfaces/classType.interface.js';
+import { Class } from '../../../core/interfaces/class.interface.js';
+import { Registration } from '../../../core/interfaces/registration.interface.js';
+import { environment } from '../../../../environments/environment.js';
 @Component({
   selector: 'app-class-list',
   standalone: true,
