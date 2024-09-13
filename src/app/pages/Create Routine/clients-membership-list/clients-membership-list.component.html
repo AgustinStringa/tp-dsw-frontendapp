@@ -1,4 +1,8 @@
 <div class="table-container">
+  @if (clientForRoutineList.length > 0) {
+  <div class="mx-auto w-75 my-5">
+    <p class="display-5">Clickea un cliente para asginar la rutina</p>
+  </div>
   <table class="table align-middle mb-0 bg-white">
     <thead class="bg-light">
       <tr>
@@ -42,4 +46,9 @@
       }
     </tbody>
   </table>
+  } @else {
+  <div class="alert alert-danger" role="alert">
+    No hay clientes con membresía activa para asignar una rutina
+  </div>
+  }
 </div>

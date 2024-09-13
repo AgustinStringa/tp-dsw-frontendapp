@@ -11,6 +11,7 @@ import {
   startOfDay,
   addHours,
   format,
+  parse,
 } from 'date-fns';
 import { Component, inject, AfterViewInit } from '@angular/core';
 import {
@@ -34,8 +35,10 @@ import Client from '../../../core/Classes/client.js';
 import IExercise from '../../../core/interfaces/IExercise.interface.js';
 import { DialogNewExerciseRoutineComponent } from '../dialog-new-exercise-routine/dialog-new-exercise-routine.component.js';
 import { environment } from '../../../../environments/environment.js';
+import { ExerciseRoutineCardComponent } from '../exercise-routine-card/exercise-routine-card.component.js';
+import IExerciseRoutine from '../../../core/interfaces/IExerciseRoutine.inteface.js';
 interface Day {
-  exercisesRoutine?: ExerciseRoutine[];
+  exercisesRoutine?: IExerciseRoutine[];
   number: number;
   weekNumber: number;
 }
@@ -50,14 +53,6 @@ export interface DialogData {
   series: number;
   reps: number;
 }
-export interface ExerciseRoutine {
-  exercise: IExercise | null;
-  series: number;
-  reps: number;
-  internalIndex?: number;
-  day: number;
-  week: number;
-}
 @Component({
   selector: 'app-create-routine-page',
   standalone: true,
@@ -70,6 +65,7 @@ export interface ExerciseRoutine {
     ClientsMembershipListComponent,
     MatIconModule,
     NgClass,
+    ExerciseRoutineCardComponent,
   ],
   templateUrl: './create-routine-page.component.html',
   styleUrl: './create-routine-page.component.css',
@@ -79,7 +75,7 @@ export class CreateRoutinePageComponent implements AfterViewInit {
     dateFrom: new FormControl('', Validators.required),
     dateTo: new FormControl<Date | null>(null, Validators.required),
     client: new FormControl<Client | null>(null, Validators.required),
-    exercisesRoutine: new FormControl<ExerciseRoutine[]>(
+    exercisesRoutine: new FormControl<IExerciseRoutine[]>(
       [],
       [Validators.minLength(1), Validators.required]
     ),
@@ -205,7 +201,7 @@ export class CreateRoutinePageComponent implements AfterViewInit {
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result !== undefined && result.exerciseSelected != null) {
-        const newExerciseRoutine = {
+        const newIExerciseRoutine = {
           exercise: result.exerciseSelected,
           series: result.series,
           reps: result.reps,
@@ -215,18 +211,18 @@ export class CreateRoutinePageComponent implements AfterViewInit {
         this.routineForm.patchValue({
           exercisesRoutine: [
             ...(this.routineForm.value.exercisesRoutine ?? []),
-            newExerciseRoutine,
+            newIExerciseRoutine,
           ],
         });
         day.exercisesRoutine?.push({
-          ...newExerciseRoutine,
+          ...newIExerciseRoutine,
           internalIndex: day.exercisesRoutine.length,
         });
       }
     });
   }
 
-  removeExercise(day: Day, exercise: ExerciseRoutine) {
+  removeExercise(day: Day, exercise: IExerciseRoutine) {
     day.exercisesRoutine = day.exercisesRoutine?.filter(
       (exr) => exr.internalIndex != exercise.internalIndex
     );
@@ -301,5 +297,25 @@ export class CreateRoutinePageComponent implements AfterViewInit {
           });
         });
     } catch (error: any) {}
+  }
+
+  handleInputDateFrom() {
+    if (
+      this.routineForm.value.dateFrom == null ||
+      this.routineForm.value.dateFrom == undefined
+    )
+      return;
+    const firstMonday = addDays(startOfWeek(new Date()), 1);
+    const dateFromValue = parse(
+      this.routineForm.value.dateFrom,
+      'yyyy-MM-dd',
+      new Date()
+    );
+    if (dateFromValue < firstMonday || dateFromValue.getDay() != 1) {
+      this.routineForm.patchValue({
+        dateFrom: lightFormat(firstMonday, 'yyyy-MM-dd'),
+      });
+    }
+    this.setDateTo();
   }
 }

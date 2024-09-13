@@ -47,19 +47,6 @@
     border-bottom-right-radius: 4px;
 }
 
-.week-container,
-.day-container {
-    display: flex;
-    gap: 2rem;
-}
-
-.week-container .example-accordion-item,
-.day-container .example-accordion-item {
-    flex-grow: 1;
-}
-
-
-
 ::ng-deep .snackbar_success,
 ::ng-deep .snackbar_success * {
     background-color: #28a745 !important;
@@ -78,4 +65,31 @@
 ::ng-deep .snackbar_success *,
 ::ng-deep .snackbar_error * {
     font-size: 1.1rem !important;
+}
+
+.example-button-container button {
+    border: none;
+    background-color: transparent;
+}
+
+.week-header-container,
+.day-header-container {
+    display: flex;
+    align-items: center;
+}
+
+.week-header-container div:first-child,
+.day-header-container div:first-child {
+    flex-grow: 1;
+}
+
+.exercises-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem;
+}
+
+.exercise-routine-card {
+    flex-basis: 200px;
+    flex-grow: 0;
 }
