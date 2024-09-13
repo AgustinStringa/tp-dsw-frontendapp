@@ -7,7 +7,7 @@ import {
   signal,
   WritableSignal,
 } from '@angular/core';
-import Client from '../../../core/Classes/client.js';
+import Client from '../../../core/classes/client.js';
 import { NgClass } from '@angular/common';
 import { SimpleChanges } from '@angular/core';
 import ICurrentMembership from '../../../core/interfaces/ICurrentMembership.interface.js';

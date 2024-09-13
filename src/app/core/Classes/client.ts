@@ -1,4 +1,5 @@
 import CurrentMembership from '../interfaces/ICurrentMembership.interface.js';
+
 export default class Client {
   id: string;
   lastName: string;

@@ -30,29 +30,33 @@ import {
   HttpErrorResponse,
 } from '@angular/common/http';
 import { MatDialog } from '@angular/material/dialog';
-import { ClientsMembershipListComponent } from '../clients-membership-list/clients-membership-list.component.js';
-import Client from '../../../core/Classes/client.js';
+import Client from '../../../core/classes/client.js';
 import IExercise from '../../../core/interfaces/IExercise.interface.js';
+import IExerciseRoutine from '../../../core/interfaces/IExerciseRoutine.inteface.js';
+import { ClientsMembershipListComponent } from '../clients-membership-list/clients-membership-list.component.js';
 import { DialogNewExerciseRoutineComponent } from '../dialog-new-exercise-routine/dialog-new-exercise-routine.component.js';
 import { environment } from '../../../../environments/environment.js';
 import { ExerciseRoutineCardComponent } from '../exercise-routine-card/exercise-routine-card.component.js';
-import IExerciseRoutine from '../../../core/interfaces/IExerciseRoutine.inteface.js';
+
 interface Day {
   exercisesRoutine?: IExerciseRoutine[];
   number: number;
   weekNumber: number;
 }
+
 interface Week {
   days: Day[];
   text: string;
   number: number;
 }
+
 export interface DialogData {
   exercises: IExercise[];
   exerciseSelected: IExercise;
   series: number;
   reps: number;
 }
+
 @Component({
   selector: 'app-create-routine-page',
   standalone: true,
@@ -80,11 +84,13 @@ export class CreateRoutinePageComponent implements AfterViewInit {
       [Validators.minLength(1), Validators.required]
     ),
   });
+
   weeks: Week[] = [];
   expandedIndex = 0;
   clientsWithmembership: Client[] = [];
   exercises: Object[] = [];
   today: Date = new Date();
+
   readonly dialog = inject(MatDialog);
   private _snackBar = inject(MatSnackBar);
 
@@ -97,7 +103,7 @@ export class CreateRoutinePageComponent implements AfterViewInit {
     this.startUpDatePicker();
   }
 
-  async getClientsWithMembership() {
+  getClientsWithMembership() {
     try {
       this.http
         .get<any>(environment.clientsWithMembershipUrl)
@@ -121,7 +127,7 @@ export class CreateRoutinePageComponent implements AfterViewInit {
     }
   }
 
-  async getExercises() {
+  getExercises() {
     try {
       this.http.get<any>(environment.exercisesUrl).subscribe((res: any) => {
         this.exercises = res.data;
@@ -251,7 +257,7 @@ export class CreateRoutinePageComponent implements AfterViewInit {
     });
   }
 
-  async onSubmit() {
+  onSubmit() {
     //validaciones variadas
     /**
      * fecha desde mayor o igual a hoy
