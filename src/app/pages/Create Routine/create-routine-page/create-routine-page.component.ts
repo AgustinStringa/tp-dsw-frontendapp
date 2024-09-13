@@ -28,11 +28,12 @@ import {
   HttpClientModule,
   HttpErrorResponse,
 } from '@angular/common/http';
+import { MatDialog } from '@angular/material/dialog';
 import { ClientsMembershipListComponent } from '../clients-membership-list/clients-membership-list.component.js';
 import Client from '../../../core/Classes/client.js';
 import IExercise from '../../../core/interfaces/IExercise.interface.js';
-import { MatDialog } from '@angular/material/dialog';
 import { DialogNewExerciseRoutineComponent } from '../dialog-new-exercise-routine/dialog-new-exercise-routine.component.js';
+import { environment } from '../../../../environments/environment.js';
 interface Day {
   exercisesRoutine?: ExerciseRoutine[];
   number: number;
@@ -85,9 +86,6 @@ export class CreateRoutinePageComponent implements AfterViewInit {
   });
   weeks: Week[] = [];
   expandedIndex = 0;
-  urlClientsWithMembership: string = '';
-  urlCreateRoutine: string = '';
-  urlExercise: string = '';
   clientsWithmembership: Client[] = [];
   exercises: Object[] = [];
   today: Date = new Date();
@@ -95,10 +93,6 @@ export class CreateRoutinePageComponent implements AfterViewInit {
   private _snackBar = inject(MatSnackBar);
 
   constructor(private http: HttpClient) {
-    this.urlClientsWithMembership =
-      'http://localhost:3000/api/clients/membership-active';
-    this.urlExercise = 'http://localhost:3000/api/routines/exercises';
-    this.urlCreateRoutine = 'http://localhost:3000/api/routines';
     this.getClientsWithMembership();
     this.getExercises();
   }
@@ -110,7 +104,7 @@ export class CreateRoutinePageComponent implements AfterViewInit {
   async getClientsWithMembership() {
     try {
       this.http
-        .get<any>(this.urlClientsWithMembership)
+        .get<any>(environment.clientsWithMembershipUrl)
         .subscribe((res: any) => {
           Array.from(res.data).forEach((u: any) => {
             this.clientsWithmembership = [
@@ -133,7 +127,7 @@ export class CreateRoutinePageComponent implements AfterViewInit {
 
   async getExercises() {
     try {
-      this.http.get<any>(this.urlExercise).subscribe((res: any) => {
+      this.http.get<any>(environment.exercisesUrl).subscribe((res: any) => {
         this.exercises = res.data;
       });
     } catch (error: any) {
@@ -286,7 +280,7 @@ export class CreateRoutinePageComponent implements AfterViewInit {
     };
     try {
       this.http
-        .post<any>(this.urlCreateRoutine, newRoutine)
+        .post<any>(environment.createRoutineUrl, newRoutine)
         .pipe(
           catchError((error: HttpErrorResponse) => {
             if (error.status === 400) {
