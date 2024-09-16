@@ -1,0 +1,38 @@
+<h2 mat-dialog-title>Nuevo Ejercicio</h2>
+<form action="" [formGroup]="exerciseRoutineForm">
+  <mat-dialog-content>
+    <mat-form-field>
+      <mat-label>Ejercicio</mat-label>
+      <mat-select formControlName="exercise">
+        @for (ex of data.exercises; track ex) {
+        <mat-option [value]="ex">{{ ex.name }}</mat-option>
+        }
+      </mat-select>
+      @if (exerciseRoutineForm.controls.exercise.hasError('required')) {
+      <mat-error>Por favor elige un ejercicio</mat-error>
+      }
+    </mat-form-field>
+    <br />
+
+    <mat-form-field>
+      <mat-label>Repeticiones:</mat-label>
+      <input formControlName="reps" matInput type="number" min="1" />
+    </mat-form-field>
+
+    <br />
+    <mat-form-field>
+      <mat-label>Series:</mat-label>
+      <input matInput formControlName="series" type="number" min="1" />
+    </mat-form-field>
+  </mat-dialog-content>
+  <mat-dialog-actions>
+    <button mat-button (click)="onNoClick()">Cancelar</button>
+    <button
+      mat-button
+      [disabled]="!exerciseRoutineForm.valid"
+      [mat-dialog-close]="returnValues()"
+    >
+      Ok
+    </button>
+  </mat-dialog-actions>
+</form>

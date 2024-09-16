@@ -1,0 +1,185 @@
+<app-clients-membership-list
+  [clientList]="clientsWithmembership"
+  (clientChange)="setSelectedClient($event)"
+></app-clients-membership-list>
+
+<div class="form-container">
+  <form action="" [formGroup]="routineForm" (ngSubmit)="onSubmit()">
+    <label class="form-label display-6 fw-bold" for="inputDateFrom"
+      >Fecha desde:</label
+    >
+
+    <input
+      matInput
+      type="date"
+      id="inputDateFrom"
+      class="form-control"
+      formControlName="dateFrom"
+      required=""
+      (input)="handleInputDateFrom()"
+    />
+    @if (routineForm.value.dateFrom != '' &&
+    routineForm.controls.dateFrom.invalid) {
+    <div class="alert alert-error">
+      {{ "Selecciona una fecha" }}
+    </div>
+    }
+
+    <p class="display-6 my-5 fw-bold" for="">
+      Fecha Hasta:
+      {{ getDateToWithFormat() }}
+    </p>
+    @if (weeks.length==0) {
+    <div class="alert alert-warning">Agrega una semana</div>
+    } @if (getDateToWithFormat() == '') {
+    <div class="alert alert-warning">Selecciona una fecha desde</div>
+    }
+
+    <p class="display-6 my-5 fw-bold">Semanas:</p>
+    <cdk-accordion class="example-accordion week-accordion">
+      @for (item of weeks; track item; let index = $index) {
+      <cdk-accordion-item
+        #accordionItem="cdkAccordionItem"
+        class="example-accordion-item"
+        role="button"
+        tabindex="0"
+        [attr.id]="'accordion-header-' + index"
+        [attr.aria-expanded]="accordionItem.expanded"
+        [attr.aria-controls]="'accordion-body-' + index"
+      >
+        <div class="week-header-container">
+          <div
+            class="example-accordion-item-header flex-grow"
+            (click)="accordionItem.toggle()"
+          >
+            {{ item.text }}
+            <span class="example-accordion-item-description">
+              Click para {{ accordionItem.expanded ? "cerrar" : "abrir" }}
+            </span>
+          </div>
+          @if (item.number == weeks.length) {
+          <div class="example-button-container">
+            <button mat-fab aria-label="Example icon button with a delete icon">
+              <mat-icon (click)="removeWeek(item)">delete</mat-icon>
+            </button>
+          </div>
+
+          }
+        </div>
+        <!-- week-header-container -->
+        <div
+          class="example-accordion-item-body"
+          role="region"
+          [style.display]="accordionItem.expanded ? '' : 'none'"
+          [attr.id]="'accordion-body-' + index"
+          [attr.aria-labelledby]="'accordion-header-' + index"
+        >
+          <!-- ARRAY DE DIAS -->
+          @for (day of item.days; track day; let ind = $index) {
+          <cdk-accordion class="example-accordion accordion-day">
+            <cdk-accordion-item
+              #accordionItem="cdkAccordionItem"
+              class="example-accordion-item"
+              role="button"
+              tabindex="0"
+              [attr.id]="'accordion-header-' + ind"
+              [attr.aria-expanded]="accordionItem.expanded"
+              [attr.aria-controls]="'accordion-body-' + ind"
+            >
+              <div class="day-header-container">
+                <div
+                  class="example-accordion-item-header"
+                  (click)="accordionItem.toggle()"
+                >
+                  {{ "Día " + day.number }}
+                  <span class="example-accordion-item-description">
+                    Click para
+                    {{ accordionItem.expanded ? "cerrar" : "abrir" }}
+                  </span>
+                </div>
+                @if (day.number == item.days.length) {
+                <div class="example-button-container">
+                  <button
+                    mat-fab
+                    aria-label="Example icon button with a delete icon"
+                  >
+                    <mat-icon (click)="removeDay(day)">delete</mat-icon>
+                  </button>
+                </div>
+                }
+              </div>
+              <!-- day-header-container -->
+              <div>
+                <div
+                  class="example-accordion-item-body"
+                  role="region"
+                  [style.display]="accordionItem.expanded ? '' : 'none'"
+                  [attr.id]="'accordion-body-' + ind"
+                  [attr.aria-labelledby]="'accordion-header-' + ind"
+                >
+                  <div class="exercises-container">
+                    @for (ex of day.exercisesRoutine; track ex; let ind =
+                    $index) {
+                    <!-- EJERCICIO START -->
+
+                    <app-exercise-routine-card
+                      class="exercise-routine-card"
+                      [exerciseRoutine]="ex"
+                    ></app-exercise-routine-card>
+
+                    <!-- EJERCICIO END -->
+                    }@empty {
+                    <p>Agrega un ejercicio para comenzar!</p>
+                    }
+                  </div>
+                  <button
+                    type="button"
+                    (click)="addExercise(day)"
+                    class="btn btn-primary my-5"
+                    data-mdb-ripple-init
+                  >
+                    Agregar Ejercicio
+                  </button>
+                </div>
+              </div>
+            </cdk-accordion-item>
+          </cdk-accordion>
+          }
+
+          <div>
+            <button
+              type="button"
+              (click)="addDay(item)"
+              class="btn btn-primary my-5"
+              data-mdb-ripple-init
+              [ngClass]="item.days.length <= 6 ? '' : 'disabled'"
+            >
+              Agregar Día
+            </button>
+          </div>
+        </div>
+      </cdk-accordion-item>
+      }
+    </cdk-accordion>
+
+    <div class="d-grid gap-2 col-6 mx-auto my-3">
+      <button
+        class="btn btn-primary"
+        type="button"
+        mdbRipple
+        (click)="addweek()"
+      >
+        Agregar Semana
+      </button>
+    </div>
+    <div class="text-end my-5">
+      <button
+        type="submit"
+        [disabled]="!routineForm.valid"
+        class="btn btn-success btn-lg"
+      >
+        Guardar Rutina
+      </button>
+    </div>
+  </form>
+</div>
