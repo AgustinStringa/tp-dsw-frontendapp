@@ -3,6 +3,7 @@ import { ClientsListComponent } from './clients-list/clients-list.component.js';
 import { TrainersListComponent } from './trainers-list/trainers-list.component.js';
 import { LoginComponent } from './login/login.component.js';
 import { MembershipTypesListComponent } from './membership-types-list/membership-types-list.component.js';
+import { CurrentMembershipsListComponent } from './current-memberships-list/current-memberships-list.component.js';
 
 export const routes: Routes = [
   { path: '', component: LoginComponent },
@@ -12,4 +13,5 @@ export const routes: Routes = [
     path: 'membershiptypes',
     component: MembershipTypesListComponent,
   },
+  { path: 'currentmemberships', component: CurrentMembershipsListComponent },
 ];
