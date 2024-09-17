@@ -19,16 +19,56 @@
       <a class="navbar-brand" href="#">App Gimnasio</a>
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="#">Home</a>
+          <a
+            class="nav-link active"
+            [ngClass]="{ active: isActive('/') }"
+            aria-current="page"
+            routerLink="/"
+            >Home</a
+          >
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">Clientes</a>
+          <a
+            class="nav-link"
+            [ngClass]="{ active: isActive('/clients') }"
+            routerLink="clients"
+            >Clientes</a
+          >
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">Entrenadores</a>
+          <a
+            class="nav-link"
+            [ngClass]="{ active: isActive('/trainers') }"
+            routerLink="trainers"
+            >Entrenadores</a
+          >
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">Rutinas</a>
+          <a
+            class="nav-link"
+            [ngClass]="{ active: isActive('/membershiptypes') }"
+            routerLink="membershiptypes"
+            >Tipos de Membresías</a
+          >
+        </li>
+        <li class="nav-item">
+          <a
+            class="nav-link"
+            [ngClass]="{ active: isActive('/currentmemberships') }"
+            routerLink="currentmemberships"
+            >Membresías</a
+          >
+        </li>
+        <li class="nav-item">
+          <a
+            class="nav-link"
+            [ngClass]="{ active: isActive('/registration') }"
+            routerLink="registration"
+            >Registrarse a una clase</a
+          >
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="">Rutinas</a>
         </li>
       </ul>
     </div>
