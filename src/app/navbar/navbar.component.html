@@ -1,60 +1,36 @@
-<!-- Navbar -->
-<nav class="navbar navbar-expand-lg navbar-light bg-light gradient-custom">
-  <!-- Container wrapper -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
   <div class="container-fluid">
-    <!-- Navbar brand -->
-    <a class="navbar-brand" href="#">Brand</a>
-
-    <!-- Toggle button -->
     <button
       class="navbar-toggler"
       type="button"
-      (click)="basicNavbar.toggle()"
+      (click)="togglerFirstExample.toggle()"
+      aria-controls="navbarTogglerDemo01"
       aria-expanded="false"
       aria-label="Toggle navigation"
     >
       <i class="fas fa-bars"></i>
     </button>
-
-    <!-- Collapsible wrapper -->
     <div
-      class="collapse navbar-collapse justify-content-lg-end"
-      id="navbarSupportedContent"
+      class="collapse navbar-collapse"
+      id="navbarTogglerDemo01"
       mdbCollapse
-      #basicNavbar="mdbCollapse"
+      #togglerFirstExample="mdbCollapse"
     >
-      <ul class="navbar-nav mb-2 mb-lg-0 me-lg-2">
+      <a class="navbar-brand" href="#">App Gimnasio</a>
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <li class="nav-item">
           <a class="nav-link active" aria-current="page" href="#">Home</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">Link</a>
+          <a class="nav-link" href="#">Clientes</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">Mi Pefil</a>
+          <a class="nav-link" href="#">Entrenadores</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">Membresía</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Rutina</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Clases</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Metas</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">
-            <i class="fas fa-user-alt"></i>
-          </a>
+          <a class="nav-link" href="#">Rutinas</a>
         </li>
       </ul>
-      <!-- Left links -->
     </div>
-    <!-- Collapsible wrapper -->
   </div>
-  <!-- Container wrapper -->
 </nav>
-<!-- Navbar -->
