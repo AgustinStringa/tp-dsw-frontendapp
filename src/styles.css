@@ -12,3 +12,27 @@ body {
     margin: 0;
     font-family: Roboto, "Helvetica Neue", sans-serif;
 }
+
+/*TABLAS PARA CRUDS*/
+table {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    grid-row: auto;
+}
+
+thead {
+    background-color: rgba(181, 255, 160, 0.689);
+}
+
+td,
+th {
+    border: 1px solid #ddd;
+    padding: 10px;
+}
+
+.exercises-list-container button,
+.memberships-list-container button {
+    margin-top: 20px;
+    border-radius: 5px;
+    background-color: lightgreen;
+    border-color: green;
+}

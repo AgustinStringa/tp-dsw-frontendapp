@@ -1,26 +1,11 @@
-.membership-types-list-container{
+.membership-types-list-container {
   width: 70%;
   margin: 0 auto 20px;
 }
 
-.view-memberships-button{
+.view-memberships-button {
   background-color: lightgreen;
   width: auto;
   border-radius: 10px;
   border: none;
-}
-
-table {
-  border-color: midnightblue;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  grid-row: auto;
-}
-
-thead {
-  background-color: rgba(181, 255, 160, 0.689);
-}
-
-td, th {
-  border: 1px solid #ddd;
-  padding: 10px;
 }
