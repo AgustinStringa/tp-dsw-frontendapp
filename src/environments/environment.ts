@@ -12,4 +12,7 @@ export const environment = {
   clientsWithMembershipUrl:
     'http://localhost:3000/api/clients/membership-active',
   exercisesUrl: 'http://localhost:3000/api/routines/exercises',
+  currentMembershipsUrl:
+    'http://localhost:3000/api/memberships/currentmemberships',
+  membershipTypesUrl: 'http://localhost:3000/api/memberships/membershiptypes',
 };

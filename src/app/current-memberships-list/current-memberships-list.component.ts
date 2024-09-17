@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { CurrentMembership } from '../core/interfaces/current-membership.js';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { NgFor, NgIf, CommonModule } from '@angular/common';
-
+import { environment } from '../../environments/environment.js';
 @Component({
   selector: 'app-current-memberships-list',
   standalone: true,
@@ -11,17 +11,15 @@ import { NgFor, NgIf, CommonModule } from '@angular/common';
   styleUrl: './current-memberships-list.component.css',
 })
 export class CurrentMembershipsListComponent {
-  url: string = '';
   memberships: CurrentMembership[] = [];
 
   constructor(private http: HttpClient) {
-    this.url = 'http://localhost:3000/api/memberships/currentmemberships';
     this.getMemberships();
   }
 
-  async getMemberships() {
+  getMemberships() {
     try {
-      this.http.get<any>(this.url).subscribe((res) => {
+      this.http.get<any>(environment.currentMembershipsUrl).subscribe((res) => {
         this.memberships = res.data;
       });
     } catch (error: any) {

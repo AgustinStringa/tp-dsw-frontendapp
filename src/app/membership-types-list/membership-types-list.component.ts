@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { MembershipType } from '../core/interfaces/membership-type.js';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { NgFor, NgIf } from '@angular/common';
-
+import { environment } from '../../environments/environment.js';
 @Component({
   selector: 'app-membership-types-list',
   standalone: true,
@@ -11,17 +11,15 @@ import { NgFor, NgIf } from '@angular/common';
   styleUrl: './membership-types-list.component.css',
 })
 export class MembershipTypesListComponent {
-  url: string = '';
   membershipTypes: MembershipType[] = [];
 
   constructor(private http: HttpClient) {
-    this.url = 'http://localhost:3000/api/memberships/membershiptypes';
     this.getMembershipTypes();
   }
 
-  async getMembershipTypes() {
+  getMembershipTypes() {
     try {
-      this.http.get<any>(this.url).subscribe((res) => {
+      this.http.get<any>(environment.membershipTypesUrl).subscribe((res) => {
         this.membershipTypes = res.data;
       });
     } catch (error: any) {
