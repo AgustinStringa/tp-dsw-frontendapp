@@ -1,0 +1,76 @@
+<div class="class-type-list-container">
+  @if (this.classtypes.length > 0) {
+  <table class="class-type-table">
+    <thead>
+      <tr>
+        <th>ClassType</th>
+        <th>Description</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (c of classtypes; track c.name) {
+      <tr [class.selected]="selectedClassType === c">
+        <td>{{ c.name }}</td>
+        <td>{{ c.description }}</td>
+        <td>
+          <button type="button" [class.selected]="selectedClassType === c" (click)="selectClassType(c)">
+            Seleccionar
+          </button>
+        </td>
+      </tr>
+      }
+    </tbody>
+  </table>
+  } @else {
+  <p>No se pudieron cargar los Tipos de Clase</p>
+  }
+</div>
+
+<div class="selected-class-type-info">
+  @if (this.selectedClassType) {
+  <div class="class-type-details">
+    <h2>Selected Class Type Information:</h2>
+    <p><strong>Name:</strong> {{ selectedClassType.name }}</p>
+    <p><strong>Description:</strong> {{ selectedClassType.description }}</p>
+  </div>
+
+  @if (selectedClassType.classes && selectedClassType.classes.length > 0) {
+  <div class="classes-container">
+    <h3>Classes:</h3>
+    <table class="classes-table">
+      <thead>
+        <tr>
+          <th>Day</th>
+          <th>Start Time</th>
+          <th>End Time</th>
+          <th>Capacity</th>
+          <th>Location</th>
+          <th>Trainer</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (i of selectedClassType.classes; track i.id) {
+        <tr>
+          <td>{{ i.day }}</td>
+          <td>{{ i.startTime }}</td>
+          <td>{{ i.endTime }}</td>
+          <td>{{ i.maxCapacity }}</td>
+          <td>{{ i.location }}</td>
+          <td>{{ i.trainer.firstName }} {{ i.trainer.lastName }}</td>
+          <td>
+            <button type="button" [class.selected]="selectedClass === i" (click)="selectClass(i)">
+              Seleccionar Clase
+            </button>
+          </td>
+        </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+  } @else {
+  <p>No classes available.</p>
+  }
+  }
+</div>
