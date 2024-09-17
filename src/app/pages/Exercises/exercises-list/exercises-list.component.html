@@ -1,0 +1,38 @@
+<div class="w-75 mx-auto">
+  <h2 class="display-4">Ejercicios</h2>
+  <div class="exercises-list-container">
+    @if (exercises && exercises.length > 0) {
+    <table align="center">
+      <thead>
+        <tr>
+          <th>Nombre</th>
+          <th>Descripción</th>
+          <th>Video</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        @for (e of exercises; track e) {
+        <tr>
+          <td>{{ e.name }}</td>
+          <td>{{ e.description }}</td>
+          <td><a href="">Enlace al video</a> {{ e.urlVideo }}</td>
+          <td>acciones</td>
+        </tr>
+        }
+      </tbody>
+    </table>
+    } @else if (exercises && exercises.length == 0){
+    <div class="alert alert-warning fs-6" role="alert">
+      No hay ejercicios cargados. Crea uno para comenzar.
+    </div>
+    } @else {
+    <div class="alert alert-danger fs-6" role="alert">
+      No se pudieron cargar los ejercicios.
+    </div>
+    }
+
+    <button>Nuevo ejercicio</button>
+  </div>
+</div>
