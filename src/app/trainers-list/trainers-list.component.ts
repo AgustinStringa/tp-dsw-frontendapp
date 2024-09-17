@@ -18,7 +18,7 @@ export class TrainersListComponent {
     this.url = 'http://localhost:3000/api/trainers';
   }
 
-  async getTrainers() {
+  getTrainers() {
     try {
       this.http.get<any>(this.url).subscribe((res) => {
         this.trainers = res.data;

@@ -24,7 +24,7 @@ export class ClientsListComponent {
     this.getClients();
   }
 
-  async getClients() {
+  getClients() {
     try {
       this.http.get<any>(this.url).subscribe((res) => {
         this.clients = res.data;
