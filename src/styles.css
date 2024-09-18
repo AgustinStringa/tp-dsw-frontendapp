@@ -14,17 +14,19 @@ body {
 }
 
 /*TABLAS PARA CRUDS*/
-table {
+.exercises-list-container table,
+.memberships-list-container table {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     grid-row: auto;
 }
 
-thead {
+.exercises-list-container thead,
+.memberships-list-container thead {
     background-color: rgba(181, 255, 160, 0.689);
 }
 
-td,
-th {
+.exercises-list-container td th,
+.memberships-list-container td th {
     border: 1px solid #ddd;
     padding: 10px;
 }
@@ -35,4 +37,18 @@ th {
     border-radius: 5px;
     background-color: lightgreen;
     border-color: green;
+}
+
+.w-85 {
+    width: 85%;
+}
+
+.exercises-list-container table td button {
+    border: none;
+    padding: .5rem;
+    transition: all .3s ease-in-out;
+}
+
+.exercises-list-container table td button:hover {
+    background-color: green;
 }
