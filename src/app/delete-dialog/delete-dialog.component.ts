@@ -1,11 +1,28 @@
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { Component, Inject } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-
+import {
+  MAT_DIALOG_DATA,
+  MatDialogRef,
+  MatDialogActions,
+  MatDialogClose,
+  MatDialogContent,
+  MatDialogTitle,
+} from '@angular/material/dialog';
+import { MatButtonModule } from '@angular/material/button';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { environment } from '../../environments/environment.js';
 @Component({
   selector: 'app-delete-dialog',
   standalone: true,
-  imports: [HttpClientModule],
+  imports: [
+    HttpClientModule,
+    MatDialogActions,
+    MatDialogContent,
+    MatFormFieldModule,
+    MatDialogTitle,
+    MatDialogClose,
+    MatButtonModule,
+  ],
   templateUrl: './delete-dialog.component.html',
   styleUrl: './delete-dialog.component.css',
 })
@@ -25,11 +42,13 @@ export class DeleteDialogComponent {
   }
 
   onSubmit(): void {
-    let url = '//localhost:3000/api';
+    let url = '';
     if (this.entity === 'client') {
-      url += '/clients';
+      url += environment.deleteClientUrl;
     } else if (this.entity === 'trainers') {
-      url += '/trainers';
+      url += environment.deleteTrainerUrl;
+    } else if (this.entity === 'exercises') {
+      url += environment.deleteExerciseUrl;
     }
     url += '/' + this.id;
 
