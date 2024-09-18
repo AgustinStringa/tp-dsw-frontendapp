@@ -1,4 +1,4 @@
-<div class="w-75 mx-auto">
+<div class="mx-auto w-85">
   <h2 class="display-4">Ejercicios</h2>
   <div class="exercises-list-container">
     @if (exercises && exercises.length > 0) {
@@ -18,7 +18,20 @@
           <td>{{ e.name }}</td>
           <td>{{ e.description }}</td>
           <td><a href="">Enlace al video</a> {{ e.urlVideo }}</td>
-          <td>acciones</td>
+          <td>
+            <button
+              (click)="removeExercise(e.id)"
+              aria-label="Example icon button with a delete icon"
+            >
+              <mat-icon>delete</mat-icon>
+            </button>
+            <button
+              (click)="editExercise(e)"
+              aria-label="Example icon button with a delete icon"
+            >
+              <mat-icon>edit</mat-icon>
+            </button>
+          </td>
         </tr>
         }
       </tbody>
