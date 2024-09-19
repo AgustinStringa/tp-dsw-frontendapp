@@ -31,10 +31,10 @@
         <td>{{ exerciseRoutine.exercise?.name || 'No Disponible' }}</td>
         <td>{{ exerciseRoutine.series || 'N/A' }}</td>
         <td>{{ exerciseRoutine.repetitions || 'N/A' }}</td>
-        <td>{{ exerciseRoutine.weight || 'No asignado' }}</td>
+        <td>{{ exerciseRoutine.weight || 'No registrado' }}</td>
         @if (!exerciseRoutine.weight) {
         <td>
-          <button (click)="openModal(exerciseRoutine)">Cargar Peso</button>
+          <button (click)="openModal(exerciseRoutine)">Registrar Peso</button>
         </td>
         } @else {
         <td>

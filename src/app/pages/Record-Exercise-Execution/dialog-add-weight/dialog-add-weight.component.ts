@@ -25,7 +25,11 @@ export class DialogAddWeightComponent {
   }
 
   onSave(): void {
-    if (this.selectedWeight !== null && this.exerciseRoutine) {
+    if (
+      this.selectedWeight !== null &&
+      this.selectedWeight >= 0 &&
+      this.exerciseRoutine
+    ) {
       if (this.exerciseRoutine.id) {
         this.http
           .patch(
@@ -36,24 +40,26 @@ export class DialogAddWeightComponent {
           )
           .subscribe(
             (response) => {
-              console.log('Weight updated successfully:', response);
+              console.log('Peso actualizado exitosamente:', response);
               this.saveWeight.emit(this.selectedWeight as number);
               this.onClose();
             },
             (error) => {
-              console.error('Error updating weight:', error);
-              alert(
-                'Failed to update weight. Please check the console for details.'
-              );
+              console.error('No se pudo actualizar el peso.', error);
+              alert('No se pudo actualizar el peso.');
             }
           );
       } else {
-        console.error('Exercise ID is missing');
-        alert('Exercise ID is missing.');
+        console.error('Falta el ID del ejercicio');
+        alert('Falta el ID del ejercicio');
       }
     } else {
-      console.error('Selected weight or exercise routine is missing');
-      alert('Selected weight or exercise routine is missing.');
+      console.error(
+        'El peso seleccionado no es válido o falta la rutina de ejercicios'
+      );
+      alert(
+        'Ingrese un peso válido (no debe ser negativo) y asegúrese de que la rutina de ejercicios esté seleccionada.'
+      );
     }
   }
 }
