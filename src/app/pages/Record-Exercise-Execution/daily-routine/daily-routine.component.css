@@ -1,4 +1,4 @@
-/* Estilos para el contenedor de la rutina diaria */
+
 .daily-routine-container {
   padding: 20px;
   background-color: #f5f5f5;
@@ -9,7 +9,7 @@
   font-family: Arial, sans-serif;
 }
 
-/* Estilos para la información de la rutina */
+
 .routine-info {
   margin-bottom: 20px;
 }
@@ -29,7 +29,7 @@
   color: #333;
 }
 
-/* Estilos para la tabla de ejercicios */
+
 .exercises-table {
   width: 100%;
   border-collapse: collapse;
@@ -68,13 +68,13 @@
   background-color: #0056b3;
 }
 
-/* Estilos condicionales para botones */
+
 .exercises-table td button[disabled] {
   background-color: #ccc;
   cursor: not-allowed;
 }
 
-/* Estilos generales para botones */
+
 button {
   padding: 10px 20px;
   font-size: 1rem;

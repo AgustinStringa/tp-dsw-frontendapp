@@ -27,7 +27,7 @@ export class DailyRoutineComponent {
 
   userId: string = '66e9b19b100c4d9c3024fc97'; // ID hardcodeado del usuario
 
-  private urlRoutine: string = `${environment.routinesUrl}`; // Asegúrate que la URL es correcta
+  private urlRoutine: string = `${environment.routinesUrl}`;
   private daysOfWeek: string[] = [
     'domingo',
     'lunes',
@@ -58,8 +58,8 @@ export class DailyRoutineComponent {
 
   loadRoutine(): void {
     const today = new Date();
-    this.currentDayName = this.getDayName(today.getDay()); // Actualiza el nombre del día
-    this.currentWeekAndMonth = this.getCurrentWeekAndMonth(today); // Actualiza la semana actual con el mes
+    this.currentDayName = this.getDayName(today.getDay());
+    this.currentWeekAndMonth = this.getCurrentWeekAndMonth(today);
 
     this.http
       .get<{ message: string; data: IRoutine }>(
@@ -67,8 +67,8 @@ export class DailyRoutineComponent {
       )
       .subscribe(
         (response) => {
-          console.log('Routine response:', response); // Agrega esta línea para ver la respuesta en la consola
-          this.routine = response.data; // Asume que la respuesta es directamente de tipo IRoutine
+          console.log('Routine response:', response);
+          this.routine = response.data;
           if (this.routine) {
             this.startDate =
               formatDate(this.routine.start, 'yyyy-MM-dd', 'en-US') || '';
@@ -122,9 +122,8 @@ export class DailyRoutineComponent {
 
   saveWeight(weight: number): void {
     if (this.selectedExerciseRoutine) {
-      // Aquí deberías actualizar el peso en tu lógica, por ejemplo:
       this.selectedExerciseRoutine.weight = weight;
-      // Cierra el modal después de guardar
+
       this.closeModal();
     }
   }
