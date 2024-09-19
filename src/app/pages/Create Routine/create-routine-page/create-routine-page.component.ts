@@ -54,7 +54,7 @@ export interface DialogData {
   exercises: IExercise[];
   exerciseSelected: IExercise;
   series: number;
-  reps: number;
+  repetitions: number;
 }
 
 @Component({
@@ -201,7 +201,7 @@ export class CreateRoutinePageComponent implements AfterViewInit {
         exercises: this.exercises,
         exerciseSelected: null,
         series: 1,
-        reps: 1,
+        repetitions: 1,
       },
     });
 
@@ -210,7 +210,7 @@ export class CreateRoutinePageComponent implements AfterViewInit {
         const newIExerciseRoutine = {
           exercise: result.exerciseSelected,
           series: result.series,
-          reps: result.reps,
+          repetitions: result.repetitions,
           day: day.number,
           week: day.weekNumber,
         };
@@ -275,7 +275,7 @@ export class CreateRoutinePageComponent implements AfterViewInit {
         week: ex.week,
         day: ex.day,
         series: ex.series,
-        repetitions: ex.reps,
+        repetitions: ex.repetitions,
         weight: 0,
         exercise: ex.exercise?.id,
       })),

@@ -4,6 +4,7 @@ import { TrainersListComponent } from './trainers-list/trainers-list.component.j
 import { LoginComponent } from './login/login.component.js';
 import { ClassListComponent } from './pages/Class-Registration/class-list/class-list.component.js';
 import { CreateRoutinePageComponent } from './pages/Create Routine/create-routine-page/create-routine-page.component.js';
+import { DailyRoutineComponent } from './pages/Record-Exercise-Execution/daily-routine/daily-routine.component.js';
 
 export const routes: Routes = [
   { path: '', component: LoginComponent },
@@ -11,4 +12,5 @@ export const routes: Routes = [
   { path: 'trainers', component: TrainersListComponent },
   { path: 'registration', component: ClassListComponent },
   { path: 'create-routine', component: CreateRoutinePageComponent },
+  { path: 'record-exercise-execution', component: DailyRoutineComponent },
 ];
