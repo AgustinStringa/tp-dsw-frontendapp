@@ -76,6 +76,7 @@ export class DailyRoutineComponent {
               formatDate(this.routine.end, 'yyyy-MM-dd', 'en-US') || '';
             this.exercisesRoutine = this.routine.exercisesRoutine.map(
               (exerciseRoutine) => ({
+                id: exerciseRoutine.id,
                 exercise: exerciseRoutine.exercise,
                 series: exerciseRoutine.series || 0,
                 repetitions: exerciseRoutine.repetitions || 0,
