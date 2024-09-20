@@ -107,7 +107,7 @@ export class ExerciseDialogComponent {
         });
     } else if (this.data.action == 'put') {
       this.http
-        .put<any>(environment.exercisesUrl + this.data.exercise.id, {
+        .put<any>(environment.exercisesUrl + '/' + this.data.exercise.id, {
           name,
           description,
           urlVideo,

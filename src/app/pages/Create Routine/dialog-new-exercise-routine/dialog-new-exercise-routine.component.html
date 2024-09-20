@@ -31,7 +31,7 @@
       type="submit"
       mat-button
       [disabled]="!exerciseRoutineForm.valid"
-      (click)="returnValues()"
+      [mat-dialog-close]="returnValues()"
     >
       Ok
     </button>

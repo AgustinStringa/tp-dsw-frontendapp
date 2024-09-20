@@ -38,6 +38,7 @@ import { ExerciseRoutineCardComponent } from '../exercise-routine-card/exercise-
 import { IExerciseRoutine } from '../../../core/interfaces/exercise-routine.inteface.js';
 import { IExercise } from '../../../core/interfaces/exercise.interface.js';
 import Client from '../../../core/classes/client.js';
+import { Router } from '@angular/router';
 interface Day {
   exercisesRoutine?: IExerciseRoutine[];
   number: number;
@@ -94,7 +95,7 @@ export class CreateRoutinePageComponent implements AfterViewInit {
   readonly dialog = inject(MatDialog);
   private _snackBar = inject(MatSnackBar);
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private router: Router) {
     this.getClientsWithMembership();
     this.getExercises();
   }
@@ -267,7 +268,7 @@ export class CreateRoutinePageComponent implements AfterViewInit {
     //post
     //mensaje de exito XOR error
     const newRoutine = {
-      trainer: '66cf6459f3d2bcf6d338b3e6',
+      trainer: '66e9aa2e294b5091cfb08eb0',
       client: this.routineForm.value.client?.id,
       start: parseISO(this.routineForm.value.dateFrom || ''),
       end: this.routineForm.value.dateTo,
@@ -282,14 +283,26 @@ export class CreateRoutinePageComponent implements AfterViewInit {
     };
     try {
       this.http
-        .post<any>(environment.createRoutineUrl, newRoutine)
+        .post<any>(environment.routinesUrl, newRoutine)
         .pipe(
           catchError((error: HttpErrorResponse) => {
+            console.log(error);
             if (error.status === 400) {
-              this._snackBar.open('Error al crear la rutina', 'cerrar', {
-                duration: 3000,
-                panelClass: ['snackbar_error'],
-              });
+              if (error.error.message == 'There is overlap between routines') {
+                this._snackBar.open(
+                  'Hay solapamiento entre fechas de rutinas',
+                  'cerrar',
+                  {
+                    duration: 3000,
+                    panelClass: ['snackbar_error'],
+                  }
+                );
+              } else {
+                this._snackBar.open('Error al crear la rutina', 'cerrar', {
+                  duration: 3000,
+                  panelClass: ['snackbar_error'],
+                });
+              }
             }
             return throwError(
               () => new Error(error.message || 'Error desconocido')
@@ -301,6 +314,7 @@ export class CreateRoutinePageComponent implements AfterViewInit {
             duration: 3000,
             panelClass: ['snackbar_success'],
           });
+          this.router.navigate(['/create-routine']); // NO FUNCIONA
         });
     } catch (error: any) {}
   }
