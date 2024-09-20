@@ -1,7 +1,8 @@
 import { Component, Input } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
-import IExerciseRoutine from '../../../core/interfaces/IExerciseRoutine.inteface.js';
+import { IExerciseRoutine } from '../../../core/interfaces/exercise-routine.inteface';
+
 @Component({
   selector: 'app-exercise-routine-card',
   standalone: true,
