@@ -1,5 +1,6 @@
-import IExercise from './IExercise.interface.js';
-export default interface IExerciseRoutine {
+import { IExercise } from './exercise.interface';
+
+export interface IExerciseRoutine {
   id?: string;
   exercise: IExercise | null;
   series: number | null;

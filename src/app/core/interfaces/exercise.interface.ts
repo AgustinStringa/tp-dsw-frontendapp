@@ -1,4 +1,4 @@
-export default interface IExercise {
+export interface IExercise {
   id: string;
   name: string;
   description: string;

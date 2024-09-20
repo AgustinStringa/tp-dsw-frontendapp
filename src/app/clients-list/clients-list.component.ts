@@ -1,4 +1,3 @@
-import User from '../core/interfaces/user.interface';
 import { Component } from '@angular/core';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { NgFor, NgIf } from '@angular/common';
@@ -7,6 +6,7 @@ import { ClientDialogComponent } from '../client-dialog/client-dialog.component'
 import { DeleteDialogComponent } from '../delete-dialog/delete-dialog.component';
 import { ComponentType } from '@angular/cdk/portal';
 import { environment } from '../../environments/environment';
+import { IUser } from '../core/interfaces/user.interface';
 
 @Component({
   selector: 'app-clients-list',
@@ -17,7 +17,7 @@ import { environment } from '../../environments/environment';
 })
 export class ClientsListComponent {
   url: string = '';
-  clients: User[] = [];
+  clients: IUser[] = [];
 
   constructor(private http: HttpClient, private dialog: MatDialog) {
     this.url = environment.clientsUrl;

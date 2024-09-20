@@ -1,4 +1,4 @@
-import CurrentMembership from '../interfaces/ICurrentMembership.interface.js';
+import { IMembership } from '../interfaces/membership.interface';
 
 export default class Client {
   id: string;
@@ -6,7 +6,7 @@ export default class Client {
   firstName: string;
   dni: string;
   email: string;
-  currentMembership: CurrentMembership;
+  currentMembership: IMembership;
 
   constructor(
     id: string,
@@ -14,7 +14,7 @@ export default class Client {
     firstName: string,
     dni: string,
     email: string,
-    currentMembership: CurrentMembership
+    currentMembership: IMembership
   ) {
     this.id = id;
     this.lastName = lastName;

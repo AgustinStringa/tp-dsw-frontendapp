@@ -1,7 +1,7 @@
-import User from '../core/interfaces/user.interface';
 import { NgFor, NgIf } from '@angular/common';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { Component } from '@angular/core';
+import { IUser } from '../core/interfaces/user.interface';
 
 @Component({
   selector: 'app-trainers-list',
@@ -12,7 +12,7 @@ import { Component } from '@angular/core';
 })
 export class TrainersListComponent {
   url: string = '';
-  trainers: User[] = [];
+  trainers: IUser[] = [];
 
   constructor(private http: HttpClient) {
     this.url = 'http://localhost:3000/api/trainers';

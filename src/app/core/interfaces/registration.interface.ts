@@ -1,7 +1,7 @@
-import { Class } from './class.interface.js';
-import User from './user.interface.js';
+import { IClass } from './class.interface';
 
 export interface Registration {
-  class: string;
+  class: IClass;
   client: string;
+  //client: IUser;
 }
