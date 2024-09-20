@@ -6,6 +6,13 @@ import { ComponentType } from '@angular/cdk/portal';
 import IExercise from '../../../core/interfaces/IExercise.interface.js';
 import { DeleteDialogComponent } from '../../../delete-dialog/delete-dialog.component.js';
 import { environment } from '../../../../environments/environment.js';
+import { ExerciseDialogComponent } from '../exercise-dialog/exercise-dialog.component.js';
+export interface DialogExerciseData {
+  exercise: IExercise;
+  action: string;
+  title: string;
+}
+
 @Component({
   selector: 'app-exercises-list',
   standalone: true,
@@ -38,14 +45,25 @@ export class ExercisesListComponent {
   }
 
   editExercise(e: IExercise): void {
-    // this.openDialog()
+    this.openDialog(ExerciseDialogComponent, {
+      exercise: e,
+      title: 'Editar ejercicio',
+      action: 'put',
+    });
   }
 
-  removeExercise(id: string): void {
+  addExercise(): void {
+    this.openDialog(ExerciseDialogComponent, {
+      title: 'Crear ejercicio',
+      action: 'post',
+    });
+  }
+
+  removeExercise(id: string | undefined): void {
     this.openDialog(DeleteDialogComponent, {
       id: id,
-      entity: 'exercises',
       title: 'Eliminar ejercicio',
+      url: environment.exercisesUrl,
     });
   }
 }

@@ -1,0 +1,62 @@
+<div class="exercise-dialog-container">
+  <h2 mat-dialog-title>Nuevo Ejercicio</h2>
+  <form action="" [formGroup]="exerciseForm">
+    <mat-dialog-content>
+      <mat-form-field>
+        <mat-label>Ejercicio</mat-label>
+        <input
+          title="ejercicio"
+          placeholder="ej: dominadas"
+          formControlName="name"
+          matInput
+          type="text"
+        />
+      </mat-form-field>
+
+      <br />
+
+      <mat-form-field>
+        <mat-label>Descripción:</mat-label>
+        <textarea
+          title="exercise description"
+          matInput
+          cdkTextareaAutosize
+          #autosize="cdkTextareaAutosize"
+          formControlName="description"
+          cdkAutosizeMinRows="1"
+          cdkAutosizeMaxRows="5"
+        ></textarea>
+        <!-- <input
+          title="descripcion"
+          placeholder="ej: realizada con barra"
+          formControlName="description"
+          matInput
+          type="text"
+        /> -->
+      </mat-form-field>
+      <br />
+
+      <mat-form-field>
+        <mat-label>Url del video:</mat-label>
+        <input
+          title="url"
+          placeholder="ej: http://youtube.com"
+          formControlName="urlVideo"
+          matInput
+          type="text"
+        />
+      </mat-form-field>
+    </mat-dialog-content>
+    <mat-dialog-actions>
+      <button type="submit" mat-button (click)="onNoClick()">Cancelar</button>
+      <button
+        type="submit"
+        mat-button
+        [disabled]="!exerciseForm.valid"
+        (click)="onSubmit()"
+      >
+        Ok
+      </button>
+    </mat-dialog-actions>
+  </form>
+</div>
