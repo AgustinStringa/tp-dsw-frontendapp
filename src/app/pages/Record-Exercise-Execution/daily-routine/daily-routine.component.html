@@ -7,7 +7,7 @@
         <td><strong>Fecha Desde:</strong> {{ startDate }}</td>
         <td><strong>Fecha Hasta:</strong> {{ endDate }}</td>
         <td><strong>Semana Actual:</strong> {{ currentWeekAndMonth }}</td>
-        <td><strong>Día Actual:</strong> {{ currentDayName }}</td>
+        <td><strong>Día Actual:</strong> {{ currentDayName }} {{currentDayNumber}}</td>
       </tr>
     </table>
   </div>
@@ -27,6 +27,8 @@
     </thead>
     <tbody>
       @for (exerciseRoutine of exercisesRoutine; track exerciseRoutine.exercise?.id) {
+        @if (exerciseRoutine.day && exerciseRoutine.day === dayToday)  {
+          <!-- && exerciseRoutine.week && exerciseRoutine.week.toString() === currentWeekAndMonth) -->
       <tr>
         <td>{{ exerciseRoutine.exercise?.name || 'No Disponible' }}</td>
         <td>{{ exerciseRoutine.series || 'N/A' }}</td>
@@ -43,6 +45,7 @@
         }
       </tr>
       }
+    }
     </tbody>
   </table>
   }

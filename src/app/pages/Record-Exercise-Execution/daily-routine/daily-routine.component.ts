@@ -21,11 +21,13 @@ export class DailyRoutineComponent {
   endDate: string = '';
   currentWeekAndMonth: string = '';
   currentDayName: string = '';
+  currentDayNumber: number = 0;
   showModal: boolean = false;
   selectedExerciseRoutine: IExerciseRoutine | null = null;
   selectedWeight: number | null = null;
+  dayToday: number = new Date().getDay();
 
-  userId: string = '66e9b19b100c4d9c3024fc97'; // ID hardcodeado del usuario
+  userId: string = '66ed63ad9818b43969cf5ded'; // ID hardcodeado del usuario
 
   private urlRoutine: string = `${environment.routinesUrl}`;
   private daysOfWeek: string[] = [
@@ -59,7 +61,8 @@ export class DailyRoutineComponent {
   loadRoutine(): void {
     const today = new Date();
     this.currentDayName = this.getDayName(today.getDay());
-    this.currentWeekAndMonth = this.getCurrentWeekAndMonth(today);
+    this.currentDayNumber = today.getDate();
+    // this.currentWeekAndMonth = this.getCurrentWeekAndMonth(today);
 
     this.http
       .get<{ message: string; data: IRoutine }>(
@@ -85,11 +88,13 @@ export class DailyRoutineComponent {
                 weight: exerciseRoutine.weight || null,
               })
             );
-            // Actualiza la semana actual con el mes
+
             this.currentWeekAndMonth = this.getCurrentWeekAndMonth(
-              new Date(this.routine.start)
+              new Date(this.routine.start),
+              new Date(this.routine.end)
             );
           }
+          console.log('this.routine.start ' + new Date(this.routine.start));
         },
         (error) => {
           console.error('Error loading routine:', error);
@@ -101,14 +106,22 @@ export class DailyRoutineComponent {
     return this.daysOfWeek[dayIndex] || '';
   }
 
-  private getCurrentWeekAndMonth(date: Date): string {
-    const start = new Date(date.getFullYear(), 0, 1);
-    const diff = date.getTime() - start.getTime();
+  private getCurrentWeekAndMonth(dateStart: Date, dateEnd: Date): string {
+    // const start = new Date(date.getFullYear(), 0, 1);
+    // const diff = date.getTime() - start.getTime();
+    // const oneWeek = 1000 * 60 * 60 * 24 * 7;
+    // const weekNumber = Math.floor(diff / oneWeek) + 1;
+    // const monthName = this.monthsOfYear[date.getMonth()];
+    // console.log('Week number:', weekNumber);
+    // console.log('date: ', date.getMonth());
+    // return `${weekNumber}`;
+    const start = new Date(dateStart);
+    const end = new Date(dateEnd);
+    const diff = end.getTime() - start.getTime();
     const oneWeek = 1000 * 60 * 60 * 24 * 7;
     const weekNumber = Math.floor(diff / oneWeek) + 1;
-    const monthName = this.monthsOfYear[date.getMonth()]; // Obtener el nombre del mes
-
-    return `${monthName} - Semana ${weekNumber}`;
+    const monthName = this.monthsOfYear[dateStart.getMonth()];
+    return `${weekNumber}`;
   }
 
   openModal(exerciseRoutine: IExerciseRoutine): void {
