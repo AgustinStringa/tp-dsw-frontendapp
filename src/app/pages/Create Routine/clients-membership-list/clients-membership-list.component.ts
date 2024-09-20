@@ -10,7 +10,7 @@ import {
 import { NgClass } from '@angular/common';
 import { SimpleChanges } from '@angular/core';
 import { IMembership } from '../../../core/interfaces/membership.interface.js';
-import Client from '../../../core/classes/client.js';
+import Client from '../../../core/Classes/client.js';
 
 class ClientForRoutine extends Client {
   public selected: boolean;

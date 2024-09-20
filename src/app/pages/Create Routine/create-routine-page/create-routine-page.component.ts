@@ -37,7 +37,7 @@ import { environment } from '../../../../environments/environment.js';
 import { ExerciseRoutineCardComponent } from '../exercise-routine-card/exercise-routine-card.component.js';
 import { IExerciseRoutine } from '../../../core/interfaces/exercise-routine.inteface.js';
 import { IExercise } from '../../../core/interfaces/exercise.interface.js';
-import Client from '../../../core/classes/client.js';
+import Client from '../../../core/Classes/client.js';
 import { Router } from '@angular/router';
 interface Day {
   exercisesRoutine?: IExerciseRoutine[];
@@ -162,8 +162,7 @@ export class CreateRoutinePageComponent implements AfterViewInit {
   getDateToWithFormat() {
     if (
       this.routineForm.value.dateTo != null &&
-      this.routineForm.value.dateTo != undefined &&
-      this.weeks.length > 0
+      this.routineForm.value.dateTo != undefined
     ) {
       return lightFormat(this.routineForm.value.dateTo, 'dd/MM/yyy');
     } else return '';
@@ -310,11 +309,15 @@ export class CreateRoutinePageComponent implements AfterViewInit {
           })
         )
         .subscribe((res: any) => {
-          this._snackBar.open('Rutina creada correctamente', 'cerrar', {
-            duration: 3000,
-            panelClass: ['snackbar_success'],
-          });
-          this.router.navigate(['/create-routine']); // NO FUNCIONA
+          this._snackBar
+            .open('Rutina creada correctamente', 'cerrar', {
+              duration: 3000,
+              panelClass: ['snackbar_success'],
+            })
+            .afterDismissed()
+            .subscribe((info) => {
+              this.reloadCurrentRoute();
+            });
         });
     } catch (error: any) {}
   }
@@ -337,5 +340,10 @@ export class CreateRoutinePageComponent implements AfterViewInit {
       });
     }
     this.setDateTo();
+  }
+
+  reloadCurrentRoute() {
+    //ES UNA SOLUCION BASTANTE CUTRE, PERO CUMPLE
+    window.location.reload();
   }
 }
