@@ -1,11 +1,10 @@
 import { NgFor, NgIf } from '@angular/common';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
-
-import { Registration } from '../../../core/interfaces/registration.interface.js';
 import { environment } from '../../../../environments/environment.js';
 import { IClassType } from '../../../core/interfaces/class-type.interface.js';
 import { IClass } from '../../../core/interfaces/class.interface.js';
+import { IRegistration } from '../../../core/interfaces/registration.interface.js';
 
 @Component({
   selector: 'app-class-list',
@@ -47,12 +46,12 @@ export class ClassListComponent {
     if (this.selectedClass) {
       console.log(`Inscrito en la clase: ${this.selectedClass.id}`);
 
-      const registration: Registration = {
+      const registration: IRegistration = {
         class: this.selectedClass,
         client: this.userId,
       };
       this.http
-        .post<Registration>(this.urlRegistration, registration)
+        .post<IRegistration>(this.urlRegistration, registration)
         .subscribe(() => {
           console.log('Clase registrada correctamente.');
         });
