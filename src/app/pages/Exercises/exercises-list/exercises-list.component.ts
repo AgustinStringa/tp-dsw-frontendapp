@@ -3,10 +3,10 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDialog } from '@angular/material/dialog';
 import { ComponentType } from '@angular/cdk/portal';
-import IExercise from '../../../core/interfaces/IExercise.interface.js';
 import { DeleteDialogComponent } from '../../../delete-dialog/delete-dialog.component.js';
 import { environment } from '../../../../environments/environment.js';
 import { ExerciseDialogComponent } from '../exercise-dialog/exercise-dialog.component.js';
+import { IExercise } from '../../../core/interfaces/exercise.interface.js';
 export interface DialogExerciseData {
   exercise: IExercise;
   action: string;

@@ -20,7 +20,6 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { DialogData } from '../create-routine-page/create-routine-page.component.js';
 import { IExercise } from '../../../core/interfaces/exercise.interface.js';
-
 @Component({
   selector: 'app-dialog-new-exercise-routine',
   standalone: true,
