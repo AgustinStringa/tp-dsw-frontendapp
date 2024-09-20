@@ -59,7 +59,11 @@
           </div>
           @if (item.number == weeks.length) {
           <div class="example-button-container">
-            <button mat-fab aria-label="Example icon button with a delete icon">
+            <button
+              type="button"
+              mat-fab
+              aria-label="Example icon button with a delete icon"
+            >
               <mat-icon (click)="removeWeek(item)">delete</mat-icon>
             </button>
           </div>
@@ -100,6 +104,7 @@
                 @if (day.number == item.days.length) {
                 <div class="example-button-container">
                   <button
+                    type="button"
                     mat-fab
                     aria-label="Example icon button with a delete icon"
                   >

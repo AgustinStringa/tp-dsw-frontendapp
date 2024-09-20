@@ -25,13 +25,15 @@ body {
     background-color: rgba(181, 255, 160, 0.689);
 }
 
-.exercises-list-container td th,
-.memberships-list-container td th {
+.exercises-list-container td,
+.exercises-list-container th,
+.memberships-list-container td,
+.memberships-list-container th {
     border: 1px solid #ddd;
     padding: 10px;
 }
 
-.exercises-list-container button,
+.exercises-list-container table button,
 .memberships-list-container button {
     margin-top: 20px;
     border-radius: 5px;

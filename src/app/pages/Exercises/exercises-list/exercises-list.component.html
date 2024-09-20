@@ -1,5 +1,14 @@
 <div class="mx-auto w-85">
-  <h2 class="display-4">Ejercicios</h2>
+  <h2>Ejercicios</h2>
+  <div class="my-4 text-end">
+    <button
+      type="button"
+      class="btn btn-primary btn-lg"
+      (click)="addExercise()"
+    >
+      Nuevo ejercicio
+    </button>
+  </div>
   <div class="exercises-list-container">
     @if (exercises && exercises.length > 0) {
     <table align="center">
@@ -45,7 +54,5 @@
       No se pudieron cargar los ejercicios.
     </div>
     }
-
-    <button (click)="addExercise()">Nuevo ejercicio</button>
   </div>
 </div>
