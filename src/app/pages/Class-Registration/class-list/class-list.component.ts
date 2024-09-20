@@ -18,8 +18,6 @@ export class ClassListComponent {
   classtypes: IClassType[] = [];
   selectedClass: IClass | null = null;
   selectedClassType: IClassType | null = null;
-  urlClassType: string = environment.ClassType;
-  urlRegistration: string = environment.Registration;
 
   private userId = '66ce147975ef00a40ff511f1'; // ID hardcodeado del usuario
 
@@ -29,7 +27,7 @@ export class ClassListComponent {
 
   async getClassTypes() {
     try {
-      this.http.get<any>(this.urlClassType).subscribe((res) => {
+      this.http.get<any>(environment.classTypesUrl).subscribe((res) => {
         this.classtypes = res.data;
       });
     } catch (error: any) {
@@ -51,7 +49,7 @@ export class ClassListComponent {
         client: this.userId,
       };
       this.http
-        .post<IRegistration>(this.urlRegistration, registration)
+        .post<IRegistration>(environment.registrationUrl, registration)
         .subscribe(() => {
           console.log('Clase registrada correctamente.');
         });

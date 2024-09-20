@@ -1,13 +1,22 @@
+const apiUrl = 'https://api.gimnasio.com';
+
 export const environment = {
   production: true,
-  apiUrl: 'https://api.gimnasio.com/',
-  classesUrl: 'https://api.gimnasio.com/',
-  clientsUrl: 'https://api.gimnasio.com/',
-  membershipsUrl: 'https://api.gimnasio.com/',
-  routinesUrl: 'https://api.gimnasio.com/',
-  trainersUrl: 'https://api.gimnasio.com/',
-  createRoutineUrl: 'http://localhost:3000/api/routines/routines',
-  clientsWithMembershipUrl:
-    'http://localhost:3000/api/clients/membership-active',
-  exercisesUrl: 'http://localhost:3000/api/routines/exercises',
+  apiUrl: apiUrl,
+  authUrl: apiUrl + '/auth',
+  clientsUrl: apiUrl + '/clients',
+  clientsWithMembershipUrl: apiUrl + 'clients/membership-active',
+  classTypesUrl: apiUrl + '/classes/types',
+  classesUrl: apiUrl + '/classes',
+  createRoutineUrl: apiUrl + '/routines/routines',
+  exerciseRoutinesUrl: apiUrl + '/routines/exerciseroutines',
+  exercisesUrl: apiUrl + '/routines/exercises',
+  goalsUrl: apiUrl + '/clients/goals',
+  membershipsUrl: apiUrl + '/memberships',
+  membershipTypesUrl: apiUrl + '/memberships/types',
+  paymentsUrl: apiUrl + '/memberships/payments',
+  progressesUrl: apiUrl + '/clients/progresses',
+  routinesUrl: apiUrl + '/routines',
+  trainersUrl: apiUrl + '/trainers',
+  registrationUrl: apiUrl + '/classes/registration',
 };

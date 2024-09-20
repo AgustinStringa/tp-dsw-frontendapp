@@ -16,17 +16,15 @@ import { IUser } from '../core/interfaces/user.interface';
   styleUrl: './clients-list.component.css',
 })
 export class ClientsListComponent {
-  url: string = '';
   clients: IUser[] = [];
 
   constructor(private http: HttpClient, private dialog: MatDialog) {
-    this.url = environment.clientsUrl;
     this.getClients();
   }
 
   async getClients() {
     try {
-      this.http.get<any>(this.url).subscribe((res) => {
+      this.http.get<any>(environment.clientsUrl).subscribe((res) => {
         this.clients = res.data;
       });
     } catch (error: any) {
