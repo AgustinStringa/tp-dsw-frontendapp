@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
-import { MembershipType } from '../core/interfaces/membership-type.js';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { NgFor, NgIf } from '@angular/common';
+import { IMembershipType } from '../core/interfaces/membership-type.interface';
 
 @Component({
   selector: 'app-membership-types-list',
@@ -12,7 +12,7 @@ import { NgFor, NgIf } from '@angular/common';
 })
 export class MembershipTypesListComponent {
   url: string = '';
-  membershipTypes: MembershipType[] = [];
+  membershipTypes: IMembershipType[] = [];
 
   constructor(private http: HttpClient) {
     this.url = 'http://localhost:3000/api/memberships/membershiptypes';

@@ -1,7 +1,7 @@
-import { ClassType } from './classType.interface.js';
-import User from './user.interface.js';
+import { IClassType } from './class-type.interface';
+import { IUser } from './user.interface';
 
-export interface Class {
+export interface IClass {
   id: string;
   day: number;
   startTime: string;
@@ -9,6 +9,6 @@ export interface Class {
   maxCapacity: number;
   location: string;
   active: boolean;
-  classType: ClassType;
-  trainer: User;
+  classType: IClassType;
+  trainer: IUser;
 }

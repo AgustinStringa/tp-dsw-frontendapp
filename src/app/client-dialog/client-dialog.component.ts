@@ -1,4 +1,3 @@
-import User from '../core/interfaces/user.interface';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { Component, Inject } from '@angular/core';
 import {
@@ -8,6 +7,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { IUser } from '../core/interfaces/user.interface';
 
 @Component({
   selector: 'app-client-dialog',
@@ -38,7 +38,7 @@ export class ClientDialogComponent {
 
   constructor(
     @Inject(MAT_DIALOG_DATA)
-    public data: { title: string; action: string; client: User },
+    public data: { title: string; action: string; client: IUser },
     public dialogRef: MatDialogRef<ClientDialogComponent>,
     private http: HttpClient
   ) {

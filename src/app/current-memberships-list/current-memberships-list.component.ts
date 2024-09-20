@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
-import { CurrentMembership } from '../core/interfaces/current-membership.js';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { NgFor, NgIf, CommonModule } from '@angular/common';
+import { IMembership } from '../core/interfaces/membership.interface';
 
 @Component({
   selector: 'app-current-memberships-list',
@@ -12,7 +12,7 @@ import { NgFor, NgIf, CommonModule } from '@angular/common';
 })
 export class CurrentMembershipsListComponent {
   url: string = '';
-  memberships: CurrentMembership[] = [];
+  memberships: IMembership[] = [];
 
   constructor(private http: HttpClient) {
     this.url = 'http://localhost:3000/api/memberships/currentmemberships';
