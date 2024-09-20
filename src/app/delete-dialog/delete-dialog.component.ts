@@ -1,16 +1,20 @@
-import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { Component, Inject } from '@angular/core';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { MatButtonModule } from '@angular/material/button';
+import { MatFormFieldModule } from '@angular/material/form-field';
 import {
   MAT_DIALOG_DATA,
   MatDialogRef,
-  MatDialogActions,
   MatDialogClose,
-  MatDialogContent,
   MatDialogTitle,
 } from '@angular/material/dialog';
-import { MatButtonModule } from '@angular/material/button';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { environment } from '../../environments/environment.js';
+import { MatDialogContent, MatDialogActions } from '@angular/material/dialog';
+interface DialogData {
+  id: string;
+  url: string;
+  title: string;
+}
+
 @Component({
   selector: 'app-delete-dialog',
   standalone: true,
@@ -27,40 +31,30 @@ import { environment } from '../../environments/environment.js';
   styleUrl: './delete-dialog.component.css',
 })
 export class DeleteDialogComponent {
+  url: string = '';
   title: string = '';
-  id: string = '';
-  entity: string = '';
 
   constructor(
     public dialogRef: MatDialogRef<DeleteDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: any,
+    @Inject(MAT_DIALOG_DATA) public data: DialogData,
     private http: HttpClient
   ) {
+    this.url = data.url + '/' + data.id;
     this.title = data.title;
-    this.id = data.id;
-    this.entity = data.entity;
   }
 
   onSubmit(): void {
-    let url = '';
-    if (this.entity === 'client') {
-      url += environment.deleteClientUrl;
-    } else if (this.entity === 'trainers') {
-      url += environment.deleteTrainerUrl;
-    } else if (this.entity === 'exercises') {
-      url += environment.deleteExerciseUrl;
-    }
-    url += '/' + this.id;
-
-    try {
-      this.http.delete<any>(url).subscribe();
-      this.dialogRef.close();
-    } catch (error: any) {
-      console.log(error);
-    }
+    this.http.delete<any>(this.url).subscribe({
+      next: () => {
+        this.closeDialog();
+      },
+      error: (error) => {
+        console.error('Error en la petición:', error);
+      },
+    });
   }
 
-  closeModal(): void {
+  closeDialog(): void {
     this.dialogRef.close();
   }
 }

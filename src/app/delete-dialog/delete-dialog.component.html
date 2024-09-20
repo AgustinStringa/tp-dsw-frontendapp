@@ -1,7 +1,12 @@
 <mat-dialog-content>
   <div>
     <h3 mat-dialog-title class="p-0">{{ title }}</h3>
-    <button type="button" (click)="closeModal()" class="btn-close"></button>
+    <button
+      title="close dialog"
+      type="button"
+      (click)="closeDialog()"
+      class="btn-close"
+    ></button>
   </div>
 
   <div>
@@ -11,7 +16,7 @@
   <div>
     <mat-dialog-actions>
       <button mat-button type="button" (click)="onSubmit()">Confirmar</button>
-      <button mat-button type="button" (click)="closeModal()">Cancelar</button>
+      <button mat-button type="button" (click)="closeDialog()">Cancelar</button>
     </mat-dialog-actions>
   </div>
 </mat-dialog-content>
