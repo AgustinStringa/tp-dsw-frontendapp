@@ -1,4 +1,3 @@
-import User from '../core/interfaces/user.interface';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { Component, Inject } from '@angular/core';
 import {
@@ -8,6 +7,8 @@ import {
   Validators,
 } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { environment } from '../../environments/environment';
+import { IUser } from '../core/interfaces/user.interface';
 
 @Component({
   selector: 'app-client-dialog',
@@ -38,7 +39,7 @@ export class ClientDialogComponent {
 
   constructor(
     @Inject(MAT_DIALOG_DATA)
-    public data: { title: string; action: string; client: User },
+    public data: { title: string; action: string; client: IUser },
     public dialogRef: MatDialogRef<ClientDialogComponent>,
     private http: HttpClient
   ) {
@@ -70,7 +71,7 @@ export class ClientDialogComponent {
 
     if (this.action === 'post') {
       try {
-        this.http.post<any>('//localhost:3000/api/clients', data).subscribe();
+        this.http.post<any>(environment.clientsUrl, data).subscribe();
         this.closeModal();
       } catch (error: any) {
         console.log(error);
@@ -78,7 +79,7 @@ export class ClientDialogComponent {
     } else if (this.action === 'put') {
       try {
         this.http
-          .put<any>('//localhost:3000/api/clients/' + this.clientId, data)
+          .put<any>(environment.clientsUrl + '/' + this.clientId, data)
           .subscribe();
         this.closeModal();
       } catch (error: any) {

@@ -31,12 +31,12 @@ import {
 } from '@angular/common/http';
 import { MatDialog } from '@angular/material/dialog';
 import Client from '../../../core/classes/client.js';
-import IExercise from '../../../core/interfaces/IExercise.interface.js';
-import IExerciseRoutine from '../../../core/interfaces/IExerciseRoutine.inteface.js';
 import { ClientsMembershipListComponent } from '../clients-membership-list/clients-membership-list.component.js';
 import { DialogNewExerciseRoutineComponent } from '../dialog-new-exercise-routine/dialog-new-exercise-routine.component.js';
 import { environment } from '../../../../environments/environment.js';
 import { ExerciseRoutineCardComponent } from '../exercise-routine-card/exercise-routine-card.component.js';
+import { IExerciseRoutine } from '../../../core/interfaces/exercise-routine.inteface.js';
+import { IExercise } from '../../../core/interfaces/exercise.interface.js';
 
 interface Day {
   exercisesRoutine?: IExerciseRoutine[];
