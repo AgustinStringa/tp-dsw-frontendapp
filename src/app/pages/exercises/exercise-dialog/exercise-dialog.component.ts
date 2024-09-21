@@ -27,6 +27,7 @@ import {
 import { environment } from '../../../../environments/environment.js';
 import { catchError } from 'rxjs/operators';
 import { throwError } from 'rxjs';
+import { MatSnackBar } from '@angular/material/snack-bar';
 @Component({
   selector: 'app-exercise-dialog',
   standalone: true,
@@ -49,7 +50,7 @@ import { throwError } from 'rxjs';
 export class ExerciseDialogComponent {
   title: string = '';
   action: string = '';
-
+  private _snackBar = inject(MatSnackBar);
   readonly dialogRef = inject(MatDialogRef<DialogExerciseData>);
   readonly data = inject<DialogExerciseData>(MAT_DIALOG_DATA);
   exerciseForm = new FormGroup({
@@ -86,12 +87,17 @@ export class ExerciseDialogComponent {
         })
         .pipe(
           catchError((error: HttpErrorResponse) => {
+            console.log(error);
             if (error.status === 400) {
-              // this._snackBar.open('Error al crear la rutina', 'cerrar', {
-              //   duration: 3000,
-              //   panelClass: ['snackbar_error'],
-              // });
-              console.log(error);
+              this._snackBar.open('Error al crear el ejercicio', 'cerrar', {
+                duration: 3000,
+                panelClass: ['snackbar_error'],
+              });
+            } else if (error.status === 500 || error.status === 0) {
+              this._snackBar.open('Error en el servidor', 'cerrar', {
+                duration: 3000,
+                panelClass: ['snackbar_error'],
+              });
             }
             return throwError(
               () => new Error(error.message || 'Error desconocido')
@@ -99,11 +105,15 @@ export class ExerciseDialogComponent {
           })
         )
         .subscribe((res: any) => {
-          // this._snackBar.open('Rutina creada correctamente', 'cerrar', {
-          //   duration: 3000,
-          //   panelClass: ['snackbar_success'],
-          // });
-          console.log(res);
+          this._snackBar
+            .open('Ejercicio creado correctamente', 'cerrar', {
+              duration: 1500,
+              panelClass: ['snackbar_success'],
+            })
+            .afterDismissed()
+            .subscribe((info) => {
+              this.dialogRef.close();
+            });
         });
     } else if (this.data.action == 'put') {
       this.http
@@ -115,11 +125,23 @@ export class ExerciseDialogComponent {
         .pipe(
           catchError((error: HttpErrorResponse) => {
             if (error.status === 400) {
-              // this._snackBar.open('Error al crear la rutina', 'cerrar', {
-              //   duration: 3000,
-              //   panelClass: ['snackbar_error'],
-              // });
-              console.log(error);
+              this._snackBar.open(
+                'Error al actualizar el ejercicio',
+                'cerrar',
+                {
+                  duration: 3000,
+                  panelClass: ['snackbar_error'],
+                }
+              );
+            } else {
+              this._snackBar.open(
+                'Error al actualizar el ejercicio',
+                'cerrar',
+                {
+                  duration: 3000,
+                  panelClass: ['snackbar_error'],
+                }
+              );
             }
             return throwError(
               () => new Error(error.message || 'Error desconocido')
@@ -127,11 +149,15 @@ export class ExerciseDialogComponent {
           })
         )
         .subscribe((res: any) => {
-          // this._snackBar.open('Rutina creada correctamente', 'cerrar', {
-          //   duration: 3000,
-          //   panelClass: ['snackbar_success'],
-          // });
-          console.log(res);
+          this._snackBar
+            .open('Ejercicio actualizado correctamente', 'cerrar', {
+              duration: 1500,
+              panelClass: ['snackbar_success'],
+            })
+            .afterDismissed()
+            .subscribe((info) => {
+              this.dialogRef.close();
+            });
         });
     }
   }

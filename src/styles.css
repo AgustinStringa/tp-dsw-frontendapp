@@ -15,20 +15,24 @@ body {
 
 /*TABLAS PARA CRUDS*/
 .exercises-list-container table,
-.memberships-list-container table {
+.memberships-list-container table,
+.membership-types-list-container table {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     grid-row: auto;
 }
 
 .exercises-list-container thead,
-.memberships-list-container thead {
+.memberships-list-container thead,
+.membership-types-list-container thead {
     background-color: rgba(181, 255, 160, 0.689);
 }
 
 .exercises-list-container td,
 .exercises-list-container th,
 .memberships-list-container td,
-.memberships-list-container th {
+.memberships-list-container th,
+.membership-types-list-container td,
+.membership-types-list-container th {
     border: 1px solid #ddd;
     padding: 10px;
 }
@@ -54,3 +58,5 @@ body {
 .exercises-list-container table td button:hover {
     background-color: green;
 }
+
+/*TO DO: INCLUDE SNACK BAR STYLES HERE*/

@@ -286,23 +286,25 @@ export class CreateRoutinePageComponent implements AfterViewInit {
         .pipe(
           catchError((error: HttpErrorResponse) => {
             console.log(error);
-            if (error.status === 400) {
-              if (error.error.message == 'There is overlap between routines') {
-                this._snackBar.open(
-                  'Hay solapamiento entre fechas de rutinas',
-                  'cerrar',
-                  {
-                    duration: 3000,
-                    panelClass: ['snackbar_error'],
-                  }
-                );
-              } else {
-                this._snackBar.open('Error al crear la rutina', 'cerrar', {
+            if (
+              error.status === 400 &&
+              error.error.message == 'There is overlap between routines'
+            ) {
+              this._snackBar.open(
+                'Hay solapamiento entre fechas de rutinas',
+                'cerrar',
+                {
                   duration: 3000,
                   panelClass: ['snackbar_error'],
-                });
-              }
+                }
+              );
+            } else {
+              this._snackBar.open('Error al crear la rutina', 'cerrar', {
+                duration: 3000,
+                panelClass: ['snackbar_error'],
+              });
             }
+
             return throwError(
               () => new Error(error.message || 'Error desconocido')
             );
