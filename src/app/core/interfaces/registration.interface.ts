@@ -1,6 +1,6 @@
 import { IClass } from './class.interface';
 
-export interface Registration {
+export interface IRegistration {
   class: IClass;
   client: string;
   //client: IUser;

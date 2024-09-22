@@ -7,6 +7,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { environment } from '../../environments/environment';
 import { IUser } from '../core/interfaces/user.interface';
 
 @Component({
@@ -70,7 +71,7 @@ export class ClientDialogComponent {
 
     if (this.action === 'post') {
       try {
-        this.http.post<any>('//localhost:3000/api/clients', data).subscribe();
+        this.http.post<any>(environment.clientsUrl, data).subscribe();
         this.closeModal();
       } catch (error: any) {
         console.log(error);
@@ -78,7 +79,7 @@ export class ClientDialogComponent {
     } else if (this.action === 'put') {
       try {
         this.http
-          .put<any>('//localhost:3000/api/clients/' + this.clientId, data)
+          .put<any>(environment.clientsUrl + '/' + this.clientId, data)
           .subscribe();
         this.closeModal();
       } catch (error: any) {

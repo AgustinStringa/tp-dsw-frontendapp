@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { NgFor, NgIf, CommonModule } from '@angular/common';
+import { environment } from '../../environments/environment';
 import { IMembership } from '../core/interfaces/membership.interface';
 
 @Component({
@@ -15,13 +16,12 @@ export class CurrentMembershipsListComponent {
   memberships: IMembership[] = [];
 
   constructor(private http: HttpClient) {
-    this.url = 'http://localhost:3000/api/memberships/currentmemberships';
     this.getMemberships();
   }
 
   async getMemberships() {
     try {
-      this.http.get<any>(this.url).subscribe((res) => {
+      this.http.get<any>(environment.membershipsUrl).subscribe((res) => {
         this.memberships = res.data;
       });
     } catch (error: any) {
