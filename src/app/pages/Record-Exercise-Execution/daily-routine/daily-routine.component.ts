@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import IExerciseRoutine from '../../../core/interfaces/IExerciseRoutine.inteface.js';
+import { IExerciseRoutine } from '../../../core/interfaces/exercise-routine.inteface.js';
 import { environment } from '../../../../environments/environment.js';
 import { formatDate, NgFor, NgIf } from '@angular/common';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
@@ -19,7 +19,7 @@ export class DailyRoutineComponent {
   exercisesRoutine: IExerciseRoutine[] = [];
   startDate: string = '';
   endDate: string = '';
-  currentWeekAndMonth: string = '';
+  currentWeek: string = '';
   currentDayName: string = '';
   currentDayNumber: number = 0;
   showModal: boolean = false;
@@ -27,7 +27,7 @@ export class DailyRoutineComponent {
   selectedWeight: number | null = null;
   dayToday: number = new Date().getDay();
 
-  userId: string = '66ed63ad9818b43969cf5ded'; // ID hardcodeado del usuario
+  userId: string = '66e9b19b100c4d9c3024fc97'; // ID hardcodeado del usuario
 
   private urlRoutine: string = `${environment.routinesUrl}`;
   private daysOfWeek: string[] = [
@@ -39,20 +39,6 @@ export class DailyRoutineComponent {
     'viernes',
     'sábado',
   ];
-  private monthsOfYear: string[] = [
-    'enero',
-    'febrero',
-    'marzo',
-    'abril',
-    'mayo',
-    'junio',
-    'julio',
-    'agosto',
-    'septiembre',
-    'octubre',
-    'noviembre',
-    'diciembre',
-  ];
 
   constructor(private http: HttpClient) {
     this.loadRoutine();
@@ -62,7 +48,6 @@ export class DailyRoutineComponent {
     const today = new Date();
     this.currentDayName = this.getDayName(today.getDay());
     this.currentDayNumber = today.getDate();
-    // this.currentWeekAndMonth = this.getCurrentWeekAndMonth(today);
 
     this.http
       .get<{ message: string; data: IRoutine }>(
@@ -89,7 +74,7 @@ export class DailyRoutineComponent {
               })
             );
 
-            this.currentWeekAndMonth = this.getCurrentWeekAndMonth(
+            this.currentWeek = this.getCurrentWeek(
               new Date(this.routine.start),
               new Date(this.routine.end)
             );
@@ -106,21 +91,12 @@ export class DailyRoutineComponent {
     return this.daysOfWeek[dayIndex] || '';
   }
 
-  private getCurrentWeekAndMonth(dateStart: Date, dateEnd: Date): string {
-    // const start = new Date(date.getFullYear(), 0, 1);
-    // const diff = date.getTime() - start.getTime();
-    // const oneWeek = 1000 * 60 * 60 * 24 * 7;
-    // const weekNumber = Math.floor(diff / oneWeek) + 1;
-    // const monthName = this.monthsOfYear[date.getMonth()];
-    // console.log('Week number:', weekNumber);
-    // console.log('date: ', date.getMonth());
-    // return `${weekNumber}`;
+  private getCurrentWeek(dateStart: Date, dateEnd: Date): string {
     const start = new Date(dateStart);
     const end = new Date(dateEnd);
     const diff = end.getTime() - start.getTime();
     const oneWeek = 1000 * 60 * 60 * 24 * 7;
-    const weekNumber = Math.floor(diff / oneWeek) + 1;
-    const monthName = this.monthsOfYear[dateStart.getMonth()];
+    const weekNumber = Math.floor(diff / oneWeek);
     return `${weekNumber}`;
   }
 

@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import IExerciseRoutine from '../../../core/interfaces/IExerciseRoutine.inteface.js';
+import { IExerciseRoutine } from '../../../core/interfaces/exercise-routine.inteface.js';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../../environments/environment.js';
 

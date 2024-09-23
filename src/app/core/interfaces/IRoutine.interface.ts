@@ -1,5 +1,4 @@
-import IExercise from './IExercise.interface.js';
-import IExerciseRoutine from './IExerciseRoutine.inteface.js';
+import { IExerciseRoutine } from './exercise-routine.inteface.js';
 import ITrainer from './ITrainer.interface.js';
 
 export default interface IRoutine {

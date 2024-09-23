@@ -6,13 +6,17 @@
       <tr>
         <td><strong>Fecha Desde:</strong> {{ startDate }}</td>
         <td><strong>Fecha Hasta:</strong> {{ endDate }}</td>
-        <td><strong>Semana Actual:</strong> {{ currentWeekAndMonth }}</td>
+        <td><strong>Semana Actual:</strong> {{ currentWeek }}</td>
         <td><strong>Día Actual:</strong> {{ currentDayName }} {{currentDayNumber}}</td>
       </tr>
     </table>
   </div>
   }
-
+@else {
+  <div class="routine-info">
+    <p>No se ha encontrado una rutina para el día de hoy.</p>
+  </div>
+}
   <!-- Tabla de ejercicios -->
   @if (this.exercisesRoutine.length > 0) {
   <table class="exercises-table">
@@ -27,8 +31,8 @@
     </thead>
     <tbody>
       @for (exerciseRoutine of exercisesRoutine; track exerciseRoutine.exercise?.id) {
-        @if (exerciseRoutine.day && exerciseRoutine.day === dayToday)  {
-          <!-- && exerciseRoutine.week && exerciseRoutine.week.toString() === currentWeekAndMonth) -->
+        @if (exerciseRoutine.day && exerciseRoutine.day === dayToday && exerciseRoutine.week && exerciseRoutine.week.toString() === currentWeek)  {
+          
       <tr>
         <td>{{ exerciseRoutine.exercise?.name || 'No Disponible' }}</td>
         <td>{{ exerciseRoutine.series || 'N/A' }}</td>
@@ -43,9 +47,12 @@
           <button (click)="openModal(exerciseRoutine)">Editar Peso</button>
         </td>
         }
+        
       </tr>
       }
     }
+  
+    
     </tbody>
   </table>
   }
