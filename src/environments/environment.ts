@@ -5,7 +5,7 @@ export const environment = {
   apiUrl: apiUrl,
   authUrl: apiUrl + '/auth',
   clientsUrl: apiUrl + '/clients',
-  clientsWithMembershipUrl: apiUrl + 'clients/membership-active',
+  clientsWithMembershipUrl: apiUrl + '/clients/membership-active',
   classTypesUrl: apiUrl + '/classes/types',
   classesUrl: apiUrl + '/classes',
   createRoutineUrl: apiUrl + '/routines/routines',
