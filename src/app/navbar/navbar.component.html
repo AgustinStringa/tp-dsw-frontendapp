@@ -1,60 +1,82 @@
-<!-- Navbar -->
-<nav class="navbar navbar-expand-lg navbar-light bg-light gradient-custom">
-  <!-- Container wrapper -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
   <div class="container-fluid">
-    <!-- Navbar brand -->
-    <a class="navbar-brand" href="#">Brand</a>
-
-    <!-- Toggle button -->
     <button
       class="navbar-toggler"
       type="button"
-      (click)="basicNavbar.toggle()"
+      (click)="togglerFirstExample.toggle()"
+      aria-controls="navbarTogglerDemo01"
       aria-expanded="false"
       aria-label="Toggle navigation"
     >
       <i class="fas fa-bars"></i>
     </button>
-
-    <!-- Collapsible wrapper -->
     <div
-      class="collapse navbar-collapse justify-content-lg-end"
-      id="navbarSupportedContent"
+      class="collapse navbar-collapse"
+      id="navbarTogglerDemo01"
       mdbCollapse
-      #basicNavbar="mdbCollapse"
+      #togglerFirstExample="mdbCollapse"
     >
-      <ul class="navbar-nav mb-2 mb-lg-0 me-lg-2">
+      <a class="navbar-brand" href="#">App Gimnasio</a>
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="#">Home</a>
+          <a
+            class="nav-link active"
+            [ngClass]="{ active: isActive('/') }"
+            aria-current="page"
+            routerLink="/"
+            >Home</a
+          >
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">Link</a>
+          <a
+            class="nav-link"
+            [ngClass]="{ active: isActive('/clients') }"
+            routerLink="clients"
+            >Clientes</a
+          >
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">Mi Pefil</a>
+          <a
+            class="nav-link"
+            [ngClass]="{ active: isActive('/trainers') }"
+            routerLink="trainers"
+            >Entrenadores</a
+          >
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">Membresía</a>
+          <a
+            class="nav-link"
+            [ngClass]="{ active: isActive('/membershiptypes') }"
+            routerLink="membershiptypes"
+            >Tipos de Membresías</a
+          >
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">Rutina</a>
+          <a
+            class="nav-link"
+            [ngClass]="{ active: isActive('/currentmemberships') }"
+            routerLink="currentmemberships"
+            >Membresías</a
+          >
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">Clases</a>
+          <a
+            class="nav-link"
+            [ngClass]="{ active: isActive('/registration') }"
+            routerLink="registration"
+            >Registrarse a una clase</a
+          >
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">Metas</a>
+          <a class="nav-link" routerLink="">Rutinas</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">
-            <i class="fas fa-user-alt"></i>
-          </a>
+          <a class="nav-link" routerLink="/create-routine">Crear Rutina</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/exercise">Ejercicios</a>
         </li>
       </ul>
-      <!-- Left links -->
     </div>
-    <!-- Collapsible wrapper -->
   </div>
-  <!-- Container wrapper -->
 </nav>
-<!-- Navbar -->

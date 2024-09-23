@@ -18,7 +18,7 @@ export class MembershipTypesListComponent {
     this.getMembershipTypes();
   }
 
-  async getMembershipTypes() {
+  getMembershipTypes() {
     try {
       this.http.get<any>(environment.membershipTypesUrl).subscribe((res) => {
         this.membershipTypes = res.data;

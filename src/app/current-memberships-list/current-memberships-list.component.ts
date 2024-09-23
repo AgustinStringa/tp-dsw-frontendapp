@@ -19,7 +19,7 @@ export class CurrentMembershipsListComponent {
     this.getMemberships();
   }
 
-  async getMemberships() {
+  getMemberships() {
     try {
       this.http.get<any>(environment.membershipsUrl).subscribe((res) => {
         this.memberships = res.data;
