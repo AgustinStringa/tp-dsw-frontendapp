@@ -1,13 +1,17 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, inject, Input, Output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { IExerciseRoutine } from '../../../core/interfaces/exercise-routine.inteface.js';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../../environments/environment.js';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
   selector: 'app-dialog-add-weight',
   standalone: true,
-  imports: [FormsModule],
+  imports: [FormsModule, MatFormFieldModule, MatInputModule, MatButtonModule],
   templateUrl: './dialog-add-weight.component.html',
   styleUrl: './dialog-add-weight.component.css',
 })
@@ -15,6 +19,8 @@ export class DialogAddWeightComponent {
   @Input() exerciseRoutine: IExerciseRoutine | null = null;
   @Output() closeModal = new EventEmitter<void>();
   @Output() saveWeight = new EventEmitter<number>();
+
+  private _snackBar = inject(MatSnackBar);
 
   selectedWeight: number | null = null;
 
@@ -41,25 +47,32 @@ export class DialogAddWeightComponent {
           .subscribe(
             (response) => {
               console.log('Peso actualizado exitosamente:', response);
+              this.openSnackBar('Peso actualizado exitosamente.', 'Cerrar');
               this.saveWeight.emit(this.selectedWeight as number);
               this.onClose();
             },
             (error) => {
               console.error('No se pudo actualizar el peso.', error);
-              alert('No se pudo actualizar el peso.');
+              this.openSnackBar('No se pudo actualizar el peso.', 'Cerrar');
             }
           );
       } else {
         console.error('Falta el ID del ejercicio');
-        alert('Falta el ID del ejercicio');
       }
     } else {
       console.error(
         'El peso seleccionado no es válido o falta la rutina de ejercicios'
       );
-      alert(
-        'Ingrese un peso válido (no debe ser negativo) y asegúrese de que la rutina de ejercicios esté seleccionada.'
+      this.openSnackBar(
+        'Ingrese un peso válido (no debe ser negativo) y asegúrese de que la rutina de ejercicios esté seleccionada.',
+        'Cerrar'
       );
     }
+  }
+
+  //'Ingrese un peso válido (no debe ser negativo) y asegúrese de que la rutina de ejercicios esté seleccionada.'
+
+  openSnackBar(message: string, action: string) {
+    this._snackBar.open(message, action);
   }
 }
