@@ -46,7 +46,6 @@ export class DialogAddWeightComponent {
           )
           .subscribe(
             (response) => {
-              console.log('Peso actualizado exitosamente:', response);
               this.openSnackBar('Peso actualizado exitosamente.', 'Cerrar');
               this.saveWeight.emit(this.selectedWeight as number);
               this.onClose();

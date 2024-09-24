@@ -55,7 +55,6 @@ export class DailyRoutineComponent {
       )
       .subscribe(
         (response) => {
-          console.log('Routine response:', response);
           this.routine = response.data;
           if (this.routine) {
             this.startDate =
@@ -79,7 +78,6 @@ export class DailyRoutineComponent {
               new Date(this.routine.end)
             );
           }
-          console.log('this.routine.start ' + new Date(this.routine.start));
         },
         (error) => {
           console.error('Error loading routine:', error);
