@@ -13,9 +13,14 @@
   </div>
   }
 @else {
-  <div class="routine-info">
-    <p>No se ha encontrado una rutina para el día de hoy.</p>
-  </div>
+<div class="routine-info">
+  <table class="routine-table">
+    <tr>
+      <td><strong>Día Actual:</strong> {{ currentDayName }} {{currentDayNumber}}</td>
+    </tr>
+  </table>
+  <p class="alert"> No tiene ninguna rutina registrada para el día de la fecha</p>
+</div>
 }
   <!-- Tabla de ejercicios -->
   @if (this.exercisesRoutine.length > 0) {

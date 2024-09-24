@@ -1,12 +1,14 @@
 .daily-routine-container {
   padding: 20px;
-  background-color: rgba(181, 255, 160, 0.689);
-
+  background-color: #3a3a3a;
+  /* Fondo gris claro */
   border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
   max-width: 1000px;
   margin: 0 auto;
   font-family: Arial, sans-serif;
+  color: white;
+  /* Texto blanco para contraste */
 }
 
 .routine-info {
@@ -21,12 +23,13 @@
 
 .routine-table td {
   padding: 10px;
-  border: 1px solid #ddd;
+  border: 1px solid #555;
+  /* Bordes más claros que antes */
 }
 
 .routine-table strong {
-  color: forestgreen;
-
+  color: #F7CE68;
+  /* Color dorado del gradiente de la navbar */
 }
 
 .exercises-table {
@@ -39,26 +42,29 @@
 .exercises-table td {
   padding: 10px;
   text-align: left;
-  border: 1px solid #ddd;
+  border: 1px solid #555;
+  /* Bordes más claros */
 }
 
 .exercises-table th {
-  background-color: forestgreen;
-
-  color: white;
+  background-color: #4a4a4a;
+  /* Fondo gris medio en los encabezados */
+  color: #F7CE68;
+  /* Texto dorado para coincidencia con el gradiente */
   font-weight: bold;
 }
 
 .exercises-table td {
-  background-color: #fff;
-  color: darkgreen;
-
+  background-color: #5a5a5a;
+  /* Gris claro en las celdas */
+  color: #F7CE68;
+  /* Texto dorado */
 }
 
 .exercises-table td button {
   padding: 8px 12px;
-  background-color: forestgreen;
-
+  background-color: #FBAB7E;
+  /* Color del gradiente */
   color: white;
   border: none;
   border-radius: 5px;
@@ -67,13 +73,8 @@
 }
 
 .exercises-table td button:hover {
-  background-color: darkgreen;
-
-}
-
-.exercises-table td button[disabled] {
-  background-color: #ccc;
-  cursor: not-allowed;
+  background-color: #F7CE68;
+  /* Ajuste de hover para coincidir con el gradiente */
 }
 
 button {
@@ -82,12 +83,18 @@ button {
   border: none;
   border-radius: 5px;
   cursor: pointer;
-  background-color: forestgreen;
-
+  background-color: #FBAB7E;
   color: white;
 }
 
 button:hover {
-  background-color: darkgreen;
+  background-color: #F7CE68;
+}
 
+.alert {
+  padding: 10px;
+  background-color: #f44336;
+  color: white;
+  border-radius: 5px;
+  margin-bottom: 20px;
 }
