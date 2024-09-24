@@ -106,18 +106,23 @@ export class CreateRoutinePageComponent implements AfterViewInit {
   getClientsWithMembership() {
     try {
       this.http
-        .get<any>(environment.clientsWithMembershipUrl)
+        .get<any>(environment.membershipsActive)
         .subscribe((res: any) => {
-          Array.from(res.data).forEach((u: any) => {
+          Array.from(res.data).forEach((m: any) => {
             this.clientsWithmembership = [
               ...this.clientsWithmembership,
               new Client(
-                u.id,
-                u.lastName,
-                u.firstName,
-                u.dni,
-                u.email,
-                u.currentMembership
+                m.client.id,
+                m.client.lastName,
+                m.client.firstName,
+                m.client.dni,
+                m.client.email,
+                {
+                  dateFrom: m.dateFrom,
+                  dateTo: m.dateTo,
+                  type: m.type,
+                  client: m.client,
+                }
               ),
             ];
           });
@@ -267,7 +272,7 @@ export class CreateRoutinePageComponent implements AfterViewInit {
     //post
     //mensaje de exito XOR error
     const newRoutine = {
-      trainer: '66cf6459f3d2bcf6d338b3e6',
+      trainer: '66e9aa2e294b5091cfb08eb0',
       client: this.routineForm.value.client?.id,
       start: parseISO(this.routineForm.value.dateFrom || ''),
       end: this.routineForm.value.dateTo,
