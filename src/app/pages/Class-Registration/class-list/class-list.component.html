@@ -1,76 +1,55 @@
 <div class="class-type-list-container">
   @if (this.classtypes.length > 0) {
-  <table class="class-type-table">
-    <thead>
-      <tr>
-        <th>ClassType</th>
-        <th>Description</th>
-        <th></th>
-      </tr>
-    </thead>
-    <tbody>
-      @for (c of classtypes; track c.name) {
-      <tr [class.selected]="selectedClassType === c">
-        <td>{{ c.name }}</td>
-        <td>{{ c.description }}</td>
-        <td>
-          <button type="button" [class.selected]="selectedClassType === c" (click)="selectClassType(c)">
-            Seleccionar
-          </button>
-        </td>
-      </tr>
-      }
-    </tbody>
-  </table>
+  <mat-accordion>
+    @for (classType of classtypes; track classType.name) {
+    <!-- Expansion panel para cada ClassType -->
+    <mat-expansion-panel class="expansion-panel" [expanded]="selectedClassType === classType"
+      (opened)="selectClassType(classType)">
+      <mat-expansion-panel-header class="expansion-header">
+        <mat-panel-title>
+          {{ classType.name }}
+        </mat-panel-title>
+        <mat-panel-description>
+          {{ classType.description }}
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+
+      <!-- Detalles del ClassType -->
+      <div class="class-type-details">
+        <p><strong>Description:</strong> {{ classType.description }}</p>
+      </div>
+
+      <!-- Segundo Expansion Panel para las clases dentro del ClassType -->
+      <mat-accordion *ngIf="classType.classes && classType.classes.length > 0">
+        @for (i of classType.classes; track i.id) {
+        <mat-expansion-panel class="class-panel" [expanded]="selectedClass === i">
+          <mat-expansion-panel-header class="class-header">
+            <mat-panel-title>
+              {{ i.day }} - {{ i.trainer.firstName }} {{ i.trainer.lastName }}
+            </mat-panel-title>
+            <mat-panel-description>
+              {{ i.startTime }} - {{ i.endTime }} | {{ i.location }}
+            </mat-panel-description>
+          </mat-expansion-panel-header>
+
+          <div class="class-details">
+            <p><strong>Max Capacity:</strong> {{ i.maxCapacity }}</p>
+            <p><strong>Location:</strong> {{ i.location }}</p>
+            <p><strong>Trainer:</strong> {{ i.trainer.firstName }} {{ i.trainer.lastName }}</p>
+            <button type="button" [class.selected]="selectedClass === i" (click)="selectClass(i)">
+              Registrarse a esta clase
+            </button>
+          </div>
+        </mat-expansion-panel>
+        }
+      </mat-accordion>
+
+      <!-- Mensaje si no hay clases disponibles -->
+      <p *ngIf="!classType.classes || classType.classes.length === 0">No hay clases disponibles.</p>
+    </mat-expansion-panel>
+    }
+  </mat-accordion>
   } @else {
   <p>No se pudieron cargar los Tipos de Clase</p>
-  }
-</div>
-
-<div class="selected-class-type-info">
-  @if (this.selectedClassType) {
-  <div class="class-type-details">
-    <h2>Selected Class Type Information:</h2>
-    <p><strong>Name:</strong> {{ selectedClassType.name }}</p>
-    <p><strong>Description:</strong> {{ selectedClassType.description }}</p>
-  </div>
-
-  @if (selectedClassType.classes && selectedClassType.classes.length > 0) {
-  <div class="classes-container">
-    <h3>Classes:</h3>
-    <table class="classes-table">
-      <thead>
-        <tr>
-          <th>Day</th>
-          <th>Start Time</th>
-          <th>End Time</th>
-          <th>Capacity</th>
-          <th>Location</th>
-          <th>Trainer</th>
-          <th></th>
-        </tr>
-      </thead>
-      <tbody>
-        @for (i of selectedClassType.classes; track i.id) {
-        <tr>
-          <td>{{ i.day }}</td>
-          <td>{{ i.startTime }}</td>
-          <td>{{ i.endTime }}</td>
-          <td>{{ i.maxCapacity }}</td>
-          <td>{{ i.location }}</td>
-          <td>{{ i.trainer.firstName }} {{ i.trainer.lastName }}</td>
-          <td>
-            <button type="button" [class.selected]="selectedClass === i" (click)="selectClass(i)">
-              Seleccionar Clase
-            </button>
-          </td>
-        </tr>
-        }
-      </tbody>
-    </table>
-  </div>
-  } @else {
-  <p>No classes available.</p>
-  }
   }
 </div>

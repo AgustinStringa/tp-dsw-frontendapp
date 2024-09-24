@@ -5,11 +5,12 @@ import { environment } from '../../../../environments/environment.js';
 import { IClassType } from '../../../core/interfaces/class-type.interface.js';
 import { IClass } from '../../../core/interfaces/class.interface.js';
 import { IRegistration } from '../../../core/interfaces/registration.interface.js';
+import { MatExpansionModule } from '@angular/material/expansion';
 
 @Component({
   selector: 'app-class-list',
   standalone: true,
-  imports: [NgFor, NgIf, HttpClientModule],
+  imports: [NgFor, NgIf, HttpClientModule, MatExpansionModule],
   templateUrl: './class-list.component.html',
   styleUrl: './class-list.component.css',
 })

@@ -1,12 +1,12 @@
-
 .class-type-list-container {
   padding: 20px;
-  background-color: #f5f5f5;
+  background-color: #3a3a3a;
   border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
   max-width: 1000px;
   margin: 0 auto;
   font-family: Arial, sans-serif;
+  color: white;
 }
 
 .class-type-table {
@@ -19,27 +19,27 @@
 .class-type-table td {
   padding: 10px;
   text-align: left;
-  border: 1px solid #ddd;
+  border: 1px solid #aaa;
 }
 
 .class-type-table th {
-  background-color: #007bff;
-  color: white;
+  background-color: #4a4a4a;
+  color: #F7CE68;
   font-weight: bold;
 }
 
 .class-type-table td {
-  background-color: #fff;
-  color: #555;
+  background-color: #6c757d;
+  color: #F7CE68;
 }
 
 .class-type-table tr.selected {
-  background-color: #dfefff;
+  background-color: #5e6472;
 }
 
 .class-type-table td button {
   padding: 8px 12px;
-  background-color: #007bff;
+  background-color: #FBAB7E;
   color: white;
   border: none;
   border-radius: 5px;
@@ -48,74 +48,61 @@
 }
 
 .class-type-table td button:hover {
-  background-color: #0056b3;
-}
-
-.class-type-table td button.selected {
-  background-color: #0056b3;
+  background-color: #F7CE68;
 }
 
 .selected-class-type-info {
   margin-top: 30px;
   padding: 20px;
-  background-color: #e0f7fa;
+  background-color: #3a3a3a;
   border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  color: white;
 }
 
 .class-type-details h2 {
-  color: #007bff;
+  color: #F7CE68;
   font-size: 1.5rem;
   margin-bottom: 10px;
 }
 
 .class-type-details p {
   font-size: 1rem;
-  color: #555;
+  color: black;
 }
 
 .class-type-details strong {
-  color: #333;
-}
-
-.classes-container {
-  margin-top: 20px;
+  color: #000000;
 }
 
 .classes-container h3 {
   font-size: 1.2rem;
-  color: #333;
+  color: #F7CE68;
   margin-bottom: 10px;
-}
-
-.classes-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-bottom: 20px;
 }
 
 .classes-table th,
 .classes-table td {
   padding: 10px;
   text-align: left;
-  border: 1px solid #ddd;
+  border: 1px solid #aaa;
 }
 
 .classes-table th {
-  background-color: #28a745;
-  color: white;
+  background-color: #4a4a4a;
+  color: #F7CE68;
   font-weight: bold;
 }
 
 .classes-table td {
-  background-color: #fff;
-  color: #555;
+  background-color: #6c757d;
+  color: #F7CE68;
 }
 
 .classes-table td button {
   padding: 8px 12px;
-  background-color: #28a745;
-  color: white;
+  background-color: #FBAB7E;
+  color: rgb(77, 20, 20);
   border: none;
   border-radius: 5px;
   cursor: pointer;
@@ -123,9 +110,5 @@
 }
 
 .classes-table td button:hover {
-  background-color: #218838;
-}
-
-.classes-table td button.selected {
-  background-color: #218838;
+  background-color: #F7CE68;
 }
