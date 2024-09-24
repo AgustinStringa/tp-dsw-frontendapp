@@ -1,7 +1,4 @@
-import { IClass } from './class.interface';
-
 export interface IRegistration {
-  class: IClass;
+  class: string;
   client: string;
-  //client: IUser;
 }
