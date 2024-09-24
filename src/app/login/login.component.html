@@ -1,112 +1,246 @@
 <section class="text-center text-lg-start">
   <div class="container py-4">
     <div class="row g-0 align-items-center">
-      
       <!--Imagen izquierda-->
-      <div [ngClass]="isLoginVisible ? 'col-0' : 'd-none d-lg-block col-lg-6 mb-5 mb-lg-0'" style="position: relative; overflow: hidden;">
-        <img src="https://mdbootstrap.com/img/new/ecommerce/vertical/004.jpg" class="w-100 rounded-4 shadow-4" alt="" [ngClass]="isLoginVisible ? 'active' : ''" id="leftImage">
+      <div
+        [ngClass]="
+          isLoginVisible ? 'col-0' : 'd-none d-lg-block col-lg-6 mb-5 mb-lg-0'
+        "
+        style="position: relative; overflow: hidden"
+      >
+        <img
+          src="https://mdbootstrap.com/img/new/ecommerce/vertical/004.jpg"
+          class="w-100 rounded-4 shadow-4"
+          alt=""
+          [ngClass]="isLoginVisible ? 'active' : ''"
+          id="leftImage"
+        />
       </div>
 
       <div class="col-lg-6 mb-5 mb-lg-0">
-        <div class="card cascading-right bg-body-tertiary" style="backdrop-filter: blur(30px);">
-          
+        <div
+          class="card cascading-right bg-body-tertiary"
+          style="backdrop-filter: blur(30px)"
+        >
           <!--Formulario login-->
-          <div id="login" [ngClass]="{'col-0': !isLoginVisible, 'active': isLoginVisible}" class="card-body p-5 shadow-5 text-center">
+          <div
+            id="login"
+            [ngClass]="{ 'col-0': !isLoginVisible, active: isLoginVisible }"
+            class="card-body p-5 shadow-5 text-center"
+          >
             <h2 class="fw-bold mb-5">Ingresar</h2>
-            
+
             <form action="" method="post">
               <div data-mdb-input-init class="form-outline mb-4">
-                <input type="email" id="loginEmail" class="form-control" [(ngModel)]="email" name="email" required>
-                <label class="form-label" for="loginEmail" [style.opacity]="isFieldEmpty('email') ? '1' : '0'">Correo electrónico</label>
+                <input
+                  type="email"
+                  id="loginEmail"
+                  class="form-control"
+                  [(ngModel)]="email"
+                  name="email"
+                  required
+                />
+                <label
+                  class="form-label"
+                  for="loginEmail"
+                  [style.opacity]="isFieldEmpty('email') ? '1' : '0'"
+                  >Correo electrónico</label
+                >
               </div>
 
               <div data-mdb-input-init class="form-outline mb-4">
-                <input type ="password" id="loginPassword" class ="form-control" [(ngModel)]="password" name ="password" required>
-                <label class="form-label" for="loginPassword" [style.opacity]="isFieldEmpty('password') ? '1' : '0'">Contraseña</label>
+                <input
+                  type="password"
+                  id="loginPassword"
+                  class="form-control"
+                  [(ngModel)]="password"
+                  name="password"
+                  required
+                />
+                <label
+                  class="form-label"
+                  for="loginPassword"
+                  [style.opacity]="isFieldEmpty('password') ? '1' : '0'"
+                  >Contraseña</label
+                >
               </div>
 
-              <button type="submit" data-mdb-button-init data-mdb-ripple-init class="btn btn-primary btn-block mb-4">
+              <button
+                (click)="onSubmit()"
+                type="submit"
+                data-mdb-button-init
+                data-mdb-ripple-init
+                class="btn btn-primary btn-block mb-4"
+              >
                 Aceptar
-              </button>  
+              </button>
             </form>
-            <a (click)="isLoginVisible = !isLoginVisible" href="#"><p>Todavía no eres un miembro? Regístrate ahora!</p></a>
+            <a (click)="isLoginVisible = !isLoginVisible" href="#"
+              ><p>Todavía no eres un miembro? Regístrate ahora!</p></a
+            >
           </div>
 
           <!--Formulario signup-->
-          <div id="signup" [ngClass]="{'col-0': isLoginVisible, 'active': !isLoginVisible}" class="card-body p-5 shadow-5 text-center">
+          <div
+            id="signup"
+            [ngClass]="{ 'col-0': isLoginVisible, active: !isLoginVisible }"
+            class="card-body p-5 shadow-5 text-center"
+          >
             <h2 class="fw-bold mb-5">Regístrate ahora!</h2>
 
             <form>
               <div class="row">
-                
                 <div class="col-md-6 mb-4">
                   <div data-mdb-input-init class="form-outline">
-                    <input type="text" id="signupName" class="form-control" [(ngModel)]="firstName" name="firstName" required>
-                    <label class="form-label" for="signupFirstName" [style.opacity]="isFieldEmpty('firstName') ? '1' : '0'">Nombre</label>
+                    <input
+                      type="text"
+                      id="signupName"
+                      class="form-control"
+                      [(ngModel)]="firstName"
+                      name="firstName"
+                      required
+                    />
+                    <label
+                      class="form-label"
+                      for="signupFirstName"
+                      [style.opacity]="isFieldEmpty('firstName') ? '1' : '0'"
+                      >Nombre</label
+                    >
                   </div>
                 </div>
-                
+
                 <div class="col-md-6 mb-4">
                   <div data-mdb-input-init class="form-outline">
-                    <input type="text" id="signupLastName" class="form-control" [(ngModel)]="lastName" name="lastName" required>
-                    <label class="form-label" for="signupLastName" [style.opacity]="isFieldEmpty('lastName') ? '1' : '0'">Apellido</label>
+                    <input
+                      type="text"
+                      id="signupLastName"
+                      class="form-control"
+                      [(ngModel)]="lastName"
+                      name="lastName"
+                      required
+                    />
+                    <label
+                      class="form-label"
+                      for="signupLastName"
+                      [style.opacity]="isFieldEmpty('lastName') ? '1' : '0'"
+                      >Apellido</label
+                    >
                   </div>
                 </div>
-              
-              </div>
-          
-              <div data-mdb-input-init class="form-outline mb-4">
-                <input type="email" id="signupEmail" class="form-control" [(ngModel)]="email" name="email" required>
-                <label class="form-label" for="signupEmail" [style.opacity]="isFieldEmpty('email') ? '1' : '0'">Correo electrónico</label>
-              </div>
-          
-              <div class="row">
-              
-                <div class="col-md-6 mb-4">
-                  <div data-mdb-input-init class="form-outline">
-                    <input type="text" id="signupUser" class="form-control" [(ngModel)]="user" name="user" required>
-                    <label class="form-label" for="signupUser" [style.opacity]="isFieldEmpty('user') ? '1' : '0'">Usuario</label>
-                  </div>
-                </div>
-              
-                <div class="col-md-6 mb-4">
-                  <div data-mdb-input-init class="form-outline">
-                    <input type="password" id="signupPassword" class="form-control" [(ngModel)]="password" name="password" required>
-                    <label class="form-label" for="signupPassword" [style.opacity]="isFieldEmpty('password') ? '1' : '0'">Contraseña</label>
-                  </div>
-                </div>
-              
               </div>
 
-              <button type="submit" data-mdb-button-init data-mdb-ripple-init class="btn btn-primary btn-block mb-4">
+              <div data-mdb-input-init class="form-outline mb-4">
+                <input
+                  type="email"
+                  id="signupEmail"
+                  class="form-control"
+                  [(ngModel)]="email"
+                  name="email"
+                  required
+                />
+                <label
+                  class="form-label"
+                  for="signupEmail"
+                  [style.opacity]="isFieldEmpty('email') ? '1' : '0'"
+                  >Correo electrónico</label
+                >
+              </div>
+
+              <div class="row">
+                <div class="col-md-6 mb-4">
+                  <div data-mdb-input-init class="form-outline">
+                    <input
+                      type="text"
+                      id="signupUser"
+                      class="form-control"
+                      [(ngModel)]="user"
+                      name="user"
+                      required
+                    />
+                    <label
+                      class="form-label"
+                      for="signupUser"
+                      [style.opacity]="isFieldEmpty('user') ? '1' : '0'"
+                      >Usuario</label
+                    >
+                  </div>
+                </div>
+
+                <div class="col-md-6 mb-4">
+                  <div data-mdb-input-init class="form-outline">
+                    <input
+                      type="password"
+                      id="signupPassword"
+                      class="form-control"
+                      [(ngModel)]="password"
+                      name="password"
+                      required
+                    />
+                    <label
+                      class="form-label"
+                      for="signupPassword"
+                      [style.opacity]="isFieldEmpty('password') ? '1' : '0'"
+                      >Contraseña</label
+                    >
+                  </div>
+                </div>
+              </div>
+
+              <button
+                type="submit"
+                data-mdb-button-init
+                data-mdb-ripple-init
+                class="btn btn-primary btn-block mb-4"
+              >
                 Registrarme
               </button>
-          
+
               <!-- Register buttons -->
               <div class="text-center">
                 <p>o registrarme con:</p>
-                <button type="button" data-mdb-button-init data-mdb-ripple-init class="btn btn-link btn-floating mx-1">
+                <button
+                  type="button"
+                  data-mdb-button-init
+                  data-mdb-ripple-init
+                  class="btn btn-link btn-floating mx-1"
+                >
                   <i class="fab fa-facebook-f"></i>
                 </button>
-          
-                <button type="button" data-mdb-button-init data-mdb-ripple-init class="btn btn-link btn-floating mx-1">
+
+                <button
+                  type="button"
+                  data-mdb-button-init
+                  data-mdb-ripple-init
+                  class="btn btn-link btn-floating mx-1"
+                >
                   <i class="fab fa-google"></i>
                 </button>
-          
               </div>
             </form>
-            <a (click)="isLoginVisible = !isLoginVisible" href="#"><p>Posees una cuenta? Ingresa aquí!</p></a>
+            <a (click)="isLoginVisible = !isLoginVisible" href="#"
+              ><p>Posees una cuenta? Ingresa aquí!</p></a
+            >
           </div>
           <!--Fin formulario signup-->
-          
         </div>
       </div>
-      
+
       <!--Imagen derecha-->
-      <div [ngClass]="isLoginVisible ? 'd-none d-lg-block col-lg-6 mb-5 mb-lg-0' : 'col-0'" style="position: relative; overflow: hidden;"><!--Los estilos se pueden sacar. Ver que queda mejor-->
-        <img src="https://mdbootstrap.com/img/new/ecommerce/vertical/004.jpg" class="w-100 rounded-4 shadow-4" alt="" [ngClass]="isLoginVisible ? 'active' : ''" id="rightImage">
+      <div
+        [ngClass]="
+          isLoginVisible ? 'd-none d-lg-block col-lg-6 mb-5 mb-lg-0' : 'col-0'
+        "
+        style="position: relative; overflow: hidden"
+      >
+        <!--Los estilos se pueden sacar. Ver que queda mejor-->
+        <img
+          src="https://mdbootstrap.com/img/new/ecommerce/vertical/004.jpg"
+          class="w-100 rounded-4 shadow-4"
+          alt=""
+          [ngClass]="isLoginVisible ? 'active' : ''"
+          id="rightImage"
+        />
       </div>
-      
     </div>
   </div>
 </section>

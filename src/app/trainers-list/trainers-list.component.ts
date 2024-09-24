@@ -3,6 +3,7 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { environment } from '../../environments/environment';
 import { IUser } from '../core/interfaces/user.interface';
+import { AuthService } from '../services/auth.service.js';
 
 @Component({
   selector: 'app-trainers-list',
@@ -15,7 +16,11 @@ export class TrainersListComponent {
   url: string = '';
   trainers: IUser[] = [];
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) {
+    const service = new AuthService(http);
+
+    console.log(service.getUser());
+  }
 
   async getTrainers() {
     try {
