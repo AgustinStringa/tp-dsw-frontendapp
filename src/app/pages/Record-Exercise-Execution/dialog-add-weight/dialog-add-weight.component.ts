@@ -70,8 +70,6 @@ export class DialogAddWeightComponent {
     }
   }
 
-  //'Ingrese un peso válido (no debe ser negativo) y asegúrese de que la rutina de ejercicios esté seleccionada.'
-
   openSnackBar(message: string, action: string) {
     this._snackBar.open(message, action);
   }
