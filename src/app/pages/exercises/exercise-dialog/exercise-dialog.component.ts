@@ -24,10 +24,11 @@ import {
   HttpClientModule,
   HttpErrorResponse,
 } from '@angular/common/http';
-import { environment } from '../../../../environments/environment.js';
 import { catchError } from 'rxjs/operators';
 import { throwError } from 'rxjs';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { environment } from '../../../../environments/environment.js';
+import { trimValidator } from '../../../core/Functions/trim-validator.js';
 @Component({
   selector: 'app-exercise-dialog',
   standalone: true,
@@ -54,17 +55,27 @@ export class ExerciseDialogComponent {
   readonly dialogRef = inject(MatDialogRef<DialogExerciseData>);
   readonly data = inject<DialogExerciseData>(MAT_DIALOG_DATA);
   exerciseForm = new FormGroup({
-    name: new FormControl<string>('', Validators.required),
-    description: new FormControl<string>('', Validators.required),
+    name: new FormControl<string>('', [
+      Validators.required,
+      Validators.nullValidator,
+      Validators.minLength(1),
+      trimValidator(),
+    ]),
+    description: new FormControl<string>('', [
+      Validators.required,
+      Validators.nullValidator,
+      Validators.minLength(1),
+      trimValidator(),
+    ]),
     urlVideo: new FormControl<string>(''),
   });
 
   constructor(private http: HttpClient) {
     if (this.data.action == 'put') {
       this.exerciseForm.patchValue({
-        name: this.data.exercise.name,
-        description: this.data.exercise.description,
-        urlVideo: this.data.exercise.urlVideo,
+        name: this.data.exercise.name.trim(),
+        description: this.data.exercise.description.trim(),
+        urlVideo: this.data.exercise.urlVideo.trim(),
       });
     }
   }

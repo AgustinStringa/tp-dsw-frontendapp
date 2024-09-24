@@ -26,7 +26,9 @@
         <tr>
           <td>{{ e.name }}</td>
           <td>{{ e.description }}</td>
-          <td><a href="">Enlace al video</a> {{ e.urlVideo }}</td>
+          <td>
+            <a href="{{ e.urlVideo }}" target="_blank">Enlace al video</a>
+          </td>
           <td>
             <button
               (click)="removeExercise(e.id)"
