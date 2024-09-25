@@ -28,4 +28,6 @@ export class CurrentMembershipsListComponent {
       console.log(error);
     }
   }
+
+  addMembership() {}
 }

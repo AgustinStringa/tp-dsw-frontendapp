@@ -1,11 +1,4 @@
 .membership-types-list-container {
-  width: 70%;
+  width: 80%;
   margin: 0 auto 20px;
-}
-
-.view-memberships-button {
-  background-color: lightgreen;
-  width: auto;
-  border-radius: 10px;
-  border: none;
 }
