@@ -28,17 +28,22 @@
         <td>{{ mt.description }}</td>
         <td>${{ mt.price }}</td>
         <td align="center">
-          <button type="button" class="view-memberships-button">Ver</button>
+          <a
+            class="nav-link"
+            routerLink="{{ getRouterLink(mt.id) }}"
+            target="_blank"
+            >Ver</a
+          >
         </td>
         <td class="td-actions">
           <button
-            (click)="deleteMembershipType()"
+            (click)="deleteMembershipType(mt.id)"
             aria-label="Example icon button with a delete icon"
           >
             <mat-icon>delete</mat-icon>
           </button>
           <button
-            (click)="updateMembershipType()"
+            (click)="updateMembershipType(mt)"
             aria-label="Example icon button with a delete icon"
           >
             <mat-icon>edit</mat-icon>

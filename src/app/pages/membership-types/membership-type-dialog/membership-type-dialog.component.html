@@ -1,12 +1,12 @@
 <div class="exercise-dialog-container">
   <h2 mat-dialog-title>{{ this.data.title }}</h2>
-  <form action="" [formGroup]="exerciseForm">
+  <form action="" [formGroup]="membershipTypeForm">
     <mat-dialog-content>
       <mat-form-field>
-        <mat-label>Ejercicio</mat-label>
+        <mat-label>Nombre</mat-label>
         <input
-          title="ejercicio"
-          placeholder="ej: dominadas"
+          title="nombre"
+          placeholder="Ej: Premium 2024"
           formControlName="name"
           matInput
           type="text"
@@ -18,7 +18,7 @@
       <mat-form-field>
         <mat-label>Descripción:</mat-label>
         <textarea
-          title="exercise description"
+          title="descripcion del tipo de membresía"
           matInput
           cdkTextareaAutosize
           #autosize="cdkTextareaAutosize"
@@ -30,13 +30,13 @@
       <br />
 
       <mat-form-field>
-        <mat-label>Url del video:</mat-label>
+        <mat-label>Precio:</mat-label>
         <input
-          title="url"
-          placeholder="ej: http://youtube.com"
-          formControlName="urlVideo"
+          title="precio"
+          placeholder="ej: 1220"
+          formControlName="price"
           matInput
-          type="text"
+          type="number"
         />
       </mat-form-field>
     </mat-dialog-content>
@@ -44,7 +44,7 @@
       <button
         type="submit"
         mat-button
-        [disabled]="!exerciseForm.valid"
+        [disabled]="!membershipTypeForm.valid"
         (click)="onSubmit()"
       >
         Ok
@@ -53,3 +53,4 @@
     </mat-dialog-actions>
   </form>
 </div>
+>
