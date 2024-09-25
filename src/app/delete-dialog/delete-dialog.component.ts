@@ -46,15 +46,11 @@ export class DeleteDialogComponent {
   onSubmit(): void {
     this.http.delete<any>(this.url).subscribe({
       next: () => {
-        this.closeDialog();
+        this.dialogRef.close('deleted');
       },
       error: (error) => {
         console.error('Error en la petición:', error);
       },
     });
-  }
-
-  closeDialog(): void {
-    this.dialogRef.close();
   }
 }

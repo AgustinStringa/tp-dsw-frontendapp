@@ -21,7 +21,7 @@ export interface DialogExerciseData {
   styleUrl: './exercises-list.component.css',
 })
 export class ExercisesListComponent {
-  exercises: IExercise[] | undefined = [];
+  exercises: IExercise[] | null = null;
   constructor(private http: HttpClient, private dialog: MatDialog) {
     this.getExercises();
   }
@@ -29,8 +29,10 @@ export class ExercisesListComponent {
   openDialog(dialog: ComponentType<unknown>, data: object): void {
     const dialogRef = this.dialog.open(dialog, { data });
 
-    dialogRef.afterClosed().subscribe(() => {
-      this.getExercises();
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result !== 'none') {
+        this.getExercises();
+      }
     });
   }
 
@@ -40,11 +42,12 @@ export class ExercisesListComponent {
         this.exercises = res.data;
       });
     } catch (error: any) {
+      this.exercises = null;
       console.log(error);
     }
   }
 
-  editExercise(e: IExercise): void {
+  updateExercise(e: IExercise): void {
     this.openDialog(ExerciseDialogComponent, {
       exercise: e,
       title: 'Editar ejercicio',
@@ -59,7 +62,7 @@ export class ExercisesListComponent {
     });
   }
 
-  removeExercise(id: string | undefined): void {
+  deleteExercise(id: string | undefined): void {
     this.openDialog(DeleteDialogComponent, {
       id: id,
       title: 'Eliminar ejercicio',

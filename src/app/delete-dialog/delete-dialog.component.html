@@ -4,7 +4,7 @@
     <button
       title="close dialog"
       type="button"
-      (click)="closeDialog()"
+      (click)="this.dialogRef.close('none')"
       class="btn-close"
     ></button>
   </div>
@@ -16,7 +16,9 @@
   <div>
     <mat-dialog-actions>
       <button mat-button type="button" (click)="onSubmit()">Confirmar</button>
-      <button mat-button type="button" (click)="closeDialog()">Cancelar</button>
+      <button mat-button type="button" (click)="this.dialogRef.close('none')">
+        Cancelar
+      </button>
     </mat-dialog-actions>
   </div>
 </mat-dialog-content>

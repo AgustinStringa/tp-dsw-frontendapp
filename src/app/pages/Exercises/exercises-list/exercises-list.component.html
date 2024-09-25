@@ -10,7 +10,7 @@
     </button>
   </div>
   <div class="exercises-list-container">
-    @if (exercises && exercises.length > 0) {
+    @if (exercises !== null && exercises.length > 0) {
     <table align="center">
       <thead>
         <tr>
@@ -31,13 +31,13 @@
           </td>
           <td>
             <button
-              (click)="removeExercise(e.id)"
+              (click)="deleteExercise(e.id)"
               aria-label="Example icon button with a delete icon"
             >
               <mat-icon>delete</mat-icon>
             </button>
             <button
-              (click)="editExercise(e)"
+              (click)="updateExercise(e)"
               aria-label="Example icon button with a delete icon"
             >
               <mat-icon>edit</mat-icon>
@@ -47,7 +47,7 @@
         }
       </tbody>
     </table>
-    } @else if (exercises && exercises.length == 0){
+    } @else if (exercises !== null && exercises.length == 0){
     <div class="alert alert-warning fs-6" role="alert">
       No hay ejercicios cargados. Crea uno para comenzar.
     </div>

@@ -81,7 +81,7 @@ export class ExerciseDialogComponent {
   }
 
   onNoClick(): void {
-    this.dialogRef.close();
+    this.dialogRef.close('none');
   }
 
   onSubmit(): void {
@@ -98,7 +98,6 @@ export class ExerciseDialogComponent {
         })
         .pipe(
           catchError((error: HttpErrorResponse) => {
-            console.log(error);
             if (error.status === 400) {
               this._snackBar.open('Error al crear el ejercicio', 'cerrar', {
                 duration: 3000,
@@ -123,7 +122,7 @@ export class ExerciseDialogComponent {
             })
             .afterDismissed()
             .subscribe((info) => {
-              this.dialogRef.close();
+              this.dialogRef.close('created');
             });
         });
     } else if (this.data.action == 'put') {
@@ -167,7 +166,7 @@ export class ExerciseDialogComponent {
             })
             .afterDismissed()
             .subscribe((info) => {
-              this.dialogRef.close();
+              this.dialogRef.close('updated');
             });
         });
     }

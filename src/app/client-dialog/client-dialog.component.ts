@@ -38,6 +38,7 @@ export class ClientDialogComponent {
   title: string = '';
   action: string = '';
   clientId: string | undefined;
+  url: string = '';
 
   form = new FormGroup({
     firstName: new FormControl('', [Validators.required]),
@@ -56,12 +57,13 @@ export class ClientDialogComponent {
 
   constructor(
     @Inject(MAT_DIALOG_DATA)
-    public data: { title: string; action: string; client: IUser },
+    public data: { title: string; action: string; client: IUser; url: string },
     public dialogRef: MatDialogRef<ClientDialogComponent>,
     private http: HttpClient
   ) {
     this.title = data.title;
     this.action = data.action;
+    this.url = data.url;
 
     if (data.client !== undefined) {
       const form = this.form.controls;
@@ -79,7 +81,7 @@ export class ClientDialogComponent {
     let data: Record<string, any> = {
       firstName: this.form.get('firstName')?.value,
       lastName: this.form.get('lastName')?.value,
-      dni: this.form.get('dni')?.value,
+      dni: String(this.form.get('dni')?.value),
       email: this.form.get('email')?.value,
     };
 
@@ -88,8 +90,8 @@ export class ClientDialogComponent {
 
     if (this.action === 'post') {
       try {
-        this.http.post<any>(environment.clientsUrl, data).subscribe((info) => {
-          this.closeModal();
+        this.http.post<any>(this.url, data).subscribe((info) => {
+          this.dialogRef.close('created');
         });
       } catch (error: any) {
         console.log(error);
@@ -97,17 +99,13 @@ export class ClientDialogComponent {
     } else if (this.action === 'put') {
       try {
         this.http
-          .put<any>(environment.clientsUrl + '/' + this.clientId, data)
+          .put<any>(this.url + '/' + this.clientId, data)
           .subscribe((info) => {
-            this.closeModal();
+            this.dialogRef.close('updated');
           });
       } catch (error: any) {
         console.log(error);
       }
     }
-  }
-
-  closeModal(): void {
-    this.dialogRef.close();
   }
 }

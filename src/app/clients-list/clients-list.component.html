@@ -7,7 +7,7 @@
     </button>
   </div>
 
-  @if (clients.length > 0) {
+  @if (clients !== null && clients.length > 0) {
   <table>
     <thead>
       <tr>
@@ -36,7 +36,7 @@
             <mat-icon>delete</mat-icon>
           </button>
           <button
-            (click)="updateUser(c.id)"
+            (click)="updateUser(c)"
             aria-label="Example icon button with a delete icon"
           >
             <mat-icon>edit</mat-icon>
@@ -46,7 +46,13 @@
       }
     </tbody>
   </table>
+  } @else if (clients !== null && clients.length == 0){
+  <div class="alert alert-warning fs-6" role="alert">
+    No hay clientes cargados. Crea uno para comenzar.
+  </div>
   } @else {
-  <p>No se pudieron cargar los clientes</p>
+  <div class="alert alert-danger fs-6" role="alert">
+    No se pudieron cargar los clientes.
+  </div>
   }
 </div>
