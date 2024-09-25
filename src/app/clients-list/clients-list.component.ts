@@ -2,16 +2,16 @@ import { Component } from '@angular/core';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { NgFor, NgIf } from '@angular/common';
 import { MatDialog } from '@angular/material/dialog';
+import { MatIconModule } from '@angular/material/icon';
 import { ClientDialogComponent } from '../client-dialog/client-dialog.component';
 import { DeleteDialogComponent } from '../delete-dialog/delete-dialog.component';
 import { ComponentType } from '@angular/cdk/portal';
 import { environment } from '../../environments/environment';
 import { IUser } from '../core/interfaces/user.interface';
-
 @Component({
   selector: 'app-clients-list',
   standalone: true,
-  imports: [HttpClientModule, NgFor, NgIf],
+  imports: [NgFor, NgIf, HttpClientModule, MatIconModule],
   templateUrl: './clients-list.component.html',
   styleUrl: './clients-list.component.css',
 })

@@ -1,38 +1,52 @@
-<div class="usersListContainer">
+<div class="users-list-container">
+  <h2 class="crud-page-title">Clientes:</h2>
 
-@if (clients.length > 0) {
+  <div class="my-4 text-end">
+    <button type="button" class="btn btn-primary btn-lg" (click)="addUser()">
+      Nuevo cliente
+    </button>
+  </div>
+
+  @if (clients.length > 0) {
   <table>
     <thead>
       <tr>
         <th>Apellido</th>
         <th>Nombre</th>
-        <th>Usuario</th>
+        <th>Dni</th>
         <th>Correo electrónico</th>
-        <th></th>
-        <th></th>
+        <th>Acciones</th>
       </tr>
     </thead>
-    
+
     <tbody>
-  @for (c of clients; track c) {
+      @for (c of clients; track c) {
       <tr>
         <td>{{ c.lastName }}</td>
         <td>{{ c.firstName }}</td>
         <td>{{ c.dni }}</td>
-        <td>{{ c.email }}</td>
         <td>
-          <button type="button" (click)="updateUser(c.id)">Modificar</button>
+          {{ c.email }}
         </td>
-        <td>
-          <button type="button" (click)="deleteUser(c.id)">Eliminar</button>
+        <td class="td-actions">
+          <button
+            (click)="deleteUser(c.id)"
+            aria-label="Example icon button with a delete icon"
+          >
+            <mat-icon>delete</mat-icon>
+          </button>
+          <button
+            (click)="updateUser(c.id)"
+            aria-label="Example icon button with a delete icon"
+          >
+            <mat-icon>edit</mat-icon>
+          </button>
         </td>
       </tr>
-  }
+      }
     </tbody>
   </table>
-} @else {
+  } @else {
   <p>No se pudieron cargar los clientes</p>
-}
+  }
 </div>
-
-<button (click)="addUser()">Nuevo cliente</button>

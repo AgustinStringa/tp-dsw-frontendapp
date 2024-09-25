@@ -6,14 +6,31 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import {
+  MAT_DIALOG_DATA,
+  MatDialogRef,
+  MatDialogContent,
+  MatDialogActions,
+  MatDialogTitle,
+} from '@angular/material/dialog';
+import { MatFormFieldModule } from '@angular/material/form-field';
 import { environment } from '../../environments/environment';
 import { IUser } from '../core/interfaces/user.interface';
-
+import { MatInputModule } from '@angular/material/input';
+import { MatButtonModule } from '@angular/material/button';
 @Component({
   selector: 'app-client-dialog',
   standalone: true,
-  imports: [ReactiveFormsModule, HttpClientModule],
+  imports: [
+    ReactiveFormsModule,
+    HttpClientModule,
+    MatFormFieldModule,
+    MatDialogContent,
+    MatDialogActions,
+    MatInputModule,
+    MatButtonModule,
+    MatDialogTitle,
+  ],
   templateUrl: './client-dialog.component.html',
   styleUrl: './client-dialog.component.css',
 })
@@ -71,8 +88,9 @@ export class ClientDialogComponent {
 
     if (this.action === 'post') {
       try {
-        this.http.post<any>(environment.clientsUrl, data).subscribe();
-        this.closeModal();
+        this.http.post<any>(environment.clientsUrl, data).subscribe((info) => {
+          this.closeModal();
+        });
       } catch (error: any) {
         console.log(error);
       }
@@ -80,8 +98,9 @@ export class ClientDialogComponent {
       try {
         this.http
           .put<any>(environment.clientsUrl + '/' + this.clientId, data)
-          .subscribe();
-        this.closeModal();
+          .subscribe((info) => {
+            this.closeModal();
+          });
       } catch (error: any) {
         console.log(error);
       }

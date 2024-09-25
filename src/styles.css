@@ -14,16 +14,24 @@ body {
 }
 
 /*TABLAS PARA CRUDS*/
+.crud-page-title {
+    font-size: 2.5rem !important;
+    font-weight: bold !important;
+    margin: 2rem 0 !important;
+}
+
 .exercises-list-container table,
 .memberships-list-container table,
-.membership-types-list-container table {
+.membership-types-list-container table,
+.users-list-container table {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     grid-row: auto;
 }
 
 .exercises-list-container thead,
 .memberships-list-container thead,
-.membership-types-list-container thead {
+.membership-types-list-container thead,
+.users-list-container thead {
     background-color: rgba(181, 255, 160, 0.689);
 }
 
@@ -32,13 +40,16 @@ body {
 .memberships-list-container td,
 .memberships-list-container th,
 .membership-types-list-container td,
-.membership-types-list-container th {
+.membership-types-list-container th,
+.users-list-container td,
+.users-list-container th {
     border: 1px solid #ddd;
     padding: 10px;
 }
 
 .exercises-list-container table button,
-.memberships-list-container button {
+.memberships-list-container button,
+.users-list-container table button {
     margin-top: 20px;
     border-radius: 5px;
     background-color: lightgreen;
@@ -49,7 +60,8 @@ body {
     width: 85%;
 }
 
-.exercises-list-container table td button {
+.exercises-list-container table td button,
+.users-list-container table td button {
     border: none;
     padding: .5rem;
     transition: all .3s ease-in-out;

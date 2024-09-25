@@ -1,4 +1,20 @@
-.usersListContainer {
+.users-list-container {
     width: 70%;
-    margin: 0 auto;
+    margin: 2rem auto;
+}
+
+.users-list-container table {
+    width: 100%;
+}
+
+.td-actions {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 1.5rem;
+}
+
+th,
+td {
+    text-align: center;
 }
