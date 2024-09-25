@@ -30,14 +30,15 @@ import {
   HttpErrorResponse,
 } from '@angular/common/http';
 import { MatDialog } from '@angular/material/dialog';
-import Client from '../../../core/classes/client.js';
+
 import { ClientsMembershipListComponent } from '../clients-membership-list/clients-membership-list.component.js';
 import { DialogNewExerciseRoutineComponent } from '../dialog-new-exercise-routine/dialog-new-exercise-routine.component.js';
 import { environment } from '../../../../environments/environment.js';
 import { ExerciseRoutineCardComponent } from '../exercise-routine-card/exercise-routine-card.component.js';
 import { IExerciseRoutine } from '../../../core/interfaces/exercise-routine.inteface.js';
 import { IExercise } from '../../../core/interfaces/exercise.interface.js';
-
+import Client from '../../../core/Classes/client.js';
+import { Router } from '@angular/router';
 interface Day {
   exercisesRoutine?: IExerciseRoutine[];
   number: number;
@@ -94,7 +95,7 @@ export class CreateRoutinePageComponent implements AfterViewInit {
   readonly dialog = inject(MatDialog);
   private _snackBar = inject(MatSnackBar);
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private router: Router) {
     this.getClientsWithMembership();
     this.getExercises();
   }
@@ -166,8 +167,7 @@ export class CreateRoutinePageComponent implements AfterViewInit {
   getDateToWithFormat() {
     if (
       this.routineForm.value.dateTo != null &&
-      this.routineForm.value.dateTo != undefined &&
-      this.weeks.length > 0
+      this.routineForm.value.dateTo != undefined
     ) {
       return lightFormat(this.routineForm.value.dateTo, 'dd/MM/yyy');
     } else return '';
@@ -287,25 +287,44 @@ export class CreateRoutinePageComponent implements AfterViewInit {
     };
     try {
       this.http
-        .post<any>(environment.createRoutineUrl, newRoutine)
+        .post<any>(environment.routinesUrl, newRoutine)
         .pipe(
           catchError((error: HttpErrorResponse) => {
-            if (error.status === 400) {
+            console.log(error);
+            if (
+              error.status === 400 &&
+              error.error.message == 'There is overlap between routines'
+            ) {
+              this._snackBar.open(
+                'Hay solapamiento entre fechas de rutinas',
+                'cerrar',
+                {
+                  duration: 3000,
+                  panelClass: ['snackbar_error'],
+                }
+              );
+            } else {
               this._snackBar.open('Error al crear la rutina', 'cerrar', {
                 duration: 3000,
                 panelClass: ['snackbar_error'],
               });
             }
+
             return throwError(
               () => new Error(error.message || 'Error desconocido')
             );
           })
         )
         .subscribe((res: any) => {
-          this._snackBar.open('Rutina creada correctamente', 'cerrar', {
-            duration: 3000,
-            panelClass: ['snackbar_success'],
-          });
+          this._snackBar
+            .open('Rutina creada correctamente', 'cerrar', {
+              duration: 3000,
+              panelClass: ['snackbar_success'],
+            })
+            .afterDismissed()
+            .subscribe((info) => {
+              this.reloadCurrentRoute();
+            });
         });
     } catch (error: any) {}
   }
@@ -328,5 +347,10 @@ export class CreateRoutinePageComponent implements AfterViewInit {
       });
     }
     this.setDateTo();
+  }
+
+  reloadCurrentRoute() {
+    //ES UNA SOLUCION BASTANTE CUTRE, PERO CUMPLE
+    window.location.reload();
   }
 }
