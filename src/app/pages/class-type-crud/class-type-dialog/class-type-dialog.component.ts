@@ -21,6 +21,7 @@ import { MatInputModule } from '@angular/material/input';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { environment } from '../../../../environments/environment';
 import { IClassType } from '../../../core/interfaces/class-type.interface';
+import { trimValidator } from '../../../core/Functions/trim-validator';
 
 interface DialogData {
   title: string;
@@ -53,8 +54,8 @@ export class ClassTypeDialogComponent {
   classTypeId: string | undefined;
 
   form = new FormGroup({
-    name: new FormControl<string>('', [Validators.required]),
-    description: new FormControl<string>('', [Validators.required]),
+    name: new FormControl<string>('', [Validators.required, trimValidator()]),
+    description: new FormControl<string>(''),
   });
 
   constructor(

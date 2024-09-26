@@ -7,17 +7,18 @@ import { DeleteDialogComponent } from '../../../delete-dialog/delete-dialog.comp
 import { environment } from '../../../../environments/environment';
 import { IClassType } from '../../../core/interfaces/class-type.interface';
 import { ComponentType } from '@angular/cdk/portal';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'app-class-type-list',
   standalone: true,
-  imports: [NgIf, NgFor, HttpClientModule],
+  imports: [NgIf, NgFor, HttpClientModule, MatIconModule],
   templateUrl: './class-type-list.component.html',
   styleUrl: './class-type-list.component.css',
 })
 export class ClassTypeListComponent {
   readonly dialog = inject(MatDialog);
-  classTypes: IClassType[] = [];
+  classTypes: IClassType[] | null = null;
 
   constructor(private http: HttpClient) {
     this.getClassTypes();
@@ -29,7 +30,7 @@ export class ClassTypeListComponent {
         this.classTypes = res.data;
       });
     } catch (error: any) {
-      console.log(error);
+      this.classTypes = null;
     }
   }
 
