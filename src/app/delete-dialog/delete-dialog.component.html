@@ -1,13 +1,24 @@
-<div>
-  <h1>{{title}}</h1>
-  <button type="button" (click)="closeModal()" class="btn-close"></button>
-</div>
+<mat-dialog-content>
+  <div>
+    <h3 mat-dialog-title class="p-0">{{ title }}</h3>
+    <button
+      title="close dialog"
+      type="button"
+      (click)="this.dialogRef.close('none')"
+      class="btn-close"
+    ></button>
+  </div>
 
-<div>
-  <p>¿Está seguro?</p>
-</div>
+  <div>
+    <p>¿Está seguro?</p>
+  </div>
 
-<div>
-  <button type="button" (click)="onSubmit()">Confirmar</button>
-  <button type="button" (click)="closeModal()">Cancelar</button>
-</div>
+  <div>
+    <mat-dialog-actions>
+      <button mat-button type="button" (click)="onSubmit()">Confirmar</button>
+      <button mat-button type="button" (click)="this.dialogRef.close('none')">
+        Cancelar
+      </button>
+    </mat-dialog-actions>
+  </div>
+</mat-dialog-content>

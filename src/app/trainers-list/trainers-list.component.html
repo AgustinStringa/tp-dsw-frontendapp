@@ -1,18 +1,54 @@
 <div class="trainers-list-container">
-  <button (click)="getTrainers()">Obtain All Trainers!</button>
+  <h2 class="crud-page-title">Entrenadores:</h2>
+  <div class="my-4 text-end">
+    <button type="button" class="btn btn-primary btn-lg" (click)="addTrainer()">
+      Nuevo Entrenador
+    </button>
+  </div>
+  @if (trainers !== null && trainers.length > 0) {
+  <table>
+    <thead>
+      <tr>
+        <th>Apellido</th>
+        <th>Nombre</th>
+        <th>Dni</th>
+        <th>Correo electrónico</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
 
-  @if (trainers.length > 0) {
-  <ul class="trainers-list">
     @for (trainer of trainers; track trainer.dni) {
-    <li  class="trainer-item">
-      <p class="trainer-detail">trainername: {{ trainer.dni }}</p>
-      <p class="trainer-detail">email : {{ trainer.email }}</p>
-      <p class="trainer-detail">firstName: {{ trainer.firstName }}</p>
-      <p class="trainer-detail">lastName: {{ trainer.lastName }}</p>
-    </li>
+    <tr>
+      <td>{{ trainer.lastName }}</td>
+      <td>{{ trainer.firstName }}</td>
+      <td>{{ trainer.dni }}</td>
+      <td>
+        {{ trainer.email }}
+      </td>
+      <td class="td-actions">
+        <button
+          (click)="deleteTrainer(trainer.id)"
+          aria-label="Example icon button with a delete icon"
+        >
+          <mat-icon>delete</mat-icon>
+        </button>
+        <button
+          (click)="updateTrainer(trainer)"
+          aria-label="Example icon button with a delete icon"
+        >
+          <mat-icon>edit</mat-icon>
+        </button>
+      </td>
+    </tr>
     }
-  </ul>
+  </table>
+  } @else if (trainers !== null && trainers.length == 0){
+  <div class="alert alert-warning fs-6" role="alert">
+    No hay entrenadores cargados. Crea uno para comenzar.
+  </div>
   } @else {
-  <p>No trainers found!</p>
+  <div class="alert alert-danger fs-6" role="alert">
+    No se pudieron cargar los entrenadores.
+  </div>
   }
 </div>
