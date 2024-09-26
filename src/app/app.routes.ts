@@ -7,11 +7,13 @@ import { CurrentMembershipsListComponent } from './current-memberships-list/curr
 import { ClassListComponent } from './pages/Class-Registration/class-list/class-list.component.js';
 import { CreateRoutinePageComponent } from './pages/Create Routine/create-routine-page/create-routine-page.component.js';
 import { ExercisesListComponent } from './pages/Exercises/exercises-list/exercises-list.component.js';
+import { ClassTypeListComponent } from './pages/class-type-crud/class-type-list/class-type-list.component.js';
 
 export const routes: Routes = [
   { path: '', component: LoginComponent },
   { path: 'clients', component: ClientsListComponent },
   { path: 'trainers', component: TrainersListComponent },
+  { path: 'class-types', component: ClassTypeListComponent },
   { path: 'registration', component: ClassListComponent },
   { path: 'create-routine', component: CreateRoutinePageComponent },
   { path: 'currentmemberships', component: CurrentMembershipsListComponent },

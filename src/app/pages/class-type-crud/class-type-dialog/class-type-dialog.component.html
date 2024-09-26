@@ -1,0 +1,23 @@
+<h2 mat-dialog-title>{{ title }}</h2>
+<button type="button" (click)="closeDialog('none')" class="btn-close"></button>
+
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+  <mat-dialog-content>
+    <mat-form-field>
+      <mat-label for="name">Nombre</mat-label>
+      <input type="text" formControlName="name" id="name" matInput>
+    </mat-form-field>
+    <br>
+    <mat-form-field>
+      <mat-label for="description">Descripción</mat-label>
+      <input type="text" formControlName="description" id="description" matInput>
+    </mat-form-field>
+  </mat-dialog-content>
+
+  <mat-dialog-actions>
+    <button type="submit" mat-button [disabled]="!form.valid">Guardar</button>
+    <button mat-button type="button" (click)="closeDialog('none')">
+      Cancelar
+    </button>
+  </mat-dialog-actions>
+</form>

@@ -68,6 +68,21 @@
           >
         </li>
         <li class="nav-item">
+          <a
+            class="nav-link"
+            [ngClass]="{ active: isActive('/registration') }"
+            routerLink="registration"
+            >Registrarse a una clase</a
+          >
+        </li>
+        <li class="nav-item">
+          <a
+            class="nav-link"
+            [ngClass]="{ active: isActive('/class-types') }"
+            routerLink="class-types"
+            >Tipos de clases</a>
+        </li>
+        <li class="nav-item">
           <a class="nav-link" routerLink="">Rutinas</a>
         </li>
         <li class="nav-item">

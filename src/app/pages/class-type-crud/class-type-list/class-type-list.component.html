@@ -1,0 +1,16 @@
+@if (classTypes.length > 0) {
+<ul>
+  @for (type of classTypes; track type) {
+  <li>
+    <strong>{{ type.name }}</strong>: {{ type.description }}
+    <button (click)="updateClassType(type)">Modificar</button>
+    <button (click)="deleteClassType(type.id)">Eliminar</button>
+  </li>
+  }
+</ul>
+} @else {
+<p>No se pudieron cargar los tipos de clases</p>
+}
+
+
+<button (click)="addClassType()">Nuevo tipo</button>

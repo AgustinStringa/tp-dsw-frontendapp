@@ -47,7 +47,7 @@
   </mat-dialog-content>
   <mat-dialog-actions>
     <button type="submit" mat-button [disabled]="!form.valid">Guardar</button>
-    <button mat-button type="submit" (click)="this.dialogRef.close('none')">
+    <button mat-button type="button" (click)="this.dialogRef.close('none')">
       Cancelar
     </button>
   </mat-dialog-actions>
