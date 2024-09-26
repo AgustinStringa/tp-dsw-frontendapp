@@ -47,11 +47,11 @@
     border-bottom-right-radius: 4px;
 }
 
-::ng-deep .snackbar_success,
+/* ::ng-deep .snackbar_success,
 ::ng-deep .snackbar_success * {
     background-color: #28a745 !important;
 }
-
+*/
 ::ng-deep .snackbar_success .mdc-button__label,
 ::ng-deep .snackbar_error .mdc-button__label {
     color: white;

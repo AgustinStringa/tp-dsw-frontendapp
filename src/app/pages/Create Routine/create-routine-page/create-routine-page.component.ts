@@ -30,13 +30,14 @@ import {
   HttpErrorResponse,
 } from '@angular/common/http';
 import { MatDialog } from '@angular/material/dialog';
+import { Router } from '@angular/router';
 import Client from '../../../core/classes/client.js';
 import { ClientsMembershipListComponent } from '../clients-membership-list/clients-membership-list.component.js';
 import { DialogNewExerciseRoutineComponent } from '../dialog-new-exercise-routine/dialog-new-exercise-routine.component.js';
 import { environment } from '../../../../environments/environment.js';
 import { ExerciseRoutineCardComponent } from '../exercise-routine-card/exercise-routine-card.component.js';
-import { IExerciseRoutine } from '../../../core/interfaces/exercise-routine.inteface.js';
 import { IExercise } from '../../../core/interfaces/exercise.interface.js';
+import { IExerciseRoutine } from '../../../core/interfaces/exercise-routine.inteface.js';
 
 interface Day {
   exercisesRoutine?: IExerciseRoutine[];
@@ -94,7 +95,7 @@ export class CreateRoutinePageComponent implements AfterViewInit {
   readonly dialog = inject(MatDialog);
   private _snackBar = inject(MatSnackBar);
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private router: Router) {
     this.getClientsWithMembership();
     this.getExercises();
   }
@@ -106,18 +107,23 @@ export class CreateRoutinePageComponent implements AfterViewInit {
   getClientsWithMembership() {
     try {
       this.http
-        .get<any>(environment.clientsWithMembershipUrl)
+        .get<any>(environment.membershipsActive)
         .subscribe((res: any) => {
-          Array.from(res.data).forEach((u: any) => {
+          Array.from(res.data).forEach((m: any) => {
             this.clientsWithmembership = [
               ...this.clientsWithmembership,
               new Client(
-                u.id,
-                u.lastName,
-                u.firstName,
-                u.dni,
-                u.email,
-                u.currentMembership
+                m.client.id,
+                m.client.lastName,
+                m.client.firstName,
+                m.client.dni,
+                m.client.email,
+                {
+                  dateFrom: m.dateFrom,
+                  dateTo: m.dateTo,
+                  type: m.type,
+                  client: m.client,
+                }
               ),
             ];
           });
@@ -161,8 +167,7 @@ export class CreateRoutinePageComponent implements AfterViewInit {
   getDateToWithFormat() {
     if (
       this.routineForm.value.dateTo != null &&
-      this.routineForm.value.dateTo != undefined &&
-      this.weeks.length > 0
+      this.routineForm.value.dateTo != undefined
     ) {
       return lightFormat(this.routineForm.value.dateTo, 'dd/MM/yyy');
     } else return '';
@@ -267,7 +272,7 @@ export class CreateRoutinePageComponent implements AfterViewInit {
     //post
     //mensaje de exito XOR error
     const newRoutine = {
-      trainer: '66cf6459f3d2bcf6d338b3e6',
+      trainer: '66e9aa2e294b5091cfb08eb0',
       client: this.routineForm.value.client?.id,
       start: parseISO(this.routineForm.value.dateFrom || ''),
       end: this.routineForm.value.dateTo,
@@ -282,25 +287,44 @@ export class CreateRoutinePageComponent implements AfterViewInit {
     };
     try {
       this.http
-        .post<any>(environment.createRoutineUrl, newRoutine)
+        .post<any>(environment.routinesUrl, newRoutine)
         .pipe(
           catchError((error: HttpErrorResponse) => {
-            if (error.status === 400) {
+            console.log(error);
+            if (
+              error.status === 400 &&
+              error.error.message == 'There is overlap between routines'
+            ) {
+              this._snackBar.open(
+                'Hay solapamiento entre fechas de rutinas',
+                'cerrar',
+                {
+                  duration: 3000,
+                  panelClass: ['snackbar_error'],
+                }
+              );
+            } else {
               this._snackBar.open('Error al crear la rutina', 'cerrar', {
                 duration: 3000,
                 panelClass: ['snackbar_error'],
               });
             }
+
             return throwError(
               () => new Error(error.message || 'Error desconocido')
             );
           })
         )
         .subscribe((res: any) => {
-          this._snackBar.open('Rutina creada correctamente', 'cerrar', {
-            duration: 3000,
-            panelClass: ['snackbar_success'],
-          });
+          this._snackBar
+            .open('Rutina creada correctamente', 'cerrar', {
+              duration: 3000,
+              panelClass: ['snackbar_success'],
+            })
+            .afterDismissed()
+            .subscribe((info) => {
+              this.reloadCurrentRoute();
+            });
         });
     } catch (error: any) {}
   }
@@ -323,5 +347,10 @@ export class CreateRoutinePageComponent implements AfterViewInit {
       });
     }
     this.setDateTo();
+  }
+
+  reloadCurrentRoute() {
+    //ES UNA SOLUCION BASTANTE CUTRE, PERO CUMPLE
+    window.location.reload();
   }
 }

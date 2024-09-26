@@ -1,47 +1,56 @@
-import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { Component, Inject } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { MatButtonModule } from '@angular/material/button';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import {
+  MAT_DIALOG_DATA,
+  MatDialogRef,
+  MatDialogClose,
+  MatDialogTitle,
+} from '@angular/material/dialog';
+import { MatDialogContent, MatDialogActions } from '@angular/material/dialog';
+interface DialogData {
+  id: string;
+  url: string;
+  title: string;
+}
 
 @Component({
   selector: 'app-delete-dialog',
   standalone: true,
-  imports: [HttpClientModule],
+  imports: [
+    HttpClientModule,
+    MatDialogActions,
+    MatDialogContent,
+    MatFormFieldModule,
+    MatDialogTitle,
+    MatDialogClose,
+    MatButtonModule,
+  ],
   templateUrl: './delete-dialog.component.html',
   styleUrl: './delete-dialog.component.css',
 })
 export class DeleteDialogComponent {
+  url: string = '';
   title: string = '';
-  id: string = '';
-  entity: string = '';
 
   constructor(
     public dialogRef: MatDialogRef<DeleteDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: any,
+    @Inject(MAT_DIALOG_DATA) public data: DialogData,
     private http: HttpClient
   ) {
+    this.url = data.url + '/' + data.id;
     this.title = data.title;
-    this.id = data.id;
-    this.entity = data.entity;
   }
 
   onSubmit(): void {
-    let url = '//localhost:3000/api';
-    if (this.entity === 'client') {
-      url += '/clients';
-    } else if (this.entity === 'trainers') {
-      url += '/trainers';
-    }
-    url += '/' + this.id;
-
-    try {
-      this.http.delete<any>(url).subscribe();
-      this.dialogRef.close();
-    } catch (error: any) {
-      console.log(error);
-    }
-  }
-
-  closeModal(): void {
-    this.dialogRef.close();
+    this.http.delete<any>(this.url).subscribe({
+      next: () => {
+        this.dialogRef.close('deleted');
+      },
+      error: (error) => {
+        console.error('Error en la petición:', error);
+      },
+    });
   }
 }
