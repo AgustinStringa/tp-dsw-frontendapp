@@ -1,0 +1,76 @@
+<h2 mat-dialog-title>{{ title }}</h2>
+<button type="button" (click)="closeDialog('none')" class="btn-close"></button>
+
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+  <mat-dialog-content>
+    <mat-form-field>
+      <mat-label for="day">Día</mat-label>
+      <mat-select formControlName="day" id="day">
+        <mat-option value="1">Lunes</mat-option>
+        <mat-option value="2">Martes</mat-option>
+        <mat-option value="3">Miércoles</mat-option>
+        <mat-option value="4">Jueves</mat-option>
+        <mat-option value="5">Viernes</mat-option>
+        <mat-option value="6">Sábado</mat-option>
+        <mat-option value="7">Domingo</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label for="startTime">Hora inicio</mat-label>
+      <input matInput type="time" formControlName="startTime" id="startTime" />
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label for="endTime">Hora fin</mat-label>
+      <input matInput type="time" formControlName="endTime" id="endTime" />
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label for="maxCapacity">Capacidad de personas</mat-label>
+      <input
+        matInput
+        type="number"
+        formControlName="maxCapacity"
+        id="maxCapacity"
+      />
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label for="location">Ubicación</mat-label>
+      <input matInput type="text" formControlName="location" id="location" />
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label for="classType">Tipo de clase</mat-label>
+      <mat-select formControlName="classType" id="classType">
+        @for (ct of classTypes; track ct) {
+        <mat-option value="{{ ct.id }}">{{ ct.name }}</mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label for="trainer">Entrenador</mat-label>
+      <mat-select formControlName="trainer" id="trainer">
+        @for (t of trainers; track t) {
+        <mat-option value="{{ t.id }}">{{
+          t.firstName + " " + t.lastName
+        }}</mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
+
+    <!--<mat-form-field>
+      <mat-label for="endTime">Activa</mat-label>
+      <input matInput type="time" formControlName="endTime" id="endTime" />
+    </mat-form-field>-->
+  </mat-dialog-content>
+
+  <mat-dialog-actions>
+    <button mat-button type="submit" [disabled]="!form.valid">Guardar</button>
+    <button mat-button type="button" (click)="closeDialog('none')">
+      Cancelar
+    </button>
+  </mat-dialog-actions>
+</form>

@@ -83,6 +83,12 @@
             >Tipos de clases</a>
         </li>
         <li class="nav-item">
+          <a class="nav-link"
+          [ngClass]="{ active: isActive('/classes') }"
+          routerLink="classes"
+          >Clases</a>
+        </li>
+        <li class="nav-item">
           <a class="nav-link" routerLink="">Rutinas</a>
         </li>
         <li class="nav-item">
