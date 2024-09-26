@@ -23,7 +23,7 @@ export class TrainersListComponent {
     this.getTrainers();
   }
 
-  async getTrainers() {
+  getTrainers() {
     try {
       this.http.get<any>(environment.trainersUrl).subscribe((res) => {
         //TO DO: NO TRAER CONTRASEÑAS

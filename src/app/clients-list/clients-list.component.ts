@@ -22,7 +22,7 @@ export class ClientsListComponent {
     this.getClients();
   }
 
-  async getClients() {
+  getClients() {
     try {
       this.http.get<any>(environment.clientsUrl).subscribe((res) => {
         this.clients = res.data;
