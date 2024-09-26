@@ -1,13 +1,22 @@
+const apiUrl = 'http://localhost:3000/api';
+
 export const environment = {
   production: false,
-  apiUrl: 'http://localhost:3000/api',
-  classesUrl: 'http://localhost:3000/api/classes',
-  clientsUrl: 'http://localhost:3000/api/clients',
-  membershipsUrl: 'http://localhost:3000/api/memberships',
-  routinesUrl: 'http://localhost:3000/api/routines',
-  trainersUrl: 'http://localhost:3000/api/trainers',
-  createRoutineUrl: 'http://localhost:3000/api/routines/routines',
-  clientsWithMembershipUrl:
-    'http://localhost:3000/api/clients/membership-active',
-  exercisesUrl: 'http://localhost:3000/api/routines/exercises',
+  apiUrl: apiUrl,
+  authUrl: apiUrl + '/auth',
+  clientsUrl: apiUrl + '/clients',
+  classTypesUrl: apiUrl + '/classes/types',
+  classesUrl: apiUrl + '/classes',
+  createRoutineUrl: apiUrl + '/routines',
+  exerciseRoutinesUrl: apiUrl + '/routines/exerciseroutines',
+  exercisesUrl: apiUrl + '/routines/exercises',
+  goalsUrl: apiUrl + '/clients/goals',
+  membershipsUrl: apiUrl + '/memberships',
+  membershipsActive: apiUrl + '/memberships/active',
+  membershipTypesUrl: apiUrl + '/memberships/types',
+  paymentsUrl: apiUrl + '/memberships/payments',
+  progressesUrl: apiUrl + '/clients/progresses',
+  routinesUrl: apiUrl + '/routines',
+  trainersUrl: apiUrl + '/trainers',
+  registrationUrl: apiUrl + '/classes/registration',
 };

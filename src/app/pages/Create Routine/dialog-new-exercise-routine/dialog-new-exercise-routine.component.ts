@@ -19,8 +19,7 @@ import {
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { DialogData } from '../create-routine-page/create-routine-page.component.js';
-import Exercise from '../../../core/interfaces/IExercise.interface.js';
-
+import { IExercise } from '../../../core/interfaces/exercise.interface.js';
 @Component({
   selector: 'app-dialog-new-exercise-routine',
   standalone: true,
@@ -43,7 +42,7 @@ export class DialogNewExerciseRoutineComponent {
   readonly dialogRef = inject(MatDialogRef<DialogNewExerciseRoutineComponent>);
   readonly data = inject<DialogData>(MAT_DIALOG_DATA);
   exerciseRoutineForm = new FormGroup({
-    exercise: new FormControl<Exercise | null>(null, Validators.required),
+    exercise: new FormControl<IExercise | null>(null, Validators.required),
     series: new FormControl<number>(1, Validators.required),
     reps: new FormControl<number>(1, Validators.required),
   });

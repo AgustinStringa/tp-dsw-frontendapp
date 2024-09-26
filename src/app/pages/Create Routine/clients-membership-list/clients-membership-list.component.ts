@@ -9,8 +9,9 @@ import {
 } from '@angular/core';
 import { NgClass } from '@angular/common';
 import { SimpleChanges } from '@angular/core';
-import ICurrentMembership from '../../../core/interfaces/ICurrentMembership.interface.js';
-import Client from '../../../core/Classes/Client.js';
+import Client from '../../../core/classes/client.js';
+import { IMembership } from '../../../core/interfaces/membership.interface.js';
+
 class ClientForRoutine extends Client {
   public selected: boolean;
   constructor(
@@ -19,7 +20,7 @@ class ClientForRoutine extends Client {
     firstName: string,
     dni: string,
     email: string,
-    currentMembership: ICurrentMembership
+    currentMembership: IMembership
   ) {
     super(id, lastName, firstName, dni, email, currentMembership);
     this.selected = false;

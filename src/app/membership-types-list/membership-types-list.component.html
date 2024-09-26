@@ -1,0 +1,60 @@
+<div class="membership-types-list-container">
+  <h2 class="crud-page-title">Tipos de membresía:</h2>
+  <div class="my-4 text-end">
+    <button
+      type="button"
+      class="btn btn-primary btn-lg"
+      (click)="addMembershipType()"
+    >
+      Nuevo tipo de membresía
+    </button>
+  </div>
+  @if (membershipTypes !== null && membershipTypes.length > 0) {
+  <table>
+    <thead>
+      <tr>
+        <th>Nombre</th>
+        <th>Descripción</th>
+        <th>Precio</th>
+        <th>Membresías vigentes</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      @for (mt of membershipTypes; track mt) {
+      <tr>
+        <td>{{ mt.name }}</td>
+        <td>{{ mt.description }}</td>
+        <td>${{ mt.price }}</td>
+        <td align="center">
+          <button type="button" class="view-memberships-button">Ver</button>
+        </td>
+        <td class="td-actions">
+          <button
+            (click)="deleteMembershipType()"
+            aria-label="Example icon button with a delete icon"
+          >
+            <mat-icon>delete</mat-icon>
+          </button>
+          <button
+            (click)="updateMembershipType()"
+            aria-label="Example icon button with a delete icon"
+          >
+            <mat-icon>edit</mat-icon>
+          </button>
+        </td>
+      </tr>
+      }
+    </tbody>
+  </table>
+  } @else if (membershipTypes !== null && membershipTypes.length == 0){
+  <div class="alert alert-warning fs-6" role="alert">
+    No hay tipos de membresía cargados. Crea uno para comenzar.
+  </div>
+  } @else {
+  <div class="alert alert-danger fs-6" role="alert">
+    No se pudieron cargar los tipos de membresía.
+  </div>
+  }
+</div>

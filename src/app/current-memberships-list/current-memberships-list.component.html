@@ -1,0 +1,43 @@
+<div class="memberships-list-container">
+  <h2 class="crud-page-title">Membresías:</h2>
+  <div class="my-4 text-end">
+    <button
+      type="button"
+      class="btn btn-primary btn-lg"
+      (click)="addMembership()"
+    >
+      Nueva membresía
+    </button>
+  </div>
+  @if (memberships !== null && memberships.length > 0) {
+  <table align="center">
+    <thead>
+      <tr>
+        <th>Fecha desde</th>
+        <th>Fecha hasta</th>
+        <th>Tipo de membresía</th>
+        <th>Cliente</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      @for (m of memberships; track m) {
+      <tr>
+        <td>{{ m.dateFrom | date : "dd/MM/yyyy - HH:mm:ss" }}</td>
+        <td>{{ m.dateTo | date : "dd/MM/yyyy - HH:mm:ss" }}</td>
+        <td>{{ m.type.name }}</td>
+        <td>{{ m.client.firstName + " " + m.client.lastName }}</td>
+      </tr>
+      }
+    </tbody>
+  </table>
+  }@else if (memberships !== null && memberships.length == 0){
+  <div class="alert alert-warning fs-6" role="alert">
+    No hay membresías cargadas. Crea una para comenzar.
+  </div>
+  } @else {
+  <div class="alert alert-danger fs-6" role="alert">
+    No se pudieron cargar las membresías.
+  </div>
+  }
+</div>
