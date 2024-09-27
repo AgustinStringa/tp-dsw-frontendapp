@@ -61,10 +61,11 @@
       </mat-select>
     </mat-form-field>
 
-    <!--<mat-form-field>
-      <mat-label for="endTime">Activa</mat-label>
-      <input matInput type="time" formControlName="endTime" id="endTime" />
-    </mat-form-field>-->
+    @if (this.action !== "post") {
+    <mat-checkbox formControlName="active" id="active">
+      Clase activa
+    </mat-checkbox>
+    }
   </mat-dialog-content>
 
   <mat-dialog-actions>

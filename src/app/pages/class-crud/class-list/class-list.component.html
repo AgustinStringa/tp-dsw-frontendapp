@@ -1,4 +1,4 @@
-<div class="class-list-container">
+<div class="list-container class-list-container">
   <h2 class="crud-page-title">Clases</h2>
 
   <div class="my-4 text-end">
@@ -15,10 +15,14 @@
         <th>Día</th>
         <th>Hora inicio</th>
         <th>Hora fin</th>
-        <th>Capacidad personas</th>
+        <th>
+          Capacidad<br />
+          personas
+        </th>
         <th>Ubicación</th>
-        <th>Activa</th>
         <th>Entrenador</th>
+        <th>Activa</th>
+        <th>Acciones</th>
       </tr>
     </thead>
 
@@ -26,13 +30,13 @@
       @for (c of classes; track c) {
       <tr>
         <td>{{ c.classType.name }}</td>
-        <td>{{ c.day }}</td>
+        <td>{{ getDayName(c.day) }}</td>
         <td>{{ c.startTime }}</td>
         <td>{{ c.endTime }}</td>
         <td>{{ c.maxCapacity }}</td>
         <td>{{ c.location }}</td>
-        <td>{{ c.active }}</td>
         <td>{{ c.trainer.firstName + " " + c.trainer.lastName }}</td>
+        <td>{{ c.active ? "Sí" : "No" }}</td>
 
         <td class="td-actions">
           <button

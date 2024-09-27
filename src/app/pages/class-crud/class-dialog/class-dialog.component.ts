@@ -14,23 +14,25 @@ import {
   MatDialogRef,
   MatDialogTitle,
 } from '@angular/material/dialog';
-import { ClassTypeDialogComponent } from '../../class-type-crud/class-type-dialog/class-type-dialog.component';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
-import { IClass } from '../../../core/interfaces/class.interface';
-import { MatSelectModule } from '@angular/material/select';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { MatButtonModule } from '@angular/material/button';
+import { MatSelectModule } from '@angular/material/select';
+import { ClassTypeDialogComponent } from '../../class-type-crud/class-type-dialog/class-type-dialog.component';
 import { environment } from '../../../../environments/environment';
+import { IClass } from '../../../core/interfaces/class.interface';
 import { IClassType } from '../../../core/interfaces/class-type.interface';
 import { IUser } from '../../../core/interfaces/user.interface';
+import { trimValidator } from '../../../core/Functions/trim-validator';
 
 interface DialogData {
   title: string;
   action: string;
   trainers: IUser[];
   classTypes: IClassType[];
-  class: IClass | undefined;
+  class_a: IClass | undefined;
 }
 
 @Component({
@@ -48,6 +50,7 @@ interface DialogData {
     MatButtonModule,
     ReactiveFormsModule,
     HttpClientModule,
+    MatCheckboxModule,
   ],
   templateUrl: './class-dialog.component.html',
   styleUrl: './class-dialog.component.css',
@@ -59,14 +62,20 @@ export class ClassDialogComponent {
   readonly classTypes: IClassType[];
   classId: string | undefined;
 
+  //configurar validators
+
   form = new FormGroup({
     day: new FormControl<string>('', [Validators.required]),
     startTime: new FormControl<string>('', [Validators.required]),
     endTime: new FormControl<string>('', [Validators.required]),
-    maxCapacity: new FormControl<string>('', [Validators.required]),
-    location: new FormControl<string>('', [Validators.required]),
+    maxCapacity: new FormControl<number | null>(null, [Validators.required]),
+    location: new FormControl<string>('', [
+      Validators.required,
+      trimValidator(),
+    ]),
     classType: new FormControl<string>('', [Validators.required]),
     trainer: new FormControl<string>('', [Validators.required]),
+    active: new FormControl<boolean>(true, [Validators.required]),
   });
 
   constructor(
@@ -79,20 +88,32 @@ export class ClassDialogComponent {
     this.trainers = data.trainers;
     this.classTypes = data.classTypes;
 
-    if (data.class !== undefined) {
+    if (data.class_a !== undefined) {
       const form = this.form.controls;
-      this.classId = data.class.id;
+      this.classId = data.class_a.id;
 
-      //form..setValue(data.classType.name);
-      //form.description.setValue(data.classType.description);
-      //setear los valores a modificar
+      form.day.setValue(data.class_a.day.toString());
+      form.startTime.setValue(data.class_a.startTime);
+      form.endTime.setValue(data.class_a.endTime);
+      form.maxCapacity.setValue(data.class_a.maxCapacity);
+      form.location.setValue(data.class_a.location);
+      form.classType.setValue(data.class_a.classType.id);
+      form.trainer.setValue(data.class_a.trainer.id);
+      form.active.setValue(data.class_a.active);
     }
   }
 
   onSubmit(): void {
+    const form = this.form.controls;
     let data: Record<string, any> = {
-      //name: this.form.get('name')?.value,
-      //description: this.form.get('description')?.value,
+      day: Number(form.day.value),
+      startTime: form.startTime.value,
+      endTime: form.endTime.value,
+      maxCapacity: form.maxCapacity.value,
+      location: form.location.value,
+      classType: form.classType.value,
+      trainer: form.trainer.value,
+      active: form.active.value,
     };
 
     if (this.action === 'post') {

@@ -2,14 +2,14 @@ import { Component, inject } from '@angular/core';
 import { ComponentType } from '@angular/cdk/portal';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { MatIconModule } from '@angular/material/icon';
 import { NgFor, NgIf } from '@angular/common';
 import { ClassDialogComponent } from '../class-dialog/class-dialog.component';
 import { DeleteDialogComponent } from '../../../delete-dialog/delete-dialog.component';
 import { environment } from '../../../../environments/environment';
 import { IClass } from '../../../core/interfaces/class.interface';
-import { MatIconModule } from '@angular/material/icon';
-import { IUser } from '../../../core/interfaces/user.interface';
 import { IClassType } from '../../../core/interfaces/class-type.interface';
+import { IUser } from '../../../core/interfaces/user.interface';
 
 @Component({
   selector: 'app-class-list',
@@ -72,7 +72,9 @@ export class ClassListComponent {
       data: {
         title: 'Modificar Clase',
         action: 'put',
-        classType: class_a,
+        trainers: this.trainers,
+        classTypes: this.classTypes,
+        class_a: class_a,
       },
     });
   }
@@ -93,5 +95,26 @@ export class ClassListComponent {
     dialogRef.afterClosed().subscribe((result) => {
       if (result !== 'none') this.getClasses();
     });
+  }
+
+  getDayName(dayNumber: number) {
+    switch (dayNumber) {
+      case 1:
+        return 'Lunes';
+      case 2:
+        return 'Martes';
+      case 3:
+        return 'Miércoles';
+      case 4:
+        return 'Jueves';
+      case 5:
+        return 'Viernes';
+      case 6:
+        return 'Sábado';
+      case 7:
+        return 'Domingo';
+      default:
+        return 'Error';
+    }
   }
 }
