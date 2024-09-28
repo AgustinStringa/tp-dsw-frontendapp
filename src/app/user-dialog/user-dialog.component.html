@@ -1,53 +1,47 @@
 <h2 mat-dialog-title>{{ title }}</h2>
-<button
-  type="button"
-  (click)="this.dialogRef.close('none')"
-  class="btn-close"
-></button>
+<button type="button" (click)="closeDialog('none')" class="btn-close"></button>
+
 <form [formGroup]="form" (ngSubmit)="onSubmit()">
   <mat-dialog-content>
     <mat-form-field>
       <mat-label for="firstName">Nombre</mat-label>
       <input type="text" formControlName="firstName" id="firstName" matInput />
     </mat-form-field>
-
     <br />
 
     <mat-form-field>
-      <label for="lastName">Apellido</label>
+      <mat-label for="lastName">Apellido</mat-label>
       <input type="text" formControlName="lastName" id="lastName" matInput />
     </mat-form-field>
-
     <br />
 
     <mat-form-field>
-      <label for="dni">DNI</label>
+      <mat-label for="dni">DNI</mat-label>
       <input type="number" formControlName="dni" id="dni" matInput />
     </mat-form-field>
     <br />
 
     <mat-form-field>
-      <label for="email">Correo electrónico</label>
+      <mat-label for="email">Correo electrónico</mat-label>
       <input type="email" formControlName="email" id="email" matInput />
     </mat-form-field>
     <br />
 
-    @if (action === 'post') {
     <mat-form-field>
-      <label for="password">Contraseña</label>
+      <mat-label for="password">Contraseña</mat-label>
       <input
         type="password"
         formControlName="password"
         id="password"
         matInput
+        [placeholder]="userId ? 'Sin modificar' : ''"
       />
     </mat-form-field>
     <br />
-    }
   </mat-dialog-content>
   <mat-dialog-actions>
     <button type="submit" mat-button [disabled]="!form.valid">Guardar</button>
-    <button mat-button type="button" (click)="this.dialogRef.close('none')">
+    <button mat-button type="button" (click)="closeDialog('none')">
       Cancelar
     </button>
   </mat-dialog-actions>

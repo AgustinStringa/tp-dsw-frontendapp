@@ -1,5 +1,5 @@
 import { Routes } from '@angular/router';
-import { ClientsListComponent } from './clients-list/clients-list.component.js';
+import { ClientListComponent } from './pages/client-crud/clients-list/client-list.component.js';
 import { TrainersListComponent } from './trainers-list/trainers-list.component.js';
 import { LoginComponent } from './login/login.component.js';
 import { MembershipTypesListComponent } from './membership-types-list/membership-types-list.component.js';
@@ -12,7 +12,7 @@ import { ClassListComponent as ClassListCrud } from './pages/class-crud/class-li
 
 export const routes: Routes = [
   { path: '', component: LoginComponent },
-  { path: 'clients', component: ClientsListComponent },
+  { path: 'clients', component: ClientListComponent },
   { path: 'trainers', component: TrainersListComponent },
   { path: 'class-types', component: ClassTypeListComponent },
   { path: 'classes', component: ClassListCrud },

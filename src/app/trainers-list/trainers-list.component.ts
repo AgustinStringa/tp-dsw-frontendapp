@@ -7,7 +7,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { DeleteDialogComponent } from '../delete-dialog/delete-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
 import { ComponentType } from '@angular/cdk/overlay/index.js';
-import { ClientDialogComponent } from '../client-dialog/client-dialog.component.js';
+import { UserDialogComponent } from '../user-dialog/user-dialog.component.js';
 
 @Component({
   selector: 'app-trainers-list',
@@ -48,23 +48,23 @@ export class TrainersListComponent {
     this.openDialog(DeleteDialogComponent, {
       id: id,
       entity: 'trainer',
-      title: 'Eliminar entrenador',
+      title: 'Eliminar Entrenador',
       url: environment.trainersUrl,
     });
   }
 
   updateTrainer(trainer: IUser): void {
-    this.openDialog(ClientDialogComponent, {
-      title: 'Modificar entrenador',
+    this.openDialog(UserDialogComponent, {
+      title: 'Modificar Entrenador',
       action: 'put',
-      client: trainer,
+      user: trainer,
       url: environment.trainersUrl,
     });
   }
 
   addTrainer(): void {
-    this.openDialog(ClientDialogComponent, {
-      title: 'Nuevo entrenador',
+    this.openDialog(UserDialogComponent, {
+      title: 'Nuevo Entrenador',
       action: 'post',
       url: environment.trainersUrl,
     });
