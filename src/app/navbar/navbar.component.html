@@ -70,23 +70,18 @@
         <li class="nav-item">
           <a
             class="nav-link"
-            [ngClass]="{ active: isActive('/registration') }"
-            routerLink="registration"
-            >Registrarse a una clase</a
+            [ngClass]="{ active: isActive('/class-types') }"
+            routerLink="class-types"
+            >Tipos de clases</a
           >
         </li>
         <li class="nav-item">
           <a
             class="nav-link"
-            [ngClass]="{ active: isActive('/class-types') }"
-            routerLink="class-types"
-            >Tipos de clases</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link"
-          [ngClass]="{ active: isActive('/classes') }"
-          routerLink="classes"
-          >Clases</a>
+            [ngClass]="{ active: isActive('/classes') }"
+            routerLink="classes"
+            >Clases</a
+          >
         </li>
         <li class="nav-item">
           <a class="nav-link" routerLink="">Rutinas</a>
@@ -95,7 +90,7 @@
           <a class="nav-link" routerLink="/create-routine">Crear Rutina</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" routerLink="/exercise">Ejercicios</a>
+          <a class="nav-link" routerLink="/exercises">Ejercicios</a>
         </li>
       </ul>
     </div>

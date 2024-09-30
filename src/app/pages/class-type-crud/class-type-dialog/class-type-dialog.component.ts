@@ -22,6 +22,7 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { environment } from '../../../../environments/environment';
 import { IClassType } from '../../../core/interfaces/class-type.interface';
 import { trimValidator } from '../../../core/Functions/trim-validator';
+import { NgClass } from '@angular/common';
 
 interface DialogData {
   title: string;
@@ -44,6 +45,7 @@ interface DialogData {
     MatButtonModule,
     ReactiveFormsModule,
     HttpClientModule,
+    NgClass,
   ],
   templateUrl: './class-type-dialog.component.html',
   styleUrl: './class-type-dialog.component.css',

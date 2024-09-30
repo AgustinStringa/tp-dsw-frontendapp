@@ -26,6 +26,7 @@ import { IClass } from '../../../core/interfaces/class.interface';
 import { IClassType } from '../../../core/interfaces/class-type.interface';
 import { IUser } from '../../../core/interfaces/user.interface';
 import { trimValidator } from '../../../core/Functions/trim-validator';
+import { NgClass } from '@angular/common';
 
 interface DialogData {
   title: string;
@@ -51,6 +52,7 @@ interface DialogData {
     ReactiveFormsModule,
     HttpClientModule,
     MatCheckboxModule,
+    NgClass,
   ],
   templateUrl: './class-dialog.component.html',
   styleUrl: './class-dialog.component.css',

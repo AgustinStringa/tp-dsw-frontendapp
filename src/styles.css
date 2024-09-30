@@ -63,3 +63,47 @@ body {
 }
 
 /*TO DO: INCLUDE SNACK BAR STYLES HERE*/
+
+/* MatDialog */
+
+.dialog-title {
+  position: relative;
+  align-items: center;
+}
+
+.dialog-title h2,
+.dialog-title [mat-dialog-title] {
+  padding: 0;
+  margin: 0;
+  flex: 1;
+  text-align: center;
+}
+
+.dialog-title .btn-close {
+  position: absolute;
+  right: 10px;
+  top: 22.8px;
+}
+
+mat-dialog-content.common-dialog {
+  display: flex;
+  flex-direction: column;
+}
+
+mat-dialog-actions.common-dialog {
+  display: flex;
+  justify-content: space-evenly;
+  margin: 0 0 1rem 0;
+}
+
+mat-dialog-actions.common-dialog button {
+  width: 30%;
+  height: 50px;
+}
+
+mat-dialog-actions.common-dialog button.btn-secondary {
+  box-shadow: 0 4px 9px -4px gray;
+}
+mat-dialog-actions.common-dialog button.btn-secondary:hover {
+  background-color: gray;
+}

@@ -1,27 +1,27 @@
 import { Routes } from '@angular/router';
+import { ClassListComponent } from './pages/Class-Registration/class-list/class-list.component.js';
+import { ClassListComponent as ClassListCrud } from './pages/class-crud/class-list/class-list.component.js';
+import { ClassTypeListComponent } from './pages/class-type-crud/class-type-list/class-type-list.component.js';
 import { ClientListComponent } from './pages/client-crud/clients-list/client-list.component.js';
-import { TrainersListComponent } from './trainers-list/trainers-list.component.js';
+import { CreateRoutinePageComponent } from './pages/Create Routine/create-routine-page/create-routine-page.component.js';
+import { CurrentMembershipsListComponent } from './current-memberships-list/current-memberships-list.component.js';
+import { ExercisesListComponent } from './pages/Exercises/exercises-list/exercises-list.component.js';
 import { LoginComponent } from './login/login.component.js';
 import { MembershipTypesListComponent } from './membership-types-list/membership-types-list.component.js';
-import { CurrentMembershipsListComponent } from './current-memberships-list/current-memberships-list.component.js';
-import { ClassListComponent } from './pages/Class-Registration/class-list/class-list.component.js';
-import { CreateRoutinePageComponent } from './pages/Create Routine/create-routine-page/create-routine-page.component.js';
-import { ExercisesListComponent } from './pages/Exercises/exercises-list/exercises-list.component.js';
-import { ClassTypeListComponent } from './pages/class-type-crud/class-type-list/class-type-list.component.js';
-import { ClassListComponent as ClassListCrud } from './pages/class-crud/class-list/class-list.component.js';
+import { TrainersListComponent } from './trainers-list/trainers-list.component.js';
 
 export const routes: Routes = [
   { path: '', component: LoginComponent },
-  { path: 'clients', component: ClientListComponent },
-  { path: 'trainers', component: TrainersListComponent },
-  { path: 'class-types', component: ClassTypeListComponent },
   { path: 'classes', component: ClassListCrud },
-  { path: 'registration', component: ClassListComponent },
+  { path: 'class-types', component: ClassTypeListComponent },
+  { path: 'clients', component: ClientListComponent },
   { path: 'create-routine', component: CreateRoutinePageComponent },
   { path: 'currentmemberships', component: CurrentMembershipsListComponent },
+  { path: 'exercises', component: ExercisesListComponent },
   {
     path: 'membershiptypes',
     component: MembershipTypesListComponent,
   },
-  { path: 'exercises', component: ExercisesListComponent },
+  { path: 'registration', component: ClassListComponent },
+  { path: 'trainers', component: TrainersListComponent },
 ];

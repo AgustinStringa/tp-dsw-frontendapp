@@ -56,10 +56,7 @@ export class ExerciseDialogComponent {
   readonly data = inject<DialogExerciseData>(MAT_DIALOG_DATA);
   exerciseForm = new FormGroup({
     name: new FormControl<string>('', [Validators.required, trimValidator()]),
-    description: new FormControl<string>('', [
-      Validators.required,
-      trimValidator(),
-    ]),
+    description: new FormControl<string>(''),
     urlVideo: new FormControl<string>(''),
   });
 
