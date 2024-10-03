@@ -11,18 +11,39 @@ import { ExercisesListComponent } from './pages/Exercises/exercises-list/exercis
 
 export const routes: Routes = [
   { path: '', component: LoginComponent },
-  { path: 'clients', component: ClientsListComponent },
+  {
+    path: 'clients',
+    component: ClientsListComponent,
+  },
   {
     path: 'trainers',
     component: TrainersListComponent,
     canActivate: [authGuard],
   },
-  { path: 'registration', component: ClassListComponent },
-  { path: 'create-routine', component: CreateRoutinePageComponent },
-  { path: 'currentmemberships', component: CurrentMembershipsListComponent },
+  {
+    path: 'registration',
+    component: ClassListComponent,
+    canActivate: [authGuard],
+  },
+  {
+    path: 'create-routine',
+    component: CreateRoutinePageComponent,
+    canActivate: [authGuard],
+  },
+  {
+    path: 'currentmemberships',
+    component: CurrentMembershipsListComponent,
+    canActivate: [authGuard],
+  },
   {
     path: 'membershiptypes',
     component: MembershipTypesListComponent,
+    canActivate: [authGuard],
+  },
+  {
+    path: 'trainers',
+    component: TrainersListComponent,
+    canActivate: [authGuard],
   },
   { path: 'exercises', component: ExercisesListComponent },
 ];

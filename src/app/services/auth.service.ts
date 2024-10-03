@@ -10,30 +10,26 @@ export class AuthService {
   constructor(private httpClient: HttpClient) {}
 
   //TO DO: ver si falta DNI u otro campo
-  register(
-    email: string,
-    password: string,
-    firstName: string,
-    lastname: string
-  ): Observable<any> {
-    return this.httpClient.post(`${environment.authUrl}`, {
-      email,
-      password,
-      firstName,
-      lastname,
+  register(user: {
+    email: string;
+    password: string;
+    firstName: string;
+    lastname: string;
+    dni: number;
+  }): Observable<any> {
+    return this.httpClient.post(`${environment.clientsUrl}`, {
+      user,
     });
   }
 
-  login(email: string, password: string): Observable<any> {
-    return this.httpClient
-      .post(`${environment.authUrl}`, { email, password })
-      .pipe(
-        tap((response: any) => {
-          console.log(response, 'response desde tap');
-          sessionStorage.setItem('token', response.data.token);
-          sessionStorage.setItem('user', JSON.stringify(response.data.user));
-        })
-      );
+  login(user: { email: string; password: string }): Observable<any> {
+    return this.httpClient.post(`${environment.authUrl}`, user).pipe(
+      tap((response: any) => {
+        console.log(response, 'response desde tap');
+        sessionStorage.setItem('token', response.data.token);
+        sessionStorage.setItem('user', JSON.stringify(response.data.user));
+      })
+    );
   }
 
   setSession(token: string) {
@@ -45,7 +41,11 @@ export class AuthService {
   }
 
   getUser(): any | null {
-    return JSON.parse(sessionStorage.getItem('user') || '');
+    const user = sessionStorage.getItem('user');
+    if (user !== null) {
+      return JSON.parse(user);
+    }
+    return null;
   }
 
   logout() {

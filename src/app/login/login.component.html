@@ -70,9 +70,16 @@
                 type="submit"
                 data-mdb-button-init
                 data-mdb-ripple-init
-                class="btn btn-primary btn-block mb-4"
+                class="btn btn-primary btn-block mb-4 d-flex flex-column align-items-center"
               >
                 Aceptar
+                <mat-progress-spinner
+                  color="accent"
+                  [mode]="'indeterminate'"
+                  [value]="'50'"
+                  diameter="20"
+                  [ngClass]="isSpinnerVisible ? 'd-block' : 'd-none'"
+                ></mat-progress-spinner>
               </button>
             </form>
             <a (click)="isLoginVisible = !isLoginVisible" href="#"
@@ -161,7 +168,7 @@
                       class="form-label"
                       for="signupUser"
                       [style.opacity]="isFieldEmpty('user') ? '1' : '0'"
-                      >Usuario</label
+                      >Dni</label
                     >
                   </div>
                 </div>

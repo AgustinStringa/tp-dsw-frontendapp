@@ -77,6 +77,15 @@
           <a class="nav-link" routerLink="/exercise">Ejercicios</a>
         </li>
       </ul>
+      @if(user != null ){
+      <!-- VER QUE REQUIERE RECARGA -->
+      <button mat-button [matMenuTriggerFor]="menu">Menu</button>
+      <mat-menu #menu="matMenu">
+        <button mat-menu-item>Mi perfil</button>
+        <button mat-menu-item>Cerrar Sesión</button>
+      </mat-menu>
+
+      }
     </div>
   </div>
 </nav>
