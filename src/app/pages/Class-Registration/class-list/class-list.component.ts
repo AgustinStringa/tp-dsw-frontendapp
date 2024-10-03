@@ -1,6 +1,8 @@
 import { NgFor, NgIf } from '@angular/common';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { Component, inject } from '@angular/core';
+import { format } from 'date-fns';
+import { es } from 'date-fns/locale';
 import { environment } from '../../../../environments/environment.js';
 import { IClassType } from '../../../core/interfaces/class-type.interface.js';
 import { IClass } from '../../../core/interfaces/class.interface.js';
@@ -83,5 +85,14 @@ export class ClassListComponent {
     this._snackBar.open(message, action, {
       duration: 3000,
     });
+  }
+  getDayNameFromNumber(dayNumber: number) {
+    if (dayNumber < 1 || dayNumber > 7) {
+      return '';
+    }
+    const date = new Date(2024, 9, dayNumber);
+    let dayName = format(date, 'EEEE', { locale: es });
+    dayName = dayName.charAt(0).toUpperCase() + dayName.slice(1);
+    return dayName;
   }
 }
