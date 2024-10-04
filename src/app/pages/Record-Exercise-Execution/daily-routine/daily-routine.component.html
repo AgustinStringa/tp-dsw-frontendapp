@@ -48,10 +48,15 @@
         @if (!exerciseRoutine.weight) {
         <td>
           <button (click)="openModal(exerciseRoutine)">Registrar Peso</button>
+          <a target="_blank" href={{exerciseRoutine.exercise?.urlVideo}}> Ver Ejercicio</a>
         </td>
         } @else {
         <td>
           <button (click)="openModal(exerciseRoutine)">Editar Peso</button>
+          <button class="primary-button button button-success">
+          
+            <a target="_blank" class="text-white" href={{exerciseRoutine.exercise?.urlVideo}}> Ver Ejercicio</a>
+          </button>
         </td>
         }
         

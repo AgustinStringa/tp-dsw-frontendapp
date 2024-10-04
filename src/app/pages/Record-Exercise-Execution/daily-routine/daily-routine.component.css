@@ -60,6 +60,7 @@
   border-radius: 5px;
   cursor: pointer;
   font-size: 0.9rem;
+  transition: all .2s ease-in-out;
 }
 
 .exercises-table td button:hover {
@@ -74,6 +75,7 @@ button {
   cursor: pointer;
   background-color: #FBAB7E;
   color: white;
+  margin: 5px
 }
 
 button:hover {
