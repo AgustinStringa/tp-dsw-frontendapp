@@ -55,18 +55,8 @@ export class ExerciseDialogComponent {
   readonly dialogRef = inject(MatDialogRef<DialogExerciseData>);
   readonly data = inject<DialogExerciseData>(MAT_DIALOG_DATA);
   exerciseForm = new FormGroup({
-    name: new FormControl<string>('', [
-      Validators.required,
-      Validators.nullValidator,
-      Validators.minLength(1),
-      trimValidator(),
-    ]),
-    description: new FormControl<string>('', [
-      Validators.required,
-      Validators.nullValidator,
-      Validators.minLength(1),
-      trimValidator(),
-    ]),
+    name: new FormControl<string>('', [Validators.required, trimValidator()]),
+    description: new FormControl<string>(''),
     urlVideo: new FormControl<string>(''),
   });
 
@@ -89,6 +79,8 @@ export class ExerciseDialogComponent {
     const description = this.exerciseForm.value.description;
     const urlVideo = this.exerciseForm.value.urlVideo;
     //TODO: ver más validaciones aquí
+    console.log('enviando');
+
     if (this.data.action == 'post') {
       this.http
         .post<any>(environment.exercisesUrl, {

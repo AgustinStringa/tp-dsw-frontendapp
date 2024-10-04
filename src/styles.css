@@ -1,16 +1,20 @@
 /* You can add global styles to this file, and also import other style files */
 
-@import '@fortawesome/fontawesome-free/css/all.css';
-@import 'mdb-angular-ui-kit/assets/scss/mdb.scss';
+@import "@fortawesome/fontawesome-free/css/all.css";
+@import "mdb-angular-ui-kit/assets/scss/mdb.scss";
 
 html,
 body {
-    height: 100%;
+  height: 100%;
 }
 
 body {
-    margin: 0;
-    font-family: Roboto, "Helvetica Neue", sans-serif;
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+.w-85 {
+  width: 85%;
 }
 
 /*TABLAS PARA CRUDS*/
@@ -20,73 +24,86 @@ body {
     margin: 2rem 0 !important;
 }
 
-.exercises-list-container table,
-.memberships-list-container table,
-.membership-types-list-container table,
-.users-list-container table,
-.trainers-list-container table {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    grid-row: auto;
+.list-container table {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  grid-row: auto;
 }
 
-.exercises-list-container thead,
-.memberships-list-container thead,
-.membership-types-list-container thead,
-.users-list-container thead,
-.trainers-list-container thead {
-    background-color: rgba(181, 255, 160, 0.689);
+.list-container thead {
+  background-color: rgba(181, 255, 160, 0.689);
 }
 
-.exercises-list-container td,
-.exercises-list-container th,
-.memberships-list-container td,
-.memberships-list-container th,
-.membership-types-list-container td,
-.membership-types-list-container th,
-.users-list-container td,
-.users-list-container th,
-.trainers-list-container td,
-.trainers-list-container th {
-    border: 1px solid #ddd;
-    padding: 10px;
+.list-container td,
+.list-container th {
+  border: 1px solid #ddd;
+  padding: 10px;
 }
 
-.exercises-list-container table button,
-.memberships-list-container table button,
-.membership-types-list-container table button,
-.users-list-container table button,
-.trainers-list-container table button {
-    margin-top: 20px;
-    border-radius: 5px;
-    background-color: lightgreen;
-    border-color: green;
+.list-container table button {
+  border-radius: 5px;
+  background-color: lightgreen;
+  border-color: green;
 }
 
-.w-85 {
-    width: 85%;
+.list-container table td button {
+  border: none;
+  padding: 0.5rem;
+  transition: all 0.3s ease-in-out;
 }
 
-.exercises-list-container table td button,
-.users-list-container table td button,
-.trainers-list-container table td button,
-.membership-types-list-container table td button {
-    border: none;
-    padding: .5rem;
-    transition: all .3s ease-in-out;
-}
-
-.exercises-list-container table td button:hover,
-.users-list-container table td button:hover,
-.trainers-list-container table td button:hover,
-.membership-types-list-container table td button:hover {
-    background-color: green;
+.list-container table td button:hover {
+  background-color: green;
 }
 
 .td-actions {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    gap: 1.5rem;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  gap: 1.5rem;
 }
 
 /*TO DO: INCLUDE SNACK BAR STYLES HERE*/
+
+/* MatDialog */
+
+.dialog-title {
+  position: relative;
+  align-items: center;
+}
+
+.dialog-title h2,
+.dialog-title [mat-dialog-title] {
+  padding: 0;
+  margin: 0;
+  flex: 1;
+  text-align: center;
+}
+
+.dialog-title .btn-close {
+  position: absolute;
+  right: 10px;
+  top: 22.8px;
+}
+
+mat-dialog-content.common-dialog {
+  display: flex;
+  flex-direction: column;
+}
+
+mat-dialog-actions.common-dialog {
+  display: flex;
+  justify-content: space-evenly;
+  margin: 0 0 1rem 0;
+}
+
+mat-dialog-actions.common-dialog button {
+  width: 30%;
+  height: 50px;
+}
+
+mat-dialog-actions.common-dialog button.btn-secondary {
+  box-shadow: 0 4px 9px -4px gray;
+}
+mat-dialog-actions.common-dialog button.btn-secondary:hover {
+  background-color: gray;
+}

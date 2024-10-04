@@ -1,51 +1,33 @@
 <div class="container">
   <div class="dialog-title">
     <h2 mat-dialog-title>
-      {{ this.data.title }}
+      {{ title }}
     </h2>
     <button
       type="button"
       class="btn-close"
       title="Cerrar ventana"
-      (click)="onNoClick()"
+      (click)="closeDialog('none')"
     ></button>
   </div>
 
-  <form action="" [formGroup]="exerciseForm">
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
     <mat-dialog-content class="common-dialog">
       <mat-form-field>
-        <mat-label>Ejercicio</mat-label>
-        <input
-          title="ejercicio"
-          placeholder="ej: dominadas"
-          formControlName="name"
-          matInput
-          type="text"
-        />
+        <mat-label for="name">Nombre</mat-label>
+        <input type="text" formControlName="name" id="name" matInput />
       </mat-form-field>
 
       <mat-form-field>
-        <mat-label>Descripción</mat-label>
+        <mat-label for="description">Descripción</mat-label>
         <textarea
-          title="exercise description"
           matInput
           cdkTextareaAutosize
           #autosize="cdkTextareaAutosize"
           formControlName="description"
-          cdkAutosizeMinRows="2"
+          cdkAutosizeMinRows="3"
           cdkAutosizeMaxRows="5"
         ></textarea>
-      </mat-form-field>
-
-      <mat-form-field>
-        <mat-label>Url del video</mat-label>
-        <input
-          title="url"
-          placeholder="ej: http://youtube.com"
-          formControlName="urlVideo"
-          matInput
-          type="text"
-        />
       </mat-form-field>
     </mat-dialog-content>
 
@@ -53,9 +35,9 @@
       <button
         mat-button
         type="submit"
-        class="btn btn-success"
-        [disabled]="!exerciseForm.valid"
-        (click)="onSubmit()"
+        class="btn"
+        [ngClass]="{ 'btn-success': form.valid }"
+        [disabled]="!form.valid"
       >
         Guardar
       </button>
@@ -63,7 +45,7 @@
         mat-button
         type="button"
         class="btn-secondary"
-        (click)="onNoClick()"
+        (click)="closeDialog('none')"
       >
         Cancelar
       </button>
