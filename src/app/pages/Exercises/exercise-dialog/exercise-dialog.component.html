@@ -1,7 +1,18 @@
-<div class="exercise-dialog-container">
-  <h2 mat-dialog-title>{{ this.data.title }}</h2>
+<div class="container">
+  <div class="dialog-title">
+    <h2 mat-dialog-title>
+      {{ this.data.title }}
+    </h2>
+    <button
+      type="button"
+      class="btn-close"
+      title="Cerrar ventana"
+      (click)="onNoClick()"
+    ></button>
+  </div>
+
   <form action="" [formGroup]="exerciseForm">
-    <mat-dialog-content>
+    <mat-dialog-content class="common-dialog">
       <mat-form-field>
         <mat-label>Ejercicio</mat-label>
         <input
@@ -13,24 +24,21 @@
         />
       </mat-form-field>
 
-      <br />
-
       <mat-form-field>
-        <mat-label>Descripción:</mat-label>
+        <mat-label>Descripción</mat-label>
         <textarea
           title="exercise description"
           matInput
           cdkTextareaAutosize
           #autosize="cdkTextareaAutosize"
           formControlName="description"
-          cdkAutosizeMinRows="1"
+          cdkAutosizeMinRows="2"
           cdkAutosizeMaxRows="5"
         ></textarea>
       </mat-form-field>
-      <br />
 
       <mat-form-field>
-        <mat-label>Url del video:</mat-label>
+        <mat-label>Url del video</mat-label>
         <input
           title="url"
           placeholder="ej: http://youtube.com"
@@ -40,15 +48,24 @@
         />
       </mat-form-field>
     </mat-dialog-content>
-    <mat-dialog-actions>
-      <button type="submit" mat-button (click)="onNoClick()">Cancelar</button>
+
+    <mat-dialog-actions class="common-dialog">
       <button
-        type="submit"
         mat-button
+        type="submit"
+        class="btn btn-success"
         [disabled]="!exerciseForm.valid"
         (click)="onSubmit()"
       >
-        Ok
+        Guardar
+      </button>
+      <button
+        mat-button
+        type="button"
+        class="btn-secondary"
+        (click)="onNoClick()"
+      >
+        Cancelar
       </button>
     </mat-dialog-actions>
   </form>
