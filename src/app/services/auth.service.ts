@@ -7,6 +7,16 @@ import { environment } from '../../environments/environment.js';
   providedIn: 'root',
 })
 export class AuthService {
+  //podria tiparse la signal
+  // public type userSignal = {
+  // dni:string;
+  // email:string;
+  // firstName:string;
+  // id:string
+  // isClient:boolean
+  // lastName:string
+  // password:string
+  // }
   public userSignal = signal<any>(null);
 
   constructor(private httpClient: HttpClient) {}
@@ -28,8 +38,17 @@ export class AuthService {
     return this.httpClient.post(`${environment.authUrl}`, user).pipe(
       tap((response: any) => {
         sessionStorage.setItem('token', response.data.token);
-        sessionStorage.setItem('user', JSON.stringify(response.data.user));
-        this.userSignal.set(response.data.user);
+        sessionStorage.setItem(
+          'user',
+          JSON.stringify({
+            ...response.data.user,
+            isClient: response.data.client,
+          })
+        );
+        this.userSignal.set({
+          ...response.data.user,
+          isClient: response.data.client,
+        });
       })
     );
   }

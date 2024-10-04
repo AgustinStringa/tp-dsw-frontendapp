@@ -37,6 +37,7 @@
             >Home</a
           >
         </li>
+        @if(!this.userSignal().isClient ){
         <li class="nav-item">
           <a
             class="nav-link"
@@ -45,6 +46,7 @@
             >Clientes</a
           >
         </li>
+        } @if(!this.userSignal().isClient ){
         <li class="nav-item">
           <a
             class="nav-link"
@@ -53,6 +55,7 @@
             >Entrenadores</a
           >
         </li>
+        } @if(!this.userSignal().isClient ){
         <li class="nav-item">
           <a
             class="nav-link"
@@ -61,6 +64,7 @@
             >Tipos de Membresías</a
           >
         </li>
+        } @if(!this.userSignal().isClient ){
         <li class="nav-item">
           <a
             class="nav-link"
@@ -69,6 +73,7 @@
             >Membresías</a
           >
         </li>
+        } @if(this.userSignal().isClient ){
         <li class="nav-item">
           <a
             class="nav-link"
@@ -77,21 +82,26 @@
             >Registrarse a una clase</a
           >
         </li>
+        } @if(!this.userSignal().isClient ){
         <li class="nav-item">
           <a class="nav-link" routerLink="">Rutinas</a>
         </li>
+        } @if(!this.userSignal().isClient ){
         <li class="nav-item">
           <a class="nav-link" routerLink="/create-routine">Crear Rutina</a>
         </li>
+        } @if(!this.userSignal().isClient ){
         <li class="nav-item">
           <a class="nav-link" routerLink="/exercise">Ejercicios</a>
         </li>
+        } @if(this.userSignal().isClient ){
+
         <li class="nav-item">
           <a class="nav-link" routerLink="/record-exercise-execution"
             >Registrar entrenamiento</a
           >
         </li>
-        }
+        } }
       </ul>
       @if(this.userSignal() != null){
       <button mat-button [matMenuTriggerFor]="menu" class="text-white fw-light">
