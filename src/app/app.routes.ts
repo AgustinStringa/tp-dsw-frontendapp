@@ -7,6 +7,7 @@ import { CurrentMembershipsListComponent } from './current-memberships-list/curr
 import { ClassListComponent } from './pages/Class-Registration/class-list/class-list.component.js';
 import { CreateRoutinePageComponent } from './pages/Create Routine/create-routine-page/create-routine-page.component.js';
 import { authGuard } from './guards/auth.guard.js';
+import { DailyRoutineComponent } from './pages/Record-Exercise-Execution/daily-routine/daily-routine.component.js';
 import { ExercisesListComponent } from './pages/Exercises/exercises-list/exercises-list.component.js';
 import { HomePageComponent } from './pages/home-page/home-page.component.js';
 
@@ -37,6 +38,7 @@ export const routes: Routes = [
     component: CurrentMembershipsListComponent,
     canActivate: [authGuard],
   },
+  { path: 'record-exercise-execution', component: DailyRoutineComponent,    canActivate: [authGuard], },
   {
     path: 'membershiptypes',
     component: MembershipTypesListComponent,
