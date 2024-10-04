@@ -18,10 +18,10 @@ body {
 }
 
 /*TABLAS PARA CRUDS*/
-.crud-page-title {
-  font-size: 2.5rem !important;
-  font-weight: bold !important;
-  margin: 2rem 0 !important;
+.crud-page-title, .page-title {
+    font-size: 2.5rem !important;
+    font-weight: bold !important;
+    margin: 2rem 0 !important;
 }
 
 .list-container table {

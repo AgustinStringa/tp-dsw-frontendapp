@@ -9,6 +9,7 @@ import { ExercisesListComponent } from './pages/Exercises/exercises-list/exercis
 import { LoginComponent } from './login/login.component.js';
 import { MembershipTypesListComponent } from './membership-types-list/membership-types-list.component.js';
 import { TrainersListComponent } from './trainers-list/trainers-list.component.js';
+import { DailyRoutineComponent } from './pages/Record-Exercise-Execution/daily-routine/daily-routine.component.js';
 
 export const routes: Routes = [
   { path: '', component: LoginComponent },
@@ -16,6 +17,7 @@ export const routes: Routes = [
   { path: 'class-types', component: ClassTypeListComponent },
   { path: 'clients', component: ClientListComponent },
   { path: 'create-routine', component: CreateRoutinePageComponent },
+  { path: 'record-exercise-execution', component: DailyRoutineComponent },
   { path: 'currentmemberships', component: CurrentMembershipsListComponent },
   { path: 'exercises', component: ExercisesListComponent },
   {

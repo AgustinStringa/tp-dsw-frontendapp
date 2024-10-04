@@ -11,7 +11,7 @@
   </div>
   <div class="list-container exercises-list-container">
     @if (exercises !== null && exercises.length > 0) {
-    <table align="center">
+    <table>
       <thead>
         <tr>
           <th>Nombre</th>
@@ -29,7 +29,7 @@
           <td>
             <a href="{{ e.urlVideo }}" target="_blank">Enlace al video</a>
           </td>
-          <td>
+          <td class="td-actions">
             <button
               (click)="deleteExercise(e.id)"
               aria-label="Example icon button with a delete icon"
