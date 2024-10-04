@@ -17,8 +17,7 @@
         <th>Fecha hasta</th>
         <th>Tipo de membresía</th>
         <th>Cliente</th>
-        <th></th>
-        <th></th>
+        <th>Acciones</th>
       </tr>
     </thead>
 
@@ -29,8 +28,13 @@
         <td>{{ m.dateTo | date:'dd/MM/yyyy - HH:mm' }}</td>
         <td>{{ m.type.name }}</td>
         <td>{{ m.client.firstName + ' ' + m.client.lastName }}</td>
-        <td>
-          <button type="button">Modificar</button>
+        <td class="td-actions">
+          <button aria-label="Example icon button with a delete icon">
+            <mat-icon>delete</mat-icon>
+          </button>
+          <button aria-label="Example icon button with an edit icon">
+            <mat-icon>edit</mat-icon>
+          </button>
         </td>
       }
     </tbody>

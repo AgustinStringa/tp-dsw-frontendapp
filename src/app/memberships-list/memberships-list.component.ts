@@ -10,11 +10,19 @@ import { IUser } from '../core/interfaces/user.interface.js';
 import { ClientsListComponent } from '../clients-list/clients-list.component';
 import { IMembershipType } from '../core/interfaces/membership-type.interface.js';
 import { firstValueFrom } from 'rxjs';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'app-memberships-list',
   standalone: true,
-  imports: [NgFor, NgIf, CommonModule, HttpClientModule, ClientsListComponent],
+  imports: [
+    NgFor,
+    NgIf,
+    CommonModule,
+    HttpClientModule,
+    ClientsListComponent,
+    MatIconModule,
+  ],
   templateUrl: './memberships-list.component.html',
   styleUrl: './memberships-list.component.css',
 })
