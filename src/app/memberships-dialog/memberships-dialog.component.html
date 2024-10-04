@@ -1,5 +1,3 @@
-
-
 <div class="dialog-container">
   <div>
     <h1>{{title}}
@@ -19,7 +17,7 @@
       <label for="type">Tipo membresía</label>
         <select formControlName="type" id="type">
           <option *ngFor="let t of data.types" [value]="t.id">
-            {{ t.description }}
+            {{ t.name }}
           </option>
         </select>
     </div>

@@ -26,8 +26,9 @@
     </mat-form-field>
   </mat-dialog-content>
   <mat-dialog-actions>
-    <button mat-button (click)="onNoClick()">Cancelar</button>
+    <button mat-button type="submit" (click)="onNoClick()">Cancelar</button>
     <button
+      type="submit"
       mat-button
       [disabled]="!exerciseRoutineForm.valid"
       [mat-dialog-close]="returnValues()"

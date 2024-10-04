@@ -1,11 +1,6 @@
 .memberships-list-container {
-  width: 70%;
-  margin: 0 auto 20px;
-}
-
-table {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  grid-row: auto;
+  width: 80%;
+  margin: 0 auto 20px auto;
 }
 
 thead {
@@ -18,9 +13,6 @@ th {
   padding: 10px;
 }
 
-button {
-  margin-top: 20px;
-  border-radius: 5px;
-  background-color: lightgreen;
-  border-color: green;
+.memberships-list-container table {
+  width: 100%;
 }
