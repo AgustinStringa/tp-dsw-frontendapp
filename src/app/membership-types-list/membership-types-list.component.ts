@@ -4,6 +4,10 @@ import { NgFor, NgIf } from '@angular/common';
 import { environment } from '../../environments/environment';
 import { IMembershipType } from '../core/interfaces/membership-type.interface';
 import { MatIconModule } from '@angular/material/icon';
+import { ComponentType } from '@angular/cdk/portal';
+import { MatDialog } from '@angular/material/dialog';
+import { MembershipTypesDialogComponent } from '../membership-types-dialog/membership-types-dialog.component.js';
+import { DeleteDialogComponent } from '../delete-dialog/delete-dialog.component.js';
 @Component({
   selector: 'app-membership-types-list',
   standalone: true,
@@ -14,7 +18,7 @@ import { MatIconModule } from '@angular/material/icon';
 export class MembershipTypesListComponent {
   membershipTypes: IMembershipType[] | null = [];
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private dialog: MatDialog) {
     this.getMembershipTypes();
   }
 
@@ -28,7 +32,37 @@ export class MembershipTypesListComponent {
       console.log(error);
     }
   }
-  addMembershipType(): void {}
-  updateMembershipType(): void {}
-  deleteMembershipType(): void {}
+  addMembershipType(): void {
+    this.openDialog(MembershipTypesDialogComponent, {
+      title: 'Nuevo tipo de membresía',
+      action: 'post',
+      url: environment.membershipTypesUrl,
+    });
+  }
+  updateMembershipType(membershipType: IMembershipType): void {
+    this.openDialog(MembershipTypesDialogComponent, {
+      title: 'Modificar tipo de membresía',
+      action: 'put',
+      membershipType: membershipType,
+      url: environment.membershipTypesUrl,
+    });
+  }
+  deleteMembershipType(id: string): void {
+    this.openDialog(DeleteDialogComponent, {
+      id: id,
+      entity: 'membershiptype',
+      title: 'Eliminar tipo de membresía',
+      url: environment.membershipTypesUrl,
+    });
+  }
+
+  openDialog(dialog: ComponentType<unknown>, data: object): void {
+    const dialogRef = this.dialog.open(dialog, { data });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result !== 'none') {
+        this.getMembershipTypes();
+      }
+    });
+  }
 }

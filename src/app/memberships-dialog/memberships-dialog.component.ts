@@ -9,6 +9,9 @@ import {
   MAT_DIALOG_DATA,
   MatDialogRef,
   MatDialogModule,
+  MatDialogContent,
+  MatDialogActions,
+  MatDialogTitle,
 } from '@angular/material/dialog';
 import { IMembership } from '../core/interfaces/membership.interface.js';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
@@ -16,11 +19,24 @@ import { environment } from '../../environments/environment.js';
 import { IUser } from '../core/interfaces/user.interface.js';
 import { IMembershipType } from '../core/interfaces/membership-type.interface.js';
 import { NgForOf } from '@angular/common';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
   selector: 'app-memberships-dialog',
   standalone: true,
-  imports: [HttpClientModule, ReactiveFormsModule, NgForOf, MatDialogModule],
+  imports: [
+    HttpClientModule,
+    ReactiveFormsModule,
+    NgForOf,
+    MatDialogModule,
+    MatFormFieldModule,
+    MatDialogContent,
+    MatDialogActions,
+    MatInputModule,
+    MatButtonModule,
+  ],
   templateUrl: './memberships-dialog.component.html',
   styleUrl: './memberships-dialog.component.css',
 })
@@ -71,24 +87,23 @@ export class MembershipsDialogComponent {
       return;
     }
 
-    const dateFromValue = this.form.get('dateFrom')?.value;
-    const dateToValue = this.form.get('dateTo')?.value;
-
-    if (!dateFromValue || !dateToValue) {
-      alert('Por favor, complete todas las fechas.');
-      return; // O maneja el error como consideres
-    }
-
     let data: Record<string, any> = {
-      dateFrom: this.formatDateWithTimezone(dateFromValue),
-      dateTo: this.formatDateWithTimezone(dateToValue),
+      dateFrom: this.form.get('dateFrom')?.value,
+      dateTo: this.form.get('dateTo')?.value,
       type: this.form.get('type')?.value,
       client: this.form.get('client')?.value,
     };
 
     if (this.action === 'post') {
-      this.http.post<any>(environment.membershipsUrl, data).subscribe();
-      this.closeModal();
+      try {
+        this.http
+          .post<any>(environment.membershipsUrl, data)
+          .subscribe((info) => {
+            this.dialogRef.close('created');
+          });
+      } catch (error: any) {
+        console.log(error);
+      }
     } /*else if (this.action == 'put') {
       try {
         this.http
@@ -103,14 +118,5 @@ export class MembershipsDialogComponent {
       }
     }*/
     console.log(data);
-  }
-
-  closeModal(): void {
-    this.dialogRef.close();
-  }
-
-  formatDateWithTimezone(date: string): string {
-    const d = new Date(date);
-    return d.toISOString();
   }
 }

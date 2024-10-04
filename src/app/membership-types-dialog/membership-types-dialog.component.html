@@ -1,0 +1,35 @@
+<h2 mat-dialog-title>{{ title }}
+<button 
+  type="button"
+  class="btn-close"
+  (click)="this.dialogRef.close('none')"
+></button>
+</h2>
+
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+  <mat-dialog-content>
+    <mat-form-field>
+      <label for="name">Nombre</label>
+      <input type="text" formControlName="name" id="name" matInput>
+    </mat-form-field>
+    
+    <br />
+
+    <mat-form-field>
+      <label for="description">Descripción</label>
+      <input type="text" formControlName="description" id="description" matInput>
+    </mat-form-field>
+
+    <br />
+
+    <mat-form-field>
+      <label for="price">Precio</label>
+      <input type="number" formControlName="price" id="price" matInput>
+    </mat-form-field>
+  </mat-dialog-content>
+
+  <mat-dialog-actions>
+    <button type="submit" mat-button [disabled]="!form.valid">Guardar</button>
+    <button mat-button type="submit" (click)="this.dialogRef.close('none')">Cancelar</button>
+  </mat-dialog-actions>
+</form>
