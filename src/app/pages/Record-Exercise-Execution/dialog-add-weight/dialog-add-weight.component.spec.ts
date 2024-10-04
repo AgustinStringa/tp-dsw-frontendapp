@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ClientDialogComponent } from './client-dialog.component';
+import { DialogAddWeightComponent } from './dialog-add-weight.component';
 
-describe('ClientDialogComponent', () => {
-  let component: ClientDialogComponent;
-  let fixture: ComponentFixture<ClientDialogComponent>;
+describe('DialogAddWeightComponent', () => {
+  let component: DialogAddWeightComponent;
+  let fixture: ComponentFixture<DialogAddWeightComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [ClientDialogComponent]
+      imports: [DialogAddWeightComponent]
     })
     .compileComponents();
     
-    fixture = TestBed.createComponent(ClientDialogComponent);
+    fixture = TestBed.createComponent(DialogAddWeightComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

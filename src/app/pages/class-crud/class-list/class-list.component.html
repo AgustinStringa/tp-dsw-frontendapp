@@ -1,0 +1,68 @@
+<div class="list-container class-list-container">
+  <h2 class="crud-page-title">Clases</h2>
+
+  <div class="my-4 text-end">
+    <button type="button" class="btn btn-primary btn-lg" (click)="addClass()">
+      Nueva clase
+    </button>
+  </div>
+
+  @if (classes !== null && classes.length > 0) {
+  <table>
+    <thead>
+      <tr>
+        <th>Tipo de clase</th>
+        <th>Día</th>
+        <th>Hora inicio</th>
+        <th>Hora fin</th>
+        <th>
+          Capacidad<br />
+          personas
+        </th>
+        <th>Ubicación</th>
+        <th>Entrenador</th>
+        <th>Activa</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      @for (c of classes; track c) {
+      <tr>
+        <td>{{ c.classType.name }}</td>
+        <td>{{ getDayName(c.day) }}</td>
+        <td>{{ c.startTime }}</td>
+        <td>{{ c.endTime }}</td>
+        <td>{{ c.maxCapacity }}</td>
+        <td>{{ c.location }}</td>
+        <td>{{ c.trainer.firstName + " " + c.trainer.lastName }}</td>
+        <td>{{ c.active ? "Sí" : "No" }}</td>
+
+        <td class="td-actions">
+          <button
+            (click)="deleteClass(c.id)"
+            aria-label="Example icon button with a delete icon"
+          >
+            <mat-icon>delete</mat-icon>
+          </button>
+          <button
+            (click)="updateClass(c)"
+            aria-label="Example icon button with an edit icon"
+          >
+            <mat-icon>edit</mat-icon>
+          </button>
+        </td>
+      </tr>
+      }
+    </tbody>
+  </table>
+  } @else if (classes !== null && classes.length == 0) {
+  <div class="alert alert-warning fs-6" role="alert">
+    No hay clases cargadas. Crea una para comenzar.
+  </div>
+  } @else {
+  <div class="alert alert-danger fs-6" role="alert">
+    No se pudieron cargar las clases.
+  </div>
+  }
+</div>
