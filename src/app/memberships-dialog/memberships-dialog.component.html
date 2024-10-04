@@ -1,0 +1,40 @@
+
+
+<div class="dialog-container">
+  <div>
+    <h1>{{title}}
+      <button type="button" (click)="closeModal()" class="btn-close">X</button>
+    </h1>
+  </div>
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <div>
+      <label for="dateFrom">Fecha desde</label>
+      <input type="datetime-local" formControlName="dateFrom" id="dateFrom">
+    </div>
+    <div>
+      <label for="dateTo">Fecha hasta</label>
+      <input type="datetime-local" formControlName="dateTo" id="dateTo">
+    </div>
+    <div>
+      <label for="type">Tipo membresía</label>
+        <select formControlName="type" id="type">
+          <option *ngFor="let t of data.types" [value]="t.id">
+            {{ t.description }}
+          </option>
+        </select>
+    </div>
+    <div>
+      <label for="client">Cliente</label>
+        <select formControlName="client" id="client">
+          <option *ngFor="let c of data.clients" [value]="c.id">
+            {{ c.firstName}} {{ c.lastName}}
+          </option>
+        </select>
+    </div>
+
+    <div>
+      <button type="submit" [disabled]="!form.valid">Guardar</button>
+      <button type="button" (click)="closeModal()">Cancelar</button>
+    </div>
+  </form>
+</div>
