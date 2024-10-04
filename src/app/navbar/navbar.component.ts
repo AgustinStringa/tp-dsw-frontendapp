@@ -28,9 +28,17 @@ import { MatButtonModule } from '@angular/material/button';
 })
 export class NavbarComponent {
   private currentRoute: string = '';
-  public user: IUser | null = null;
+  private _authService: AuthService;
+  public userSignal = this.authService.userSignal;
+
   constructor(private router: Router, private authService: AuthService) {
-    this.user = authService.getUser();
+    this._authService = authService;
+    this.authService.getUser();
+    if (this.userSignal != null) {
+      this.router.navigate(['/home']);
+    } else {
+      this.router.navigate(['/']);
+    }
   }
 
   ngOnInit(): void {
@@ -47,5 +55,10 @@ export class NavbarComponent {
 
   isActive(route: string): boolean {
     return this.currentRoute === route;
+  }
+
+  logout(): void {
+    this._authService.logout();
+    this.router.navigate(['/']);
   }
 }

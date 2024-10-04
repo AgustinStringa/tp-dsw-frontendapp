@@ -18,12 +18,22 @@
     >
       <a class="navbar-brand" href="#">App Gimnasio</a>
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        @if(this.userSignal() == null){
         <li class="nav-item">
           <a
             class="nav-link active"
             [ngClass]="{ active: isActive('/') }"
             aria-current="page"
             routerLink="/"
+            >Login</a
+          >
+        </li>
+        } @if(this.userSignal() != null ){
+        <li class="nav-item">
+          <a
+            class="nav-link"
+            [ngClass]="{ active: isActive('/home') }"
+            routerLink="home"
             >Home</a
           >
         </li>
@@ -76,15 +86,18 @@
         <li class="nav-item">
           <a class="nav-link" routerLink="/exercise">Ejercicios</a>
         </li>
+        }
       </ul>
-      @if(user != null ){
-      <!-- VER QUE REQUIERE RECARGA -->
-      <button mat-button [matMenuTriggerFor]="menu">Menu</button>
+      @if(this.userSignal() != null){
+      <button mat-button [matMenuTriggerFor]="menu" class="text-white fw-light">
+        Menu
+      </button>
       <mat-menu #menu="matMenu">
-        <button mat-menu-item>Mi perfil</button>
-        <button mat-menu-item>Cerrar Sesión</button>
+        <button mat-menu-item>
+          <a class="nav-link" routerLink="/home">Mi Perfil</a>
+        </button>
+        <button mat-menu-item (click)="logout()">Cerrar Sesión</button>
       </mat-menu>
-
       }
     </div>
   </div>

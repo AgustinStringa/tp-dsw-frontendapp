@@ -8,12 +8,14 @@ import { ClassListComponent } from './pages/Class-Registration/class-list/class-
 import { CreateRoutinePageComponent } from './pages/Create Routine/create-routine-page/create-routine-page.component.js';
 import { authGuard } from './guards/auth.guard.js';
 import { ExercisesListComponent } from './pages/Exercises/exercises-list/exercises-list.component.js';
+import { HomePageComponent } from './pages/home-page/home-page.component.js';
 
 export const routes: Routes = [
   { path: '', component: LoginComponent },
   {
     path: 'clients',
     component: ClientsListComponent,
+    canActivate: [authGuard],
   },
   {
     path: 'trainers',
@@ -45,5 +47,10 @@ export const routes: Routes = [
     component: TrainersListComponent,
     canActivate: [authGuard],
   },
-  { path: 'exercises', component: ExercisesListComponent },
+  {
+    path: 'exercises',
+    component: ExercisesListComponent,
+    canActivate: [authGuard],
+  },
+  { path: 'home', component: HomePageComponent, canActivate: [authGuard] },
 ];

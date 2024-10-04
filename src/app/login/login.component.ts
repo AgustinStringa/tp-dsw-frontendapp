@@ -26,11 +26,8 @@ export class LoginComponent {
 
   isLoginVisible: boolean = true;
   isSpinnerVisible: boolean = false;
-  constructor(private router: Router, private authService: AuthService) {
-    if (this.authService.getUser() != null) {
-      this.router.navigate(['/registration']);
-    }
-  }
+  public userSignal = this.authService.userSignal;
+  constructor(private router: Router, private authService: AuthService) {}
 
   isFieldEmpty(fieldName: string): boolean {
     return (this as any)[fieldName].length === 0;
@@ -44,8 +41,7 @@ export class LoginComponent {
         .subscribe({
           next: (response: any) => {
             this.isSpinnerVisible = false;
-            console.log(response);
-            this.router.navigate(['/create-routine']);
+            this.router.navigate(['/home']);
           },
           error: (error: any) => {
             this.isSpinnerVisible = false;
@@ -56,6 +52,7 @@ export class LoginComponent {
               //poner los controles en rojo?
             } else if (httperror.status == 500) {
               //otro tipo de error
+              //snackbar?
             }
           },
         });
