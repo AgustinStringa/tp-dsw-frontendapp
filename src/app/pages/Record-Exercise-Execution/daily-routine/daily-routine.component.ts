@@ -27,18 +27,35 @@ export class DailyRoutineComponent {
   selectedWeight: number | null = null;
   dayToday: number = new Date().getDay();
 
-  userId: string = '66e9b19b100c4d9c3024fc97'; // ID hardcodeado del usuario
+  userId: string = '66ed63ad9818b43969cf5ded'; // ID hardcodeado del usuario
 
   private urlRoutine: string = `${environment.routinesUrl}`;
   private daysOfWeek: string[] = [
-    'domingo',
-    'lunes',
-    'martes',
-    'miércoles',
-    'jueves',
-    'viernes',
-    'sábado',
+    'Domingo',
+    'Lunes',
+    'Martes',
+    'Miércoles',
+    'Jueves',
+    'Viernes',
+    'Sábado',
   ];
+
+  months: string[] = [
+    'Enero',
+    'Febrero',
+    'Marzo',
+    'Abril',
+    'Mayo',
+    'Junio',
+    'Julio',
+    'Agosto',
+    'Septiembre',
+    'Octubre',
+    'Noviembre',
+    'Diciembre',
+  ];
+  currentDate = new Date();
+  currentNameOfTheMonth = this.months[this.currentDate.getMonth()];
 
   constructor(private http: HttpClient) {
     this.loadRoutine();
