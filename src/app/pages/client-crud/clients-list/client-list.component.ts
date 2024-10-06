@@ -39,6 +39,7 @@ export class ClientListComponent {
       title: 'Nuevo Cliente',
       action: 'post',
       url: environment.clientsUrl,
+      httpClient: this.http,
     });
   }
 
@@ -48,15 +49,16 @@ export class ClientListComponent {
       action: 'put',
       user: client,
       url: environment.clientsUrl,
+      httpClient: this.http,
     });
   }
 
   deleteUser(id: string): void {
     this.openDialog(DeleteDialogComponent, {
       id: id,
-      entity: 'client',
       title: 'Eliminar Cliente',
       url: environment.clientsUrl,
+      httpClient: this.http,
     });
   }
 

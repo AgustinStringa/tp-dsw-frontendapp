@@ -48,9 +48,9 @@ export class TrainersListComponent {
   deleteTrainer(id: string): void {
     this.openDialog(DeleteDialogComponent, {
       id: id,
-      entity: 'trainer',
       title: 'Eliminar Entrenador',
       url: environment.trainersUrl,
+      httpClient: this.http,
     });
   }
 
@@ -60,6 +60,7 @@ export class TrainersListComponent {
       action: 'put',
       user: trainer,
       url: environment.trainersUrl,
+      httpClient: this.http,
     });
   }
 
@@ -68,6 +69,7 @@ export class TrainersListComponent {
       title: 'Nuevo Entrenador',
       action: 'post',
       url: environment.trainersUrl,
+      httpClient: this.http,
     });
   }
 }
