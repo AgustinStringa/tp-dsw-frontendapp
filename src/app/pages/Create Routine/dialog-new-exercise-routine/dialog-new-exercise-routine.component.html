@@ -1,6 +1,9 @@
-<h2 mat-dialog-title>Nuevo Ejercicio</h2>
+<div class="dialog-title">
+  <h2 mat-dialog-title>Nuevo Ejercicio</h2>
+</div>
+
 <form action="" [formGroup]="exerciseRoutineForm">
-  <mat-dialog-content>
+  <mat-dialog-content class="common-dialog">
     <mat-form-field>
       <mat-label>Ejercicio</mat-label>
       <mat-select formControlName="exercise">
@@ -12,28 +15,35 @@
       <mat-error>Por favor elige un ejercicio</mat-error>
       }
     </mat-form-field>
-    <br />
 
     <mat-form-field>
-      <mat-label>Repeticiones:</mat-label>
-      <input formControlName="reps" matInput type="number" min="1" />
+      <mat-label>Repeticiones</mat-label>
+      <input matInput formControlName="reps" matInput type="number" min="1" />
     </mat-form-field>
 
-    <br />
     <mat-form-field>
-      <mat-label>Series:</mat-label>
+      <mat-label>Series</mat-label>
       <input matInput formControlName="series" type="number" min="1" />
     </mat-form-field>
   </mat-dialog-content>
-  <mat-dialog-actions>
-    <button mat-button type="submit" (click)="onNoClick()">Cancelar</button>
+
+  <mat-dialog-actions class="common-dialog">
     <button
-      type="submit"
       mat-button
+      type="submit"
+      class="btn btn-success"
       [disabled]="!exerciseRoutineForm.valid"
       [mat-dialog-close]="returnValues()"
     >
       Ok
+    </button>
+    <button
+      mat-button
+      type="button"
+      class="btn-secondary"
+      (click)="onNoClick()"
+    >
+      Cancelar
     </button>
   </mat-dialog-actions>
 </form>

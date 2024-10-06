@@ -3,19 +3,20 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { NgFor, NgIf } from '@angular/common';
 import { MatDialog } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
-import { ClientDialogComponent } from '../client-dialog/client-dialog.component';
-import { DeleteDialogComponent } from '../delete-dialog/delete-dialog.component';
+import { DeleteDialogComponent } from '../../../delete-dialog/delete-dialog.component';
 import { ComponentType } from '@angular/cdk/portal';
-import { environment } from '../../environments/environment';
-import { IUser } from '../core/interfaces/user.interface';
+import { environment } from '../../../../environments/environment';
+import { IUser } from '../../../core/interfaces/user.interface';
+import { UserDialogComponent } from '../../../user-dialog/user-dialog.component';
+
 @Component({
   selector: 'app-clients-list',
   standalone: true,
   imports: [NgFor, NgIf, HttpClientModule, MatIconModule],
-  templateUrl: './clients-list.component.html',
-  styleUrl: './clients-list.component.css',
+  templateUrl: './client-list.component.html',
+  styleUrl: './client-list.component.css',
 })
-export class ClientsListComponent {
+export class ClientListComponent {
   clients: IUser[] | null = null;
 
   constructor(private http: HttpClient, private dialog: MatDialog) {
@@ -34,18 +35,18 @@ export class ClientsListComponent {
   }
 
   addUser(): void {
-    this.openDialog(ClientDialogComponent, {
-      title: 'Nuevo cliente',
+    this.openDialog(UserDialogComponent, {
+      title: 'Nuevo Cliente',
       action: 'post',
       url: environment.clientsUrl,
     });
   }
 
   updateUser(client: IUser) {
-    this.openDialog(ClientDialogComponent, {
-      title: 'Modificar cliente',
+    this.openDialog(UserDialogComponent, {
+      title: 'Modificar Cliente',
       action: 'put',
-      client: client,
+      user: client,
       url: environment.clientsUrl,
     });
   }
@@ -54,7 +55,7 @@ export class ClientsListComponent {
     this.openDialog(DeleteDialogComponent, {
       id: id,
       entity: 'client',
-      title: 'Eliminar cliente',
+      title: 'Eliminar Cliente',
       url: environment.clientsUrl,
     });
   }
