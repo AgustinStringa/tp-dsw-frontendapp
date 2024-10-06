@@ -12,60 +12,66 @@ import { ExercisesListComponent } from './pages/Exercises/exercises-list/exercis
 import { HomePageComponent } from './pages/home-page/home-page.component.js';
 import { TrainersListComponent } from './trainers-list/trainers-list.component.js';
 import { DailyRoutineComponent } from './pages/Record-Exercise-Execution/daily-routine/daily-routine.component.js';
+import { trainerGuard } from './guards/trainer.guard.js';
+import { clientGuard } from './guards/client.guard.js';
 
 export const routes: Routes = [
+  { path: '', component: LoginComponent },
   {
     path: 'clients',
     component: ClientListComponent,
-    canActivate: [authGuard],
+    canActivate: [authGuard, trainerGuard],
   },
   {
     path: 'trainers',
     component: TrainersListComponent,
-    canActivate: [authGuard],
+    canActivate: [authGuard, trainerGuard],
   },
   {
     path: 'registration',
     component: ClassListComponent,
-    canActivate: [authGuard],
+    canActivate: [authGuard, clientGuard],
   },
   {
     path: 'create-routine',
     component: CreateRoutinePageComponent,
-    canActivate: [authGuard],
+    canActivate: [authGuard, trainerGuard],
   },
   {
     path: 'currentmemberships',
     component: CurrentMembershipsListComponent,
-    canActivate: [authGuard],
+    canActivate: [authGuard], //ver cual correspondería
   },
   {
     path: 'record-exercise-execution',
     component: DailyRoutineComponent,
-    canActivate: [authGuard],
+    canActivate: [authGuard, clientGuard],
   },
-  { path: 'classes', canActivate: [authGuard], component: ClassListCrud },
+  {
+    path: 'classes',
+    canActivate: [authGuard, trainerGuard],
+    component: ClassListCrud,
+  },
   {
     path: 'class-types',
-    canActivate: [authGuard],
+    canActivate: [authGuard, trainerGuard],
     component: ClassTypeListComponent,
   },
   {
     path: 'membershiptypes',
     component: MembershipTypesListComponent,
-    canActivate: [authGuard],
+    canActivate: [authGuard, trainerGuard],
   },
   {
     path: 'trainers',
     component: TrainersListComponent,
-    canActivate: [authGuard],
+    canActivate: [authGuard, trainerGuard],
   },
   {
     path: 'exercises',
     component: ExercisesListComponent,
-    canActivate: [authGuard],
+    canActivate: [authGuard, trainerGuard],
   },
   { path: 'home', component: HomePageComponent, canActivate: [authGuard] },
-  { path: 'registration', component: ClassListComponent },
   { path: '**', redirectTo: '', pathMatch: 'full' },
 ];
