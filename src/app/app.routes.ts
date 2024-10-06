@@ -38,7 +38,11 @@ export const routes: Routes = [
     component: CurrentMembershipsListComponent,
     canActivate: [authGuard],
   },
-  { path: 'record-exercise-execution', component: DailyRoutineComponent,    canActivate: [authGuard], },
+  {
+    path: 'record-exercise-execution',
+    component: DailyRoutineComponent,
+    canActivate: [authGuard],
+  },
   {
     path: 'membershiptypes',
     component: MembershipTypesListComponent,
@@ -55,4 +59,5 @@ export const routes: Routes = [
     canActivate: [authGuard],
   },
   { path: 'home', component: HomePageComponent, canActivate: [authGuard] },
+  { path: '**', redirectTo: '', pathMatch: 'full' },
 ];

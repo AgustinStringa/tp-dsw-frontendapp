@@ -26,12 +26,29 @@ export class AuthService {
     email: string;
     password: string;
     firstName: string;
-    lastname: string;
+    lastName: string;
     dni: number;
   }): Observable<any> {
-    return this.httpClient.post(`${environment.clientsUrl}`, {
-      user,
-    });
+    return this.httpClient
+      .post(`${environment.clientsUrl}`, {
+        ...user,
+      })
+      .pipe(
+        tap((response: any) => {
+          sessionStorage.setItem('token', response.data.token);
+          sessionStorage.setItem(
+            'user',
+            JSON.stringify({
+              ...response.data.user,
+              isClient: response.data.client,
+            })
+          );
+          this.userSignal.set({
+            ...response.data.user,
+            isClient: response.data.client,
+          });
+        })
+      );
   }
 
   login(user: { email: string; password: string }): Observable<any> {

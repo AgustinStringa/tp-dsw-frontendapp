@@ -160,8 +160,8 @@
                       type="text"
                       id="signupUser"
                       class="form-control"
-                      [(ngModel)]="user"
-                      name="user"
+                      [(ngModel)]="dni"
+                      name="dni"
                       required
                     />
                     <label
@@ -198,6 +198,7 @@
                 data-mdb-button-init
                 data-mdb-ripple-init
                 class="btn btn-primary btn-block mb-4"
+                (click)="onSubmit()"
               >
                 Registrarme
               </button>

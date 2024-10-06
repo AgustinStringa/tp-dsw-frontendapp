@@ -34,9 +34,7 @@ export class NavbarComponent {
   constructor(private router: Router, private authService: AuthService) {
     this._authService = authService;
     this.authService.getUser();
-    if (this.userSignal != null) {
-      this.router.navigate(['/home']);
-    } else {
+    if (this.userSignal == null) {
       this.router.navigate(['/']);
     }
   }

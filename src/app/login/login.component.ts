@@ -20,14 +20,19 @@ export class LoginComponent {
   password: string = '';
   firstName: string = '';
   lastName: string = '';
-  dni: number = 0;
+  dni: string = '';
   user: string = '';
   aqua: string = '#a7ebf3';
 
   isLoginVisible: boolean = true;
   isSpinnerVisible: boolean = false;
   public userSignal = this.authService.userSignal;
-  constructor(private router: Router, private authService: AuthService) {}
+  constructor(private router: Router, private authService: AuthService) {
+    authService.getUser();
+    if (authService.userSignal() != null) {
+      this.router.navigate(['/home']);
+    }
+  }
 
   isFieldEmpty(fieldName: string): boolean {
     return (this as any)[fieldName].length === 0;
@@ -47,7 +52,7 @@ export class LoginComponent {
             this.isSpinnerVisible = false;
             console.error('Login failed:', error);
             const httperror = error as HttpErrorResponse;
-            if (httperror.status == 404) {
+            if (httperror.status == 401) {
               //email o usuario incorrecto
               //poner los controles en rojo?
             } else if (httperror.status == 500) {
@@ -62,16 +67,16 @@ export class LoginComponent {
           email: this.email,
           password: this.password,
           firstName: this.firstName,
-          lastname: this.lastName,
-          dni: this.dni,
+          lastName: this.lastName,
+          dni: Number.parseInt(this.dni),
         })
         .subscribe({
           next: (response: any) => {
             console.log(response);
-            this.router.navigate(['/create-routine']);
+            this.router.navigate(['/home']);
           },
           error: (error) => {
-            console.error('Login failed:', error);
+            console.error('Register failed:', error);
           },
         });
     }
