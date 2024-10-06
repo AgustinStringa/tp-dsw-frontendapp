@@ -10,6 +10,7 @@ import { LoginComponent } from './login/login.component.js';
 import { MembershipTypesListComponent } from './membership-types-list/membership-types-list.component.js';
 import { TrainersListComponent } from './trainers-list/trainers-list.component.js';
 import { DailyRoutineComponent } from './pages/Record-Exercise-Execution/daily-routine/daily-routine.component.js';
+import { ShowClientRoutineComponent } from './pages/show-client-routine/show-client-routine.component.js';
 
 export const routes: Routes = [
   { path: '', component: LoginComponent },
@@ -26,4 +27,5 @@ export const routes: Routes = [
   },
   { path: 'registration', component: ClassListComponent },
   { path: 'trainers', component: TrainersListComponent },
+  { path: 'showClientRoutine', component: ShowClientRoutineComponent },
 ];

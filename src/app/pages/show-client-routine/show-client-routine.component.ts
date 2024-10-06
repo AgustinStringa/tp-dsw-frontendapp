@@ -1,34 +1,28 @@
 import { Component } from '@angular/core';
-import { IExerciseRoutine } from '../../../core/interfaces/exercise-routine.inteface.js';
-import { environment } from '../../../../environments/environment.js';
-import { formatDate, NgFor, NgIf } from '@angular/common';
-import { HttpClientModule, HttpClient } from '@angular/common/http';
-import IRoutine from '../../../core/interfaces/IRoutine.interface.js';
-import { FormsModule } from '@angular/forms';
-import { DialogAddWeightComponent } from '../dialog-add-weight/dialog-add-weight.component.js';
+import { environment } from '../../../environments/environment.js';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
+import IRoutine from '../../core/interfaces/IRoutine.interface.js';
+import { IExerciseRoutine } from '../../core/interfaces/exercise-routine.inteface.js';
+import { formatDate } from '@angular/common';
 
 @Component({
-  selector: 'app-daily-routine',
+  selector: 'app-show-client-routine',
   standalone: true,
-  imports: [NgFor, NgIf, HttpClientModule, DialogAddWeightComponent],
-  templateUrl: './daily-routine.component.html',
-  styleUrl: './daily-routine.component.css',
+  imports: [HttpClientModule],
+  templateUrl: './show-client-routine.component.html',
+  styleUrl: './show-client-routine.component.css',
 })
-export class DailyRoutineComponent {
+export class ShowClientRoutineComponent {
+  private urlRoutine: string = `${environment.routinesUrl}`;
+
+  currentDayName: string = '';
+  currentDayNumber: number = 0;
+  userId: string = '6701c515d61090925fbbe8a1'; // ID hardcodeado del usuario
   routine: IRoutine | null = null;
   exercisesRoutine: IExerciseRoutine[] = [];
   startDate: string = '';
   endDate: string = '';
   currentWeek: string = '';
-  currentDayName: string = '';
-  currentDayNumber: number = 0;
-  showModal: boolean = false;
-  selectedExerciseRoutine: IExerciseRoutine | null = null;
-  selectedWeight: number | null = null;
-  dayToday: number = new Date().getDay();
-  userId: string = '6701c515d61090925fbbe8a1'; // ID hardcodeado del usuario
-
-  private urlRoutine: string = `${environment.routinesUrl}`;
   private daysOfWeek: string[] = [
     'Domingo',
     'Lunes',
@@ -119,22 +113,5 @@ export class DailyRoutineComponent {
 
     const weekNumber = Math.floor(diffInDays / 7) + 1;
     return `${weekNumber}`;
-  }
-
-  openModal(exerciseRoutine: IExerciseRoutine): void {
-    this.selectedExerciseRoutine = exerciseRoutine;
-    this.showModal = true;
-  }
-
-  closeModal(): void {
-    this.showModal = false;
-  }
-
-  saveWeight(weight: number): void {
-    if (this.selectedExerciseRoutine) {
-      this.selectedExerciseRoutine.weight = weight;
-
-      this.closeModal();
-    }
   }
 }
