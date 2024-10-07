@@ -17,21 +17,29 @@
         <th>Fecha hasta</th>
         <th>Tipo de membresía</th>
         <th>Cliente</th>
+        <th>Acciones</th>
       </tr>
     </thead>
 
     <tbody>
       @for (m of memberships; track m) {
       <tr>
-        <td>{{ m.dateFrom | date : "dd/MM/yyyy - HH:mm:ss" }}</td>
-        <td>{{ m.dateTo | date : "dd/MM/yyyy - HH:mm:ss" }}</td>
+        <td>{{ m.dateFrom | date:'dd/MM/yyyy - HH:mm' }}</td>
+        <td>{{ m.dateTo | date:'dd/MM/yyyy - HH:mm' }}</td>
         <td>{{ m.type.name }}</td>
-        <td>{{ m.client.firstName + " " + m.client.lastName }}</td>
-      </tr>
+        <td>{{ m.client.firstName + ' ' + m.client.lastName }}</td>
+        <td class="td-actions">
+          <button aria-label="Example icon button with a delete icon">
+            <mat-icon>delete</mat-icon>
+          </button>
+          <button aria-label="Example icon button with an edit icon">
+            <mat-icon>edit</mat-icon>
+          </button>
+        </td>
       }
     </tbody>
   </table>
-  }@else if (memberships !== null && memberships.length == 0){
+  } @else if (memberships !== null && memberships.length == 0){
   <div class="alert alert-warning fs-6" role="alert">
     No hay membresías cargadas. Crea una para comenzar.
   </div>
