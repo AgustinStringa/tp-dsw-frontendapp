@@ -1,10 +1,10 @@
-.container {
-  width: 400px;
+.exercise-list-container {
+  width: 80%;
+  margin: 0 auto 20px;
 }
 
-::ng-deep .snackbar_success .mdc-button__label,
-::ng-deep .snackbar_error .mdc-button__label {
-  color: white;
+.exercise-list-container table {
+  width: 100%;
 }
 
 ::ng-deep .snackbar_error,

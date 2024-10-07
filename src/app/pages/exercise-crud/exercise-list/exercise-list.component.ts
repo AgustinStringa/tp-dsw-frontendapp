@@ -17,10 +17,10 @@ export interface DialogExerciseData {
   selector: 'app-exercises-list',
   standalone: true,
   imports: [HttpClientModule, MatIconModule],
-  templateUrl: './exercises-list.component.html',
-  styleUrl: './exercises-list.component.css',
+  templateUrl: './exercise-list.component.html',
+  styleUrl: './exercise-list.component.css',
 })
-export class ExercisesListComponent {
+export class ExerciseListComponent {
   exercises: IExercise[] | null = null;
   constructor(private http: HttpClient, private dialog: MatDialog) {
     this.getExercises();
