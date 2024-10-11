@@ -32,7 +32,7 @@ interface DialogData {
 }
 
 @Component({
-  selector: 'app-memberships-dialog',
+  selector: 'app-membership-dialog',
   standalone: true,
   imports: [
     HttpClientModule,
@@ -47,10 +47,10 @@ interface DialogData {
     MatSelectModule,
     MatCheckboxModule,
   ],
-  templateUrl: './memberships-dialog.component.html',
-  styleUrl: './memberships-dialog.component.css',
+  templateUrl: './membership-dialog.component.html',
+  styleUrl: './membership-dialog.component.css',
 })
-export class MembershipsDialogComponent {
+export class MembershipDialogComponent {
   title: string;
   action: string;
   http: HttpClient;
@@ -66,7 +66,7 @@ export class MembershipsDialogComponent {
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: DialogData,
-    public dialogRef: MatDialogRef<MembershipsDialogComponent>
+    public dialogRef: MatDialogRef<MembershipDialogComponent>
   ) {
     this.title = data.title;
     this.action = data.action;

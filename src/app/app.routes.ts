@@ -7,7 +7,7 @@ import { CreateRoutinePageComponent } from './pages/Create Routine/create-routin
 import { DailyRoutineComponent } from './pages/Record-Exercise-Execution/daily-routine/daily-routine.component.js';
 import { ExerciseListComponent } from './pages/exercise-crud/exercise-list/exercise-list.component.js';
 import { LoginComponent } from './login/login.component.js';
-import { MembershipsListComponent } from './memberships-list/memberships-list.component.js';
+import { MembershipListComponent } from './pages/membership-crud/membership-list/membership-list.component.js';
 import { MembershipTypeListComponent } from './pages/membership-type-crud/membership-type-list/membership-type-list.component.js';
 import { TrainersListComponent } from './trainers-list/trainers-list.component.js';
 
@@ -18,7 +18,7 @@ export const routes: Routes = [
   { path: 'clients', component: ClientListComponent },
   { path: 'create-routine', component: CreateRoutinePageComponent },
   { path: 'exercises', component: ExerciseListComponent },
-  { path: 'memberships', component: MembershipsListComponent },
+  { path: 'memberships', component: MembershipListComponent },
   {
     path: 'membership-types',
     component: MembershipTypeListComponent,

@@ -4,7 +4,7 @@ import { ComponentType } from '@angular/cdk/portal';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { MatDialog } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
-import { MembershipsDialogComponent } from '../memberships-dialog/memberships-dialog.component.js';
+import { MembershipDialogComponent } from '../membership-dialog/membership-dialog.component.js';
 import { NgFor, NgIf } from '@angular/common';
 import { DeleteDialogComponent } from '../../../delete-dialog/delete-dialog.component.js';
 import { environment } from '../../../../environments/environment.js';
@@ -13,13 +13,13 @@ import { IMembershipType } from '../../../core/interfaces/membership-type.interf
 import { IUser } from '../../../core/interfaces/user.interface.js';
 
 @Component({
-  selector: 'app-memberships-list',
+  selector: 'app-membership-list',
   standalone: true,
   imports: [CommonModule, NgFor, NgIf, HttpClientModule, MatIconModule],
-  templateUrl: './memberships-list.component.html',
-  styleUrl: './memberships-list.component.css',
+  templateUrl: './membership-list.component.html',
+  styleUrl: './membership-list.component.css',
 })
-export class MembershipsListComponent {
+export class MembershipListComponent {
   memberships: IMembership[] = [];
   clients: IUser[] = [];
   types: IMembershipType[] = [];
@@ -43,7 +43,7 @@ export class MembershipsListComponent {
   }
 
   addMembership() {
-    this.openDialog(MembershipsDialogComponent, {
+    this.openDialog(MembershipDialogComponent, {
       data: {
         title: 'Nueva Membresía',
         action: 'post',
@@ -53,7 +53,7 @@ export class MembershipsListComponent {
   }
 
   updateMembership(membership: IMembership) {
-    this.openDialog(MembershipsDialogComponent, {
+    this.openDialog(MembershipDialogComponent, {
       data: {
         title: 'Modificar Membresía',
         action: 'put',
