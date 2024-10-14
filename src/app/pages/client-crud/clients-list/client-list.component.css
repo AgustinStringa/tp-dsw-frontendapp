@@ -1,13 +1,13 @@
 .users-list-container {
-    width: 80%;
-    margin: 2rem auto;
+  width: 80%;
+  margin: 2rem auto;
 }
 
 .users-list-container table {
-    width: 100%;
+  width: 100%;
 }
 
 th,
 td {
-    text-align: center;
+  text-align: center;
 }

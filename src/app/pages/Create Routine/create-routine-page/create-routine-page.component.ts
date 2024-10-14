@@ -119,6 +119,7 @@ export class CreateRoutinePageComponent implements AfterViewInit {
                 m.client.dni,
                 m.client.email,
                 {
+                  id: m.id,
                   dateFrom: m.dateFrom,
                   dateTo: m.dateTo,
                   type: m.type,

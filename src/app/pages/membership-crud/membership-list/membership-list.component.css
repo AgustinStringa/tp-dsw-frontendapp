@@ -1,8 +1,13 @@
 .memberships-list-container {
   width: 80%;
-  margin: 0 auto 20px auto;
+  margin: 2rem auto;
 }
 
 .memberships-list-container table {
   width: 100%;
+}
+
+th,
+td {
+  text-align: center;
 }

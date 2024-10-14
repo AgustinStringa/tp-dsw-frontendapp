@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { ExercisesListComponent } from '../../Exercises/exercises-list/exercises-list.component';
+import { ExercisesListComponent } from '../../exercise-crud/exercise-list/exercise-list.component';
 
 describe('ExercisesListComponent', () => {
   let component: ExercisesListComponent;

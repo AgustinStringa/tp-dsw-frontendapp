@@ -18,7 +18,7 @@ import {
 } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { DialogExerciseData } from '../exercises-list/exercises-list.component.js';
+import { DialogExerciseData } from '../exercise-list/exercise-list.component.js';
 import {
   HttpClient,
   HttpClientModule,
@@ -29,6 +29,7 @@ import { throwError } from 'rxjs';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { environment } from '../../../../environments/environment.js';
 import { trimValidator } from '../../../core/Functions/trim-validator.js';
+
 @Component({
   selector: 'app-exercise-dialog',
   standalone: true,
@@ -79,7 +80,6 @@ export class ExerciseDialogComponent {
     const description = this.exerciseForm.value.description;
     const urlVideo = this.exerciseForm.value.urlVideo;
     //TODO: ver más validaciones aquí
-    console.log('enviando');
 
     if (this.data.action == 'post') {
       this.http
