@@ -1,7 +1,8 @@
 import { NgClass } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { AuthService } from '../services/auth.service.js';
 import { HttpErrorResponse } from '@angular/common/http/index.js';
 import {
@@ -23,6 +24,7 @@ export class LoginComponent {
   dni: string = '';
   user: string = '';
   aqua: string = '#a7ebf3';
+  private _snackBar = inject(MatSnackBar);
 
   isLoginVisible: boolean = true;
   isSpinnerVisible: boolean = false;
@@ -41,6 +43,10 @@ export class LoginComponent {
   onSubmit(): void {
     this.isSpinnerVisible = true;
     if (this.isLoginVisible) {
+      if (this.email.trim() == '' || this.password.trim() == '') {
+        this.isSpinnerVisible = false;
+        return;
+      }
       this.authService
         .login({ email: this.email, password: this.password })
         .subscribe({
@@ -55,13 +61,50 @@ export class LoginComponent {
             if (httperror.status == 401) {
               //email o usuario incorrecto
               //poner los controles en rojo?
-            } else if (httperror.status == 500) {
-              //otro tipo de error
-              //snackbar?
+
+              if (httperror.error.message == 'Wrong email or password') {
+                document
+                  .getElementById('loginEmail')
+                  ?.classList.add(
+                    'is-invalid',
+                    'text-danger',
+                    'border-danger',
+                    'border'
+                  );
+                document
+                  .getElementById('loginPassword')
+                  ?.classList.add(
+                    'is-invalid',
+                    'text-danger',
+                    'border-danger',
+                    'border'
+                  );
+                this._snackBar.open(
+                  'Correo electrónico o contraseña incorrectos',
+                  'cerrar',
+                  {
+                    duration: 3000,
+                  }
+                );
+              }
+            } else {
+              this._snackBar.open('Error al iniciar sesión', 'cerrar', {
+                duration: 3000,
+              });
             }
           },
         });
     } else {
+      if (
+        this.email.trim() == '' ||
+        this.password.trim() == '' ||
+        this.firstName.trim() == '' ||
+        this.lastName.trim() == '' ||
+        this.dni.trim() == ''
+      ) {
+        this.isSpinnerVisible = false;
+        return;
+      }
       this.authService
         .register({
           email: this.email,
@@ -72,11 +115,14 @@ export class LoginComponent {
         })
         .subscribe({
           next: (response: any) => {
-            console.log(response);
             this.router.navigate(['/home']);
           },
           error: (error) => {
+            //error de tipo usuario existente?
             console.error('Register failed:', error);
+            this._snackBar.open('Error al crear usuario', 'cerrar', {
+              duration: 3000,
+            });
           },
         });
     }
