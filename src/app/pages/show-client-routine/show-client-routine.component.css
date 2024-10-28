@@ -87,3 +87,32 @@ button:hover {
   border-radius: 5px;
   margin-bottom: 20px;
 }
+
+.exercise-card {
+  border: 1px solid #555;
+  /* Bordes más oscuros para mayor contraste */
+  border-radius: 5px;
+  /* Esquinas redondeadas */
+  padding: 15px;
+  /* Espaciado interno */
+  margin: 15px 0;
+  /* Margen vertical entre ejercicios */
+  background-color: #6a6a6a;
+  /* Color de fondo oscuro */
+  color: #F7CE68;
+  /* Color del texto para que resalte */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  /* Sombra más pronunciada */
+  transition: background-color 0.3s;
+  /* Transición suave para el efecto hover */
+}
+
+.exercise-card:hover {
+  background-color: #7a7a7a;
+  /* Color de fondo al pasar el mouse */
+}
+
+.exercise-card strong {
+  color: #F7CE68;
+  /* Color del texto fuerte para resaltar */
+}

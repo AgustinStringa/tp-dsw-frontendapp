@@ -16,42 +16,43 @@
       </table>
     </div>
 
-    <mat-accordion>
-      @for (week of [1, 2, 3, 4]; track week) {
-      @if (hasExercisesForWeek(week)) {
-      <mat-expansion-panel>
-        <mat-expansion-panel-header>
-          <mat-panel-title>Semana {{ week }}</mat-panel-title>
-          <mat-panel-description>Ejercicios para la semana {{ week }}</mat-panel-description>
-        </mat-expansion-panel-header>
-    
-        @for (day of [1, 2, 3, 4, 5, 6]; track day) {
-        @if (hasExercisesForDay(week, day)) {
-        <mat-expansion-panel>
-          <mat-expansion-panel-header>
-            <mat-panel-title>{{ getDayName(day) }}</mat-panel-title>
-            <mat-panel-description>Ejercicios para {{ getDayName(day) }}</mat-panel-description>
-          </mat-expansion-panel-header>
-    
-          @for (exerciseRoutine of getExercisesForWeekAndDay(week, day); track exerciseRoutine.exercise?.id) {
-          <div>
-            <p><strong>Ejercicio:</strong> {{ exerciseRoutine.exercise?.name || 'No Disponible' }}</p>
-            <p><strong>Series:</strong> {{ exerciseRoutine.series || 'N/A' }}</p>
-            <p><strong>Repeticiones:</strong> {{ exerciseRoutine.repetitions || 'N/A' }}</p>
-            <p><strong>Peso:</strong> {{ exerciseRoutine.weight || 'No registrado' }} kg</p>
-          </div>
-          } @empty {
-          <p>No hay ejercicios para este día.</p>
-          }
-        </mat-expansion-panel>
-        }
-        }
-      </mat-expansion-panel>
-      }
+<mat-accordion>
+  @for (week of [1, 2, 3, 4]; track week) {
+  @if (hasExercisesForWeek(week)) {
+  <mat-expansion-panel>
+    <mat-expansion-panel-header>
+      <mat-panel-title>Semana {{ week }}</mat-panel-title>
+      <mat-panel-description>Ejercicios para la semana {{ week }}</mat-panel-description>
+    </mat-expansion-panel-header>
+
+    @for (day of [1, 2, 3, 4, 5, 6]; track day) {
+    @if (hasExercisesForDay(week, day)) {
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <mat-panel-title>{{ getDayName(day) }}</mat-panel-title>
+        <mat-panel-description>Ejercicios para {{ getDayName(day) }}</mat-panel-description>
+      </mat-expansion-panel-header>
+
+      @for (exerciseRoutine of getExercisesForWeekAndDay(week, day); track exerciseRoutine.exercise?.id) {
+      <div class="exercise-card">
+        <p><strong>Ejercicio:</strong> {{ exerciseRoutine.exercise?.name || 'No Disponible' }}</p>
+        <p><strong>Series:</strong> {{ exerciseRoutine.series || 'N/A' }}</p>
+        <p><strong>Repeticiones:</strong> {{ exerciseRoutine.repetitions || 'N/A' }}</p>
+        <p><strong>Peso:</strong> {{ exerciseRoutine.weight || 'No registrado' }} kg</p>
+      </div>
       } @empty {
-      <p>No hay semanas registradas.</p>
+      <p>No hay ejercicios para este día.</p>
       }
-    </mat-accordion>
+    </mat-expansion-panel>
+    }
+    }
+  </mat-expansion-panel>
+  }
+  } @empty {
+  <p>No hay semanas registradas.</p>
+  }
+</mat-accordion>
+
 
 
     @if (this.exercisesRoutine.length === 0) {
