@@ -89,9 +89,27 @@
         <li class="nav-item">
           <a class="nav-link" routerLink="/create-routine">Crear Rutina</a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link" routerLink="/exercises">Ejercicios</a>
-        </li>
+
+
+
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" (click)="toggleDropdown()" 
+          [attr.aria-expanded]="isDropdownOpen"> Ejercicios </a>
+        @if (this.isDropdownOpen) {
+        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <li>
+            <a class="dropdown-item" routerLink="/showClientRoutine">Ver mi rutina</a>
+          </li>
+          <li>
+            <a class="dropdown-item" routerLink="/record-exercise-execution">Registrar rutina del día</a>
+          </li>
+        </ul>
+      }
+      </li>
+
+
+
+
         <li class="nav-item">
           <a class="nav-link" routerLink="/record-exercise-execution">Registrar entrenamiento</a>
         </li>

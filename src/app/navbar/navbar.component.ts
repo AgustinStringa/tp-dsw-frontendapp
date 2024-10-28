@@ -6,17 +6,18 @@ import {
   NavigationEnd,
 } from '@angular/router';
 import { MdbCollapseModule } from 'mdb-angular-ui-kit/collapse';
-import { NgClass } from '@angular/common';
+import { NgClass, NgIf } from '@angular/common';
 import { filter } from 'rxjs';
 @Component({
   selector: 'app-navbar',
   standalone: true,
-  imports: [MdbCollapseModule, RouterLink, NgClass],
+  imports: [MdbCollapseModule, RouterLink, NgClass, NgIf],
   templateUrl: './navbar.component.html',
   styleUrl: './navbar.component.css',
 })
 export class NavbarComponent {
   private currentRoute: string = '';
+  isDropdownOpen = false;
   constructor(private router: Router) {}
 
   ngOnInit(): void {
@@ -33,5 +34,9 @@ export class NavbarComponent {
 
   isActive(route: string): boolean {
     return this.currentRoute === route;
+  }
+
+  toggleDropdown() {
+    this.isDropdownOpen = !this.isDropdownOpen;
   }
 }
