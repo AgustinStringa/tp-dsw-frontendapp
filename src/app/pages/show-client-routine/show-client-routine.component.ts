@@ -92,11 +92,6 @@ export class ShowClientRoutineComponent {
               new Date(this.routine.start),
               new Date(this.routine.end)
             );
-
-            this.totalWeeks = this.getTotalWeeks(
-              new Date(this.routine.start),
-              new Date(this.routine.end)
-            );
           }
         },
         (error) => {
@@ -124,14 +119,7 @@ export class ShowClientRoutineComponent {
     const weekNumber = Math.floor(diffInDays / 7) + 1;
     return `${weekNumber}`;
   }
-  getTotalWeeks(dateStart: Date, dateEnd: Date): number {
-    const start = dateStart;
-    const end = dateEnd;
-    const totalDays = Math.ceil(
-      (end.getTime() - start.getTime()) / (1000 * 60 * 60 * 24)
-    );
-    return Math.ceil(totalDays / 7);
-  }
+
   activePanels: { [key: number]: boolean } = {};
 
   togglePanel(week: number): void {
