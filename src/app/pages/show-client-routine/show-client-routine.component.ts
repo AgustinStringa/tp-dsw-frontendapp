@@ -4,11 +4,15 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
 import IRoutine from '../../core/interfaces/IRoutine.interface.js';
 import { IExerciseRoutine } from '../../core/interfaces/exercise-routine.inteface.js';
 import { formatDate } from '@angular/common';
+import {
+  MatExpansionModule,
+  MatExpansionPanel,
+} from '@angular/material/expansion';
 
 @Component({
   selector: 'app-show-client-routine',
   standalone: true,
-  imports: [HttpClientModule],
+  imports: [HttpClientModule, MatExpansionPanel, MatExpansionModule],
   templateUrl: './show-client-routine.component.html',
   styleUrl: './show-client-routine.component.css',
 })
@@ -17,12 +21,13 @@ export class ShowClientRoutineComponent {
 
   currentDayName: string = '';
   currentDayNumber: number = 0;
-  userId: string = '6701c515d61090925fbbe8a1'; // ID hardcodeado del usuario
+  userId: string = '66e9b19b100c4d9c3024fc97'; // ID hardcodeado del usuario
   routine: IRoutine | null = null;
   exercisesRoutine: IExerciseRoutine[] = [];
   startDate: string = '';
   endDate: string = '';
   currentWeek: string = '';
+  totalWeeks: number = 0;
   private daysOfWeek: string[] = [
     'Domingo',
     'Lunes',
@@ -87,6 +92,11 @@ export class ShowClientRoutineComponent {
               new Date(this.routine.start),
               new Date(this.routine.end)
             );
+
+            this.totalWeeks = this.getTotalWeeks(
+              new Date(this.routine.start),
+              new Date(this.routine.end)
+            );
           }
         },
         (error) => {
@@ -95,11 +105,11 @@ export class ShowClientRoutineComponent {
       );
   }
 
-  private getDayName(dayIndex: number): string {
+  getDayName(dayIndex: number): string {
     return this.daysOfWeek[dayIndex] || '';
   }
 
-  private getCurrentWeek(dateStart: Date, dateEnd: Date): string {
+  getCurrentWeek(dateStart: Date, dateEnd: Date): string {
     const start = new Date(dateStart);
     const end = new Date(dateEnd);
     const current = new Date();
@@ -113,5 +123,34 @@ export class ShowClientRoutineComponent {
 
     const weekNumber = Math.floor(diffInDays / 7) + 1;
     return `${weekNumber}`;
+  }
+  getTotalWeeks(dateStart: Date, dateEnd: Date): number {
+    const start = dateStart;
+    const end = dateEnd;
+    const totalDays = Math.ceil(
+      (end.getTime() - start.getTime()) / (1000 * 60 * 60 * 24)
+    );
+    return Math.ceil(totalDays / 7);
+  }
+  activePanels: { [key: number]: boolean } = {};
+
+  togglePanel(week: number): void {
+    this.activePanels[week] = !this.activePanels[week];
+  }
+
+  hasExercisesForWeek(week: number): boolean {
+    return this.exercisesRoutine.some((routine) => routine.week === week);
+  }
+
+  hasExercisesForDay(week: number, day: number): boolean {
+    return this.exercisesRoutine.some(
+      (routine) => routine.week === week && routine.day === day
+    );
+  }
+
+  getExercisesForWeekAndDay(week: number, day: number): IExerciseRoutine[] {
+    return this.exercisesRoutine.filter(
+      (routine) => routine.week === week && routine.day === day
+    );
   }
 }
