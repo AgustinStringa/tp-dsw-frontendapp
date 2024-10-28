@@ -27,7 +27,7 @@ export class ShowClientRoutineComponent {
   startDate: string = '';
   endDate: string = '';
   currentWeek: string = '';
-  totalWeeks: number = 0;
+  totalWeeks: number[] = [];
   private daysOfWeek: string[] = [
     'Domingo',
     'Lunes',
@@ -92,6 +92,10 @@ export class ShowClientRoutineComponent {
               new Date(this.routine.start),
               new Date(this.routine.end)
             );
+            this.totalWeeks = this.getWeeksArray(
+              new Date(this.routine.start),
+              new Date(this.routine.end)
+            );
           }
         },
         (error) => {
@@ -118,6 +122,18 @@ export class ShowClientRoutineComponent {
 
     const weekNumber = Math.floor(diffInDays / 7) + 1;
     return `${weekNumber}`;
+  }
+
+  getWeeksArray(dateStart: Date, dateEnd: Date): number[] {
+    const start = new Date(dateStart);
+    const end = new Date(dateEnd);
+
+    const diffInMs = end.getTime() - start.getTime();
+    const diffInDays = diffInMs / (1000 * 60 * 60 * 24);
+
+    const totalWeeks = Math.floor(diffInDays / 7) + 1;
+
+    return Array.from({ length: totalWeeks }, (_, index) => index + 1);
   }
 
   activePanels: { [key: number]: boolean } = {};

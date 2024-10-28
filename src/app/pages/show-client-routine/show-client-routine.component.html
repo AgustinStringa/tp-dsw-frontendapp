@@ -17,7 +17,7 @@
     </div>
 
 <mat-accordion>
-  @for (week of [1, 2, 3, 4]; track week) {
+  @for (week of totalWeeks; track week) {
   @if (hasExercisesForWeek(week)) {
   <mat-expansion-panel>
     <mat-expansion-panel-header>
@@ -40,31 +40,15 @@
         <p><strong>Repeticiones:</strong> {{ exerciseRoutine.repetitions || 'N/A' }}</p>
         <p><strong>Peso:</strong> {{ exerciseRoutine.weight || 'No registrado' }} kg</p>
       </div>
-      } @empty {
-      <p>No hay ejercicios para este día.</p>
-      }
+      } 
     </mat-expansion-panel>
     }
     }
   </mat-expansion-panel>
   }
   } @empty {
-  <p>No hay semanas registradas.</p>
+  <p class="alert">No hay rutinas registradas.</p>
   }
 </mat-accordion>
-
-
-
-    @if (this.exercisesRoutine.length === 0) {
-    <div class="routine-info">
-      <table class="routine-table">
-        <tr>
-          <td><strong>Día Actual:</strong> {{ currentDayName }} {{ currentDayNumber }} de {{ currentNameOfTheMonth }} -
-            {{ currentDate.getFullYear() }}</td>
-        </tr>
-      </table>
-      <p class="alert">No tiene ninguna rutina registrada para el día de la fecha</p>
-    </div>
-    }
   </div>
 </div>
