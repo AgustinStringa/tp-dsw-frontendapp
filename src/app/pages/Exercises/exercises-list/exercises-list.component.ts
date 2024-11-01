@@ -11,6 +11,8 @@ export interface DialogExerciseData {
   exercise: IExercise;
   action: string;
   title: string;
+  httpClient: HttpClient;
+  url: string;
 }
 
 @Component({
@@ -52,6 +54,8 @@ export class ExercisesListComponent {
       exercise: e,
       title: 'Editar ejercicio',
       action: 'put',
+      httpClient: this.http,
+      url: environment.exercisesUrl,
     });
   }
 
@@ -59,6 +63,8 @@ export class ExercisesListComponent {
     this.openDialog(ExerciseDialogComponent, {
       title: 'Crear ejercicio',
       action: 'post',
+      httpClient: this.http,
+      url: environment.exercisesUrl,
     });
   }
 

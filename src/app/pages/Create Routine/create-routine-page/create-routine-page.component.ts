@@ -31,7 +31,7 @@ import {
 } from '@angular/common/http';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
-import Client from '../../../core/Classes/Client.js';
+import Client from '../../../core/Classes/client.js';
 import { ClientsMembershipListComponent } from '../clients-membership-list/clients-membership-list.component.js';
 import { DialogNewExerciseRoutineComponent } from '../dialog-new-exercise-routine/dialog-new-exercise-routine.component.js';
 import { environment } from '../../../../environments/environment.js';
