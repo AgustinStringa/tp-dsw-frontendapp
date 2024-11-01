@@ -9,10 +9,12 @@ import {
   MatDialogTitle,
 } from '@angular/material/dialog';
 import { MatDialogContent, MatDialogActions } from '@angular/material/dialog';
+
 interface DialogData {
   id: string;
-  url: string;
   title: string;
+  url: string;
+  httpClient: HttpClient;
 }
 
 @Component({
@@ -33,12 +35,12 @@ interface DialogData {
 export class DeleteDialogComponent {
   url: string = '';
   title: string = '';
-
+  private http: HttpClient;
   constructor(
     public dialogRef: MatDialogRef<DeleteDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: DialogData,
-    private http: HttpClient
+    @Inject(MAT_DIALOG_DATA) public data: DialogData
   ) {
+    this.http = data.httpClient;
     this.url = data.url + '/' + data.id;
     this.title = data.title;
   }

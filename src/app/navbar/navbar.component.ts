@@ -8,17 +8,39 @@ import {
 import { MdbCollapseModule } from 'mdb-angular-ui-kit/collapse';
 import { NgClass, NgIf } from '@angular/common';
 import { filter } from 'rxjs';
+import { AuthService } from '../services/auth.service.js';
+import { IUser } from '../core/interfaces/user.interface.js';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatButtonModule } from '@angular/material/button';
+
 @Component({
   selector: 'app-navbar',
   standalone: true,
-  imports: [MdbCollapseModule, RouterLink, NgClass, NgIf],
+  imports: [
+    MdbCollapseModule,
+    RouterLink,
+    NgClass,
+    MatButtonModule,
+    MatMenuModule,
+  ],
   templateUrl: './navbar.component.html',
   styleUrl: './navbar.component.css',
 })
 export class NavbarComponent {
   private currentRoute: string = '';
+
   isDropdownOpen = false;
-  constructor(private router: Router) {}
+
+  private _authService: AuthService;
+  public userSignal = this.authService.userSignal;
+
+  constructor(private router: Router, private authService: AuthService) {
+    this._authService = authService;
+    this.authService.getUser();
+    if (this.userSignal == null) {
+      this.router.navigate(['/']);
+    }
+  }
 
   ngOnInit(): void {
     this.router.events
@@ -38,5 +60,10 @@ export class NavbarComponent {
 
   toggleDropdown() {
     this.isDropdownOpen = !this.isDropdownOpen;
+  }
+
+  logout(): void {
+    this._authService.logout();
+    this.router.navigate(['/']);
   }
 }

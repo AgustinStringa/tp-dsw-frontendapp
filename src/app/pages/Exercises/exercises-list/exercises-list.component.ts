@@ -67,6 +67,7 @@ export class ExercisesListComponent {
       id: id,
       title: 'Eliminar ejercicio',
       url: environment.exercisesUrl,
+      httpClient: this.http,
     });
   }
 }

@@ -58,39 +58,36 @@ export class ClassListComponent {
 
   addClass(): void {
     this.openDialog(ClassDialogComponent, {
-      data: {
-        title: 'Nueva Clase',
-        action: 'post',
-        trainers: this.trainers,
-        classTypes: this.classTypes,
-      },
+      title: 'Nueva Clase',
+      action: 'post',
+      trainers: this.trainers,
+      classTypes: this.classTypes,
+      httpClient: this.http,
     });
   }
 
   updateClass(class_a: IClass) {
     this.openDialog(ClassDialogComponent, {
-      data: {
-        title: 'Modificar Clase',
-        action: 'put',
-        trainers: this.trainers,
-        classTypes: this.classTypes,
-        class_a: class_a,
-      },
+      title: 'Modificar Clase',
+      action: 'put',
+      trainers: this.trainers,
+      classTypes: this.classTypes,
+      class_a: class_a,
+      httpClient: this.http,
     });
   }
 
   deleteClass(id: string) {
     this.openDialog(DeleteDialogComponent, {
-      data: {
-        id: id,
-        url: environment.classesUrl,
-        title: 'Eliminar Clase',
-      },
+      id: id,
+      url: environment.classesUrl,
+      title: 'Eliminar Clase',
+      httpClient: this.http,
     });
   }
 
   openDialog(dialog: ComponentType<unknown>, data: object): void {
-    const dialogRef = this.dialog.open(dialog, data);
+    const dialogRef = this.dialog.open(dialog, { data });
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result !== 'none') this.getClasses();

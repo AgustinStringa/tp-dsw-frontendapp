@@ -34,6 +34,7 @@ interface DialogData {
   trainers: IUser[];
   classTypes: IClassType[];
   class_a: IClass | undefined;
+  httpClient: HttpClient;
 }
 
 @Component({
@@ -63,6 +64,7 @@ export class ClassDialogComponent {
   readonly trainers: IUser[];
   readonly classTypes: IClassType[];
   classId: string | undefined;
+  private http: HttpClient;
 
   //configurar validators
 
@@ -82,13 +84,13 @@ export class ClassDialogComponent {
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: DialogData,
-    public dialogRef: MatDialogRef<ClassTypeDialogComponent>,
-    private http: HttpClient
+    public dialogRef: MatDialogRef<ClassTypeDialogComponent>
   ) {
     this.action = data.action;
     this.title = data.title;
     this.trainers = data.trainers;
     this.classTypes = data.classTypes;
+    this.http = data.httpClient;
 
     if (data.class_a !== undefined) {
       const form = this.form.controls;

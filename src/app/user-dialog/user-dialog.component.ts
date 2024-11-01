@@ -15,15 +15,16 @@ import {
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { IUser } from '../core/interfaces/user.interface';
 import { trimValidator } from '../core/Functions/trim-validator';
-
 interface DialogData {
   title: string;
   action: string;
   user: IUser | undefined;
   url: string;
+
+  httpClient: HttpClient;
 }
 
 @Component({
@@ -31,7 +32,6 @@ interface DialogData {
   standalone: true,
   imports: [
     ReactiveFormsModule,
-    HttpClientModule,
     MatFormFieldModule,
     MatDialogContent,
     MatDialogActions,
@@ -62,24 +62,25 @@ export class UserDialogComponent {
     ]),
   });
 
+  private http: HttpClient;
   constructor(
     @Inject(MAT_DIALOG_DATA)
-    public data: DialogData,
-    public dialogRef: MatDialogRef<UserDialogComponent>,
-    private http: HttpClient
+    public dialogData: DialogData,
+    public dialogRef: MatDialogRef<UserDialogComponent>
   ) {
-    this.title = data.title;
-    this.action = data.action;
-    this.url = data.url;
+    this.http = dialogData.httpClient;
+    this.title = dialogData.title;
+    this.action = dialogData.action;
+    this.url = dialogData.url;
 
-    if (data.user !== undefined) {
+    if (dialogData.user !== undefined) {
       const form = this.form.controls;
-      this.userId = data.user.id;
+      this.userId = dialogData.user.id;
 
-      form.firstName.setValue(data.user.firstName);
-      form.lastName.setValue(data.user.lastName);
-      form.dni.setValue(data.user.dni);
-      form.email.setValue(data.user.email);
+      form.firstName.setValue(dialogData.user.firstName);
+      form.lastName.setValue(dialogData.user.lastName);
+      form.dni.setValue(dialogData.user.dni);
+      form.email.setValue(dialogData.user.email);
       form.password.removeValidators(Validators.required);
     }
   }
@@ -100,7 +101,8 @@ export class UserDialogComponent {
         next: () => {
           this.closeDialog('created');
         },
-        error: () => {
+        error: (error) => {
+          console.log(error);
           console.error('Error al crear el usuario');
         },
       });
@@ -110,7 +112,7 @@ export class UserDialogComponent {
           this.closeDialog('updated');
         },
         error: (error) => {
-          console.log('Error al modificar el usuario' + error);
+          console.log('Error al modificar el usuario', error);
         },
       });
     }

@@ -28,6 +28,7 @@ interface DialogData {
   title: string;
   action: string;
   classType: IClassType | undefined;
+  httpClient: HttpClient;
 }
 
 @Component({
@@ -54,7 +55,7 @@ export class ClassTypeDialogComponent {
   readonly action;
   readonly title;
   classTypeId: string | undefined;
-
+  private http: HttpClient;
   form = new FormGroup({
     name: new FormControl<string>('', [Validators.required, trimValidator()]),
     description: new FormControl<string>(''),
@@ -62,9 +63,9 @@ export class ClassTypeDialogComponent {
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: DialogData,
-    public dialogRef: MatDialogRef<ClassTypeDialogComponent>,
-    private http: HttpClient
+    public dialogRef: MatDialogRef<ClassTypeDialogComponent>
   ) {
+    this.http = data.httpClient;
     this.action = data.action;
     this.title = data.title;
 

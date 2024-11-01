@@ -36,35 +36,32 @@ export class ClassTypeListComponent {
 
   addClassType(): void {
     this.openDialog(ClassTypeDialogComponent, {
-      data: {
-        title: 'Nuevo tipo de clase',
-        action: 'post',
-      },
+      title: 'Nuevo tipo de clase',
+      action: 'post',
+      httpClient: this.http,
     });
   }
 
   updateClassType(classType: IClassType) {
     this.openDialog(ClassTypeDialogComponent, {
-      data: {
-        title: 'Modificar tipo de clase',
-        action: 'put',
-        classType: classType,
-      },
+      title: 'Modificar tipo de clase',
+      action: 'put',
+      classType: classType,
+      httpClient: this.http,
     });
   }
 
   deleteClassType(id: string) {
     this.openDialog(DeleteDialogComponent, {
-      data: {
-        id: id,
-        url: environment.classTypesUrl,
-        title: 'Eliminar tipo de clase',
-      },
+      id: id,
+      url: environment.classTypesUrl,
+      title: 'Eliminar tipo de clase',
+      httpClient: this.http,
     });
   }
 
   openDialog(dialog: ComponentType<unknown>, data: object): void {
-    const dialogRef = this.dialog.open(dialog, data);
+    const dialogRef = this.dialog.open(dialog, { data });
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result !== 'none') {
