@@ -8,6 +8,7 @@ import {
   MatExpansionModule,
   MatExpansionPanel,
 } from '@angular/material/expansion';
+import { AuthService } from '../../services/auth.service.js';
 
 @Component({
   selector: 'app-show-client-routine',
@@ -18,16 +19,17 @@ import {
 })
 export class ShowClientRoutineComponent {
   private urlRoutine: string = `${environment.routinesUrl}`;
-
+  private urlAuth: string = `${environment.authUrl}`;
   currentDayName: string = '';
   currentDayNumber: number = 0;
-  userId: string = '66e9b19b100c4d9c3024fc97'; // ID hardcodeado del usuario
+  userId: string = '';
   routine: IRoutine | null = null;
   exercisesRoutine: IExerciseRoutine[] = [];
   startDate: string = '';
   endDate: string = '';
   currentWeek: string = '';
   totalWeeks: number[] = [];
+
   private daysOfWeek: string[] = [
     'Domingo',
     'Lunes',
@@ -55,15 +57,20 @@ export class ShowClientRoutineComponent {
   currentDate = new Date();
   currentNameOfTheMonth = this.months[this.currentDate.getMonth()];
 
-  constructor(private http: HttpClient) {
-    this.loadRoutine();
+  constructor(private http: HttpClient, private authService: AuthService) {
+    const user = this.authService.getUser();
+    if (user) {
+      this.userId = user.id;
+      this.loadRoutine();
+    } else {
+      console.error('No user found in session. Redirecting or handling error.');
+    }
   }
 
   loadRoutine(): void {
     const today = new Date();
     this.currentDayName = this.getDayName(today.getDay());
     this.currentDayNumber = today.getDate();
-
     this.http
       .get<{ message: string; data: IRoutine }>(
         `${this.urlRoutine}/${this.userId}/current`
