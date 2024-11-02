@@ -6,6 +6,7 @@ import { HttpClientModule, HttpClient } from '@angular/common/http';
 import IRoutine from '../../../core/interfaces/IRoutine.interface.js';
 import { FormsModule } from '@angular/forms';
 import { DialogAddWeightComponent } from '../dialog-add-weight/dialog-add-weight.component.js';
+import { AuthService } from '../../../services/auth.service.js';
 
 @Component({
   selector: 'app-daily-routine',
@@ -26,7 +27,7 @@ export class DailyRoutineComponent {
   selectedExerciseRoutine: IExerciseRoutine | null = null;
   selectedWeight: number | null = null;
   dayToday: number = new Date().getDay();
-  userId: string = '6701c515d61090925fbbe8a1'; // ID hardcodeado del usuario
+  userId: string = '';
 
   private urlRoutine: string = `${environment.routinesUrl}`;
   private daysOfWeek: string[] = [
@@ -56,8 +57,14 @@ export class DailyRoutineComponent {
   currentDate = new Date();
   currentNameOfTheMonth = this.months[this.currentDate.getMonth()];
 
-  constructor(private http: HttpClient) {
-    this.loadRoutine();
+  constructor(private http: HttpClient, private authService: AuthService) {
+    const user = this.authService.getUser();
+    if (user) {
+      this.userId = user.id;
+      this.loadRoutine();
+    } else {
+      console.error('No user found in session. Redirecting or handling error.');
+    }
   }
 
   loadRoutine(): void {
@@ -120,7 +127,7 @@ export class DailyRoutineComponent {
     const weekNumber = Math.floor(diffInDays / 7) + 1;
     return `${weekNumber}`;
   }
-
+  //TODO: Enviar sesión del cliente por el modal.
   openModal(exerciseRoutine: IExerciseRoutine): void {
     this.selectedExerciseRoutine = exerciseRoutine;
     this.showModal = true;
