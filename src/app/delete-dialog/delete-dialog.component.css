@@ -1,5 +1,3 @@
-.btn-close {
-    position: absolute;
-    top: 1rem;
-    right: 1rem;
+.container {
+  width: 500px;
 }

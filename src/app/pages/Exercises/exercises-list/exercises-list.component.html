@@ -9,7 +9,7 @@
       Nuevo ejercicio
     </button>
   </div>
-  <div class="exercises-list-container">
+  <div class="list-container exercises-list-container">
     @if (exercises !== null && exercises.length > 0) {
     <table>
       <thead>
@@ -27,7 +27,12 @@
           <td>{{ e.name }}</td>
           <td>{{ e.description }}</td>
           <td>
+            @if (e.urlVideo !== null && e.urlVideo !== ""){
             <a href="{{ e.urlVideo }}" target="_blank">Enlace al video</a>
+            } @else {
+              <a class ="no-video"(click)="openShackBar('No existe ningún video', 'Cerrar', 'sucess')">Sin
+                video</a>
+            }
           </td>
           <td class="td-actions">
             <button

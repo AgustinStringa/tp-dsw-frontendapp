@@ -1,85 +1,92 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
   <div class="container-fluid">
-    <button
-      class="navbar-toggler"
-      type="button"
-      (click)="togglerFirstExample.toggle()"
-      aria-controls="navbarTogglerDemo01"
-      aria-expanded="false"
-      aria-label="Toggle navigation"
-    >
+    <button class="navbar-toggler" type="button" (click)="togglerFirstExample.toggle()"
+      aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
       <i class="fas fa-bars"></i>
     </button>
-    <div
-      class="collapse navbar-collapse"
-      id="navbarTogglerDemo01"
-      mdbCollapse
-      #togglerFirstExample="mdbCollapse"
-    >
-      <a class="navbar-brand" href="#">App Gimnasio</a>
+    <div class="collapse navbar-collapse" id="navbarTogglerDemo01" mdbCollapse #togglerFirstExample="mdbCollapse">
+      <a class="navbar-brand" routerLink="/">App Gimnasio</a>
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        @if(this.userSignal() == null){
         <li class="nav-item">
-          <a
-            class="nav-link active"
-            [ngClass]="{ active: isActive('/') }"
-            aria-current="page"
-            routerLink="/"
-            >Home</a
-          >
+          <a class="nav-link active" [ngClass]="{ active: isActive('/') }" aria-current="page" routerLink="/">Login</a>
+        </li>
+        } @if(this.userSignal() != null ){
+        <li class="nav-item">
+          <a class="nav-link" [ngClass]="{ active: isActive('/home') }" routerLink="home">Home</a>
+        </li>
+        @if(!this.userSignal().isClient ){
+        <li class="nav-item">
+          <a class="nav-link" [ngClass]="{ active: isActive('/clients') }" routerLink="clients">Clientes</a>
+        </li>
+        } @if(!this.userSignal().isClient ){
+        <li class="nav-item">
+          <a class="nav-link" [ngClass]="{ active: isActive('/trainers') }" routerLink="trainers">Entrenadores</a>
+        </li>
+        } @if(!this.userSignal().isClient ){
+        <li class="nav-item">
+          <a class="nav-link" [ngClass]="{ active: isActive('/membershiptypes') }" routerLink="membershiptypes">Tipos de
+            Membresías</a>
+        </li>
+        } @if(!this.userSignal().isClient ){
+        <li class="nav-item">
+          <a class="nav-link" [ngClass]="{ active: isActive('/currentmemberships') }"
+            routerLink="currentmemberships">Membresías</a>
+        </li>
+        } @if(this.userSignal().isClient ){
+        <li class="nav-item">
+          <a class="nav-link" [ngClass]="{ active: isActive('/registration') }" routerLink="registration">Registrarse a
+            una clase</a>
+        </li>
+        } @if(!this.userSignal().isClient ){
+        <li class="nav-item">
+          <a class="nav-link" [ngClass]="{ active: isActive('/class-types') }" routerLink="class-types">Tipos de
+            clases</a>
         </li>
         <li class="nav-item">
-          <a
-            class="nav-link"
-            [ngClass]="{ active: isActive('/clients') }"
-            routerLink="clients"
-            >Clientes</a
-          >
-        </li>
-        <li class="nav-item">
-          <a
-            class="nav-link"
-            [ngClass]="{ active: isActive('/trainers') }"
-            routerLink="trainers"
-            >Entrenadores</a
-          >
-        </li>
-        <li class="nav-item">
-          <a
-            class="nav-link"
-            [ngClass]="{ active: isActive('/membershiptypes') }"
-            routerLink="membershiptypes"
-            >Tipos de Membresías</a
-          >
-        </li>
-        <li class="nav-item">
-          <a
-            class="nav-link"
-            [ngClass]="{ active: isActive('/currentmemberships') }"
-            routerLink="currentmemberships"
-            >Membresías</a
-          >
-        </li>
-        <li class="nav-item">
-          <a
-            class="nav-link"
-            [ngClass]="{ active: isActive('/registration') }"
-            routerLink="registration"
-            >Registrarse a una clase</a
-          >
+          <a class="nav-link" [ngClass]="{ active: isActive('/classes') }" routerLink="classes">Clases</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" routerLink="">Rutinas</a>
         </li>
+        } @if(!this.userSignal().isClient ){
         <li class="nav-item">
           <a class="nav-link" routerLink="/create-routine">Crear Rutina</a>
         </li>
+        } @if(!this.userSignal().isClient ){
         <li class="nav-item">
-          <a class="nav-link" routerLink="/exercise">Ejercicios</a>
+          <a class="nav-link" routerLink="/exercises">Ejercicios</a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link" routerLink="/record-exercise-execution">Registrar entrenamiento</a>
+        } @if(this.userSignal().isClient ){
+          @if (this.userSignal().isClient) {
+    <li class="nav-item dropdown">
+      <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" (click)="toggleDropdown()"
+        [attr.aria-expanded]="isDropdownOpen"> Ejercicios </a>
+      @if (this.isDropdownOpen) {
+      <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+        <li>
+          <a class="dropdown-item" routerLink="/showClientRoutine">Ver mi rutina</a>
+        </li>
+        <li>
+          <a class="dropdown-item" routerLink="/record-exercise-execution">Registrar rutina del día</a>
         </li>
       </ul>
+      }
+    </li>
+  }
+        } }
+      </ul>
+      @if(this.userSignal() != null){
+      <button mat-button [matMenuTriggerFor]="menu" class="text-white fw-light">
+        Menu
+      </button>
+      <mat-menu #menu="matMenu">
+        <button mat-menu-item>
+          <a class="nav-link" routerLink="/home">Mi Perfil</a>
+        </button>
+        <button mat-menu-item (click)="logout()">Cerrar Sesión</button>
+      </mat-menu>
+      }
     </div>
   </div>
 </nav>

@@ -6,6 +6,7 @@ import { HttpClientModule, HttpClient } from '@angular/common/http';
 import IRoutine from '../../../core/interfaces/IRoutine.interface.js';
 import { FormsModule } from '@angular/forms';
 import { DialogAddWeightComponent } from '../dialog-add-weight/dialog-add-weight.component.js';
+import { AuthService } from '../../../services/auth.service.js';
 
 @Component({
   selector: 'app-daily-routine',
@@ -26,8 +27,7 @@ export class DailyRoutineComponent {
   selectedExerciseRoutine: IExerciseRoutine | null = null;
   selectedWeight: number | null = null;
   dayToday: number = new Date().getDay();
-
-  userId: string = '66ed63ad9818b43969cf5ded'; // ID hardcodeado del usuario
+  userId: string = '';
 
   private urlRoutine: string = `${environment.routinesUrl}`;
   private daysOfWeek: string[] = [
@@ -57,8 +57,14 @@ export class DailyRoutineComponent {
   currentDate = new Date();
   currentNameOfTheMonth = this.months[this.currentDate.getMonth()];
 
-  constructor(private http: HttpClient) {
-    this.loadRoutine();
+  constructor(private http: HttpClient, private authService: AuthService) {
+    const user = this.authService.getUser();
+    if (user) {
+      this.userId = user.id;
+      this.loadRoutine();
+    } else {
+      console.error('No user found in session. Redirecting or handling error.');
+    }
   }
 
   loadRoutine(): void {
@@ -109,12 +115,19 @@ export class DailyRoutineComponent {
   private getCurrentWeek(dateStart: Date, dateEnd: Date): string {
     const start = new Date(dateStart);
     const end = new Date(dateEnd);
-    const diff = end.getTime() - start.getTime();
-    const oneWeek = 1000 * 60 * 60 * 24 * 7;
-    const weekNumber = Math.floor(diff / oneWeek);
+    const current = new Date();
+
+    if (current < start || current > end) {
+      return 'Fuera del rango de fechas';
+    }
+
+    const diffInMs = current.getTime() - start.getTime();
+    const diffInDays = diffInMs / (1000 * 60 * 60 * 24);
+
+    const weekNumber = Math.floor(diffInDays / 7) + 1;
     return `${weekNumber}`;
   }
-
+  //TODO: Enviar sesión del cliente por el modal.
   openModal(exerciseRoutine: IExerciseRoutine): void {
     this.selectedExerciseRoutine = exerciseRoutine;
     this.showModal = true;

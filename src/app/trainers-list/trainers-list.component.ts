@@ -1,13 +1,13 @@
-import { NgFor, NgIf } from '@angular/common';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { Component } from '@angular/core';
+import { ComponentType } from '@angular/cdk/overlay/index.js';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { MatDialog } from '@angular/material/dialog';
+import { MatIconModule } from '@angular/material/icon';
+import { NgFor, NgIf } from '@angular/common';
+import { DeleteDialogComponent } from '../delete-dialog/delete-dialog.component';
 import { environment } from '../../environments/environment';
 import { IUser } from '../core/interfaces/user.interface';
-import { MatIconModule } from '@angular/material/icon';
-import { DeleteDialogComponent } from '../delete-dialog/delete-dialog.component';
-import { MatDialog } from '@angular/material/dialog';
-import { ComponentType } from '@angular/cdk/overlay/index.js';
-import { ClientDialogComponent } from '../client-dialog/client-dialog.component.js';
+import { UserDialogComponent } from '../user-dialog/user-dialog.component.js';
 
 @Component({
   selector: 'app-trainers-list',
@@ -38,35 +38,38 @@ export class TrainersListComponent {
   openDialog(dialog: ComponentType<unknown>, data: object): void {
     const dialogRef = this.dialog.open(dialog, { data });
 
-    dialogRef.afterClosed().subscribe(() => {
-      //TO DO: hay forma de saber si no hubo cambios? para no realizar la peticion
-      this.getTrainers();
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result !== 'none') {
+        this.getTrainers();
+      }
     });
   }
 
   deleteTrainer(id: string): void {
     this.openDialog(DeleteDialogComponent, {
       id: id,
-      entity: 'trainer',
-      title: 'Eliminar entrenador',
+      title: 'Eliminar Entrenador',
       url: environment.trainersUrl,
+      httpClient: this.http,
     });
   }
 
   updateTrainer(trainer: IUser): void {
-    this.openDialog(ClientDialogComponent, {
-      title: 'Modificar entrenador',
+    this.openDialog(UserDialogComponent, {
+      title: 'Modificar Entrenador',
       action: 'put',
-      client: trainer,
+      user: trainer,
       url: environment.trainersUrl,
+      httpClient: this.http,
     });
   }
 
   addTrainer(): void {
-    this.openDialog(ClientDialogComponent, {
-      title: 'Nuevo entrenador',
+    this.openDialog(UserDialogComponent, {
+      title: 'Nuevo Entrenador',
       action: 'post',
       url: environment.trainersUrl,
+      httpClient: this.http,
     });
   }
 }

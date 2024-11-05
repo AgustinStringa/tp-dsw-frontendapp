@@ -1,0 +1,56 @@
+<div class="list-container class-type-list-container">
+  <h2 class="crud-page-title">Tipos de clases</h2>
+
+  <div class="my-4 text-end">
+    <button
+      type="button"
+      class="btn btn-primary btn-lg"
+      (click)="addClassType()"
+    >
+      Nuevo tipo
+    </button>
+  </div>
+
+  @if (classTypes !== null && classTypes.length > 0) {
+  <table>
+    <thead>
+      <tr>
+        <th>Nombre</th>
+        <th>Descripción</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      @for (type of classTypes; track type) {
+      <tr>
+        <td>{{ type.name }}</td>
+        <td>{{ type.description }}</td>
+        <td class="td-actions">
+          <button
+            (click)="deleteClassType(type.id)"
+            aria-label="Example icon button with a delete icon"
+          >
+            <mat-icon>delete</mat-icon>
+          </button>
+          <button
+            (click)="updateClassType(type)"
+            aria-label="Example icon button with an edit icon"
+          >
+            <mat-icon>edit</mat-icon>
+          </button>
+        </td>
+      </tr>
+      }
+    </tbody>
+  </table>
+  } @else if (classTypes !== null && classTypes.length == 0) {
+  <div class="alert alert-warning fs-6" role="alert">
+    No hay tipos de clases cargados. Crea uno para comenzar.
+  </div>
+  } @else {
+  <div class="alert alert-danger fs-6" role="alert">
+    No se pudieron cargar los tipos de clases.
+  </div>
+  }
+</div>

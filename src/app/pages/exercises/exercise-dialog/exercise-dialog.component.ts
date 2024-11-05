@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, Inject, inject } from '@angular/core';
 import {
   FormsModule,
   Validators,
@@ -52,25 +52,23 @@ export class ExerciseDialogComponent {
   title: string = '';
   action: string = '';
   private _snackBar = inject(MatSnackBar);
-  readonly dialogRef = inject(MatDialogRef<DialogExerciseData>);
-  readonly data = inject<DialogExerciseData>(MAT_DIALOG_DATA);
+  private http: HttpClient;
+  url: string = '';
+  //readonly dialogRef = inject(MatDialogRef<DialogExerciseData>);
+  //readonly data = inject<DialogExerciseData>(MAT_DIALOG_DATA);
   exerciseForm = new FormGroup({
-    name: new FormControl<string>('', [
-      Validators.required,
-      Validators.nullValidator,
-      Validators.minLength(1),
-      trimValidator(),
-    ]),
-    description: new FormControl<string>('', [
-      Validators.required,
-      Validators.nullValidator,
-      Validators.minLength(1),
-      trimValidator(),
-    ]),
+    name: new FormControl<string>('', [Validators.required, trimValidator()]),
+    description: new FormControl<string>(''),
     urlVideo: new FormControl<string>(''),
   });
 
-  constructor(private http: HttpClient) {
+  constructor(
+    public dialogRef: MatDialogRef<DialogExerciseData>,
+    @Inject(MAT_DIALOG_DATA) public data: DialogExerciseData
+  ) {
+    this.http = data.httpClient;
+    this.url = data.url;
+    this.title = data.title;
     if (this.data.action == 'put') {
       this.exerciseForm.patchValue({
         name: this.data.exercise.name.trim(),
@@ -89,6 +87,8 @@ export class ExerciseDialogComponent {
     const description = this.exerciseForm.value.description;
     const urlVideo = this.exerciseForm.value.urlVideo;
     //TODO: ver más validaciones aquí
+    console.log('enviando');
+
     if (this.data.action == 'post') {
       this.http
         .post<any>(environment.exercisesUrl, {

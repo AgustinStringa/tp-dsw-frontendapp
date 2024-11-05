@@ -9,7 +9,7 @@ import {
 } from '@angular/core';
 import { NgClass } from '@angular/common';
 import { SimpleChanges } from '@angular/core';
-import Client from '../../../core/classes/client.js';
+import Client from '../../../core/Classes/client.js';
 import { IMembership } from '../../../core/interfaces/membership.interface.js';
 
 class ClientForRoutine extends Client {
