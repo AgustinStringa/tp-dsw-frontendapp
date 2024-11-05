@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, Inject, inject } from '@angular/core';
 import {
   FormsModule,
   Validators,
@@ -60,6 +60,7 @@ export class ExerciseDialogComponent {
     private http: HttpClient,
     private snackbarService: SnackbarService
   ) {
+    this.title = this.data.title;
     if (this.data.action == 'put') {
       this.exerciseForm.patchValue({
         name: this.data.exercise.name.trim(),

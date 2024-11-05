@@ -1,14 +1,17 @@
 <div class="list-container membership-types-list-container">
-  <h2 class="crud-page-title">Tipos de membresías</h2>
-  <div class="my-4 text-end">
-    <button
-      type="button"
-      class="btn btn-primary btn-lg"
-      (click)="addMembershipType()"
-    >
-      Nuevo tipo de membresía
-    </button>
+  <div class="title-div">
+    <h2 class="crud-page-title">Tipos de membresías</h2>
+    <div class="my-4 text-end">
+      <button
+        type="button"
+        class="btn btn-primary btn-lg"
+        (click)="addMembershipType()"
+      >
+        Nuevo tipo de membresía
+      </button>
+    </div>
   </div>
+
   @if (membershipTypes !== null && membershipTypes.length > 0) {
   <table>
     <thead>

@@ -1,15 +1,9 @@
 import { Component } from '@angular/core';
-import {
-  RouterLink,
-  ActivatedRoute,
-  Router,
-  NavigationEnd,
-} from '@angular/router';
+import { RouterLink, Router, NavigationEnd } from '@angular/router';
 import { MdbCollapseModule } from 'mdb-angular-ui-kit/collapse';
 import { NgClass } from '@angular/common';
 import { filter } from 'rxjs';
 import { AuthService } from '../services/auth.service.js';
-import { IUser } from '../core/interfaces/user.interface.js';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatButtonModule } from '@angular/material/button';
 
@@ -28,13 +22,11 @@ import { MatButtonModule } from '@angular/material/button';
 })
 export class NavbarComponent {
   private currentRoute: string = '';
-  private _authService: AuthService;
   public userSignal = this.authService.userSignal;
+  isDropdownOpen = false;
 
-  constructor(private router: Router, private authService: AuthService) {
-    this._authService = authService;
-    this.authService.getUser();
-    if (this.userSignal == null) {
+  constructor(private router: Router, public authService: AuthService) {
+    if (this.userSignal === null) {
       this.router.navigate(['/']);
     }
   }
@@ -55,8 +47,11 @@ export class NavbarComponent {
     return this.currentRoute === route;
   }
 
-  logout(): void {
-    this._authService.logout();
-    this.router.navigate(['/']);
+  toggleDropdown() {
+    this.isDropdownOpen = !this.isDropdownOpen;
+  }
+
+  async logout() {
+    if (await this.authService.logout()) this.router.navigate(['/']);
   }
 }

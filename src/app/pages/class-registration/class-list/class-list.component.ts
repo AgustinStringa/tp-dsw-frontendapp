@@ -1,8 +1,6 @@
 import { NgFor, NgIf } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Component, inject } from '@angular/core';
-import { format } from 'date-fns';
-import { es } from 'date-fns/locale';
 import { environment } from '../../../../environments/environment.js';
 import { IClassType } from '../../../core/interfaces/class-type.interface.js';
 import { IClass } from '../../../core/interfaces/class.interface.js';
@@ -10,6 +8,7 @@ import { IRegistration } from '../../../core/interfaces/registration.interface.j
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogConfirmRegistrationComponent } from '../dialog-confirm-registration/dialog-confirm-registration.component.js';
+import { AuthService } from '../../../services/auth.service.js';
 import { SnackbarService } from '../../../services/snackbar.service.js';
 
 @Component({
@@ -24,24 +23,70 @@ export class ClassListComponent {
   classtypes: IClassType[] = [];
   selectedClass: IClass | null = null;
   selectedClassType: IClassType | null = null;
+  availableClasses: IClassType[] = [];
+  registeredClassIds: string[] = [];
+
   private dialog = inject(MatDialog);
-  private userId = '66e9b19b100c4d9c3024fc97'; // ID hardcodeado del usuario
+  private userId = '';
 
   constructor(
     private http: HttpClient,
+    private authService: AuthService,
     private snackbarService: SnackbarService
   ) {
-    this.getClassTypes();
+    const user = this.authService.getUser();
+    if (user) {
+      console.log(user);
+      this.userId = user.id;
+      this.getRegistrations();
+      this.getClassTypes();
+    } else {
+      console.error('No user found in session. Redirecting or handling error.');
+    }
   }
 
-  async getClassTypes() {
+  getClassTypes() {
     try {
-      this.http.get<any>(environment.classTypesUrl).subscribe((res) => {
-        this.classtypes = res.data;
-      });
+      this.http
+        .get<any>(`${environment.classTypesUrl}`)
+
+        .subscribe((res) => {
+          this.classtypes = res.data;
+          this.filterClases();
+        });
     } catch (error: any) {
       console.log(error);
     }
+  }
+
+  getRegistrations() {
+    try {
+      this.http
+        .get<any>(`${environment.registrationUrl}/client/${this.userId}`)
+        .subscribe((res) => {
+          this.registeredClassIds = res.data.map(
+            (registration: IRegistration) => registration.class
+          );
+        });
+    } catch (error: any) {
+      console.log(error);
+    }
+  }
+
+  filterClases() {
+    this.availableClasses = this.classtypes ? [...this.classtypes] : [];
+
+    const registeredClassIdsSet = new Set(this.registeredClassIds);
+    this.availableClasses = this.availableClasses
+      .map((classType) => {
+        const filteredClasses = classType.classes.filter(
+          (cls) => cls.active === true && !registeredClassIdsSet.has(cls.id)
+        );
+        return { ...classType, classes: filteredClasses };
+      })
+      .filter((classType) => classType.classes.length > 0);
+
+    console.log('Clases disponibles:', this.availableClasses);
   }
 
   selectClassType(classType: IClassType) {
@@ -53,7 +98,10 @@ export class ClassListComponent {
 
     const dialogRef = this.dialog.open(DialogConfirmRegistrationComponent, {
       data: {
-        className: `Dia: ${classItem.day} - Entrenador: ${classItem.trainer.firstName} ${classItem.trainer.lastName}`,
+        className: classItem.classType.name, //TODO enviar nombre de la clase
+        trainer: classItem.trainer.firstName + ' ' + classItem.trainer.lastName,
+        day: this.getDayNameFromNumber(classItem.day),
+        startTime: classItem.startTime,
       },
     });
 
@@ -68,25 +116,33 @@ export class ClassListComponent {
           .post<IRegistration>(environment.registrationUrl, registration)
           .subscribe({
             next: () => {
-              this.snackbarService.showSuccess('Clase registrada exitosamente');
+              this.snackbarService.showSuccess('Inscripción realizada');
+              this.getRegistrations();
+              this.getClassTypes();
             },
-            error: () => {
-              this.snackbarService.showError('Error al registrar la clase');
+            error: (err) => {
+              console.log(err);
+              this.snackbarService.showError(
+                'Error al inscribirse en la clase'
+              );
             },
           });
       } else {
-        this.snackbarService.showError('Registro cancelado');
+        this.snackbarService.showError('Inscripción cancelada');
       }
     });
   }
 
   getDayNameFromNumber(dayNumber: number) {
-    if (dayNumber < 1 || dayNumber > 7) {
-      return '';
-    }
-    const date = new Date(2024, 9, dayNumber);
-    let dayName = format(date, 'EEEE', { locale: es });
-    dayName = dayName.charAt(0).toUpperCase() + dayName.slice(1);
-    return dayName;
+    const days = [
+      'Lunes',
+      'Martes',
+      'Miércoles',
+      'Jueves',
+      'Viernes',
+      'Sábado',
+      'Domingo',
+    ];
+    return days[dayNumber];
   }
 }

@@ -7,11 +7,14 @@ import { DeleteDialogComponent } from '../../../delete-dialog/delete-dialog.comp
 import { environment } from '../../../../environments/environment.js';
 import { ExerciseDialogComponent } from '../exercise-dialog/exercise-dialog.component.js';
 import { IExercise } from '../../../core/interfaces/exercise.interface.js';
+import { SnackbarService } from '../../../services/snackbar.service.js';
 
 export interface DialogExerciseData {
   exercise: IExercise;
   action: string;
   title: string;
+  httpClient: HttpClient;
+  url: string;
 }
 
 @Component({
@@ -23,7 +26,12 @@ export interface DialogExerciseData {
 })
 export class ExerciseListComponent {
   exercises: IExercise[] | null = null;
-  constructor(private http: HttpClient, private dialog: MatDialog) {
+
+  constructor(
+    private http: HttpClient,
+    private dialog: MatDialog,
+    public snackbarService: SnackbarService
+  ) {
     this.getExercises();
   }
 

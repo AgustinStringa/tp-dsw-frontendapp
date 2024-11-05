@@ -10,11 +10,12 @@ import { environment } from '../../../../environments/environment';
 import { IClass } from '../../../core/interfaces/class.interface';
 import { IClassType } from '../../../core/interfaces/class-type.interface';
 import { IUser } from '../../../core/interfaces/user.interface';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-class-list',
   standalone: true,
-  imports: [NgIf, NgFor, MatDialogModule, MatIconModule],
+  imports: [NgIf, NgFor, MatDialogModule, MatIconModule, FormsModule],
   templateUrl: './class-list.component.html',
   styleUrl: './class-list.component.css',
 })
@@ -23,6 +24,10 @@ export class ClassListComponent {
   trainers: IUser[] | null = null;
   classTypes: IClassType[] | null = null;
   classes: IClass[] | null = null;
+  filteredClasses: IClass[] | null = null;
+  dayFilter: string = '';
+  classTypeFilter: string = '';
+  trainerFilter: string = '';
 
   constructor(private http: HttpClient) {
     this.getClasses();
@@ -34,6 +39,7 @@ export class ClassListComponent {
     try {
       this.http.get<any>(environment.classesUrl).subscribe((res) => {
         this.classes = res.data;
+        this.applyFilter();
       });
     } catch (error: any) {
       this.classes = null;
@@ -102,5 +108,34 @@ export class ClassListComponent {
       'Domingo',
     ];
     return days[dayNumber];
+  }
+
+  clearFilters() {
+    this.dayFilter = '';
+    this.classTypeFilter = '';
+    this.trainerFilter = '';
+    this.applyFilter();
+  }
+  applyFilter() {
+    this.filteredClasses = this.classes ? [...this.classes] : [];
+
+    if (this.dayFilter) {
+      this.filteredClasses = this.filteredClasses.filter((c) => {
+        const classDayName = this.getDayName(c.day);
+        return classDayName === this.dayFilter;
+      });
+    }
+
+    if (this.classTypeFilter) {
+      this.filteredClasses = this.filteredClasses.filter((c) => {
+        return c.classType.name === this.classTypeFilter;
+      });
+    }
+
+    if (this.trainerFilter) {
+      this.filteredClasses = this.filteredClasses.filter((c) => {
+        return c.trainer.firstName === this.trainerFilter;
+      });
+    }
   }
 }

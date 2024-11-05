@@ -2,14 +2,11 @@ import { NgClass } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { AuthService } from '../services/auth.service.js';
 import { HttpErrorResponse } from '@angular/common/http/index.js';
-import {
-  ProgressSpinnerMode,
-  MatProgressSpinnerModule,
-} from '@angular/material/progress-spinner';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { SnackbarService } from '../services/snackbar.service.js';
+
 @Component({
   selector: 'app-login',
   standalone: true,
@@ -25,7 +22,6 @@ export class LoginComponent {
   dni: string = '';
   user: string = '';
   aqua: string = '#a7ebf3';
-  private _snackBar = inject(MatSnackBar);
 
   isLoginVisible: boolean = true;
   isSpinnerVisible: boolean = false;
@@ -55,13 +51,13 @@ export class LoginComponent {
       this.authService
         .login({ email: this.email, password: this.password })
         .subscribe({
-          next: (response: any) => {
+          next: () => {
             this.isSpinnerVisible = false;
             this.router.navigate(['/home']);
           },
           error: (error: any) => {
             this.isSpinnerVisible = false;
-            console.error('Login failed:', error);
+
             const httperror = error as HttpErrorResponse;
             if (httperror.status == 401) {
               //email o usuario incorrecto
@@ -84,18 +80,12 @@ export class LoginComponent {
                     'border-danger',
                     'border'
                   );
-                this._snackBar.open(
-                  'Correo electrónico o contraseña incorrectos',
-                  'cerrar',
-                  {
-                    duration: 3000,
-                  }
+                this.snackbarService.showError(
+                  'Correo electrónico o contraseña incorrectos'
                 );
               }
             } else {
-              this._snackBar.open('Error al iniciar sesión', 'cerrar', {
-                duration: 3000,
-              });
+              this.snackbarService.showError('Error al iniciar sesión');
             }
           },
         });

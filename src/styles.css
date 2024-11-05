@@ -25,9 +25,21 @@ body {
   margin: 2rem 0 !important;
 }
 
+.list-container {
+  width: 80%;
+  margin: 0 auto 20px;
+}
+
+.list-container .title-div {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
 .list-container table {
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   grid-row: auto;
+  width: 100%;
 }
 
 .list-container thead {
@@ -38,6 +50,7 @@ body {
 .list-container th {
   border: 1px solid #ddd;
   padding: 10px;
+  text-align: center;
 }
 
 .list-container table button {

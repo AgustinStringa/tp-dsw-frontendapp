@@ -1,43 +1,43 @@
 import { Component } from '@angular/core';
-import { IExerciseRoutine } from '../../../core/interfaces/exercise-routine.inteface.js';
-import { environment } from '../../../../environments/environment.js';
-import { formatDate, NgFor, NgIf } from '@angular/common';
+import { environment } from '../../../environments/environment.js';
 import { HttpClient } from '@angular/common/http';
-import IRoutine from '../../../core/interfaces/IRoutine.interface.js';
-import { DialogAddWeightComponent } from '../dialog-add-weight/dialog-add-weight.component.js';
-import { AuthService } from '../../../services/auth.service.js';
-import { SnackbarService } from '../../../services/snackbar.service.js';
+import IRoutine from '../../core/interfaces/IRoutine.interface.js';
+import { IExerciseRoutine } from '../../core/interfaces/exercise-routine.inteface.js';
+import { formatDate } from '@angular/common';
+import {
+  MatExpansionModule,
+  MatExpansionPanel,
+} from '@angular/material/expansion';
+import { AuthService } from '../../services/auth.service.js';
 
 @Component({
-  selector: 'app-daily-routine',
+  selector: 'app-show-client-routine',
   standalone: true,
-  imports: [NgFor, NgIf, DialogAddWeightComponent],
-  templateUrl: './daily-routine.component.html',
-  styleUrl: './daily-routine.component.css',
+  imports: [MatExpansionPanel, MatExpansionModule],
+  templateUrl: './show-client-routine.component.html',
+  styleUrl: './show-client-routine.component.css',
 })
-export class DailyRoutineComponent {
+export class ShowClientRoutineComponent {
+  private urlRoutine: string = `${environment.routinesUrl}`;
+  private urlAuth: string = `${environment.authUrl}`;
+  currentDayName: string = '';
+  currentDayNumber: number = 0;
+  userId: string = '';
   routine: IRoutine | null = null;
   exercisesRoutine: IExerciseRoutine[] = [];
   startDate: string = '';
   endDate: string = '';
   currentWeek: string = '';
-  currentDayName: string = '';
-  currentDayNumber: number = 0;
-  showModal: boolean = false;
-  selectedExerciseRoutine: IExerciseRoutine | null = null;
-  selectedWeight: number | null = null;
-  dayToday: number = new Date().getDay();
-  userId: string = '';
+  totalWeeks: number[] = [];
 
-  private urlRoutine: string = `${environment.routinesUrl}`;
   private daysOfWeek: string[] = [
-    'Domingo',
     'Lunes',
     'Martes',
     'Miércoles',
     'Jueves',
     'Viernes',
     'Sábado',
+    'Domingo',
   ];
 
   months: string[] = [
@@ -57,11 +57,7 @@ export class DailyRoutineComponent {
   currentDate = new Date();
   currentNameOfTheMonth = this.months[this.currentDate.getMonth()];
 
-  constructor(
-    private http: HttpClient,
-    private authService: AuthService,
-    private snackbarService: SnackbarService
-  ) {
+  constructor(private http: HttpClient, private authService: AuthService) {
     const user = this.authService.getUser();
     if (user) {
       this.userId = user.id;
@@ -75,14 +71,13 @@ export class DailyRoutineComponent {
     const today = new Date();
     this.currentDayName = this.getDayName(today.getDay());
     this.currentDayNumber = today.getDate();
-
     this.http
       .get<{ message: string; data: IRoutine }>(
         `${this.urlRoutine}/${this.userId}/current`
       )
-      .subscribe({
-        next: (res) => {
-          this.routine = res.data;
+      .subscribe(
+        (response) => {
+          this.routine = response.data;
           if (this.routine) {
             this.startDate =
               formatDate(this.routine.start, 'yyyy-MM-dd', 'en-US') || '';
@@ -104,19 +99,23 @@ export class DailyRoutineComponent {
               new Date(this.routine.start),
               new Date(this.routine.end)
             );
+            this.totalWeeks = this.getWeeksArray(
+              new Date(this.routine.start),
+              new Date(this.routine.end)
+            );
           }
         },
-        error: () => {
-          this.snackbarService.showError('Error al cargar la rutina');
-        },
-      });
+        (error) => {
+          console.error('Error loading routine:', error);
+        }
+      );
   }
 
-  private getDayName(dayIndex: number): string {
+  getDayName(dayIndex: number): string {
     return this.daysOfWeek[dayIndex] || '';
   }
 
-  private getCurrentWeek(dateStart: Date, dateEnd: Date): string {
+  getCurrentWeek(dateStart: Date, dateEnd: Date): string {
     const start = new Date(dateStart);
     const end = new Date(dateEnd);
     const current = new Date();
@@ -132,20 +131,37 @@ export class DailyRoutineComponent {
     return `${weekNumber}`;
   }
 
-  openModal(exerciseRoutine: IExerciseRoutine): void {
-    this.selectedExerciseRoutine = exerciseRoutine;
-    this.showModal = true;
+  getWeeksArray(dateStart: Date, dateEnd: Date): number[] {
+    const start = new Date(dateStart);
+    const end = new Date(dateEnd);
+
+    const diffInMs = end.getTime() - start.getTime();
+    const diffInDays = diffInMs / (1000 * 60 * 60 * 24);
+
+    const totalWeeks = Math.floor(diffInDays / 7) + 1;
+
+    return Array.from({ length: totalWeeks }, (_, index) => index + 1);
   }
 
-  closeModal(): void {
-    this.showModal = false;
+  activePanels: { [key: number]: boolean } = {};
+
+  togglePanel(week: number): void {
+    this.activePanels[week] = !this.activePanels[week];
   }
 
-  saveWeight(weight: number): void {
-    if (this.selectedExerciseRoutine) {
-      this.selectedExerciseRoutine.weight = weight;
+  hasExercisesForWeek(week: number): boolean {
+    return this.exercisesRoutine.some((routine) => routine.week === week);
+  }
 
-      this.closeModal();
-    }
+  hasExercisesForDay(week: number, day: number): boolean {
+    return this.exercisesRoutine.some(
+      (routine) => routine.week === week && routine.day === day
+    );
+  }
+
+  getExercisesForWeekAndDay(week: number, day: number): IExerciseRoutine[] {
+    return this.exercisesRoutine.filter(
+      (routine) => routine.week === week && routine.day === day
+    );
   }
 }

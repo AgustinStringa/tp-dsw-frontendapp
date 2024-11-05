@@ -1,0 +1,54 @@
+<div class="mx-auto w-85 py-3">
+  <h2 class="page-title">Ver rutina vigente:</h2>
+  <div class="daily-routine-container">
+
+    <div class="routine-info">
+      <table class="routine-table">
+        <tr>
+          <td><strong>Fecha Desde:</strong> {{ startDate }}</td>
+          <td><strong>Fecha Hasta:</strong> {{ endDate }}</td>
+          <td><strong>Semana Actual:</strong> {{ currentWeek }}</td>
+          <td>
+            <strong>Día Actual:</strong> {{ currentDayName }} {{ currentDayNumber }} de {{ currentNameOfTheMonth }} -
+            {{ currentDate.getFullYear() }}
+          </td>
+        </tr>
+      </table>
+    </div>
+
+<mat-accordion>
+  @for (week of totalWeeks; track week) {
+  @if (hasExercisesForWeek(week)) {
+  <mat-expansion-panel>
+    <mat-expansion-panel-header>
+      <mat-panel-title>Semana {{ week }}</mat-panel-title>
+      <mat-panel-description>Ejercicios para la semana {{ week }}</mat-panel-description>
+    </mat-expansion-panel-header>
+
+    @for (day of [1, 2, 3, 4, 5, 6]; track day) {
+    @if (hasExercisesForDay(week, day)) {
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <mat-panel-title>{{ getDayName(day) }}</mat-panel-title>
+        <mat-panel-description>Ejercicios para {{ getDayName(day) }}</mat-panel-description>
+      </mat-expansion-panel-header>
+
+      @for (exerciseRoutine of getExercisesForWeekAndDay(week, day); track exerciseRoutine.exercise?.id) {
+      <div class="exercise-card">
+        <p><strong>Ejercicio:</strong> {{ exerciseRoutine.exercise?.name || 'No Disponible' }}</p>
+        <p><strong>Series:</strong> {{ exerciseRoutine.series || 'N/A' }}</p>
+        <p><strong>Repeticiones:</strong> {{ exerciseRoutine.repetitions || 'N/A' }}</p>
+        <p><strong>Peso:</strong> {{ exerciseRoutine.weight || 'No registrado' }} kg</p>
+      </div>
+      } 
+    </mat-expansion-panel>
+    }
+    }
+  </mat-expansion-panel>
+  }
+  } @empty {
+  <p class="alert">No hay rutinas registradas.</p>
+  }
+</mat-accordion>
+  </div>
+</div>

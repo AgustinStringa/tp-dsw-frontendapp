@@ -1,10 +1,12 @@
 <div class="list-container users-list-container">
-  <h2 class="crud-page-title">Clientes</h2>
+  <div class="title-div">
+    <h2 class="crud-page-title">Clientes</h2>
 
-  <div class="my-4 text-end">
-    <button type="button" class="btn btn-primary btn-lg" (click)="addUser()">
-      Nuevo cliente
-    </button>
+    <div class="my-4 text-end">
+      <button type="button" class="btn btn-primary btn-lg" (click)="addUser()">
+        Nuevo cliente
+      </button>
+    </div>
   </div>
 
   @if (clients !== null && clients.length > 0) {

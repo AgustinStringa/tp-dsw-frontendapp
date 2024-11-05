@@ -1,3 +1,4 @@
+/*TODO ver qué puede reutilizarse de styles.css*/
 
 .modal-overlay {
   position: fixed;
@@ -12,7 +13,6 @@
   align-items: center;
   z-index: 1000;
 }
-
 
 .modal-content {
   background-color: #fff;
@@ -48,7 +48,6 @@
   box-sizing: border-box;
 }
 
-
 .modal-content .button-container {
   display: flex;
   justify-content: space-between;
@@ -63,9 +62,8 @@
   border-radius: 10px;
   cursor: pointer;
   flex: 1;
-
+  transition: all 0.2s ease-in-out;
   margin: 10px 5px;
-
 }
 
 .modal-content button:first-of-type {

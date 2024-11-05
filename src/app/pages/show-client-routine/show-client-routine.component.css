@@ -60,7 +60,6 @@
   border-radius: 5px;
   cursor: pointer;
   font-size: 0.9rem;
-  transition: all .2s ease-in-out;
 }
 
 .exercises-table td button:hover {
@@ -75,7 +74,6 @@ button {
   cursor: pointer;
   background-color: #FBAB7E;
   color: white;
-  margin: 5px
 }
 
 button:hover {
@@ -88,4 +86,23 @@ button:hover {
   color: white;
   border-radius: 5px;
   margin-bottom: 20px;
+}
+
+.exercise-card {
+  border: 1px solid #555;
+  border-radius: 5px;
+  padding: 15px;
+  margin: 15px 0;
+  background-color: #6a6a6a;
+  color: #F7CE68;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  transition: background-color 0.3s;
+}
+
+.exercise-card:hover {
+  background-color: #7a7a7a;
+}
+
+.exercise-card strong {
+  color: #F7CE68;
 }

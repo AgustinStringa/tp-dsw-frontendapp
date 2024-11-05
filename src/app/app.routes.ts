@@ -1,6 +1,7 @@
 import { Routes } from '@angular/router';
 import { authGuard } from './guards/auth.guard.js';
 import { ClassListComponent } from './pages/class-crud/class-list/class-list.component.js';
+import { ClassListComponent as ClassListComponentForClient } from './pages/class-registration/class-list/class-list.component.js';
 import { ClassTypeListComponent } from './pages/class-type-crud/class-type-list/class-type-list.component.js';
 import { clientGuard } from './guards/client.guard.js';
 import { ClientListComponent } from './pages/client-crud/clients-list/client-list.component.js';
@@ -13,6 +14,7 @@ import { MembershipListComponent } from './pages/membership-crud/membership-list
 import { MembershipTypeListComponent } from './pages/membership-type-crud/membership-type-list/membership-type-list.component.js';
 import { trainerGuard } from './guards/trainer.guard.js';
 import { TrainerListComponent } from './pages/trainer-crud/trainer-list/trainer-list.component.js';
+import { ShowClientRoutineComponent } from './pages/show-client-routine/show-client-routine.component.js';
 
 export const routes: Routes = [
   { path: '', component: LoginComponent },
@@ -59,9 +61,15 @@ export const routes: Routes = [
   },
   {
     path: 'registration',
-    component: ClassListComponent,
+    component: ClassListComponentForClient,
     canActivate: [authGuard, clientGuard],
   },
+  {
+    path: 'showClientRoutine',
+    component: ShowClientRoutineComponent,
+    canActivate: [authGuard, clientGuard],
+  },
+
   {
     path: 'trainers',
     component: TrainerListComponent,
