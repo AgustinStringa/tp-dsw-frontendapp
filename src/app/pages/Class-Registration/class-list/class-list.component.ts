@@ -11,6 +11,7 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogConfirmRegistrationComponent } from '../dialog-confirm-registration/dialog-confirm-registration.component.js';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { AuthService } from '../../../services/auth.service.js';
 
 @Component({
   selector: 'app-class-list',
@@ -24,24 +25,45 @@ export class ClassListComponent {
   classtypes: IClassType[] = [];
   selectedClass: IClass | null = null;
   selectedClassType: IClassType | null = null;
+  availableClasses: IClassType[] = [];
   private dialog = inject(MatDialog);
   private _snackBar = inject(MatSnackBar);
-  private userId = '66e9b19b100c4d9c3024fc97'; // ID hardcodeado del usuario
+  private userId = '';
 
-  constructor(private http: HttpClient) {
-    this.getClassTypes();
+  constructor(private http: HttpClient, private authService: AuthService) {
+    const user = this.authService.getUser();
+    if (user) {
+      this.userId = user.id;
+      this.getClassTypes();
+    } else {
+      console.error('No user found in session. Redirecting or handling error.');
+    }
   }
 
   async getClassTypes() {
     try {
-      this.http.get<any>(environment.classTypesUrl).subscribe((res) => {
-        this.classtypes = res.data;
-      });
+      this.http
+        .get<any>(`${environment.classTypesUrl}/available/${this.userId}`)
+        .subscribe((res) => {
+          this.classtypes = res.data;
+          // this.filterClases();
+        });
     } catch (error: any) {
       console.log(error);
     }
   }
+  /*
+  filterClases() {
+    this.availableClasses = this.classtypes ? [...this.classtypes] : [];
 
+    // Filtrar classTypes que tengan al menos una clase activa
+    this.availableClasses = this.availableClasses.filter(
+      (classType) => classType.classes.some((cls) => cls.active === true)
+
+      //filtrar classTypes que el usuario no tenga registradas
+    );
+  }
+*/
   selectClassType(classType: IClassType) {
     this.selectedClassType = classType;
   }
