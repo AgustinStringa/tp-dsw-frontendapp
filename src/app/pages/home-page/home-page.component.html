@@ -1,4 +1,70 @@
-<h1 class="display-6">HOME PAGE</h1>
-<!-- este componente podría recibir el servicio de auth  
-y mostrar datos sobre el usuario 
--->
+<div class="hero">
+  <h1>COMIENZA HOY A CAMBIAR TU VIDA Y TU CUERPO.</h1>
+</div>
+
+<section class="areas-section p-5 my-5">
+  <h3 class="home-section-header">Áreas</h3>
+  <div>
+    <div class="d-flex flex-column align-items-center">
+      <img src="./assets/weight-gym-svgrepo-com.svg" alt="" />
+      <p class="my-3">Sector peso libre</p>
+    </div>
+    <div class="d-flex flex-column align-items-center">
+      <img src="./assets/cardiogram-heart-svgrepo-com.svg" alt="" />
+      <p class="my-3">Sector Crossfit</p>
+    </div>
+    <div class="d-flex flex-column align-items-center">
+      <img src="./assets/measuring-tape-svgrepo-com.svg" alt="" />
+      <p class="my-3">Objetivos y progresos</p>
+    </div>
+  </div>
+</section>
+
+<section class="estructura-section py-5 mb-5">
+  <h3 class="home-section-header">Estructura</h3>
+  <div>
+    <div class="d-flex flex-column align-items-center">
+      <img src="./assets/shower-svgrepo-com.svg" alt="" />
+      <p class="my-3">Duchas</p>
+    </div>
+    <div class="d-flex flex-column align-items-center">
+      <img src="./assets/locker-svgrepo-com.svg" alt="" />
+      <p class="my-3">Lockers</p>
+    </div>
+    <div class="d-flex flex-column align-items-center">
+      <img src="./assets/music-player-svgrepo-com.svg" alt="" />
+      <p class="my-3">Musicalización</p>
+    </div>
+  </div>
+</section>
+
+<section class="divided-panel flex-column flex-lg-row">
+  <div class="inscripcion-clase">
+    <div class="inscripcion-clase-content">
+      <p>Explora tipos de clase y elije la que más te guste</p>
+      <div>
+        <button
+          type="button"
+          class="primary-button"
+          (click)="navigateRecordExerciseExecution()"
+        >
+          Inscribirse
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="registrar-rutina">
+    <div class="registrar-rutina-content">
+      <p>Lleva un seguimiento de tus actividades realizadas</p>
+      <div>
+        <button
+          type="button"
+          class="primary-button"
+          (click)="navigateRegistration()"
+        >
+          Registrar
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
