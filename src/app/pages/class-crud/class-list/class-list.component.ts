@@ -33,6 +33,8 @@ export class ClassListComponent {
   classes: IClass[] | null = null;
   filteredClasses: IClass[] | null = null;
   dayFilter: string = '';
+  classTypeFilter: string = '';
+  trainerFilter: string = '';
 
   constructor(private http: HttpClient) {
     this.getClasses();
@@ -125,15 +127,33 @@ export class ClassListComponent {
         return 'Error';
     }
   }
+
+  clearFilters() {
+    this.dayFilter = '';
+    this.classTypeFilter = '';
+    this.trainerFilter = '';
+    this.applyFilter();
+  }
   applyFilter() {
-    if (!this.dayFilter) {
-      this.filteredClasses = this.classes;
-    } else {
-      const day = this.dayFilter.toLowerCase();
-      this.filteredClasses =
-        this.classes?.filter(
-          (c) => this.getDayName(c.day).toLowerCase() === day
-        ) || [];
+    this.filteredClasses = this.classes ? [...this.classes] : [];
+
+    if (this.dayFilter) {
+      this.filteredClasses = this.filteredClasses.filter((c) => {
+        const classDayName = this.getDayName(c.day);
+        return classDayName === this.dayFilter;
+      });
+    }
+
+    if (this.classTypeFilter) {
+      this.filteredClasses = this.filteredClasses.filter((c) => {
+        return c.classType.name === this.classTypeFilter;
+      });
+    }
+
+    if (this.trainerFilter) {
+      this.filteredClasses = this.filteredClasses.filter((c) => {
+        return c.trainer.firstName === this.trainerFilter;
+      });
     }
   }
 }

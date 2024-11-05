@@ -3,7 +3,7 @@
 
     <div class="filter-container">
       <label for="dayFilter">Filtrar por día:</label>
-      <select id="dayFilter" [(ngModel)]="dayFilter" (ngModelChange)="applyFilter()">
+      <select class = "day-filter" id="dayFilter" [(ngModel)]="dayFilter" (ngModelChange)="applyFilter()">
         <option value="">Todos</option>
         <option value="Lunes">Lunes</option>
         <option value="Martes">Martes</option>
@@ -12,7 +12,22 @@
         <option value="Viernes">Viernes</option>
         <option value="Sábado">Sábado</option>
       </select>
-    </div>
+
+
+
+        <label for="classTypeFilter">Filtrar por tipo de clase:</label>
+        <select id="classTypeFilter" [(ngModel)]="classTypeFilter" (ngModelChange)="applyFilter()">
+          <option value="">Todos</option>
+          <option *ngFor="let classType of classTypes" [value]="classType.name">{{ classType.name }}</option>
+        </select>
+
+        <label for="trainerFilter">Filtrar por entrenador:</label>
+        <select id = "classTypeFilter" [(ngModel)]="trainerFilter" (ngModelChange)="applyFilter()">
+          <option value="">Todos</option>
+          <option *ngFor="let trainer of trainers" [value]="trainer.firstName">{{ trainer.firstName + ' ' + trainer.lastName }}</option>
+        </select>
+        <button class="btn btn-primary" (click)="clearFilters()">Limpiar filtros</button>
+      </div>
   <div class="my-4 text-end">
     <button type="button" class="btn btn-primary btn-lg" (click)="addClass()">
       Nueva clase
@@ -68,9 +83,9 @@
       }
     </tbody>
   </table>
-  } @else if (classes !== null && classes.length == 0) {
+  } @else if (filteredClasses !== null && filteredClasses.length == 0) {
   <div class="alert alert-warning fs-6" role="alert">
-    No hay clases cargadas. Crea una para comenzar.
+    No hay clases cargadas de esta categoría. Crea una para comenzar.
   </div>
   } @else {
   <div class="alert alert-danger fs-6" role="alert">
