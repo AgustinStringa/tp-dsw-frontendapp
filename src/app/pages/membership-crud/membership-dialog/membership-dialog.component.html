@@ -1,0 +1,60 @@
+<div class="dialog-title">
+  <h2 mat-dialog-title>
+    {{ title }}
+  </h2>
+  <button
+    type="button"
+    class="btn-close"
+    title="Cerrar ventana"
+    (click)="closeDialog('none')"
+  ></button>
+</div>
+
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+  <mat-dialog-content class="common-dialog">
+    <mat-form-field>
+      <mat-label for="client">Cliente</mat-label>
+      <mat-select formControlName="client" id="client">
+        @for (c of clients; track c){
+        <mat-option value="{{ c.id }}">
+          {{ c.firstName + " " + c.lastName }}
+        </mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label for="type">Tipo de membresía</mat-label>
+      <mat-select formControlName="type" id="type">
+        @for (memb of membershipTypes; track memb){
+        <mat-option value="{{ memb.id }}">
+          {{ memb.name }}
+        </mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
+
+    <!--<mat-checkbox formControlName="isPaid" id="isPaid"
+      >Membresía pagada</mat-checkbox
+    >-->
+  </mat-dialog-content>
+
+  <mat-dialog-actions class="common-dialog">
+    <button
+      mat-button
+      type="submit"
+      class="btn btn-primary btn-success"
+      [disabled]="!form.valid"
+    >
+      Guardar
+    </button>
+    <button
+      mat-button
+      type="button"
+      class="btn-secondary"
+      (click)="closeDialog('none')"
+    >
+      Cancelar
+    </button>
+  </mat-dialog-actions>
+</form>

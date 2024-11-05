@@ -4,12 +4,12 @@ import { ClassListComponent as ClassListCrud } from './pages/class-crud/class-li
 import { ClassTypeListComponent } from './pages/class-type-crud/class-type-list/class-type-list.component.js';
 import { ClientListComponent } from './pages/client-crud/clients-list/client-list.component.js';
 import { CreateRoutinePageComponent } from './pages/Create Routine/create-routine-page/create-routine-page.component.js';
-import { CurrentMembershipsListComponent } from './current-memberships-list/current-memberships-list.component.js';
-import { ExercisesListComponent } from './pages/Exercises/exercises-list/exercises-list.component.js';
-import { LoginComponent } from './login/login.component.js';
-import { MembershipTypesListComponent } from './membership-types-list/membership-types-list.component.js';
-import { TrainersListComponent } from './trainers-list/trainers-list.component.js';
 import { DailyRoutineComponent } from './pages/Record-Exercise-Execution/daily-routine/daily-routine.component.js';
+import { ExerciseListComponent } from './pages/exercise-crud/exercise-list/exercise-list.component.js';
+import { LoginComponent } from './login/login.component.js';
+import { MembershipListComponent } from './pages/membership-crud/membership-list/membership-list.component.js';
+import { MembershipTypeListComponent } from './pages/membership-type-crud/membership-type-list/membership-type-list.component.js';
+import { TrainerListComponent } from './pages/trainer-crud/trainer-list/trainer-list.component.js';
 
 export const routes: Routes = [
   { path: '', component: LoginComponent },
@@ -17,13 +17,13 @@ export const routes: Routes = [
   { path: 'class-types', component: ClassTypeListComponent },
   { path: 'clients', component: ClientListComponent },
   { path: 'create-routine', component: CreateRoutinePageComponent },
-  { path: 'record-exercise-execution', component: DailyRoutineComponent },
-  { path: 'currentmemberships', component: CurrentMembershipsListComponent },
-  { path: 'exercises', component: ExercisesListComponent },
+  { path: 'exercises', component: ExerciseListComponent },
+  { path: 'memberships', component: MembershipListComponent },
   {
-    path: 'membershiptypes',
-    component: MembershipTypesListComponent,
+    path: 'membership-types',
+    component: MembershipTypeListComponent,
   },
+  { path: 'record-exercise-execution', component: DailyRoutineComponent },
   { path: 'registration', component: ClassListComponent },
-  { path: 'trainers', component: TrainersListComponent },
+  { path: 'trainers', component: TrainerListComponent },
 ];

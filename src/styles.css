@@ -18,10 +18,11 @@ body {
 }
 
 /*TABLAS PARA CRUDS*/
-.crud-page-title, .page-title {
-    font-size: 2.5rem !important;
-    font-weight: bold !important;
-    margin: 2rem 0 !important;
+.crud-page-title,
+.page-title {
+  font-size: 2.5rem !important;
+  font-weight: bold !important;
+  margin: 2rem 0 !important;
 }
 
 .list-container table {
@@ -61,8 +62,6 @@ body {
   justify-content: center;
   gap: 1.5rem;
 }
-
-/*TO DO: INCLUDE SNACK BAR STYLES HERE*/
 
 /* MatDialog */
 
@@ -106,4 +105,21 @@ mat-dialog-actions.common-dialog button.btn-secondary {
 }
 mat-dialog-actions.common-dialog button.btn-secondary:hover {
   background-color: gray;
+}
+
+/* MatSnackBar */
+
+.snackbar_success .mdc-button__label,
+.snackbar_error .mdc-button__label {
+  color: white;
+}
+
+.snackbar_error,
+.snackbar_error * {
+  background-color: #dc3545 !important;
+}
+
+.snackbar_success *,
+.snackbar_error * {
+  font-size: 1.1rem !important;
 }

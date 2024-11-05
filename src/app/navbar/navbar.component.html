@@ -46,16 +46,16 @@
         <li class="nav-item">
           <a
             class="nav-link"
-            [ngClass]="{ active: isActive('/membershiptypes') }"
-            routerLink="membershiptypes"
+            [ngClass]="{ active: isActive('/membership-types') }"
+            routerLink="membership-types"
             >Tipos de Membresías</a
           >
         </li>
         <li class="nav-item">
           <a
             class="nav-link"
-            [ngClass]="{ active: isActive('/currentmemberships') }"
-            routerLink="currentmemberships"
+            [ngClass]="{ active: isActive('/memberships') }"
+            routerLink="memberships"
             >Membresías</a
           >
         </li>
@@ -93,7 +93,9 @@
           <a class="nav-link" routerLink="/exercises">Ejercicios</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" routerLink="/record-exercise-execution">Registrar entrenamiento</a>
+          <a class="nav-link" routerLink="/record-exercise-execution"
+            >Registrar entrenamiento</a
+          >
         </li>
       </ul>
     </div>

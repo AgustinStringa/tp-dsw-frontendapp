@@ -1,5 +1,4 @@
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import {
@@ -38,6 +37,7 @@ import { environment } from '../../../../environments/environment.js';
 import { ExerciseRoutineCardComponent } from '../exercise-routine-card/exercise-routine-card.component.js';
 import { IExercise } from '../../../core/interfaces/exercise.interface.js';
 import { IExerciseRoutine } from '../../../core/interfaces/exercise-routine.inteface.js';
+import { SnackbarService } from '../../../services/snackbar.service.js';
 
 interface Day {
   exercisesRoutine?: IExerciseRoutine[];
@@ -93,9 +93,12 @@ export class CreateRoutinePageComponent implements AfterViewInit {
   today: Date = new Date();
 
   readonly dialog = inject(MatDialog);
-  private _snackBar = inject(MatSnackBar);
 
-  constructor(private http: HttpClient, private router: Router) {
+  constructor(
+    private http: HttpClient,
+    private router: Router,
+    private snackbarService: SnackbarService
+  ) {
     this.getClientsWithMembership();
     this.getExercises();
   }
@@ -119,6 +122,7 @@ export class CreateRoutinePageComponent implements AfterViewInit {
                 m.client.dni,
                 m.client.email,
                 {
+                  id: m.id,
                   dateFrom: m.dateFrom,
                   dateTo: m.dateTo,
                   type: m.type,
@@ -295,19 +299,15 @@ export class CreateRoutinePageComponent implements AfterViewInit {
               error.status === 400 &&
               error.error.message == 'There is overlap between routines'
             ) {
-              this._snackBar.open(
+              this.snackbarService.showError(
                 'Hay solapamiento entre fechas de rutinas',
-                'cerrar',
-                {
-                  duration: 3000,
-                  panelClass: ['snackbar_error'],
-                }
+                'cerrar'
               );
             } else {
-              this._snackBar.open('Error al crear la rutina', 'cerrar', {
-                duration: 3000,
-                panelClass: ['snackbar_error'],
-              });
+              this.snackbarService.showError(
+                'Error al crear la rutina',
+                'cerrar'
+              );
             }
 
             return throwError(
@@ -316,13 +316,10 @@ export class CreateRoutinePageComponent implements AfterViewInit {
           })
         )
         .subscribe((res: any) => {
-          this._snackBar
-            .open('Rutina creada correctamente', 'cerrar', {
-              duration: 3000,
-              panelClass: ['snackbar_success'],
-            })
+          this.snackbarService
+            .showSuccess('Rutina creada correctamente', 'cerrar')
             .afterDismissed()
-            .subscribe((info) => {
+            .subscribe(() => {
               this.reloadCurrentRoute();
             });
         });
