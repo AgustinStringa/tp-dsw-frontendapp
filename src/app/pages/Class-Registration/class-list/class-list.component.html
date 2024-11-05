@@ -25,8 +25,8 @@
         </div>
 
         <!-- Segundo Expansion Panel para las clases dentro del ClassType -->
+         @if (classType.classes && classType.classes.length > 0) {
         <mat-accordion
-          *ngIf="classType.classes && classType.classes.length > 0"
         >
           @for (i of classType.classes; track i.id) { @if (i.active == true) {
           <mat-expansion-panel
@@ -60,11 +60,13 @@
               </button>
             </div>
           </mat-expansion-panel>
-          } @else {
-          <mat-panel-title> No hay clases disponibles </mat-panel-title>
-          } }
+        }  
+      }
         </mat-accordion>
-
+    } @else {
+        <p>No hay clases disponibles.</p>	 
+        <!-- TODO: HAY QUE VERIFICAR COMO APARECE ESTO. -->
+      }
         <!-- Mensaje si no hay clases disponibles -->
         <p *ngIf="!classType.classes || classType.classes.length === 0">
           No hay clases disponibles.
