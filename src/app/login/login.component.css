@@ -8,8 +8,10 @@
   }
 }
 
-#rightImage, #signup {
-  transform: translateX(-100%); /* Empieza desde fuera del contenedor */
+#rightImage,
+#signup {
+  transform: translateX(-100%);
+  /* Empieza desde fuera del contenedor */
   transition: transform 0.5s ease-in-out;
 }
 
@@ -23,15 +25,18 @@
   transition: transform 0.5s ease-in-out;
 }
 
-#rightImage.active, #login.active, #signup.active {
-  transform: translateX(0); /* Mueve el elemento al interior del contenedor */
+#rightImage.active,
+#login.active,
+#signup.active {
+  transform: translateX(0);
+  /* Mueve el elemento al interior del contenedor */
 }
 
 #leftImage.active {
   transform: translateX(100%);
 }
 
-.col-0{
+.col-0 {
   width: 0;
   height: 0;
   visibility: hidden;

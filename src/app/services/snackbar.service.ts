@@ -11,18 +11,15 @@ import {
 export class SnackbarService {
   constructor(private _snackBar: MatSnackBar) {}
 
-  showSuccess(
-    message: string,
-    action: string
-  ): MatSnackBarRef<TextOnlySnackBar> {
-    return this._snackBar.open(message, action, {
+  showSuccess(message: string): MatSnackBarRef<TextOnlySnackBar> {
+    return this._snackBar.open(message, 'cerrar', {
       duration: 3000,
       panelClass: ['snackbar_success'],
     });
   }
 
-  showError(message: string, action: string): void {
-    this._snackBar.open(message, action, {
+  showError(message: string): void {
+    this._snackBar.open(message, 'cerrar', {
       duration: 3000,
       panelClass: ['snackbar_error'],
     });

@@ -5,7 +5,7 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import {
   MAT_DIALOG_DATA,
   MatDialogActions,
@@ -31,7 +31,6 @@ interface DialogData {
   standalone: true,
   imports: [
     ReactiveFormsModule,
-    HttpClientModule,
     MatFormFieldModule,
     MatDialogContent,
     MatDialogActions,
@@ -87,10 +86,7 @@ export class MembershipTypeDialogComponent {
           this.closeDialog('created');
         },
         error: () => {
-          this.snackbarService.showError(
-            'Error al crear el tipo de membresía',
-            'cerrar'
-          );
+          this.snackbarService.showError('Error al crear el tipo de membresía');
         },
       });
     } else if (this.action === 'put') {
@@ -105,8 +101,7 @@ export class MembershipTypeDialogComponent {
           },
           error: () => {
             this.snackbarService.showError(
-              'Error al modificar el tipo de membresía',
-              'cerrar'
+              'Error al modificar el tipo de membresía'
             );
           },
         });

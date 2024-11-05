@@ -23,11 +23,7 @@ import {
 import { NgClass } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 import { CdkAccordionModule } from '@angular/cdk/accordion';
-import {
-  HttpClient,
-  HttpClientModule,
-  HttpErrorResponse,
-} from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import Client from '../../../core/classes/client.js';
@@ -66,7 +62,6 @@ export interface DialogData {
     MatFormFieldModule,
     ReactiveFormsModule,
     CdkAccordionModule,
-    HttpClientModule,
     ClientsMembershipListComponent,
     MatIconModule,
     NgClass,
@@ -300,14 +295,10 @@ export class CreateRoutinePageComponent implements AfterViewInit {
               error.error.message == 'There is overlap between routines'
             ) {
               this.snackbarService.showError(
-                'Hay solapamiento entre fechas de rutinas',
-                'cerrar'
+                'Hay solapamiento entre fechas de rutinas'
               );
             } else {
-              this.snackbarService.showError(
-                'Error al crear la rutina',
-                'cerrar'
-              );
+              this.snackbarService.showError('Error al crear la rutina');
             }
 
             return throwError(
@@ -317,7 +308,7 @@ export class CreateRoutinePageComponent implements AfterViewInit {
         )
         .subscribe((res: any) => {
           this.snackbarService
-            .showSuccess('Rutina creada correctamente', 'cerrar')
+            .showSuccess('Rutina creada correctamente')
             .afterDismissed()
             .subscribe(() => {
               this.reloadCurrentRoute();

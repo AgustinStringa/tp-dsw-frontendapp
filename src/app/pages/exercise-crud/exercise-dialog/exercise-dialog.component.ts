@@ -19,11 +19,7 @@ import {
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { DialogExerciseData } from '../exercise-list/exercise-list.component.js';
-import {
-  HttpClient,
-  HttpClientModule,
-  HttpErrorResponse,
-} from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { catchError } from 'rxjs/operators';
 import { throwError } from 'rxjs';
 import { environment } from '../../../../environments/environment.js';
@@ -44,7 +40,6 @@ import { SnackbarService } from '../../../services/snackbar.service.js';
     MatDialogContent,
     MatButtonModule,
     ReactiveFormsModule,
-    HttpClientModule,
   ],
   templateUrl: './exercise-dialog.component.html',
   styleUrl: './exercise-dialog.component.css',
@@ -93,10 +88,7 @@ export class ExerciseDialogComponent {
         })
         .pipe(
           catchError((error: HttpErrorResponse) => {
-            this.snackbarService.showError(
-              'Error al crear el ejercicio',
-              'cerrar'
-            );
+            this.snackbarService.showError('Error al crear el ejercicio');
 
             return throwError(
               () => new Error(error.message || 'Error desconocido')
@@ -105,7 +97,7 @@ export class ExerciseDialogComponent {
         )
         .subscribe((res: any) => {
           this.snackbarService
-            .showSuccess('Ejercicio creado correctamente', 'cerrar')
+            .showSuccess('Ejercicio creado correctamente')
             .afterDismissed()
             .subscribe(() => {
               this.dialogRef.close('created');
@@ -120,10 +112,7 @@ export class ExerciseDialogComponent {
         })
         .pipe(
           catchError((error: HttpErrorResponse) => {
-            this.snackbarService.showError(
-              'Error al actualizar el ejercicio',
-              'cerrar'
-            );
+            this.snackbarService.showError('Error al actualizar el ejercicio');
 
             return throwError(
               () => new Error(error.message || 'Error desconocido')
@@ -132,7 +121,7 @@ export class ExerciseDialogComponent {
         )
         .subscribe((res: any) => {
           this.snackbarService
-            .showSuccess('Ejercicio actualizado correctamente', 'cerrar')
+            .showSuccess('Ejercicio actualizado correctamente')
             .afterDismissed()
             .subscribe(() => {
               this.dialogRef.close('updated');

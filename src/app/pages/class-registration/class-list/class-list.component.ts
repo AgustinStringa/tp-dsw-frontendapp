@@ -1,5 +1,5 @@
 import { NgFor, NgIf } from '@angular/common';
-import { HttpClientModule, HttpClient } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Component, inject } from '@angular/core';
 import { format } from 'date-fns';
 import { es } from 'date-fns/locale';
@@ -15,7 +15,7 @@ import { SnackbarService } from '../../../services/snackbar.service.js';
 @Component({
   selector: 'app-class-list',
   standalone: true,
-  imports: [NgFor, NgIf, HttpClientModule, MatExpansionModule],
+  imports: [NgFor, NgIf, MatExpansionModule],
   templateUrl: './class-list.component.html',
   styleUrl: './class-list.component.css',
 })
@@ -68,20 +68,14 @@ export class ClassListComponent {
           .post<IRegistration>(environment.registrationUrl, registration)
           .subscribe({
             next: () => {
-              this.snackbarService.showSuccess(
-                'Clase registrada exitosamente',
-                'cerrar'
-              );
+              this.snackbarService.showSuccess('Clase registrada exitosamente');
             },
             error: () => {
-              this.snackbarService.showError(
-                'Error al registrar la clase',
-                'cerrar'
-              );
+              this.snackbarService.showError('Error al registrar la clase');
             },
           });
       } else {
-        this.snackbarService.showError('Registro cancelado', 'cerrar');
+        this.snackbarService.showError('Registro cancelado');
       }
     });
   }

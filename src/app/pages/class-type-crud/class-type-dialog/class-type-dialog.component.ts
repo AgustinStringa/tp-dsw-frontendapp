@@ -18,7 +18,7 @@ import {
 } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../../environments/environment';
 import { IClassType } from '../../../core/interfaces/class-type.interface';
 import { trimValidator } from '../../../core/Functions/trim-validator';
@@ -45,7 +45,6 @@ interface DialogData {
     MatDialogContent,
     MatButtonModule,
     ReactiveFormsModule,
-    HttpClientModule,
     NgClass,
   ],
   templateUrl: './class-type-dialog.component.html',
@@ -64,8 +63,8 @@ export class ClassTypeDialogComponent {
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: DialogData,
     public dialogRef: MatDialogRef<ClassTypeDialogComponent>,
-    private http: HttpClient,
-    private snackbarService: SnackbarService
+    private snackbarService: SnackbarService,
+    private http: HttpClient
   ) {
     this.action = data.action;
     this.title = data.title;
@@ -91,10 +90,7 @@ export class ClassTypeDialogComponent {
           this.closeDialog('created');
         },
         error: () => {
-          this.snackbarService.showError(
-            'Error al crear el tipo de clase',
-            'cerrar'
-          );
+          this.snackbarService.showError('Error al crear el tipo de clase');
         },
       });
     } else if (this.action === 'put') {
@@ -106,8 +102,7 @@ export class ClassTypeDialogComponent {
           },
           error: () => {
             this.snackbarService.showError(
-              'Error al modificar el tipo de clase',
-              'cerrar'
+              'Error al modificar el tipo de clase'
             );
           },
         });

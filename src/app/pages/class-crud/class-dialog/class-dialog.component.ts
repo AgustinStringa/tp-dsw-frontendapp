@@ -14,7 +14,7 @@ import {
   MatDialogRef,
   MatDialogTitle,
 } from '@angular/material/dialog';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -50,7 +50,6 @@ interface DialogData {
     MatDialogContent,
     MatButtonModule,
     ReactiveFormsModule,
-    HttpClientModule,
     MatCheckboxModule,
     NgClass,
   ],
@@ -63,8 +62,6 @@ export class ClassDialogComponent {
   readonly trainers: IUser[];
   readonly classTypes: IClassType[];
   classId: string | undefined;
-
-  //configurar validators
 
   form = new FormGroup({
     day: new FormControl<string>('', [Validators.required]),

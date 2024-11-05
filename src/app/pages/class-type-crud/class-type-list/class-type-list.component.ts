@@ -1,5 +1,5 @@
 import { Component, inject } from '@angular/core';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { MatDialog } from '@angular/material/dialog';
 import { NgFor, NgIf } from '@angular/common';
 import { ClassTypeDialogComponent } from '../class-type-dialog/class-type-dialog.component';
@@ -12,7 +12,7 @@ import { MatIconModule } from '@angular/material/icon';
 @Component({
   selector: 'app-class-type-list',
   standalone: true,
-  imports: [NgIf, NgFor, HttpClientModule, MatIconModule],
+  imports: [NgIf, NgFor, MatIconModule],
   templateUrl: './class-type-list.component.html',
   styleUrl: './class-type-list.component.css',
 })
@@ -36,35 +36,29 @@ export class ClassTypeListComponent {
 
   addClassType(): void {
     this.openDialog(ClassTypeDialogComponent, {
-      data: {
-        title: 'Nuevo tipo de clase',
-        action: 'post',
-      },
+      title: 'Nuevo tipo de clase',
+      action: 'post',
     });
   }
 
   updateClassType(classType: IClassType) {
     this.openDialog(ClassTypeDialogComponent, {
-      data: {
-        title: 'Modificar tipo de clase',
-        action: 'put',
-        classType: classType,
-      },
+      title: 'Modificar tipo de clase',
+      action: 'put',
+      classType: classType,
     });
   }
 
   deleteClassType(id: string) {
     this.openDialog(DeleteDialogComponent, {
-      data: {
-        id: id,
-        url: environment.classTypesUrl,
-        title: 'Eliminar tipo de clase',
-      },
+      id: id,
+      url: environment.classTypesUrl,
+      title: 'Eliminar tipo de clase',
     });
   }
 
   openDialog(dialog: ComponentType<unknown>, data: object): void {
-    const dialogRef = this.dialog.open(dialog, data);
+    const dialogRef = this.dialog.open(dialog, { data });
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result !== 'none') {

@@ -16,17 +16,28 @@
       mdbCollapse
       #togglerFirstExample="mdbCollapse"
     >
-      <a class="navbar-brand" href="#">App Gimnasio</a>
+      <a class="navbar-brand" routerLink="/">App Gimnasio</a>
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        @if(this.userSignal() == null){
         <li class="nav-item">
           <a
             class="nav-link active"
             [ngClass]="{ active: isActive('/') }"
             aria-current="page"
             routerLink="/"
+            >Login</a
+          >
+        </li>
+        } @if(this.userSignal() != null ){
+        <li class="nav-item">
+          <a
+            class="nav-link"
+            [ngClass]="{ active: isActive('/home') }"
+            routerLink="home"
             >Home</a
           >
         </li>
+        @if(!this.userSignal().isClient ){
         <li class="nav-item">
           <a
             class="nav-link"
@@ -35,6 +46,7 @@
             >Clientes</a
           >
         </li>
+        } @if(!this.userSignal().isClient ){
         <li class="nav-item">
           <a
             class="nav-link"
@@ -43,6 +55,7 @@
             >Entrenadores</a
           >
         </li>
+        } @if(!this.userSignal().isClient ){
         <li class="nav-item">
           <a
             class="nav-link"
@@ -51,6 +64,7 @@
             >Tipos de Membresías</a
           >
         </li>
+        } @if(!this.userSignal().isClient ){
         <li class="nav-item">
           <a
             class="nav-link"
@@ -59,6 +73,7 @@
             >Membresías</a
           >
         </li>
+        } @if(this.userSignal().isClient ){
         <li class="nav-item">
           <a
             class="nav-link"
@@ -67,6 +82,7 @@
             >Registrarse a una clase</a
           >
         </li>
+        } @if(!this.userSignal().isClient ){
         <li class="nav-item">
           <a
             class="nav-link"
@@ -86,18 +102,34 @@
         <li class="nav-item">
           <a class="nav-link" routerLink="">Rutinas</a>
         </li>
+        } @if(!this.userSignal().isClient ){
         <li class="nav-item">
           <a class="nav-link" routerLink="/create-routine">Crear Rutina</a>
         </li>
+        } @if(!this.userSignal().isClient ){
         <li class="nav-item">
           <a class="nav-link" routerLink="/exercises">Ejercicios</a>
         </li>
+        } @if(this.userSignal().isClient ){
+
         <li class="nav-item">
           <a class="nav-link" routerLink="/record-exercise-execution"
             >Registrar entrenamiento</a
           >
         </li>
+        } }
       </ul>
+      @if(this.userSignal() != null){
+      <button mat-button [matMenuTriggerFor]="menu" class="text-white fw-light">
+        Menu
+      </button>
+      <mat-menu #menu="matMenu">
+        <button mat-menu-item>
+          <a class="nav-link" routerLink="/home">Mi Perfil</a>
+        </button>
+        <button mat-menu-item (click)="logout()">Cerrar Sesión</button>
+      </mat-menu>
+      }
     </div>
   </div>
 </nav>

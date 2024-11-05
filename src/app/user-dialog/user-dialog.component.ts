@@ -15,7 +15,7 @@ import {
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { IUser } from '../core/interfaces/user.interface';
 import { trimValidator } from '../core/Functions/trim-validator';
 import { SnackbarService } from '../services/snackbar.service';
@@ -32,7 +32,6 @@ interface DialogData {
   standalone: true,
   imports: [
     ReactiveFormsModule,
-    HttpClientModule,
     MatFormFieldModule,
     MatDialogContent,
     MatDialogActions,
@@ -65,23 +64,23 @@ export class UserDialogComponent {
 
   constructor(
     @Inject(MAT_DIALOG_DATA)
-    public data: DialogData,
+    public dialogData: DialogData,
     public dialogRef: MatDialogRef<UserDialogComponent>,
-    private http: HttpClient,
-    private snackbarService: SnackbarService
+    private snackbarService: SnackbarService,
+    private http: HttpClient
   ) {
-    this.title = data.title;
-    this.action = data.action;
-    this.url = data.url;
+    this.title = dialogData.title;
+    this.action = dialogData.action;
+    this.url = dialogData.url;
 
-    if (data.user !== undefined) {
+    if (dialogData.user !== undefined) {
       const form = this.form.controls;
-      this.userId = data.user.id;
+      this.userId = dialogData.user.id;
 
-      form.firstName.setValue(data.user.firstName);
-      form.lastName.setValue(data.user.lastName);
-      form.dni.setValue(data.user.dni);
-      form.email.setValue(data.user.email);
+      form.firstName.setValue(dialogData.user.firstName);
+      form.lastName.setValue(dialogData.user.lastName);
+      form.dni.setValue(dialogData.user.dni);
+      form.email.setValue(dialogData.user.email);
       form.password.removeValidators(Validators.required);
     }
   }
@@ -103,7 +102,7 @@ export class UserDialogComponent {
           this.closeDialog('created');
         },
         error: () => {
-          this.snackbarService.showError('Error al crear el usuario', 'cerrar');
+          this.snackbarService.showError('Error al crear el usuario');
         },
       });
     } else if (this.action === 'put') {
@@ -112,10 +111,7 @@ export class UserDialogComponent {
           this.closeDialog('updated');
         },
         error: () => {
-          this.snackbarService.showError(
-            'Error al modificar el usuario',
-            'cerrar'
-          );
+          this.snackbarService.showError('Error al modificar el usuario');
         },
       });
     }

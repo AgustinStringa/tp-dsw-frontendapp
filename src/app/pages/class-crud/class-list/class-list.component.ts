@@ -1,6 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { ComponentType } from '@angular/cdk/portal';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { NgFor, NgIf } from '@angular/common';
@@ -14,7 +14,7 @@ import { IUser } from '../../../core/interfaces/user.interface';
 @Component({
   selector: 'app-class-list',
   standalone: true,
-  imports: [NgIf, NgFor, HttpClientModule, MatDialogModule, MatIconModule],
+  imports: [NgIf, NgFor, MatDialogModule, MatIconModule],
   templateUrl: './class-list.component.html',
   styleUrl: './class-list.component.css',
 })
@@ -58,39 +58,33 @@ export class ClassListComponent {
 
   addClass(): void {
     this.openDialog(ClassDialogComponent, {
-      data: {
-        title: 'Nueva Clase',
-        action: 'post',
-        trainers: this.trainers,
-        classTypes: this.classTypes,
-      },
+      title: 'Nueva Clase',
+      action: 'post',
+      trainers: this.trainers,
+      classTypes: this.classTypes,
     });
   }
 
   updateClass(class_a: IClass) {
     this.openDialog(ClassDialogComponent, {
-      data: {
-        title: 'Modificar Clase',
-        action: 'put',
-        trainers: this.trainers,
-        classTypes: this.classTypes,
-        class_a: class_a,
-      },
+      title: 'Modificar Clase',
+      action: 'put',
+      trainers: this.trainers,
+      classTypes: this.classTypes,
+      class_a: class_a,
     });
   }
 
   deleteClass(id: string) {
     this.openDialog(DeleteDialogComponent, {
-      data: {
-        id: id,
-        url: environment.classesUrl,
-        title: 'Eliminar Clase',
-      },
+      id: id,
+      url: environment.classesUrl,
+      title: 'Eliminar Clase',
     });
   }
 
   openDialog(dialog: ComponentType<unknown>, data: object): void {
-    const dialogRef = this.dialog.open(dialog, data);
+    const dialogRef = this.dialog.open(dialog, { data });
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result !== 'none') this.getClasses();

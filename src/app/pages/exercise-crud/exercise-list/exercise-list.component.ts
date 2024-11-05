@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDialog } from '@angular/material/dialog';
 import { ComponentType } from '@angular/cdk/portal';
@@ -17,7 +17,7 @@ export interface DialogExerciseData {
 @Component({
   selector: 'app-exercises-list',
   standalone: true,
-  imports: [HttpClientModule, MatIconModule],
+  imports: [MatIconModule],
   templateUrl: './exercise-list.component.html',
   styleUrl: './exercise-list.component.css',
 })

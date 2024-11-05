@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { ComponentType } from '@angular/cdk/portal';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { MatDialog } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { MembershipDialogComponent } from '../membership-dialog/membership-dialog.component.js';
@@ -16,7 +16,7 @@ import { SnackbarService } from '../../../services/snackbar.service.js';
 @Component({
   selector: 'app-membership-list',
   standalone: true,
-  imports: [CommonModule, NgFor, NgIf, HttpClientModule, MatIconModule],
+  imports: [CommonModule, NgFor, NgIf, MatIconModule],
   templateUrl: './membership-list.component.html',
   styleUrl: './membership-list.component.css',
 })
@@ -35,8 +35,8 @@ export class MembershipListComponent {
   }
 
   getActiveMemberships() {
-    this.http.get<any>(environment.membershipsUrl).subscribe({
-      //TODO trae todas las membresías, no las vigentes.
+    this.http.get<any>(environment.membershipsActive).subscribe({
+      //TODO revisar si trae las activas.
       next: (res) => {
         this.memberships = res.data;
       },
@@ -51,7 +51,6 @@ export class MembershipListComponent {
       data: {
         title: 'Nueva Membresía',
         action: 'post',
-        http: this.http,
       },
     });
   }
@@ -61,7 +60,6 @@ export class MembershipListComponent {
       data: {
         title: 'Modificar Membresía',
         action: 'put',
-        http: this.http,
         membership: membership,
       },
     });

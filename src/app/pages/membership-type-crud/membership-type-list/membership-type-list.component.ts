@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { ComponentType } from '@angular/cdk/portal';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { MatDialog } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { NgFor, NgIf } from '@angular/common';
@@ -12,7 +12,7 @@ import { MembershipTypeDialogComponent } from '../membership-type-dialog/members
 @Component({
   selector: 'app-membership-types-list',
   standalone: true,
-  imports: [NgFor, NgIf, HttpClientModule, MatIconModule],
+  imports: [NgFor, NgIf, MatIconModule],
   templateUrl: './membership-type-list.component.html',
   styleUrl: './membership-type-list.component.css',
 })

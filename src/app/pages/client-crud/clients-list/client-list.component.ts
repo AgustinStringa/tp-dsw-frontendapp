@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { NgFor, NgIf } from '@angular/common';
 import { MatDialog } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
@@ -12,7 +12,7 @@ import { UserDialogComponent } from '../../../user-dialog/user-dialog.component'
 @Component({
   selector: 'app-clients-list',
   standalone: true,
-  imports: [NgFor, NgIf, HttpClientModule, MatIconModule],
+  imports: [NgFor, NgIf, MatIconModule],
   templateUrl: './client-list.component.html',
   styleUrl: './client-list.component.css',
 })
