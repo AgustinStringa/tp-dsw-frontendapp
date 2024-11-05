@@ -1,8 +1,50 @@
 .exercises-list-container {
     margin: 2rem auto;
+    width: 80%;
 }
 
+/* Estilos para la tabla */
+.exercises-list-container table {
+    width: 100%;
+    /* Hacer que la tabla ocupe el 100% del ancho del contenedor */
+    border-collapse: collapse;
+    /* Para que las celdas estén unidas */
+}
 
+.exercises-list-container th,
+.exercises-list-container td {
+    text-align: center;
+    /* Centrar el texto en las celdas */
+    padding: 1rem;
+    /* Agregar un poco de espacio interno */
+    border: 1px solid #dee2e6;
+    /* Bordes para las celdas */
+}
+
+.exercises-list-container th {
+    background-color: #f8f9fa;
+    /* Color de fondo para los encabezados */
+}
+
+.exercises-list-container tr:nth-child(even) {
+    background-color: #f2f2f2;
+    /* Color de fondo alterno para las filas */
+}
+
+/* Estilo para los botones dentro de la tabla */
+.td-actions {
+    display: flex;
+    /* Para alinear los botones en línea */
+    justify-content: center;
+    /* Centrar los botones */
+}
+
+.td-actions button {
+    margin: 0 0.5rem;
+    /* Espacio entre botones */
+}
+
+/* Snackbar Styles */
 ::ng-deep .snackbar_error,
 ::ng-deep .snackbar_error * {
     background-color: #dc3545 !important;
