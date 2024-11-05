@@ -113,6 +113,8 @@ export class ClassListComponent {
             next: () => {
               console.log('Clase registrada correctamente.');
               this.openSnackBar('Registro exitoso', 'Cerrar');
+              this.getRegistrations();
+              this.getClassTypes();
             },
             error: (err) => {
               console.error(err);
