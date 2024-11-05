@@ -1,9 +1,9 @@
 <div class="page-container">
   <h2 class="crud-page-title">Registrarse a una clase:</h2>
   <div class="class-type-list-container">
-    @if (this.classtypes.length > 0) {
+    @if (this.availableClasses.length > 0) {
     <mat-accordion>
-      @for (classType of classtypes; track classType.name) {
+      @for (classType of availableClasses; track classType.name) {
       <!-- Expansion panel para cada ClassType -->
       <mat-expansion-panel
         class="expansion-panel"
@@ -63,19 +63,16 @@
         }  
       }
         </mat-accordion>
-    } @else {
-        <p>No hay clases disponibles.</p>	 
-        <!-- TODO: HAY QUE VERIFICAR COMO APARECE ESTO. -->
-      }
+    } 
         <!-- Mensaje si no hay clases disponibles -->
-        <p *ngIf="!classType.classes || classType.classes.length === 0">
+        <p class = "alert" *ngIf="!classType.classes || classType.classes.length === 0">
           No hay clases disponibles.
         </p>
       </mat-expansion-panel>
       }
     </mat-accordion>
     } @else {
-    <p>No se pudieron cargar los Tipos de Clase</p>
+    <p class="alert">No hay clases disponibles.</p>
     }
   </div>
 </div>

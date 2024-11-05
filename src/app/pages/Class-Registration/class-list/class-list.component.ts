@@ -34,6 +34,7 @@ export class ClassListComponent {
     const user = this.authService.getUser();
     if (user) {
       this.userId = user.id;
+      this.getRegistrations();
       this.getClassTypes();
     } else {
       console.error('No user found in session. Redirecting or handling error.');
@@ -43,27 +44,49 @@ export class ClassListComponent {
   async getClassTypes() {
     try {
       this.http
-        .get<any>(`${environment.classTypesUrl}/available/${this.userId}`)
+        .get<any>(`${environment.classTypesUrl}`)
+
         .subscribe((res) => {
           this.classtypes = res.data;
-          // this.filterClases();
+          this.filterClases();
         });
     } catch (error: any) {
       console.log(error);
     }
   }
-  /*
-  filterClases() {
+
+  registeredClassIds: string[] = [];
+
+  async getRegistrations() {
+    try {
+      this.http
+        .get<any>(`${environment.registrationUrl}/client/${this.userId}`)
+        .subscribe((res) => {
+          this.registeredClassIds = res.data.map(
+            (registration: IRegistration) => registration.class
+          );
+        });
+    } catch (error: any) {
+      console.log(error);
+    }
+  }
+
+  async filterClases() {
     this.availableClasses = this.classtypes ? [...this.classtypes] : [];
 
-    // Filtrar classTypes que tengan al menos una clase activa
-    this.availableClasses = this.availableClasses.filter(
-      (classType) => classType.classes.some((cls) => cls.active === true)
+    const registeredClassIdsSet = new Set(this.registeredClassIds);
+    this.availableClasses = this.availableClasses
+      .map((classType) => {
+        const filteredClasses = classType.classes.filter(
+          (cls) => cls.active === true && !registeredClassIdsSet.has(cls.id)
+        );
+        return { ...classType, classes: filteredClasses };
+      })
+      .filter((classType) => classType.classes.length > 0);
 
-      //filtrar classTypes que el usuario no tenga registradas
-    );
+    console.log('Clases disponibles:', this.availableClasses);
   }
-*/
+
   selectClassType(classType: IClassType) {
     this.selectedClassType = classType;
   }
