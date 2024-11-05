@@ -10,11 +10,19 @@ import { environment } from '../../../../environments/environment';
 import { IClass } from '../../../core/interfaces/class.interface';
 import { IClassType } from '../../../core/interfaces/class-type.interface';
 import { IUser } from '../../../core/interfaces/user.interface';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-class-list',
   standalone: true,
-  imports: [NgIf, NgFor, HttpClientModule, MatDialogModule, MatIconModule],
+  imports: [
+    NgIf,
+    NgFor,
+    HttpClientModule,
+    MatDialogModule,
+    MatIconModule,
+    FormsModule,
+  ],
   templateUrl: './class-list.component.html',
   styleUrl: './class-list.component.css',
 })
@@ -23,6 +31,8 @@ export class ClassListComponent {
   trainers: IUser[] | null = null;
   classTypes: IClassType[] | null = null;
   classes: IClass[] | null = null;
+  filteredClasses: IClass[] | null = null;
+  dayFilter: string = '';
 
   constructor(private http: HttpClient) {
     this.getClasses();
@@ -34,6 +44,7 @@ export class ClassListComponent {
     try {
       this.http.get<any>(environment.classesUrl).subscribe((res) => {
         this.classes = res.data;
+        this.applyFilter();
       });
     } catch (error: any) {
       this.classes = null;
@@ -112,6 +123,17 @@ export class ClassListComponent {
         return 'Domingo';
       default:
         return 'Error';
+    }
+  }
+  applyFilter() {
+    if (!this.dayFilter) {
+      this.filteredClasses = this.classes;
+    } else {
+      const day = this.dayFilter.toLowerCase();
+      this.filteredClasses =
+        this.classes?.filter(
+          (c) => this.getDayName(c.day).toLowerCase() === day
+        ) || [];
     }
   }
 }
