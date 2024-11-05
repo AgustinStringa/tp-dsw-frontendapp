@@ -1,0 +1,78 @@
+<div class="page-container">
+  <h2 class="crud-page-title">Registrarse a una clase</h2>
+  <div class="class-type-list-container">
+    @if (this.availableClasses.length > 0) {
+    <mat-accordion>
+      @for (classType of availableClasses; track classType.name) {
+      <!-- Expansion panel para cada ClassType -->
+      <mat-expansion-panel
+        class="expansion-panel"
+        [expanded]="selectedClassType === classType"
+        (opened)="selectClassType(classType)"
+      >
+        <mat-expansion-panel-header class="expansion-header">
+          <mat-panel-title>
+            {{ classType.name }}
+          </mat-panel-title>
+          <mat-panel-description>
+            {{ classType.description }}
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+
+        <!-- Detalles del ClassType -->
+        <div class="class-type-details">
+          <p><strong>Descripción:</strong> {{ classType.description }}</p>
+        </div>
+
+        <!-- Segundo Expansion Panel para las clases dentro del ClassType -->
+         @if (classType.classes && classType.classes.length > 0) {
+        <mat-accordion
+        >
+          @for (i of classType.classes; track i.id) { @if (i.active == true) {
+          <mat-expansion-panel
+            class="class-panel"
+            [expanded]="selectedClass === i"
+          >
+            <mat-expansion-panel-header class="class-header">
+              <mat-panel-title>
+                {{ getDayNameFromNumber(i.day) }} - {{ i.trainer.firstName }}
+                {{ i.trainer.lastName }}
+              </mat-panel-title>
+              <mat-panel-description>
+                {{ i.startTime }} - {{ i.endTime }} | {{ i.location }}
+              </mat-panel-description>
+            </mat-expansion-panel-header>
+
+            <div class="class-details">
+              <p><strong>Cupos:</strong> {{ i.maxCapacity }}</p>
+              <p><strong>Ubicación:</strong> {{ i.location }}</p>
+              <p>
+                <strong>Entrenador:</strong> {{ i.trainer.firstName }}
+                {{ i.trainer.lastName }}
+              </p>
+              <button
+                type="button"
+                class="btn btn-primary btn-success"
+                [class.selected]="selectedClass === i"
+                (click)="selectClass(i)"
+              >
+                Registrarse a esta clase
+              </button>
+            </div>
+          </mat-expansion-panel>
+        }  
+      }
+        </mat-accordion>
+    } 
+        <!-- Mensaje si no hay clases disponibles -->
+        <p class = "alert" *ngIf="!classType.classes || classType.classes.length === 0">
+          No hay clases disponibles.
+        </p>
+      </mat-expansion-panel>
+      }
+    </mat-accordion>
+    } @else {
+    <p class="alert">No hay clases disponibles.</p>
+    }
+  </div>
+</div>

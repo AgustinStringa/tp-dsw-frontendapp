@@ -1,0 +1,66 @@
+<div class="mx-auto w-85">
+  <h2 class="crud-page-title">Ejercicios</h2>
+  <div class="my-4 text-end">
+    <button
+      type="button"
+      class="btn btn-primary btn-lg"
+      (click)="addExercise()"
+    >
+      Nuevo ejercicio
+    </button>
+  </div>
+
+  <div class="list-container exercise-list-container">
+    @if (exercises !== null && exercises.length > 0) {
+    <table>
+      <thead>
+        <tr>
+          <th>Nombre</th>
+          <th>Descripción</th>
+          <th>Video</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        @for (e of exercises; track e) {
+        <tr>
+          <td>{{ e.name }}</td>
+          <td>{{ e.description }}</td>
+          <td>
+            @if (e.urlVideo !== null && e.urlVideo !== ""){
+            <a href="{{ e.urlVideo }}" target="_blank">Enlace al video</a>
+            } @else {
+              <a class ="no-video"(click)="openShackBar('No existe ningún video', 'Cerrar', 'sucess')">Sin
+                video</a>
+            }
+          </td>
+          <td class="td-actions">
+            <button
+              (click)="deleteExercise(e.id)"
+              aria-label="Example icon button with a delete icon"
+            >
+              <mat-icon>delete</mat-icon>
+            </button>
+            <button
+              (click)="updateExercise(e)"
+              aria-label="Example icon button with a delete icon"
+            >
+              <mat-icon>edit</mat-icon>
+            </button>
+          </td>
+        </tr>
+        }
+      </tbody>
+    </table>
+    } @else if (exercises !== null && exercises.length == 0){
+    <div class="alert alert-warning fs-6" role="alert">
+      No hay ejercicios cargados. Crea uno para comenzar.
+    </div>
+    } @else {
+    <div class="alert alert-danger fs-6" role="alert">
+      No se pudieron cargar los ejercicios.
+    </div>
+    }
+  </div>
+</div>

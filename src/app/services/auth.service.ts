@@ -40,12 +40,10 @@ export class AuthService {
             'user',
             JSON.stringify({
               ...response.data.user,
-              isClient: response.data.client,
             })
           );
           this.userSignal.set({
             ...response.data.user,
-            isClient: response.data.client,
           });
         })
       );
@@ -59,12 +57,10 @@ export class AuthService {
           'user',
           JSON.stringify({
             ...response.data.user,
-            isClient: response.data.client,
           })
         );
         this.userSignal.set({
           ...response.data.user,
-          isClient: response.data.client,
         });
       })
     );
@@ -89,8 +85,13 @@ export class AuthService {
   }
 
   logout() {
-    this.userSignal.set(null);
-    sessionStorage.removeItem('token');
-    sessionStorage.removeItem('user');
+    try {
+      this.httpClient
+        .post(`${environment.authUrl}/logout/`, {})
+        .pipe(tap((response: any) => {}));
+      this.userSignal.set(null);
+      sessionStorage.removeItem('token');
+      sessionStorage.removeItem('user');
+    } catch (error) {}
   }
 }

@@ -1,6 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { ComponentType } from '@angular/cdk/portal';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { NgFor, NgIf } from '@angular/common';
@@ -15,14 +15,7 @@ import { FormsModule } from '@angular/forms';
 @Component({
   selector: 'app-class-list',
   standalone: true,
-  imports: [
-    NgIf,
-    NgFor,
-    HttpClientModule,
-    MatDialogModule,
-    MatIconModule,
-    FormsModule,
-  ],
+  imports: [NgIf, NgFor, MatDialogModule, MatIconModule, FormsModule],
   templateUrl: './class-list.component.html',
   styleUrl: './class-list.component.css',
 })
@@ -75,7 +68,6 @@ export class ClassListComponent {
       action: 'post',
       trainers: this.trainers,
       classTypes: this.classTypes,
-      httpClient: this.http,
     });
   }
 
@@ -86,7 +78,6 @@ export class ClassListComponent {
       trainers: this.trainers,
       classTypes: this.classTypes,
       class_a: class_a,
-      httpClient: this.http,
     });
   }
 
@@ -95,7 +86,6 @@ export class ClassListComponent {
       id: id,
       url: environment.classesUrl,
       title: 'Eliminar Clase',
-      httpClient: this.http,
     });
   }
 
@@ -108,24 +98,16 @@ export class ClassListComponent {
   }
 
   getDayName(dayNumber: number) {
-    switch (dayNumber) {
-      case 1:
-        return 'Lunes';
-      case 2:
-        return 'Martes';
-      case 3:
-        return 'Miércoles';
-      case 4:
-        return 'Jueves';
-      case 5:
-        return 'Viernes';
-      case 6:
-        return 'Sábado';
-      case 7:
-        return 'Domingo';
-      default:
-        return 'Error';
-    }
+    const days = [
+      'Lunes',
+      'Martes',
+      'Miércoles',
+      'Jueves',
+      'Viernes',
+      'Sábado',
+      'Domingo',
+    ];
+    return days[dayNumber];
   }
 
   clearFilters() {
