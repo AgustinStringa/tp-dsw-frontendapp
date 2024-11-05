@@ -58,7 +58,7 @@
           <a class="nav-link" routerLink="/exercises">Ejercicios</a>
         </li>
         } @if(this.userSignal().isClient ){
-
+          @if (this.userSignal().isClient) {
     <li class="nav-item dropdown">
       <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" (click)="toggleDropdown()"
         [attr.aria-expanded]="isDropdownOpen"> Ejercicios </a>
@@ -73,7 +73,7 @@
       </ul>
       }
     </li>
-
+  }
         } }
       </ul>
       @if(this.userSignal() != null){
