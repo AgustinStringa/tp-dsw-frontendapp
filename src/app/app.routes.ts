@@ -1,18 +1,18 @@
 import { Routes } from '@angular/router';
-import { ClassTypeListComponent } from './pages/class-type-crud/class-type-list/class-type-list.component.js';
-import { ClientListComponent } from './pages/client-crud/clients-list/client-list.component.js';
-import { LoginComponent } from './login/login.component.js';
-import { ClassListComponent } from './pages/Class-Registration/class-list/class-list.component.js';
-import { CreateRoutinePageComponent } from './pages/Create Routine/create-routine-page/create-routine-page.component.js';
 import { authGuard } from './guards/auth.guard.js';
-import { HomePageComponent } from './pages/home-page/home-page.component.js';
-import { DailyRoutineComponent } from './pages/Record-Exercise-Execution/daily-routine/daily-routine.component.js';
-import { trainerGuard } from './guards/trainer.guard.js';
+import { ClassListComponent } from './pages/class-crud/class-list/class-list.component.js';
+import { ClassTypeListComponent } from './pages/class-type-crud/class-type-list/class-type-list.component.js';
 import { clientGuard } from './guards/client.guard.js';
-import { MembershipListComponent } from './pages/membership-crud/membership-list/membership-list.component.js';
-import { TrainerListComponent } from './pages/trainer-crud/trainer-list/trainer-list.component.js';
-import { MembershipTypeListComponent } from './pages/membership-type-crud/membership-type-list/membership-type-list.component.js';
+import { ClientListComponent } from './pages/client-crud/clients-list/client-list.component.js';
+import { CreateRoutinePageComponent } from './pages/create-routine/create-routine-page/create-routine-page.component.js';
+import { DailyRoutineComponent } from './pages/record-exercise-execution/daily-routine/daily-routine.component.js';
 import { ExerciseListComponent } from './pages/exercise-crud/exercise-list/exercise-list.component.js';
+import { HomePageComponent } from './pages/home-page/home-page.component.js';
+import { LoginComponent } from './login/login.component.js';
+import { MembershipListComponent } from './pages/membership-crud/membership-list/membership-list.component.js';
+import { MembershipTypeListComponent } from './pages/membership-type-crud/membership-type-list/membership-type-list.component.js';
+import { trainerGuard } from './guards/trainer.guard.js';
+import { TrainerListComponent } from './pages/trainer-crud/trainer-list/trainer-list.component.js';
 
 export const routes: Routes = [
   { path: '', component: LoginComponent },
