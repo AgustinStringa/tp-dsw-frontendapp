@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { environment } from '../../../environments/environment.js';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import IRoutine from '../../core/interfaces/IRoutine.interface.js';
 import { IExerciseRoutine } from '../../core/interfaces/exercise-routine.inteface.js';
 import { formatDate } from '@angular/common';
@@ -13,7 +13,7 @@ import { AuthService } from '../../services/auth.service.js';
 @Component({
   selector: 'app-show-client-routine',
   standalone: true,
-  imports: [HttpClientModule, MatExpansionPanel, MatExpansionModule],
+  imports: [MatExpansionPanel, MatExpansionModule],
   templateUrl: './show-client-routine.component.html',
   styleUrl: './show-client-routine.component.css',
 })
@@ -31,13 +31,13 @@ export class ShowClientRoutineComponent {
   totalWeeks: number[] = [];
 
   private daysOfWeek: string[] = [
-    'Domingo',
     'Lunes',
     'Martes',
     'Miércoles',
     'Jueves',
     'Viernes',
     'Sábado',
+    'Domingo',
   ];
 
   months: string[] = [

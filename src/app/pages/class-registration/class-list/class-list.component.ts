@@ -1,8 +1,6 @@
 import { NgFor, NgIf } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Component, inject } from '@angular/core';
-import { format } from 'date-fns';
-import { es } from 'date-fns/locale';
 import { environment } from '../../../../environments/environment.js';
 import { IClassType } from '../../../core/interfaces/class-type.interface.js';
 import { IClass } from '../../../core/interfaces/class.interface.js';
@@ -26,6 +24,8 @@ export class ClassListComponent {
   selectedClass: IClass | null = null;
   selectedClassType: IClassType | null = null;
   availableClasses: IClassType[] = [];
+  registeredClassIds: string[] = [];
+
   private dialog = inject(MatDialog);
   private userId = '';
 
@@ -36,6 +36,7 @@ export class ClassListComponent {
   ) {
     const user = this.authService.getUser();
     if (user) {
+      console.log(user);
       this.userId = user.id;
       this.getRegistrations();
       this.getClassTypes();
@@ -44,7 +45,7 @@ export class ClassListComponent {
     }
   }
 
-  async getClassTypes() {
+  getClassTypes() {
     try {
       this.http
         .get<any>(`${environment.classTypesUrl}`)
@@ -58,9 +59,7 @@ export class ClassListComponent {
     }
   }
 
-  registeredClassIds: string[] = [];
-
-  async getRegistrations() {
+  getRegistrations() {
     try {
       this.http
         .get<any>(`${environment.registrationUrl}/client/${this.userId}`)
@@ -74,7 +73,7 @@ export class ClassListComponent {
     }
   }
 
-  async filterClases() {
+  filterClases() {
     this.availableClasses = this.classtypes ? [...this.classtypes] : [];
 
     const registeredClassIdsSet = new Set(this.registeredClassIds);
@@ -99,7 +98,10 @@ export class ClassListComponent {
 
     const dialogRef = this.dialog.open(DialogConfirmRegistrationComponent, {
       data: {
-        className: `Dia: ${classItem.day} - Entrenador: ${classItem.trainer.firstName} ${classItem.trainer.lastName}`,
+        className: classItem.classType.name, //TODO enviar nombre de la clase
+        trainer: classItem.trainer.firstName + ' ' + classItem.trainer.lastName,
+        day: this.getDayNameFromNumber(classItem.day),
+        startTime: classItem.startTime,
       },
     });
 
@@ -118,7 +120,8 @@ export class ClassListComponent {
               this.getRegistrations();
               this.getClassTypes();
             },
-            error: () => {
+            error: (err) => {
+              console.log(err);
               this.snackbarService.showError('Error al registrar la clase');
             },
           });
@@ -129,12 +132,15 @@ export class ClassListComponent {
   }
 
   getDayNameFromNumber(dayNumber: number) {
-    if (dayNumber < 1 || dayNumber > 7) {
-      return '';
-    }
-    const date = new Date(2024, 9, dayNumber);
-    let dayName = format(date, 'EEEE', { locale: es });
-    dayName = dayName.charAt(0).toUpperCase() + dayName.slice(1);
-    return dayName;
+    const days = [
+      'Lunes',
+      'Martes',
+      'Miércoles',
+      'Jueves',
+      'Viernes',
+      'Sábado',
+      'Domingo',
+    ];
+    return days[dayNumber];
   }
 }

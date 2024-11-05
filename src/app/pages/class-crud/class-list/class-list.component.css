@@ -7,11 +7,6 @@
   width: 100%;
 }
 
-th,
-td {
-  text-align: center;
-}
-
 .button {
   padding: 0.5rem 1rem;
   font-size: 1rem;
@@ -20,7 +15,6 @@ td {
   cursor: pointer;
   transition: background-color 0.3s ease;
 }
-
 
 .filter-container {
   display: flex;
@@ -38,7 +32,6 @@ td {
   margin: 10px;
   font-weight: bold;
   color: #333;
-
 }
 
 .filter-container select {
@@ -55,10 +48,8 @@ td {
 .filter-container select:hover,
 .filter-container select:focus {
   border-color: #888;
-
 }
 
 .day-filter {
   width: 150px;
 }
-
