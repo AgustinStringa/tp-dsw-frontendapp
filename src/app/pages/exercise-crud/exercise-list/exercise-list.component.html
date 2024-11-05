@@ -31,8 +31,11 @@
             @if (e.urlVideo !== null && e.urlVideo !== ""){
             <a href="{{ e.urlVideo }}" target="_blank">Enlace al video</a>
             } @else {
-              <a class ="no-video"(click)="openShackBar('No existe ningún video', 'Cerrar', 'sucess')">Sin
-                video</a>
+            <a
+              class="no-video"
+              (click)="this.snackbarService.showError('No existe ningún video')"
+              >Sin video</a
+            >
             }
           </td>
           <td class="td-actions">
