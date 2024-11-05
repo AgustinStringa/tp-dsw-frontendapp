@@ -25,7 +25,6 @@ interface DialogData {
   action: string;
   user: IUser | undefined;
   url: string;
-  httpClient: HttpClient;
 }
 
 @Component({
@@ -63,14 +62,13 @@ export class UserDialogComponent {
     ]),
   });
 
-  private http: HttpClient;
   constructor(
     @Inject(MAT_DIALOG_DATA)
     public dialogData: DialogData,
     public dialogRef: MatDialogRef<UserDialogComponent>,
-    private snackbarService: SnackbarService
+    private snackbarService: SnackbarService,
+    private http: HttpClient
   ) {
-    this.http = dialogData.httpClient;
     this.title = dialogData.title;
     this.action = dialogData.action;
     this.url = dialogData.url;
@@ -104,7 +102,7 @@ export class UserDialogComponent {
           this.closeDialog('created');
         },
         error: () => {
-          this.snackbarService.showError('Error al crear el usuario', 'cerrar');
+          this.snackbarService.showError('Error al crear el usuario');
         },
       });
     } else if (this.action === 'put') {
@@ -113,10 +111,7 @@ export class UserDialogComponent {
           this.closeDialog('updated');
         },
         error: () => {
-          this.snackbarService.showError(
-            'Error al modificar el usuario',
-            'cerrar'
-          );
+          this.snackbarService.showError('Error al modificar el usuario');
         },
       });
     }

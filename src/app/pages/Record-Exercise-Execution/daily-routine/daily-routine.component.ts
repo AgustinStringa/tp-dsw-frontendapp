@@ -2,15 +2,15 @@ import { Component } from '@angular/core';
 import { IExerciseRoutine } from '../../../core/interfaces/exercise-routine.inteface.js';
 import { environment } from '../../../../environments/environment.js';
 import { formatDate, NgFor, NgIf } from '@angular/common';
-import { HttpClientModule, HttpClient } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import IRoutine from '../../../core/interfaces/IRoutine.interface.js';
-import { FormsModule } from '@angular/forms';
 import { DialogAddWeightComponent } from '../dialog-add-weight/dialog-add-weight.component.js';
+import { SnackbarService } from '../../../services/snackbar.service.js';
 
 @Component({
   selector: 'app-daily-routine',
   standalone: true,
-  imports: [NgFor, NgIf, HttpClientModule, DialogAddWeightComponent],
+  imports: [NgFor, NgIf, DialogAddWeightComponent],
   templateUrl: './daily-routine.component.html',
   styleUrl: './daily-routine.component.css',
 })
@@ -57,7 +57,10 @@ export class DailyRoutineComponent {
   currentDate = new Date();
   currentNameOfTheMonth = this.months[this.currentDate.getMonth()];
 
-  constructor(private http: HttpClient) {
+  constructor(
+    private http: HttpClient,
+    private snackbarService: SnackbarService
+  ) {
     this.loadRoutine();
   }
 
@@ -70,9 +73,9 @@ export class DailyRoutineComponent {
       .get<{ message: string; data: IRoutine }>(
         `${this.urlRoutine}/${this.userId}/current`
       )
-      .subscribe(
-        (response) => {
-          this.routine = response.data;
+      .subscribe({
+        next: (res) => {
+          this.routine = res.data;
           if (this.routine) {
             this.startDate =
               formatDate(this.routine.start, 'yyyy-MM-dd', 'en-US') || '';
@@ -96,10 +99,10 @@ export class DailyRoutineComponent {
             );
           }
         },
-        (error) => {
-          console.error('Error loading routine:', error);
-        }
-      );
+        error: () => {
+          this.snackbarService.showError('Error al cargar la rutina');
+        },
+      });
   }
 
   private getDayName(dayIndex: number): string {

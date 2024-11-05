@@ -9,6 +9,7 @@ import {
   ProgressSpinnerMode,
   MatProgressSpinnerModule,
 } from '@angular/material/progress-spinner';
+import { SnackbarService } from '../services/snackbar.service.js';
 @Component({
   selector: 'app-login',
   standalone: true,
@@ -29,7 +30,11 @@ export class LoginComponent {
   isLoginVisible: boolean = true;
   isSpinnerVisible: boolean = false;
   public userSignal = this.authService.userSignal;
-  constructor(private router: Router, private authService: AuthService) {
+  constructor(
+    private router: Router,
+    private authService: AuthService,
+    private snackbarService: SnackbarService
+  ) {
     authService.getUser();
     if (authService.userSignal() != null) {
       this.router.navigate(['/home']);
@@ -114,15 +119,12 @@ export class LoginComponent {
           dni: Number.parseInt(this.dni),
         })
         .subscribe({
-          next: (response: any) => {
+          next: () => {
             this.router.navigate(['/home']);
           },
           error: (error) => {
-            //error de tipo usuario existente?
-            console.error('Register failed:', error);
-            this._snackBar.open('Error al crear usuario', 'cerrar', {
-              duration: 3000,
-            });
+            //TODO mostrar si el error se debe a que ya se usó el correo
+            this.snackbarService.showError('Error al crear usuario');
           },
         });
     }

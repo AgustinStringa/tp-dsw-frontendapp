@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { ComponentType } from '@angular/cdk/overlay/index.js';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { DeleteDialogComponent } from '../../../delete-dialog/delete-dialog.component';
 import { environment } from '../../../../environments/environment';
 import { IUser } from '../../../core/interfaces/user.interface';
@@ -12,7 +12,7 @@ import { UserDialogComponent } from '../../../user-dialog/user-dialog.component'
 @Component({
   selector: 'app-trainers-list',
   standalone: true,
-  imports: [NgFor, NgIf, HttpClientModule, MatIconModule],
+  imports: [NgFor, NgIf, MatIconModule],
   templateUrl: './trainer-list.component.html',
   styleUrl: './trainer-list.component.css',
 })
@@ -40,7 +40,6 @@ export class TrainerListComponent {
         title: 'Nuevo Entrenador',
         action: 'post',
         url: environment.trainersUrl,
-        httpClient: this.http,
       },
     });
   }
@@ -52,7 +51,6 @@ export class TrainerListComponent {
         action: 'put',
         user: trainer,
         url: environment.trainersUrl,
-        httpClient: this.http,
       },
     });
   }
@@ -64,7 +62,6 @@ export class TrainerListComponent {
         entity: 'trainer',
         title: 'Eliminar Entrenador',
         url: environment.trainersUrl,
-        httpClient: this.http,
       },
     });
   }

@@ -1,5 +1,5 @@
 import { Component, Inject } from '@angular/core';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import {
@@ -14,14 +14,12 @@ interface DialogData {
   id: string;
   title: string;
   url: string;
-  httpClient: HttpClient;
 }
 
 @Component({
   selector: 'app-delete-dialog',
   standalone: true,
   imports: [
-    HttpClientModule,
     MatDialogActions,
     MatDialogContent,
     MatFormFieldModule,
@@ -35,12 +33,12 @@ interface DialogData {
 export class DeleteDialogComponent {
   url: string = '';
   title: string = '';
-  private http: HttpClient;
+
   constructor(
     public dialogRef: MatDialogRef<DeleteDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: DialogData
+    @Inject(MAT_DIALOG_DATA) public data: DialogData,
+    private http: HttpClient
   ) {
-    this.http = data.httpClient;
     this.url = data.url + '/' + data.id;
     this.title = data.title;
   }

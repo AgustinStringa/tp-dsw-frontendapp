@@ -5,7 +5,7 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import {
   MAT_DIALOG_DATA,
   MatDialogRef,
@@ -28,7 +28,6 @@ import { SnackbarService } from '../../../services/snackbar.service.js';
 interface DialogData {
   title: string;
   action: string;
-  http: HttpClient;
   membership: IMembership | undefined;
 }
 
@@ -36,7 +35,6 @@ interface DialogData {
   selector: 'app-membership-dialog',
   standalone: true,
   imports: [
-    HttpClientModule,
     ReactiveFormsModule,
     NgForOf,
     MatDialogModule,
@@ -54,7 +52,6 @@ interface DialogData {
 export class MembershipDialogComponent {
   title: string;
   action: string;
-  http: HttpClient;
   membershipId: string | undefined;
   clients: IUser[] | undefined;
   membershipTypes: IMembershipType[] | undefined;
@@ -68,11 +65,11 @@ export class MembershipDialogComponent {
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: DialogData,
     public dialogRef: MatDialogRef<MembershipDialogComponent>,
-    private snackbarService: SnackbarService
+    private snackbarService: SnackbarService,
+    private http: HttpClient
   ) {
     this.title = data.title;
     this.action = data.action;
-    this.http = data.http;
 
     this.getClients();
     this.getMembershipTypes();
@@ -100,10 +97,7 @@ export class MembershipDialogComponent {
           this.closeDialog('created');
         },
         error: (error) => {
-          this.snackbarService.showError(
-            'Error al crear la membresía',
-            'cerrar'
-          );
+          this.snackbarService.showError('Error al crear la membresía');
         },
       });
     } else if (this.action == 'put') {
@@ -113,11 +107,8 @@ export class MembershipDialogComponent {
           next: () => {
             this.closeDialog('updated');
           },
-          error: (error) => {
-            this.snackbarService.showError(
-              'Error al modificar la membresía',
-              'cerrar'
-            );
+          error: () => {
+            this.snackbarService.showError('Error al modificar la membresía');
           },
         });
     }
@@ -129,10 +120,7 @@ export class MembershipDialogComponent {
         this.clients = res.data;
       },
       error: (error) => {
-        this.snackbarService.showError(
-          'Error al obtener los clientes',
-          'cerrar'
-        );
+        this.snackbarService.showError('Error al obtener los clientes');
       },
     });
   }
@@ -144,8 +132,7 @@ export class MembershipDialogComponent {
       },
       error: () => {
         this.snackbarService.showError(
-          'Error al obtener los tipos de membresías',
-          'cerrar'
+          'Error al obtener los tipos de membresías'
         );
       },
     });
