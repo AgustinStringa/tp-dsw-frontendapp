@@ -7,6 +7,8 @@ import { DeleteDialogComponent } from '../../../delete-dialog/delete-dialog.comp
 import { environment } from '../../../../environments/environment.js';
 import { ExerciseDialogComponent } from '../exercise-dialog/exercise-dialog.component.js';
 import { IExercise } from '../../../core/interfaces/exercise.interface.js';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { inject } from '@angular/core';
 export interface DialogExerciseData {
   exercise: IExercise;
   action: string;
@@ -24,8 +26,17 @@ export interface DialogExerciseData {
 })
 export class ExercisesListComponent {
   exercises: IExercise[] | null = null;
+  private _snackBar = inject(MatSnackBar);
+
   constructor(private http: HttpClient, private dialog: MatDialog) {
     this.getExercises();
+  }
+
+  openShackBar(message: string, action: string, type: string): void {
+    this._snackBar.open(message, action, {
+      duration: 1500,
+      panelClass: type === 'error' ? 'snackbar_error' : 'snackbar_success',
+    });
   }
 
   openDialog(dialog: ComponentType<unknown>, data: object): void {
