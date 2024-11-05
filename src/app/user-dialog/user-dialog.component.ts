@@ -18,6 +18,7 @@ import { MatInputModule } from '@angular/material/input';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { IUser } from '../core/interfaces/user.interface';
 import { trimValidator } from '../core/Functions/trim-validator';
+import { SnackbarService } from '../services/snackbar.service';
 
 interface DialogData {
   title: string;
@@ -66,7 +67,8 @@ export class UserDialogComponent {
     @Inject(MAT_DIALOG_DATA)
     public data: DialogData,
     public dialogRef: MatDialogRef<UserDialogComponent>,
-    private http: HttpClient
+    private http: HttpClient,
+    private snackbarService: SnackbarService
   ) {
     this.title = data.title;
     this.action = data.action;
@@ -101,7 +103,7 @@ export class UserDialogComponent {
           this.closeDialog('created');
         },
         error: () => {
-          console.error('Error al crear el usuario');
+          this.snackbarService.showError('Error al crear el usuario', 'cerrar');
         },
       });
     } else if (this.action === 'put') {
@@ -109,8 +111,11 @@ export class UserDialogComponent {
         next: () => {
           this.closeDialog('updated');
         },
-        error: (error) => {
-          console.log('Error al modificar el usuario' + error);
+        error: () => {
+          this.snackbarService.showError(
+            'Error al modificar el usuario',
+            'cerrar'
+          );
         },
       });
     }

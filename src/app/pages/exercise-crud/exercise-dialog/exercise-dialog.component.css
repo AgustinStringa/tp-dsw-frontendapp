@@ -1,18 +1,3 @@
 .container {
   width: 400px;
 }
-
-::ng-deep .snackbar_success .mdc-button__label,
-::ng-deep .snackbar_error .mdc-button__label {
-  color: white;
-}
-
-::ng-deep .snackbar_error,
-::ng-deep .snackbar_error * {
-  background-color: #dc3545 !important;
-}
-
-::ng-deep .snackbar_success *,
-::ng-deep .snackbar_error * {
-  font-size: 1.1rem !important;
-}

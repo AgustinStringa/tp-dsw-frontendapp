@@ -18,6 +18,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { IMembershipType } from '../../../core/interfaces/membership-type.interface.js';
 import { environment } from '../../../../environments/environment.js';
+import { SnackbarService } from '../../../services/snackbar.service.js';
 
 interface DialogData {
   title: string;
@@ -56,7 +57,8 @@ export class MembershipTypeDialogComponent {
     @Inject(MAT_DIALOG_DATA)
     public data: DialogData,
     public dialogRef: MatDialogRef<MembershipTypeDialogComponent>,
-    private http: HttpClient
+    private http: HttpClient,
+    private snackbarService: SnackbarService
   ) {
     this.title = data.title;
     this.action = data.action;
@@ -85,7 +87,10 @@ export class MembershipTypeDialogComponent {
           this.closeDialog('created');
         },
         error: () => {
-          console.error('Error al crear el tipo de membresía');
+          this.snackbarService.showError(
+            'Error al crear el tipo de membresía',
+            'cerrar'
+          );
         },
       });
     } else if (this.action === 'put') {
@@ -98,8 +103,11 @@ export class MembershipTypeDialogComponent {
           next: () => {
             this.closeDialog('updated');
           },
-          error: (error) => {
-            console.log('Error al modificar el tipo de membresía' + error);
+          error: () => {
+            this.snackbarService.showError(
+              'Error al modificar el tipo de membresía',
+              'cerrar'
+            );
           },
         });
     }

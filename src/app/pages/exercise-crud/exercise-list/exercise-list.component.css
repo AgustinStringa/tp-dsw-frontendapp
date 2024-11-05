@@ -6,13 +6,3 @@
 .exercise-list-container table {
   width: 100%;
 }
-
-::ng-deep .snackbar_error,
-::ng-deep .snackbar_error * {
-  background-color: #dc3545 !important;
-}
-
-::ng-deep .snackbar_success *,
-::ng-deep .snackbar_error * {
-  font-size: 1.1rem !important;
-}

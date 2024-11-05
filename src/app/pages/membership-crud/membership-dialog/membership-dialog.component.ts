@@ -23,6 +23,7 @@ import { environment } from '../../../../environments/environment.js';
 import { IMembership } from '../../../core/interfaces/membership.interface.js';
 import { IMembershipType } from '../../../core/interfaces/membership-type.interface.js';
 import { IUser } from '../../../core/interfaces/user.interface.js';
+import { SnackbarService } from '../../../services/snackbar.service.js';
 
 interface DialogData {
   title: string;
@@ -66,7 +67,8 @@ export class MembershipDialogComponent {
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: DialogData,
-    public dialogRef: MatDialogRef<MembershipDialogComponent>
+    public dialogRef: MatDialogRef<MembershipDialogComponent>,
+    private snackbarService: SnackbarService
   ) {
     this.title = data.title;
     this.action = data.action;
@@ -98,8 +100,10 @@ export class MembershipDialogComponent {
           this.closeDialog('created');
         },
         error: (error) => {
-          console.error('Error en la petición:', error);
-          //poner snackbar
+          this.snackbarService.showError(
+            'Error al crear la membresía',
+            'cerrar'
+          );
         },
       });
     } else if (this.action == 'put') {
@@ -110,8 +114,10 @@ export class MembershipDialogComponent {
             this.closeDialog('updated');
           },
           error: (error) => {
-            console.error('Error en la petición:', error);
-            //poner snackbar
+            this.snackbarService.showError(
+              'Error al modificar la membresía',
+              'cerrar'
+            );
           },
         });
     }
@@ -123,8 +129,10 @@ export class MembershipDialogComponent {
         this.clients = res.data;
       },
       error: (error) => {
-        console.error('Error en la petición:', error);
-        //poner snackbar
+        this.snackbarService.showError(
+          'Error al obtener los clientes',
+          'cerrar'
+        );
       },
     });
   }
@@ -134,9 +142,11 @@ export class MembershipDialogComponent {
       next: (res) => {
         this.membershipTypes = res.data;
       },
-      error: (error) => {
-        console.error('Error en la petición:', error);
-        //poner snackbar
+      error: () => {
+        this.snackbarService.showError(
+          'Error al obtener los tipos de membresías',
+          'cerrar'
+        );
       },
     });
   }

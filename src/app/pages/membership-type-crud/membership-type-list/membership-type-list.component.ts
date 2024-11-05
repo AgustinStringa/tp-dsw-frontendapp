@@ -17,50 +17,57 @@ import { MembershipTypeDialogComponent } from '../membership-type-dialog/members
   styleUrl: './membership-type-list.component.css',
 })
 export class MembershipTypeListComponent {
-  membershipTypes: IMembershipType[] | null = [];
+  membershipTypes: IMembershipType[] | null = null;
 
   constructor(private http: HttpClient, private dialog: MatDialog) {
     this.getMembershipTypes();
   }
 
   getMembershipTypes() {
-    try {
-      this.http.get<any>(environment.membershipTypesUrl).subscribe((res) => {
+    this.http.get<any>(environment.membershipTypesUrl).subscribe({
+      next: (res) => {
         this.membershipTypes = res.data;
-      });
-    } catch (error: any) {
-      this.membershipTypes = null;
-      console.log(error);
-    }
+      },
+      error: () => {
+        this.membershipTypes = null;
+      },
+    });
   }
+
   addMembershipType(): void {
     this.openDialog(MembershipTypeDialogComponent, {
-      title: 'Nuevo Tipo de Membresía',
-      action: 'post',
-      url: environment.membershipTypesUrl,
+      data: {
+        title: 'Nuevo Tipo de Membresía',
+        action: 'post',
+        url: environment.membershipTypesUrl,
+      },
     });
   }
 
   updateMembershipType(membershipType: IMembershipType): void {
     this.openDialog(MembershipTypeDialogComponent, {
-      title: 'Modificar Tipo de Membresía',
-      action: 'put',
-      membershipType: membershipType,
-      url: environment.membershipTypesUrl,
+      data: {
+        title: 'Modificar Tipo de Membresía',
+        action: 'put',
+        membershipType: membershipType,
+        url: environment.membershipTypesUrl,
+      },
     });
   }
 
   deleteMembershipType(id: string): void {
     this.openDialog(DeleteDialogComponent, {
-      id: id,
-      entity: 'membershiptype',
-      title: 'Eliminar Tipo de Membresía',
-      url: environment.membershipTypesUrl,
+      data: {
+        id: id,
+        entity: 'membershiptype',
+        title: 'Eliminar Tipo de Membresía',
+        url: environment.membershipTypesUrl,
+      },
     });
   }
 
   openDialog(dialog: ComponentType<unknown>, data: object): void {
-    const dialogRef = this.dialog.open(dialog, { data });
+    const dialogRef = this.dialog.open(dialog, data);
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result !== 'none') {

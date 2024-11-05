@@ -26,9 +26,9 @@ import {
 } from '@angular/common/http';
 import { catchError } from 'rxjs/operators';
 import { throwError } from 'rxjs';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { environment } from '../../../../environments/environment.js';
 import { trimValidator } from '../../../core/Functions/trim-validator.js';
+import { SnackbarService } from '../../../services/snackbar.service.js';
 
 @Component({
   selector: 'app-exercise-dialog',
@@ -52,16 +52,19 @@ import { trimValidator } from '../../../core/Functions/trim-validator.js';
 export class ExerciseDialogComponent {
   title: string = '';
   action: string = '';
-  private _snackBar = inject(MatSnackBar);
   readonly dialogRef = inject(MatDialogRef<DialogExerciseData>);
   readonly data = inject<DialogExerciseData>(MAT_DIALOG_DATA);
+
   exerciseForm = new FormGroup({
     name: new FormControl<string>('', [Validators.required, trimValidator()]),
     description: new FormControl<string>(''),
     urlVideo: new FormControl<string>(''),
   });
 
-  constructor(private http: HttpClient) {
+  constructor(
+    private http: HttpClient,
+    private snackbarService: SnackbarService
+  ) {
     if (this.data.action == 'put') {
       this.exerciseForm.patchValue({
         name: this.data.exercise.name.trim(),
@@ -90,30 +93,21 @@ export class ExerciseDialogComponent {
         })
         .pipe(
           catchError((error: HttpErrorResponse) => {
-            if (error.status === 400) {
-              this._snackBar.open('Error al crear el ejercicio', 'cerrar', {
-                duration: 3000,
-                panelClass: ['snackbar_error'],
-              });
-            } else if (error.status === 500 || error.status === 0) {
-              this._snackBar.open('Error en el servidor', 'cerrar', {
-                duration: 3000,
-                panelClass: ['snackbar_error'],
-              });
-            }
+            this.snackbarService.showError(
+              'Error al crear el ejercicio',
+              'cerrar'
+            );
+
             return throwError(
               () => new Error(error.message || 'Error desconocido')
             );
           })
         )
         .subscribe((res: any) => {
-          this._snackBar
-            .open('Ejercicio creado correctamente', 'cerrar', {
-              duration: 1500,
-              panelClass: ['snackbar_success'],
-            })
+          this.snackbarService
+            .showSuccess('Ejercicio creado correctamente', 'cerrar')
             .afterDismissed()
-            .subscribe((info) => {
+            .subscribe(() => {
               this.dialogRef.close('created');
             });
         });
@@ -126,38 +120,21 @@ export class ExerciseDialogComponent {
         })
         .pipe(
           catchError((error: HttpErrorResponse) => {
-            if (error.status === 400) {
-              this._snackBar.open(
-                'Error al actualizar el ejercicio',
-                'cerrar',
-                {
-                  duration: 3000,
-                  panelClass: ['snackbar_error'],
-                }
-              );
-            } else {
-              this._snackBar.open(
-                'Error al actualizar el ejercicio',
-                'cerrar',
-                {
-                  duration: 3000,
-                  panelClass: ['snackbar_error'],
-                }
-              );
-            }
+            this.snackbarService.showError(
+              'Error al actualizar el ejercicio',
+              'cerrar'
+            );
+
             return throwError(
               () => new Error(error.message || 'Error desconocido')
             );
           })
         )
         .subscribe((res: any) => {
-          this._snackBar
-            .open('Ejercicio actualizado correctamente', 'cerrar', {
-              duration: 1500,
-              panelClass: ['snackbar_success'],
-            })
+          this.snackbarService
+            .showSuccess('Ejercicio actualizado correctamente', 'cerrar')
             .afterDismissed()
-            .subscribe((info) => {
+            .subscribe(() => {
               this.dialogRef.close('updated');
             });
         });

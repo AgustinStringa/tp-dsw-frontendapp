@@ -9,7 +9,7 @@ import { ExerciseListComponent } from './pages/exercise-crud/exercise-list/exerc
 import { LoginComponent } from './login/login.component.js';
 import { MembershipListComponent } from './pages/membership-crud/membership-list/membership-list.component.js';
 import { MembershipTypeListComponent } from './pages/membership-type-crud/membership-type-list/membership-type-list.component.js';
-import { TrainersListComponent } from './trainers-list/trainers-list.component.js';
+import { TrainerListComponent } from './pages/trainer-crud/trainer-list/trainer-list.component.js';
 
 export const routes: Routes = [
   { path: '', component: LoginComponent },
@@ -25,5 +25,5 @@ export const routes: Routes = [
   },
   { path: 'record-exercise-execution', component: DailyRoutineComponent },
   { path: 'registration', component: ClassListComponent },
-  { path: 'trainers', component: TrainersListComponent },
+  { path: 'trainers', component: TrainerListComponent },
 ];

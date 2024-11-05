@@ -11,6 +11,7 @@ import { environment } from '../../../../environments/environment.js';
 import { IMembership } from '../../../core/interfaces/membership.interface.js';
 import { IMembershipType } from '../../../core/interfaces/membership-type.interface.js';
 import { IUser } from '../../../core/interfaces/user.interface.js';
+import { SnackbarService } from '../../../services/snackbar.service.js';
 
 @Component({
   selector: 'app-membership-list',
@@ -20,24 +21,27 @@ import { IUser } from '../../../core/interfaces/user.interface.js';
   styleUrl: './membership-list.component.css',
 })
 export class MembershipListComponent {
-  memberships: IMembership[] = [];
+  memberships: IMembership[] | null = null;
   clients: IUser[] = [];
   types: IMembershipType[] = [];
   activeMemberships: { [clientId: string]: IMembership | null } = {};
 
-  constructor(private http: HttpClient, private dialog: MatDialog) {
+  constructor(
+    private http: HttpClient,
+    private dialog: MatDialog,
+    private snackbarService: SnackbarService
+  ) {
     this.getActiveMemberships();
   }
 
   getActiveMemberships() {
     this.http.get<any>(environment.membershipsUrl).subscribe({
-      //revisar la ruta
+      //TODO trae todas las membresías, no las vigentes.
       next: (res) => {
         this.memberships = res.data;
       },
-      error: (error) => {
-        console.error('Error en la petición:', error);
-        //poner snackbar
+      error: () => {
+        this.memberships = null;
       },
     });
   }
