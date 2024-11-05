@@ -1,5 +1,5 @@
 <div class="page-container">
-  <h2 class="crud-page-title">Registrarse a una clase</h2>
+  <h2 class="crud-page-title">Inscribirse a una Clase</h2>
   <div class="class-type-list-container">
     @if (this.availableClasses.length > 0) {
     <mat-accordion>
@@ -25,9 +25,8 @@
         </div>
 
         <!-- Segundo Expansion Panel para las clases dentro del ClassType -->
-         @if (classType.classes && classType.classes.length > 0) {
-        <mat-accordion
-        >
+        @if (classType.classes && classType.classes.length > 0) {
+        <mat-accordion>
           @for (i of classType.classes; track i.id) { @if (i.active == true) {
           <mat-expansion-panel
             class="class-panel"
@@ -56,16 +55,18 @@
                 [class.selected]="selectedClass === i"
                 (click)="selectClass(i)"
               >
-                Registrarse a esta clase
+                Inscribirse a esta clase
               </button>
             </div>
           </mat-expansion-panel>
-        }  
-      }
+          } }
         </mat-accordion>
-    } 
+        }
         <!-- Mensaje si no hay clases disponibles -->
-        <p class = "alert" *ngIf="!classType.classes || classType.classes.length === 0">
+        <p
+          class="alert"
+          *ngIf="!classType.classes || classType.classes.length === 0"
+        >
           No hay clases disponibles.
         </p>
       </mat-expansion-panel>

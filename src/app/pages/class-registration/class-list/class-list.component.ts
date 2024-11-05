@@ -116,17 +116,19 @@ export class ClassListComponent {
           .post<IRegistration>(environment.registrationUrl, registration)
           .subscribe({
             next: () => {
-              this.snackbarService.showSuccess('Clase registrada exitosamente');
+              this.snackbarService.showSuccess('Inscripción realizada');
               this.getRegistrations();
               this.getClassTypes();
             },
             error: (err) => {
               console.log(err);
-              this.snackbarService.showError('Error al registrar la clase');
+              this.snackbarService.showError(
+                'Error al inscribirse en la clase'
+              );
             },
           });
       } else {
-        this.snackbarService.showError('Registro cancelado');
+        this.snackbarService.showError('Inscripción cancelada');
       }
     });
   }

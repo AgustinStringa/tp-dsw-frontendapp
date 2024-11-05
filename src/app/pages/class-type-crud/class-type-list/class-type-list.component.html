@@ -1,14 +1,16 @@
 <div class="list-container class-type-list-container">
-  <h2 class="crud-page-title">Tipos de clases</h2>
+  <div class="title-div">
+    <h2 class="crud-page-title">Tipos de clases</h2>
 
-  <div class="my-4 text-end">
-    <button
-      type="button"
-      class="btn btn-primary btn-lg"
-      (click)="addClassType()"
-    >
-      Nuevo tipo
-    </button>
+    <div class="my-4 text-end">
+      <button
+        type="button"
+        class="btn btn-primary btn-lg"
+        (click)="addClassType()"
+      >
+        Nuevo tipo
+      </button>
+    </div>
   </div>
 
   @if (classTypes !== null && classTypes.length > 0) {

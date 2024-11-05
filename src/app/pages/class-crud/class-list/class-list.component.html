@@ -1,37 +1,58 @@
 <div class="list-container class-list-container">
-  <h2 class="crud-page-title">Clases</h2>
+  <div class="title-div">
+    <h2 class="crud-page-title">Clases</h2>
 
-    <div class="filter-container">
-      <label for="dayFilter">Filtrar por día:</label>
-      <select class = "day-filter" id="dayFilter" [(ngModel)]="dayFilter" (ngModelChange)="applyFilter()">
-        <option value="">Todos</option>
-        <option value="Lunes">Lunes</option>
-        <option value="Martes">Martes</option>
-        <option value="Miércoles">Miércoles</option>
-        <option value="Jueves">Jueves</option>
-        <option value="Viernes">Viernes</option>
-        <option value="Sábado">Sábado</option>
-      </select>
+    <div class="my-4 text-end">
+      <button type="button" class="btn btn-primary btn-lg" (click)="addClass()">
+        Nueva clase
+      </button>
+    </div>
+  </div>
 
+  <div class="filter-container">
+    <label for="dayFilter">Filtrar por día:</label>
+    <select
+      class="day-filter"
+      id="dayFilter"
+      [(ngModel)]="dayFilter"
+      (ngModelChange)="applyFilter()"
+    >
+      <option value="">Todos</option>
+      <option value="Lunes">Lunes</option>
+      <option value="Martes">Martes</option>
+      <option value="Miércoles">Miércoles</option>
+      <option value="Jueves">Jueves</option>
+      <option value="Viernes">Viernes</option>
+      <option value="Sábado">Sábado</option>
+      <option value="Domingo">Domingo</option>
+    </select>
 
+    <label for="classTypeFilter">Filtrar por tipo de clase:</label>
+    <select
+      id="classTypeFilter"
+      [(ngModel)]="classTypeFilter"
+      (ngModelChange)="applyFilter()"
+    >
+      <option value="">Todos</option>
+      <option *ngFor="let classType of classTypes" [value]="classType.name">
+        {{ classType.name }}
+      </option>
+    </select>
 
-        <label for="classTypeFilter">Filtrar por tipo de clase:</label>
-        <select id="classTypeFilter" [(ngModel)]="classTypeFilter" (ngModelChange)="applyFilter()">
-          <option value="">Todos</option>
-          <option *ngFor="let classType of classTypes" [value]="classType.name">{{ classType.name }}</option>
-        </select>
-
-        <label for="trainerFilter">Filtrar por entrenador:</label>
-        <select id = "classTypeFilter" [(ngModel)]="trainerFilter" (ngModelChange)="applyFilter()">
-          <option value="">Todos</option>
-          <option *ngFor="let trainer of trainers" [value]="trainer.firstName">{{ trainer.firstName + ' ' + trainer.lastName }}</option>
-        </select>
-        <button class="btn btn-primary" (click)="clearFilters()">Limpiar filtros</button>
-      </div>
-  <div class="my-4 text-end">
-    <button type="button" class="btn btn-primary btn-lg" (click)="addClass()">
-      Nueva clase
-    </button>
+    <label for="trainerFilter">Filtrar por entrenador:</label>
+    <select
+      id="classTypeFilter"
+      [(ngModel)]="trainerFilter"
+      (ngModelChange)="applyFilter()"
+    >
+      <option value="">Todos</option>
+      <option *ngFor="let trainer of trainers" [value]="trainer.firstName">
+        {{ trainer.firstName + " " + trainer.lastName }}
+      </option>
+    </select>
+    <button class="btn btn-primary" (click)="clearFilters()">
+      Limpiar filtros</button
+    ><!-- TODO debe resaltar menos, el principal es el botón nueva clase-->
   </div>
 
   @if (filteredClasses !== null && filteredClasses.length > 0) {

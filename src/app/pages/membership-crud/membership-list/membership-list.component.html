@@ -1,15 +1,16 @@
 <div class="list-container memberships-list-container">
-  <h2 class="crud-page-title">Membresías vigentes</h2>
-  <div class="my-4 text-end">
-    <button
-      type="button"
-      class="btn btn-primary btn-lg"
-      (click)="addMembership()"
-    >
-      Nueva membresía
-    </button>
+  <div class="title-div">
+    <h2 class="crud-page-title">Membresías vigentes</h2>
+    <div class="my-4 text-end">
+      <button
+        type="button"
+        class="btn btn-primary btn-lg"
+        (click)="addMembership()"
+      >
+        Nueva membresía
+      </button>
+    </div>
   </div>
-
   @if (memberships !== null && memberships.length > 0) {
   <table>
     <thead>
