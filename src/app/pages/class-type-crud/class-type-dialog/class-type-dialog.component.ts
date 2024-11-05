@@ -23,6 +23,7 @@ import { environment } from '../../../../environments/environment';
 import { IClassType } from '../../../core/interfaces/class-type.interface';
 import { trimValidator } from '../../../core/Functions/trim-validator';
 import { NgClass } from '@angular/common';
+import { SnackbarService } from '../../../services/snackbar.service';
 
 interface DialogData {
   title: string;
@@ -63,7 +64,8 @@ export class ClassTypeDialogComponent {
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: DialogData,
-    public dialogRef: MatDialogRef<ClassTypeDialogComponent>
+    public dialogRef: MatDialogRef<ClassTypeDialogComponent>,
+    private snackbarService: SnackbarService
   ) {
     this.http = data.httpClient;
     this.action = data.action;
@@ -89,8 +91,11 @@ export class ClassTypeDialogComponent {
         next: () => {
           this.closeDialog('created');
         },
-        error: (error) => {
-          console.error('Error en la petición:', error);
+        error: () => {
+          this.snackbarService.showError(
+            'Error al crear el tipo de clase',
+            'cerrar'
+          );
         },
       });
     } else if (this.action === 'put') {
@@ -100,8 +105,11 @@ export class ClassTypeDialogComponent {
           next: () => {
             this.closeDialog('updated');
           },
-          error: (error) => {
-            console.error('Error en la petición:', error);
+          error: () => {
+            this.snackbarService.showError(
+              'Error al modificar el tipo de clase',
+              'cerrar'
+            );
           },
         });
     }

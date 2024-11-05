@@ -10,7 +10,7 @@ import { IRegistration } from '../../../core/interfaces/registration.interface.j
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogConfirmRegistrationComponent } from '../dialog-confirm-registration/dialog-confirm-registration.component.js';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import { SnackbarService } from '../../../services/snackbar.service.js';
 
 @Component({
   selector: 'app-class-list',
@@ -25,10 +25,12 @@ export class ClassListComponent {
   selectedClass: IClass | null = null;
   selectedClassType: IClassType | null = null;
   private dialog = inject(MatDialog);
-  private _snackBar = inject(MatSnackBar);
   private userId = '66e9b19b100c4d9c3024fc97'; // ID hardcodeado del usuario
 
-  constructor(private http: HttpClient) {
+  constructor(
+    private http: HttpClient,
+    private snackbarService: SnackbarService
+  ) {
     this.getClassTypes();
   }
 
@@ -66,26 +68,24 @@ export class ClassListComponent {
           .post<IRegistration>(environment.registrationUrl, registration)
           .subscribe({
             next: () => {
-              console.log('Clase registrada correctamente.');
-              this.openSnackBar('Registro exitoso', 'Cerrar');
+              this.snackbarService.showSuccess(
+                'Clase registrada exitosamente',
+                'cerrar'
+              );
             },
-            error: (err) => {
-              console.error(err);
-              this.openSnackBar('Error al registrar la clase', 'Cerrar');
+            error: () => {
+              this.snackbarService.showError(
+                'Error al registrar la clase',
+                'cerrar'
+              );
             },
           });
       } else {
-        console.log('Registro cancelado.');
-        this.openSnackBar('Registro cancelado.', 'Cerrar');
+        this.snackbarService.showError('Registro cancelado', 'cerrar');
       }
     });
   }
 
-  openSnackBar(message: string, action: string) {
-    this._snackBar.open(message, action, {
-      duration: 3000,
-    });
-  }
   getDayNameFromNumber(dayNumber: number) {
     if (dayNumber < 1 || dayNumber > 7) {
       return '';

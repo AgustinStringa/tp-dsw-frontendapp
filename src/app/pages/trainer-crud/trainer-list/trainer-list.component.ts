@@ -1,68 +1,69 @@
 import { Component } from '@angular/core';
+import { ComponentType } from '@angular/cdk/overlay/index.js';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
-import { NgFor, NgIf } from '@angular/common';
-import { MatDialog } from '@angular/material/dialog';
-import { MatIconModule } from '@angular/material/icon';
 import { DeleteDialogComponent } from '../../../delete-dialog/delete-dialog.component';
-import { ComponentType } from '@angular/cdk/portal';
 import { environment } from '../../../../environments/environment';
 import { IUser } from '../../../core/interfaces/user.interface';
+import { MatDialog } from '@angular/material/dialog';
+import { MatIconModule } from '@angular/material/icon';
+import { NgFor, NgIf } from '@angular/common';
 import { UserDialogComponent } from '../../../user-dialog/user-dialog.component';
 
 @Component({
-  selector: 'app-clients-list',
+  selector: 'app-trainers-list',
   standalone: true,
   imports: [NgFor, NgIf, HttpClientModule, MatIconModule],
-  templateUrl: './client-list.component.html',
-  styleUrl: './client-list.component.css',
+  templateUrl: './trainer-list.component.html',
+  styleUrl: './trainer-list.component.css',
 })
-export class ClientListComponent {
-  clients: IUser[] | null = null;
+export class TrainerListComponent {
+  trainers: IUser[] | null = null;
 
   constructor(private http: HttpClient, private dialog: MatDialog) {
-    this.getClients();
+    this.getTrainers();
   }
 
-  getClients() {
-    try {
-      this.http.get<any>(environment.clientsUrl).subscribe((res) => {
-        this.clients = res.data;
-      });
-    } catch (error: any) {
-      this.clients = null;
-      console.log(error);
-    }
+  getTrainers() {
+    this.http.get<any>(environment.trainersUrl).subscribe({
+      next: (res) => {
+        this.trainers = res.data;
+      },
+      error: () => {
+        this.trainers = null;
+      },
+    });
   }
 
-  addUser(): void {
+  addTrainer(): void {
     this.openDialog(UserDialogComponent, {
       data: {
-        title: 'Nuevo Cliente',
+        title: 'Nuevo Entrenador',
         action: 'post',
-        url: environment.clientsUrl,
+        url: environment.trainersUrl,
         httpClient: this.http,
       },
     });
   }
 
-  updateUser(client: IUser) {
+  updateTrainer(trainer: IUser): void {
     this.openDialog(UserDialogComponent, {
       data: {
-        title: 'Modificar Cliente',
+        title: 'Modificar Entrenador',
         action: 'put',
-        user: client,
-        url: environment.clientsUrl,
+        user: trainer,
+        url: environment.trainersUrl,
         httpClient: this.http,
       },
     });
   }
 
-  deleteUser(id: string): void {
+  deleteTrainer(id: string): void {
     this.openDialog(DeleteDialogComponent, {
       data: {
         id: id,
-        title: 'Eliminar Cliente',
-        url: environment.clientsUrl,
+        entity: 'trainer',
+        title: 'Eliminar Entrenador',
+        url: environment.trainersUrl,
         httpClient: this.http,
       },
     });
@@ -73,7 +74,7 @@ export class ClientListComponent {
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result !== 'none') {
-        this.getClients();
+        this.getTrainers();
       }
     });
   }

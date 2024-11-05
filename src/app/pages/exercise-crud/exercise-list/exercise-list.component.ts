@@ -7,6 +7,7 @@ import { DeleteDialogComponent } from '../../../delete-dialog/delete-dialog.comp
 import { environment } from '../../../../environments/environment.js';
 import { ExerciseDialogComponent } from '../exercise-dialog/exercise-dialog.component.js';
 import { IExercise } from '../../../core/interfaces/exercise.interface.js';
+
 export interface DialogExerciseData {
   exercise: IExercise;
   action: string;
@@ -17,17 +18,17 @@ export interface DialogExerciseData {
   selector: 'app-exercises-list',
   standalone: true,
   imports: [HttpClientModule, MatIconModule],
-  templateUrl: './exercises-list.component.html',
-  styleUrl: './exercises-list.component.css',
+  templateUrl: './exercise-list.component.html',
+  styleUrl: './exercise-list.component.css',
 })
-export class ExercisesListComponent {
+export class ExerciseListComponent {
   exercises: IExercise[] | null = null;
   constructor(private http: HttpClient, private dialog: MatDialog) {
     this.getExercises();
   }
 
   openDialog(dialog: ComponentType<unknown>, data: object): void {
-    const dialogRef = this.dialog.open(dialog, { data });
+    const dialogRef = this.dialog.open(dialog, data);
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result !== 'none') {
@@ -49,25 +50,33 @@ export class ExercisesListComponent {
 
   updateExercise(e: IExercise): void {
     this.openDialog(ExerciseDialogComponent, {
-      exercise: e,
-      title: 'Editar ejercicio',
-      action: 'put',
+      data: {
+        exercise: e,
+        title: 'Editar ejercicio',
+        action: 'put',
+        httpClient: this.http,
+      },
     });
   }
 
   addExercise(): void {
     this.openDialog(ExerciseDialogComponent, {
-      title: 'Crear ejercicio',
-      action: 'post',
+      data: {
+        title: 'Crear ejercicio',
+        action: 'post',
+        httpClient: this.http,
+      },
     });
   }
 
   deleteExercise(id: string | undefined): void {
     this.openDialog(DeleteDialogComponent, {
-      id: id,
-      title: 'Eliminar ejercicio',
-      url: environment.exercisesUrl,
-      httpClient: this.http,
+      data: {
+        id: id,
+        title: 'Eliminar ejercicio',
+        url: environment.exercisesUrl,
+        httpClient: this.http,
+      },
     });
   }
 }
