@@ -1,11 +1,17 @@
 import { Component } from '@angular/core';
+import { ComponentType } from '@angular/cdk/portal';
 import { FormsModule } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { NgFor, NgIf } from '@angular/common';
 import { MatDialog } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
+import {
+  MatPaginatorIntl,
+  MatPaginatorModule,
+  PageEvent,
+} from '@angular/material/paginator';
+import { CustomPaginatorIntl } from '../../../core/classes/CustomPaginatorIntl';
 import { DeleteDialogComponent } from '../../../delete-dialog/delete-dialog.component';
-import { ComponentType } from '@angular/cdk/portal';
 import { environment } from '../../../../environments/environment';
 import { IUser } from '../../../core/interfaces/user.interface';
 import { UserDialogComponent } from '../../../user-dialog/user-dialog.component';
@@ -13,7 +19,8 @@ import { UserDialogComponent } from '../../../user-dialog/user-dialog.component'
 @Component({
   selector: 'app-clients-list',
   standalone: true,
-  imports: [FormsModule, MatIconModule, NgFor, NgIf],
+  imports: [FormsModule, MatIconModule, MatPaginatorModule, NgFor, NgIf],
+  providers: [{ provide: MatPaginatorIntl, useClass: CustomPaginatorIntl }],
   templateUrl: './client-list.component.html',
   styleUrls: [
     '../../../../assets/styles/filter-container.css',
@@ -23,7 +30,10 @@ import { UserDialogComponent } from '../../../user-dialog/user-dialog.component'
 export class ClientListComponent {
   clients: IUser[] | null = null;
   filteredClients: IUser[] | null = null;
+  clientsPage: IUser[] | null = null;
+
   nameFilter: string = '';
+  pageSize: number = 50;
 
   constructor(private http: HttpClient, private dialog: MatDialog) {
     this.getClients();
@@ -34,6 +44,12 @@ export class ClientListComponent {
       next: (res) => {
         this.clients = res.data;
         this.filteredClients = this.clients ? [...this.clients] : [];
+
+        const e = new PageEvent();
+        e.length = this.filteredClients.length;
+        e.pageIndex = 0;
+        e.pageSize = this.pageSize;
+        this.handlePageEvent(e);
       },
       error: () => {
         this.clients = null;
@@ -102,10 +118,24 @@ export class ClientListComponent {
         return false;
       });
     }
+    const e = new PageEvent();
+    e.length = this.filteredClients.length;
+    e.pageIndex = 0;
+    e.pageSize = this.pageSize;
+    this.handlePageEvent(e);
   }
 
   clearFilters() {
     this.nameFilter = '';
     this.applyFilter();
+  }
+
+  handlePageEvent(e: PageEvent) {
+    if (this.filteredClients !== null) {
+      const start = e.pageIndex * e.pageSize;
+      const end = (e.pageIndex + 1) * e.pageSize;
+
+      this.clientsPage = [...this.filteredClients.slice(start, end)];
+    }
   }
 }
