@@ -1,0 +1,58 @@
+<div class="container">
+  <div class="dialog-title">
+    <h2 mat-dialog-title>
+      {{ title }}
+    </h2>
+    <button
+      type="button"
+      class="btn-close"
+      title="Cerrar ventana"
+      (click)="closeDialog('none')"
+    ></button>
+  </div>
+
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <mat-dialog-content class="common-dialog">
+      <mat-form-field>
+        <mat-label for="name">Nombre</mat-label>
+        <input type="text" formControlName="name" id="name" matInput />
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label for="price">Precio</mat-label>
+        <input type="number" formControlName="price" id="price" matInput />
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label for="description">Descripción</mat-label>
+        <textarea
+          matInput
+          cdkTextareaAutosize
+          #autosize="cdkTextareaAutosize"
+          formControlName="description"
+          cdkAutosizeMinRows="3"
+          cdkAutosizeMaxRows="5"
+        ></textarea>
+      </mat-form-field>
+    </mat-dialog-content>
+
+    <mat-dialog-actions class="common-dialog">
+      <button
+        mat-button
+        type="submit"
+        class="btn btn-success"
+        [disabled]="!form.valid"
+      >
+        Guardar
+      </button>
+      <button
+        mat-button
+        type="button"
+        class="btn-secondary"
+        (click)="closeDialog('none')"
+      >
+        Cancelar
+      </button>
+    </mat-dialog-actions>
+  </form>
+</div>

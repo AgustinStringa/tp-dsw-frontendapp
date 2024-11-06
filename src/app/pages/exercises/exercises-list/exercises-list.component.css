@@ -1,0 +1,40 @@
+/*TODO ver qué puede reutilizarse de styles.css*/
+
+.exercises-list-container {
+  margin: 2rem auto;
+  width: 80%;
+}
+
+.exercises-list-container table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.exercises-list-container th,
+.exercises-list-container td {
+  text-align: center;
+  padding: 1rem;
+  border: 1px solid #dee2e6;
+}
+
+.exercises-list-container th {
+  background-color: #f8f9fa;
+}
+
+.exercises-list-container tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+.td-actions {
+  display: flex;
+  justify-content: center;
+}
+
+.td-actions button {
+  margin: 0 0.5rem;
+}
+
+.no-video {
+  color: red;
+  cursor: pointer;
+}

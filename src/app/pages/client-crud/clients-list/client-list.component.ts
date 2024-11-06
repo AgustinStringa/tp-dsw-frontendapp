@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { NgFor, NgIf } from '@angular/common';
 import { MatDialog } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
@@ -12,7 +12,7 @@ import { UserDialogComponent } from '../../../user-dialog/user-dialog.component'
 @Component({
   selector: 'app-clients-list',
   standalone: true,
-  imports: [NgFor, NgIf, HttpClientModule, MatIconModule],
+  imports: [NgFor, NgIf, MatIconModule],
   templateUrl: './client-list.component.html',
   styleUrl: './client-list.component.css',
 })
@@ -36,34 +36,37 @@ export class ClientListComponent {
 
   addUser(): void {
     this.openDialog(UserDialogComponent, {
-      title: 'Nuevo Cliente',
-      action: 'post',
-      url: environment.clientsUrl,
-      httpClient: this.http,
+      data: {
+        title: 'Nuevo Cliente',
+        action: 'post',
+        url: environment.clientsUrl,
+      },
     });
   }
 
   updateUser(client: IUser) {
     this.openDialog(UserDialogComponent, {
-      title: 'Modificar Cliente',
-      action: 'put',
-      user: client,
-      url: environment.clientsUrl,
-      httpClient: this.http,
+      data: {
+        title: 'Modificar Cliente',
+        action: 'put',
+        user: client,
+        url: environment.clientsUrl,
+      },
     });
   }
 
   deleteUser(id: string): void {
     this.openDialog(DeleteDialogComponent, {
-      id: id,
-      title: 'Eliminar Cliente',
-      url: environment.clientsUrl,
-      httpClient: this.http,
+      data: {
+        id: id,
+        title: 'Eliminar Cliente',
+        url: environment.clientsUrl,
+      },
     });
   }
 
   openDialog(dialog: ComponentType<unknown>, data: object): void {
-    const dialogRef = this.dialog.open(dialog, { data });
+    const dialogRef = this.dialog.open(dialog, data);
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result !== 'none') {

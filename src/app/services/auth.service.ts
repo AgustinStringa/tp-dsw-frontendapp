@@ -1,27 +1,29 @@
 import { Injectable, signal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, tap } from 'rxjs';
+import { firstValueFrom, Observable, tap } from 'rxjs';
 import { environment } from '../../environments/environment.js';
+import { SnackbarService } from './snackbar.service.js';
+
+interface IUserSession {
+  id: string;
+  firstName: string;
+  lastName: string;
+  dni: string;
+  email: string;
+  isClient: boolean;
+}
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  //podria tiparse la signal
-  // public type userSignal = {
-  // dni:string;
-  // email:string;
-  // firstName:string;
-  // id:string
-  // isClient:boolean
-  // lastName:string
-  // password:string
-  // }
-  public userSignal = signal<any>(null);
+  public userSignal = signal<IUserSession | null>(null);
 
-  constructor(private httpClient: HttpClient) {}
+  constructor(
+    private httpClient: HttpClient,
+    private snackbarService: SnackbarService
+  ) {}
 
-  //TO DO: ver si falta DNI u otro campo
   register(user: {
     email: string;
     password: string;
@@ -74,24 +76,33 @@ export class AuthService {
     return sessionStorage.getItem('token');
   }
 
-  getUser(): any | null {
+  getUser(): IUserSession | null {
     const user = sessionStorage.getItem('user');
+
     if (user !== null) {
-      this.userSignal.set(JSON.parse(user));
-      return JSON.parse(user);
+      const parsed = JSON.parse(user);
+      this.userSignal.set(parsed);
+      return parsed;
     }
+
     this.userSignal.set(null);
     return null;
   }
 
-  logout() {
+  async logout(): Promise<boolean> {
     try {
-      this.httpClient
-        .post(`${environment.authUrl}/logout/`, {})
-        .pipe(tap((response: any) => {}));
+      await firstValueFrom(
+        this.httpClient.post(`${environment.authUrl}/logout/`, {})
+      );
+
       this.userSignal.set(null);
       sessionStorage.removeItem('token');
       sessionStorage.removeItem('user');
-    } catch (error) {}
+
+      return true;
+    } catch (error) {
+      this.snackbarService.showError('No se pudo cerrar la sesión');
+      return false;
+    }
   }
 }

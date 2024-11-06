@@ -14,7 +14,7 @@ import {
   MatDialogRef,
   MatDialogTitle,
 } from '@angular/material/dialog';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -34,7 +34,6 @@ interface DialogData {
   trainers: IUser[];
   classTypes: IClassType[];
   class_a: IClass | undefined;
-  httpClient: HttpClient;
 }
 
 @Component({
@@ -51,7 +50,6 @@ interface DialogData {
     MatDialogContent,
     MatButtonModule,
     ReactiveFormsModule,
-    HttpClientModule,
     MatCheckboxModule,
     NgClass,
   ],
@@ -64,9 +62,6 @@ export class ClassDialogComponent {
   readonly trainers: IUser[];
   readonly classTypes: IClassType[];
   classId: string | undefined;
-  private http: HttpClient;
-
-  //configurar validators
 
   form = new FormGroup({
     day: new FormControl<string>('', [Validators.required]),
@@ -84,13 +79,13 @@ export class ClassDialogComponent {
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: DialogData,
-    public dialogRef: MatDialogRef<ClassTypeDialogComponent>
+    public dialogRef: MatDialogRef<ClassTypeDialogComponent>,
+    private http: HttpClient
   ) {
     this.action = data.action;
     this.title = data.title;
     this.trainers = data.trainers;
     this.classTypes = data.classTypes;
-    this.http = data.httpClient;
 
     if (data.class_a !== undefined) {
       const form = this.form.controls;

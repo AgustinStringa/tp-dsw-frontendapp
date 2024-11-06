@@ -18,13 +18,13 @@ import { MatInputModule } from '@angular/material/input';
 import { HttpClient } from '@angular/common/http';
 import { IUser } from '../core/interfaces/user.interface';
 import { trimValidator } from '../core/Functions/trim-validator';
+import { SnackbarService } from '../services/snackbar.service';
+
 interface DialogData {
   title: string;
   action: string;
   user: IUser | undefined;
   url: string;
-
-  httpClient: HttpClient;
 }
 
 @Component({
@@ -62,13 +62,13 @@ export class UserDialogComponent {
     ]),
   });
 
-  private http: HttpClient;
   constructor(
     @Inject(MAT_DIALOG_DATA)
     public dialogData: DialogData,
-    public dialogRef: MatDialogRef<UserDialogComponent>
+    public dialogRef: MatDialogRef<UserDialogComponent>,
+    private snackbarService: SnackbarService,
+    private http: HttpClient
   ) {
-    this.http = dialogData.httpClient;
     this.title = dialogData.title;
     this.action = dialogData.action;
     this.url = dialogData.url;
@@ -101,9 +101,8 @@ export class UserDialogComponent {
         next: () => {
           this.closeDialog('created');
         },
-        error: (error) => {
-          console.log(error);
-          console.error('Error al crear el usuario');
+        error: () => {
+          this.snackbarService.showError('Error al crear el usuario');
         },
       });
     } else if (this.action === 'put') {
@@ -111,8 +110,8 @@ export class UserDialogComponent {
         next: () => {
           this.closeDialog('updated');
         },
-        error: (error) => {
-          console.log('Error al modificar el usuario', error);
+        error: () => {
+          this.snackbarService.showError('Error al modificar el usuario');
         },
       });
     }

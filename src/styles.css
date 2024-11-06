@@ -18,15 +18,28 @@ body {
 }
 
 /*TABLAS PARA CRUDS*/
-.crud-page-title, .page-title {
-    font-size: 2.5rem !important;
-    font-weight: bold !important;
-    margin: 2rem 0 !important;
+.crud-page-title,
+.page-title {
+  font-size: 2.5rem !important;
+  font-weight: bold !important;
+  margin: 2rem 0 !important;
+}
+
+.list-container {
+  width: 80%;
+  margin: 0 auto 20px;
+}
+
+.list-container .title-div {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
 }
 
 .list-container table {
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   grid-row: auto;
+  width: 100%;
 }
 
 .list-container thead {
@@ -37,6 +50,7 @@ body {
 .list-container th {
   border: 1px solid #ddd;
   padding: 10px;
+  text-align: center;
 }
 
 .list-container table button {
@@ -61,8 +75,6 @@ body {
   justify-content: center;
   gap: 1.5rem;
 }
-
-/*TO DO: INCLUDE SNACK BAR STYLES HERE*/
 
 /* MatDialog */
 
@@ -106,4 +118,21 @@ mat-dialog-actions.common-dialog button.btn-secondary {
 }
 mat-dialog-actions.common-dialog button.btn-secondary:hover {
   background-color: gray;
+}
+
+/* MatSnackBar */
+
+.snackbar_success .mdc-button__label,
+.snackbar_error .mdc-button__label {
+  color: white;
+}
+
+.snackbar_error,
+.snackbar_error * {
+  background-color: #dc3545 !important;
+}
+
+.snackbar_success *,
+.snackbar_error * {
+  font-size: 1.1rem !important;
 }

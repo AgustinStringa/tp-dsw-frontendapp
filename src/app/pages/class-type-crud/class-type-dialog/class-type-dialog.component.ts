@@ -18,17 +18,17 @@ import {
 } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../../environments/environment';
 import { IClassType } from '../../../core/interfaces/class-type.interface';
 import { trimValidator } from '../../../core/Functions/trim-validator';
 import { NgClass } from '@angular/common';
+import { SnackbarService } from '../../../services/snackbar.service';
 
 interface DialogData {
   title: string;
   action: string;
   classType: IClassType | undefined;
-  httpClient: HttpClient;
 }
 
 @Component({
@@ -45,7 +45,6 @@ interface DialogData {
     MatDialogContent,
     MatButtonModule,
     ReactiveFormsModule,
-    HttpClientModule,
     NgClass,
   ],
   templateUrl: './class-type-dialog.component.html',
@@ -55,7 +54,7 @@ export class ClassTypeDialogComponent {
   readonly action;
   readonly title;
   classTypeId: string | undefined;
-  private http: HttpClient;
+
   form = new FormGroup({
     name: new FormControl<string>('', [Validators.required, trimValidator()]),
     description: new FormControl<string>(''),
@@ -63,9 +62,10 @@ export class ClassTypeDialogComponent {
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: DialogData,
-    public dialogRef: MatDialogRef<ClassTypeDialogComponent>
+    public dialogRef: MatDialogRef<ClassTypeDialogComponent>,
+    private snackbarService: SnackbarService,
+    private http: HttpClient
   ) {
-    this.http = data.httpClient;
     this.action = data.action;
     this.title = data.title;
 
@@ -89,8 +89,8 @@ export class ClassTypeDialogComponent {
         next: () => {
           this.closeDialog('created');
         },
-        error: (error) => {
-          console.error('Error en la petición:', error);
+        error: () => {
+          this.snackbarService.showError('Error al crear el tipo de clase');
         },
       });
     } else if (this.action === 'put') {
@@ -100,8 +100,10 @@ export class ClassTypeDialogComponent {
           next: () => {
             this.closeDialog('updated');
           },
-          error: (error) => {
-            console.error('Error en la petición:', error);
+          error: () => {
+            this.snackbarService.showError(
+              'Error al modificar el tipo de clase'
+            );
           },
         });
     }
