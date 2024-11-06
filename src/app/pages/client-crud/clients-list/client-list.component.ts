@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { NgFor, NgIf } from '@angular/common';
 import { MatDialog } from '@angular/material/dialog';
@@ -12,26 +13,32 @@ import { UserDialogComponent } from '../../../user-dialog/user-dialog.component'
 @Component({
   selector: 'app-clients-list',
   standalone: true,
-  imports: [NgFor, NgIf, MatIconModule],
+  imports: [FormsModule, MatIconModule, NgFor, NgIf],
   templateUrl: './client-list.component.html',
-  styleUrl: './client-list.component.css',
+  styleUrls: [
+    '../../../../assets/styles/filter-container.css',
+    './client-list.component.css',
+  ],
 })
 export class ClientListComponent {
   clients: IUser[] | null = null;
+  filteredClients: IUser[] | null = null;
+  nameFilter: string = '';
 
   constructor(private http: HttpClient, private dialog: MatDialog) {
     this.getClients();
   }
 
   getClients() {
-    try {
-      this.http.get<any>(environment.clientsUrl).subscribe((res) => {
+    this.http.get<any>(environment.clientsUrl).subscribe({
+      next: (res) => {
         this.clients = res.data;
-      });
-    } catch (error: any) {
-      this.clients = null;
-      console.log(error);
-    }
+        this.filteredClients = this.clients ? [...this.clients] : [];
+      },
+      error: () => {
+        this.clients = null;
+      },
+    });
   }
 
   addUser(): void {
@@ -73,5 +80,32 @@ export class ClientListComponent {
         this.getClients();
       }
     });
+  }
+
+  applyFilter() {
+    this.filteredClients = this.clients ? [...this.clients] : [];
+
+    if (this.nameFilter) {
+      this.filteredClients = this.filteredClients.filter((client) => {
+        if (
+          `${client.lastName} ${client.firstName}`.match(
+            new RegExp(this.nameFilter, 'i')
+          )
+        )
+          return true;
+        if (
+          `${client.firstName} ${client.lastName}`.match(
+            new RegExp(this.nameFilter, 'i')
+          )
+        )
+          return true;
+        return false;
+      });
+    }
+  }
+
+  clearFilters() {
+    this.nameFilter = '';
+    this.applyFilter();
   }
 }

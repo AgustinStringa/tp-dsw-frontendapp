@@ -9,7 +9,20 @@
     </div>
   </div>
 
-  @if (clients !== null && clients.length > 0) {
+  <div class="filter-container">
+    <label for="name-filter">Filtrar por nombre y apellido:</label>
+    <input
+      type="text"
+      name="name-filter"
+      id="name-filter"
+      [(ngModel)]="nameFilter"
+      (ngModelChange)="applyFilter()"
+    />
+
+    <button class="btn" (click)="clearFilters()">Limpiar filtros</button>
+  </div>
+
+  @if (filteredClients !== null && filteredClients.length > 0) {
   <table>
     <thead>
       <tr>
@@ -22,7 +35,7 @@
     </thead>
 
     <tbody>
-      @for (c of clients; track c) {
+      @for (c of filteredClients; track c) {
       <tr>
         <td>{{ c.lastName }}</td>
         <td>{{ c.firstName }}</td>
@@ -48,7 +61,7 @@
       }
     </tbody>
   </table>
-  } @else if (clients !== null && clients.length == 0){
+  } @else if (filteredClients !== null && filteredClients.length == 0){
   <div class="alert alert-warning fs-6" role="alert">
     No hay clientes cargados. Crea uno para comenzar.
   </div>

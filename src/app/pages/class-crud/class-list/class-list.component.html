@@ -50,9 +50,7 @@
         {{ trainer.firstName + " " + trainer.lastName }}
       </option>
     </select>
-    <button class="btn btn-primary" (click)="clearFilters()">
-      Limpiar filtros</button
-    ><!-- TODO debe resaltar menos, el principal es el botón nueva clase-->
+    <button class="btn" (click)="clearFilters()">Limpiar filtros</button>
   </div>
 
   @if (filteredClasses !== null && filteredClasses.length > 0) {
