@@ -1,9 +1,10 @@
-nav, a {
+nav,
+a {
   display: inline-block;
   color: forestgreen;
   font-size: 16px;
   margin-right: 20px;
-  transition: color 0.3s ease,;
+  transition: color 0.3s ease, ;
 }
 
 nav a:hover {
@@ -13,7 +14,7 @@ nav a:hover {
 /* Centrar el menú */
 nav {
   display: flex;
-  padding: 10px; 
+  padding: 10px;
   background-color: rgba(181, 255, 160, 0.689);
   margin-bottom: 10px;
 }

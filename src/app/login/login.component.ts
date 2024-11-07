@@ -2,9 +2,9 @@ import { NgClass } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AuthService } from '../services/auth.service.js';
 import { HttpErrorResponse } from '@angular/common/http/index.js';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { AuthService } from '../services/auth.service.js';
 import { SnackbarService } from '../services/snackbar.service.js';
 
 @Component({
@@ -118,5 +118,13 @@ export class LoginComponent {
           },
         });
     }
+  }
+
+  scrollTop() {
+    window.scroll({
+      top: 0,
+      left: 0,
+      behavior: 'smooth',
+    });
   }
 }
