@@ -102,13 +102,13 @@ export class ClassListComponent {
 
   getDayName(dayNumber: number) {
     const days = [
+      'Domingo',
       'Lunes',
       'Martes',
       'Miércoles',
       'Jueves',
       'Viernes',
       'Sábado',
-      'Domingo',
     ];
     return days[dayNumber];
   }
