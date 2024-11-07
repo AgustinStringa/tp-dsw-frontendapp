@@ -134,12 +134,18 @@
           @if (this.isDropdownOpen) {
           <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
             <li>
-              <a class="dropdown-item" routerLink="/showClientRoutine"
+              <a
+                class="dropdown-item"
+                routerLink="/showClientRoutine"
+                (click)="toggleDropdown()"
                 >Ver mi rutina</a
               >
             </li>
             <li>
-              <a class="dropdown-item" routerLink="/record-exercise-execution"
+              <a
+                class="dropdown-item"
+                routerLink="/record-exercise-execution"
+                (click)="toggleDropdown()"
                 >Registrar rutina del día</a
               >
             </li>

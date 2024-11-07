@@ -15,7 +15,7 @@ import { FormsModule } from '@angular/forms';
 @Component({
   selector: 'app-class-list',
   standalone: true,
-  imports: [NgIf, NgFor, MatDialogModule, MatIconModule, FormsModule],
+  imports: [NgFor, MatDialogModule, MatIconModule, FormsModule],
   templateUrl: './class-list.component.html',
   styleUrls: [
     '../../../../assets/styles/filter-container.css',

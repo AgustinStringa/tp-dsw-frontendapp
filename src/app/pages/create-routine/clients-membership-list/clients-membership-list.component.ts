@@ -7,6 +7,8 @@ import {
   signal,
   WritableSignal,
 } from '@angular/core';
+import { es } from 'date-fns/locale';
+import { format } from 'date-fns';
 import { NgClass } from '@angular/common';
 import { SimpleChanges } from '@angular/core';
 import Client from '../../../core/classes/client.js';
@@ -77,5 +79,9 @@ export class ClientsMembershipListComponent implements OnChanges {
       this.clientChange.emit(null);
       return;
     }
+  }
+
+  formatDate(dateFrom: Date): string {
+    return format(dateFrom, 'dd/MM/yyyy', { locale: es });
   }
 }

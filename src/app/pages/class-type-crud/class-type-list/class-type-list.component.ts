@@ -1,7 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { MatDialog } from '@angular/material/dialog';
-import { NgFor, NgIf } from '@angular/common';
 import { ClassTypeDialogComponent } from '../class-type-dialog/class-type-dialog.component';
 import { DeleteDialogComponent } from '../../../delete-dialog/delete-dialog.component';
 import { environment } from '../../../../environments/environment';
@@ -12,7 +11,7 @@ import { MatIconModule } from '@angular/material/icon';
 @Component({
   selector: 'app-class-type-list',
   standalone: true,
-  imports: [NgIf, NgFor, MatIconModule],
+  imports: [MatIconModule],
   templateUrl: './class-type-list.component.html',
   styleUrl: './class-type-list.component.css',
 })
@@ -36,14 +35,14 @@ export class ClassTypeListComponent {
 
   addClassType(): void {
     this.openDialog(ClassTypeDialogComponent, {
-      title: 'Nuevo tipo de clase',
+      title: 'Nuevo Tipo de Clase',
       action: 'post',
     });
   }
 
   updateClassType(classType: IClassType) {
     this.openDialog(ClassTypeDialogComponent, {
-      title: 'Modificar tipo de clase',
+      title: 'Modificar Tipo de Clase',
       action: 'put',
       classType: classType,
     });
@@ -53,7 +52,7 @@ export class ClassTypeListComponent {
     this.openDialog(DeleteDialogComponent, {
       id: id,
       url: environment.classTypesUrl,
-      title: 'Eliminar tipo de clase',
+      title: 'Eliminar Tipo de Clase',
     });
   }
 

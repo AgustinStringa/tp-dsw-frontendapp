@@ -1,17 +1,14 @@
-import { Component, Inject, inject } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import {
-  FormsModule,
   Validators,
   FormControl,
   FormGroup,
   ReactiveFormsModule,
 } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
-import { MatSelectModule } from '@angular/material/select';
 import {
   MAT_DIALOG_DATA,
   MatDialogActions,
-  MatDialogClose,
   MatDialogContent,
   MatDialogRef,
   MatDialogTitle,
@@ -30,13 +27,10 @@ import { SnackbarService } from '../../../services/snackbar.service.js';
   selector: 'app-exercise-dialog',
   standalone: true,
   imports: [
-    MatSelectModule,
     MatFormFieldModule,
     MatInputModule,
     MatDialogTitle,
     MatDialogActions,
-    MatDialogClose,
-    FormsModule,
     MatDialogContent,
     MatButtonModule,
     ReactiveFormsModule,
@@ -97,12 +91,8 @@ export class ExerciseDialogComponent {
           })
         )
         .subscribe((res: any) => {
-          this.snackbarService
-            .showSuccess('Ejercicio creado correctamente')
-            .afterDismissed()
-            .subscribe(() => {
-              this.dialogRef.close('created');
-            });
+          this.snackbarService.showSuccess('Ejercicio creado correctamente');
+          this.dialogRef.close('created');
         });
     } else if (this.data.action == 'put') {
       this.http
@@ -120,13 +110,11 @@ export class ExerciseDialogComponent {
             );
           })
         )
-        .subscribe((res: any) => {
-          this.snackbarService
-            .showSuccess('Ejercicio actualizado correctamente')
-            .afterDismissed()
-            .subscribe(() => {
-              this.dialogRef.close('updated');
-            });
+        .subscribe(() => {
+          this.snackbarService.showSuccess(
+            'Ejercicio actualizado correctamente'
+          );
+          this.dialogRef.close('updated');
         });
     }
   }

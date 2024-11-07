@@ -36,7 +36,6 @@ interface DialogData {
   standalone: true,
   imports: [
     ReactiveFormsModule,
-    NgForOf,
     MatDialogModule,
     MatFormFieldModule,
     MatDialogContent,
@@ -119,7 +118,7 @@ export class MembershipDialogComponent {
       next: (res) => {
         this.clients = res.data;
       },
-      error: (error) => {
+      error: () => {
         this.snackbarService.showError('Error al obtener los clientes');
       },
     });

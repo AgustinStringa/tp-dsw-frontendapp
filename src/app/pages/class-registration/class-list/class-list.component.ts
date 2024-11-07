@@ -1,4 +1,4 @@
-import { NgFor, NgIf } from '@angular/common';
+import { NgIf } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Component, inject } from '@angular/core';
 import { environment } from '../../../../environments/environment.js';
@@ -14,7 +14,7 @@ import { SnackbarService } from '../../../services/snackbar.service.js';
 @Component({
   selector: 'app-class-list',
   standalone: true,
-  imports: [NgFor, NgIf, MatExpansionModule],
+  imports: [MatExpansionModule, NgIf],
   templateUrl: './class-list.component.html',
   styleUrl: './class-list.component.css',
 })

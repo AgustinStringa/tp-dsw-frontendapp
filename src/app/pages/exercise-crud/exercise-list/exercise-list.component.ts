@@ -60,7 +60,7 @@ export class ExerciseListComponent {
     this.openDialog(ExerciseDialogComponent, {
       data: {
         exercise: e,
-        title: 'Editar ejercicio',
+        title: 'Modificar Ejercicio',
         action: 'put',
       },
     });
@@ -69,7 +69,7 @@ export class ExerciseListComponent {
   addExercise(): void {
     this.openDialog(ExerciseDialogComponent, {
       data: {
-        title: 'Crear ejercicio',
+        title: 'Nuevo Ejercicio',
         action: 'post',
       },
     });
@@ -79,7 +79,7 @@ export class ExerciseListComponent {
     this.openDialog(DeleteDialogComponent, {
       data: {
         id: id,
-        title: 'Eliminar ejercicio',
+        title: 'Eliminar Ejercicio',
         url: environment.exercisesUrl,
       },
     });

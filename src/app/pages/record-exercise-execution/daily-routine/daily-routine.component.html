@@ -18,15 +18,9 @@
         </tr>
       </table>
     </div>
-
-    } @else {
-    <p class="alert">
-      No tiene ninguna rutina registrada para el día de la fecha
-    </p>
     }
 
     <div>
-      <!-- Tabla de ejercicios -->
       @if (this.exercisesRoutine && this.exercisesRoutine.length > 0) {
       <table class="exercises-table">
         <thead>
@@ -96,7 +90,6 @@
       </p>
       }
     </div>
-
     <!-- Modal para cargar peso -->
     @if (this.showModal && selectedExerciseRoutine) {
     <app-dialog-add-weight

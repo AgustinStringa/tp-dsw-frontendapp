@@ -9,8 +9,8 @@
     <thead class="bg-light">
       <tr>
         <th>Nombre</th>
-        <th>Dni</th>
-        <th>Fecha de la última membresía</th>
+        <th>DNI</th>
+        <th>Fecha de la Última Membresía</th>
         <th>Tipo de Membresía</th>
       </tr>
     </thead>
@@ -37,7 +37,7 @@
         <td>
           <p class="fw-normal mb-1">{{ c.dni || "there is no dni yet" }}</p>
         </td>
-        <td>{{ c.currentMembership.dateFrom }}</td>
+        <td>{{ formatDate(c.currentMembership.dateFrom) }}</td>
         <td>
           <span class="badge badge-success rounded-pill d-inline">{{
             c.currentMembership.type.name
@@ -49,7 +49,7 @@
     </tbody>
   </table>
   } @else {
-  <div class="alert alert-danger" role="alert">
+  <div class="alert alert-warning" role="alert">
     No hay clientes con membresía activa para asignar una rutina
   </div>
   }

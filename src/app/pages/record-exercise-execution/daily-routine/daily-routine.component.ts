@@ -106,9 +106,7 @@ export class DailyRoutineComponent {
             );
           }
         },
-        error: () => {
-          this.snackbarService.showError('Error al cargar la rutina');
-        },
+        error: () => {},
       });
   }
 
