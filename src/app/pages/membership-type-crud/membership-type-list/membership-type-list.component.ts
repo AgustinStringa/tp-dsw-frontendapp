@@ -12,7 +12,7 @@ import { MembershipTypeDialogComponent } from '../membership-type-dialog/members
 @Component({
   selector: 'app-membership-types-list',
   standalone: true,
-  imports: [NgFor, NgIf, MatIconModule],
+  imports: [MatIconModule],
   templateUrl: './membership-type-list.component.html',
   styleUrl: './membership-type-list.component.css',
 })

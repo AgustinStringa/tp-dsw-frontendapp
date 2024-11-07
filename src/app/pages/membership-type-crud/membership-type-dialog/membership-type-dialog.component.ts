@@ -19,6 +19,7 @@ import { MatInputModule } from '@angular/material/input';
 import { IMembershipType } from '../../../core/interfaces/membership-type.interface.js';
 import { environment } from '../../../../environments/environment.js';
 import { SnackbarService } from '../../../services/snackbar.service.js';
+import { trimValidator } from '../../../core/Functions/trim-validator.js';
 
 interface DialogData {
   title: string;
@@ -48,7 +49,11 @@ export class MembershipTypeDialogComponent {
 
   form = new FormGroup({
     name: new FormControl('', [Validators.required]),
-    description: new FormControl('', [Validators.required]),
+    description: new FormControl('', [
+      Validators.required,
+      trimValidator(),
+      Validators.minLength(1),
+    ]),
     price: new FormControl('', [Validators.required, Validators.min(0)]),
   });
 
@@ -76,7 +81,7 @@ export class MembershipTypeDialogComponent {
     const form = this.form.controls;
     let data: Record<string, any> = {
       name: form.name.value,
-      description: form.description.value,
+      description: form.description.value?.trim(),
       price: Number(form.price.value),
     };
 
