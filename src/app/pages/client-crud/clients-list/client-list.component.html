@@ -9,8 +9,7 @@
     </div>
   </div>
 
-  @if (filteredClients !== null && clientsPage !== null && clientsPage.length >
-  0) {
+  @if (clients && clients.length > 0) {
   <div class="filter-container">
     <label for="name-filter">Filtrar por nombre y apellido:</label>
     <input
@@ -20,10 +19,11 @@
       [(ngModel)]="nameFilter"
       (ngModelChange)="applyFilter()"
     />
-
     <button class="btn" (click)="clearFilters()">Limpiar filtros</button>
   </div>
 
+  } @if (filteredClients && clientsPage && clientsPage.length
+  > 0) {
   <table>
     <thead>
       <tr>
@@ -72,13 +72,19 @@
   >
   </mat-paginator>
 
-  } @else if (filteredClients !== null && filteredClients.length == 0){
+  } @else if (clients === null){
+  <div class="alert alert-danger fs-6" role="alert">
+    No se pudieron cargar los clientes.
+  </div>
+
+  } @else if (clients.length === 0){
   <div class="alert alert-warning fs-6" role="alert">
     No hay clientes cargados. Crea uno para comenzar.
   </div>
+
   } @else {
-  <div class="alert alert-danger fs-6" role="alert">
-    No se pudieron cargar los clientes.
+  <div class="alert alert-warning fs-6" role="alert">
+    Ningún cliente cumple con los criterios del filtro.
   </div>
   }
 </div>
