@@ -17,7 +17,10 @@ import { FormsModule } from '@angular/forms';
   standalone: true,
   imports: [NgIf, NgFor, MatDialogModule, MatIconModule, FormsModule],
   templateUrl: './class-list.component.html',
-  styleUrl: './class-list.component.css',
+  styleUrls: [
+    '../../../../assets/styles/filter-container.css',
+    './class-list.component.css',
+  ],
 })
 export class ClassListComponent {
   readonly dialog = inject(MatDialog);
