@@ -12,7 +12,7 @@ import {
   format,
   parse,
 } from 'date-fns';
-import { Component, inject, AfterViewInit } from '@angular/core';
+import { Component, inject, AfterViewChecked } from '@angular/core';
 import {
   FormsModule,
   FormControl,
@@ -71,7 +71,7 @@ export interface DialogData {
   templateUrl: './create-routine-page.component.html',
   styleUrl: './create-routine-page.component.css',
 })
-export class CreateRoutinePageComponent implements AfterViewInit {
+export class CreateRoutinePageComponent implements AfterViewChecked {
   routineForm = new FormGroup({
     dateFrom: new FormControl('', Validators.required),
     dateTo: new FormControl<Date | null>(null, Validators.required),
@@ -89,6 +89,7 @@ export class CreateRoutinePageComponent implements AfterViewInit {
   today: Date = new Date();
   trainerId: string | undefined = '';
   isClientSelected: boolean = false;
+  firstMonday = lightFormat(addDays(startOfWeek(new Date()), 1), 'yyyy-MM-dd');
 
   readonly dialog = inject(MatDialog);
 
@@ -103,8 +104,10 @@ export class CreateRoutinePageComponent implements AfterViewInit {
     this.trainerId = this.authService.getUser()?.id;
   }
 
-  public ngAfterViewInit(): void {
-    this.startUpDatePicker();
+  ngAfterViewChecked(): void {
+    if (this.isClientSelected) {
+      this.startUpDatePicker();
+    }
   }
 
   getClientsWithMembership() {
@@ -177,15 +180,12 @@ export class CreateRoutinePageComponent implements AfterViewInit {
     } else return '';
   }
 
-  startUpDatePicker() {
+  async startUpDatePicker() {
     const inputDateFrom = document.querySelector(
       '#inputDateFrom'
     ) as HTMLInputElement;
-    const firstMonday = lightFormat(
-      addDays(startOfWeek(new Date()), 1),
-      'yyyy-MM-dd'
-    );
-    inputDateFrom.min = firstMonday;
+    if (inputDateFrom == null) return;
+    inputDateFrom.min = this.firstMonday;
     inputDateFrom.step = '7';
     this.setDateTo();
   }
@@ -265,6 +265,9 @@ export class CreateRoutinePageComponent implements AfterViewInit {
       client: newSelectedClient,
     });
     this.isClientSelected = newSelectedClient !== null;
+    if (this.isClientSelected) {
+      this.startUpDatePicker();
+    }
   }
 
   onSubmit() {

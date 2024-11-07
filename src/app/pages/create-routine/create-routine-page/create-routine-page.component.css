@@ -108,3 +108,13 @@
   width: 90%;
   margin: 0 auto;
 }
+
+.save-routine {
+  display: flex;
+  justify-content: center;
+  margin-top: 2rem;
+}
+
+.title-div {
+  margin-left: 3rem
+}
