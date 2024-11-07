@@ -1,84 +1,109 @@
-<div class ="mx-auto w-85 py-3">
-<h2 class="page-title">Registrar entrenamiento:</h2>
-<div class="daily-routine-container">
-  <!-- Información de la rutina -->
-  @if (this.routine) {
-  <div class="routine-info">
-    <table class="routine-table">
-      <tr>
-        <td><strong>Fecha Desde:</strong> {{ startDate }}</td>
-        <td><strong>Fecha Hasta:</strong> {{ endDate }}</td>
-        <td><strong>Semana Actual:</strong> {{ currentWeek }}</td>
-        <td><strong>Día Actual:</strong> {{ currentDayName }} {{currentDayNumber}} de {{currentNameOfTheMonth}} - {{currentDate.getFullYear()}}</td>
-      </tr>
-    </table>
-  </div>
-  }
-@else {
-<div class="routine-info">
-  <table class="routine-table">
-    <tr>
-      <td><strong>Día Actual:</strong> {{ currentDayName }} {{currentDayNumber}} de {{currentNameOfTheMonth}} -  {{currentDate.getFullYear()}} </td>
-    </tr>
-  </table>
-  <p class="alert"> No tiene ninguna rutina registrada para el día de la fecha</p>
-</div>
+<div class="mx-auto w-85 py-3">
+  <h2 class="page-title">Registrar entrenamiento</h2>
+  <div class="daily-routine-container">
+    <!-- Información de la rutina -->
+    @if (this.routine) {
+    <div class="routine-info">
+      <table class="routine-table">
+        <tr>
+          <td><strong>Fecha Desde:</strong> {{ startDate }}</td>
+          <td><strong>Fecha Hasta:</strong> {{ endDate }}</td>
+          <td><strong>Semana Actual:</strong> {{ currentWeek }}</td>
+          <td>
+            <!--TODO cambiar encabezado por uno más apropiado al negocio-->
+            <strong>Día Actual:</strong> {{ currentDayName }}
+            {{ currentDayNumber }} de {{ currentNameOfTheMonth }} -
+            {{ currentDate.getFullYear() }}
+          </td>
+        </tr>
+      </table>
+    </div>
 
-}
-<div>
-  <!-- Tabla de ejercicios -->
-  @if (this.exercisesRoutine && this.exercisesRoutine.length > 0) {
-  <table class="exercises-table">
-    <thead>
-      <tr>
-        <th>Nombre</th>
-        <th>Series</th>
-        <th>Repeticiones</th>
-        <th>Peso</th>
-        <th>Acción</th>
-      </tr>
-    </thead>
-    <tbody>
-      @for (exerciseRoutine of exercisesRoutine; track exerciseRoutine.exercise?.id) {
-        @if (exerciseRoutine.day && exerciseRoutine.day === dayToday && exerciseRoutine.week && exerciseRoutine.week.toString() === currentWeek)  {
-          
-      <tr>
-        <td>{{ exerciseRoutine.exercise?.name || 'No Disponible' }}</td>
-        <td>{{ exerciseRoutine.series || 'N/A' }}</td>
-        <td>{{ exerciseRoutine.repetitions || 'N/A' }}</td>
-        <td>{{ exerciseRoutine.weight || 'No registrado' }} kg</td>
-        @if (!exerciseRoutine.weight) {
-        <td>
-          <button (click)="openModal(exerciseRoutine)">Registrar Peso</button>
-          <a target="_blank" href={{exerciseRoutine.exercise?.urlVideo}}> Ver Ejercicio</a>
-        </td>
-        } @else {
-        <td>
-          <button (click)="openModal(exerciseRoutine)">Editar Peso</button>
-          <button class="primary-button button button-success">
-          
-            <a target="_blank" class="text-white" href={{exerciseRoutine.exercise?.urlVideo}}> Ver Ejercicio</a>
-          </button>
-        </td>
-        }
-        
-      </tr>
-      }
+    } @else {
+    <p class="alert">
+      No tiene ninguna rutina registrada para el día de la fecha
+    </p>
     }
-    
-  </tbody>
-    
-  </table>
-  }
-  @else {
-    <p class="alert"> No tiene ninguna rutina registrada para el día de la fecha</p>
-  }
-</div>
-  <!-- Modal para cargar peso -->
-  @if (this.showModal && selectedExerciseRoutine) {
-  <app-dialog-add-weight [exerciseRoutine]="selectedExerciseRoutine" (closeModal)="closeModal()"
-    (saveWeight)="saveWeight($event)"></app-dialog-add-weight>
-  }
-</div>
 
+    <div>
+      <!-- Tabla de ejercicios -->
+      @if (this.exercisesRoutine && this.exercisesRoutine.length > 0) {
+      <table class="exercises-table">
+        <thead>
+          <tr>
+            <th>Ejercicio</th>
+            <th>Series</th>
+            <th>Repeticiones</th>
+            <th>Estado</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (exerciseRoutine of exercisesRoutine; track
+          exerciseRoutine.exercise?.id) { @if (exerciseRoutine.day &&
+          exerciseRoutine.day === dayToday && exerciseRoutine.week &&
+          exerciseRoutine.week === currentWeek) {
+
+          <tr>
+            <td>{{ exerciseRoutine.exercise?.name || "No Disponible" }}</td>
+            <td>{{ exerciseRoutine.series || "N/A" }}</td>
+            <td>{{ exerciseRoutine.repetitions || "N/A" }}</td>
+            <td>{{ getExerciseStatus(exerciseRoutine) }}</td>
+
+            <td
+              style="
+                display: flex;
+                justify-content: center;
+                gap: 1rem;
+                flex-wrap: wrap;
+              "
+            >
+              @if (exerciseRoutine.weight === null) {
+              <button
+                class="btn btn-success"
+                (click)="openModal(exerciseRoutine)"
+              >
+                Marcar realizado
+              </button>
+
+              } @else {
+              <button
+                class="btn btn-secondary"
+                (click)="openModal(exerciseRoutine)"
+              >
+                Editar estado
+              </button>
+              }
+
+              <button class="btn btn-primary">
+                <a
+                  target="_blank"
+                  class="text-white"
+                  href="{{ exerciseRoutine.exercise?.urlVideo }}"
+                >
+                  Ver Video</a
+                >
+              </button>
+            </td>
+          </tr>
+          } }
+        </tbody>
+      </table>
+
+      } @else {
+      <p class="alert">
+        No tiene ninguna rutina registrada para el día de la fecha
+      </p>
+      }
+    </div>
+
+    <!-- Modal para cargar peso -->
+    @if (this.showModal && selectedExerciseRoutine) {
+    <app-dialog-add-weight
+      [exerciseRoutine]="selectedExerciseRoutine"
+      (closeModal)="closeModal()"
+      (saveWeight)="saveWeight($event)"
+    ></app-dialog-add-weight>
+    }
+  </div>
 </div>

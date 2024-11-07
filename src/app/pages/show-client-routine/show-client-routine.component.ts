@@ -31,13 +31,13 @@ export class ShowClientRoutineComponent {
   totalWeeks: number[] = [];
 
   private daysOfWeek: string[] = [
+    'Domingo',
     'Lunes',
     'Martes',
     'Miércoles',
     'Jueves',
     'Viernes',
     'Sábado',
-    'Domingo',
   ];
 
   months: string[] = [

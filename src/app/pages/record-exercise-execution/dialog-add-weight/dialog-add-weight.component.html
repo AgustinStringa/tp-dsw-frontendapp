@@ -1,9 +1,25 @@
 <div class="modal-overlay" (click)="onClose()">
   <div class="modal-content" (click)="$event.stopPropagation()">
     <h2>Registrar Peso</h2>
+
     <label for="weight">Peso:</label>
-    <input id="weight" type="number" [(ngModel)]="selectedWeight" placeholder="Ingrese el peso" />
+    <input
+      id="weight"
+      type="number"
+      [(ngModel)]="selectedWeight"
+      placeholder="Ingrese el peso"
+      [disabled]="withoutWeight"
+    />
+
+    <label for="withoutWeight">Sin peso</label>
+    <input
+      type="checkbox"
+      id="withoutWeight"
+      [(ngModel)]="withoutWeight"
+      (click)="selectedWeight = null"
+    />
+
     <button (click)="onSave()">Guardar</button>
-    <button (click)="onClose()">Cerrar</button>
+    <button (click)="onClose()">Cancelar</button>
   </div>
 </div>

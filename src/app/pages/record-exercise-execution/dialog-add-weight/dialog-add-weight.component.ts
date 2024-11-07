@@ -1,4 +1,11 @@
-import { Component, EventEmitter, inject, Input, Output } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  inject,
+  Input,
+  Output,
+  SimpleChanges,
+} from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { IExerciseRoutine } from '../../../core/interfaces/exercise-routine.inteface.js';
 import { HttpClient } from '@angular/common/http';
@@ -20,6 +27,7 @@ export class DialogAddWeightComponent {
   @Output() closeModal = new EventEmitter<void>();
   @Output() saveWeight = new EventEmitter<number>();
 
+  withoutWeight: boolean = false;
   selectedWeight: number | null = null;
 
   constructor(
@@ -27,44 +35,47 @@ export class DialogAddWeightComponent {
     private snackbarService: SnackbarService
   ) {}
 
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['exerciseRoutine']) {
+      if (this.exerciseRoutine?.weight) {
+        if (this.exerciseRoutine.weight === 0) this.withoutWeight = true;
+        else this.selectedWeight = this.exerciseRoutine.weight;
+      }
+    }
+  }
+
   onClose(): void {
     this.closeModal.emit();
   }
 
   onSave(): void {
     if (
-      this.selectedWeight !== null &&
-      this.selectedWeight >= 0 &&
-      this.exerciseRoutine
+      this.withoutWeight === false &&
+      (this.selectedWeight === null || this.selectedWeight <= 0)
     ) {
-      if (this.exerciseRoutine.id) {
-        this.http
-          .patch(
-            `${environment.routinesUrl}/exerciseroutines/${this.exerciseRoutine.id}`,
-            {
-              weight: this.selectedWeight,
-            }
-          )
-          .subscribe({
-            next: () => {
-              this.snackbarService.showSuccess('Peso actualizado exitosamente');
-              this.saveWeight.emit(this.selectedWeight as number);
-              this.onClose();
-            },
-            error: () => {
-              this.snackbarService.showError('No se pudo actualizar el peso');
-            },
-          });
-      } else {
-        console.error('Falta el ID del ejercicio');
-      }
-    } else {
-      console.error(
-        'El peso seleccionado no es válido o falta la rutina de ejercicios'
-      );
-      this.snackbarService.showError(
-        'Ingrese un peso válido (no debe ser negativo) y asegúrese de que la rutina de ejercicios esté seleccionada.'
+      return this.snackbarService.showError(
+        'Ingrese un peso válido (debe ser mayor a cero) o marque la opción "Sin peso".'
       );
     }
+
+    const weight = this.withoutWeight ? 0 : this.selectedWeight;
+
+    this.http
+      .patch(
+        `${environment.routinesUrl}/exerciseroutines/${this.exerciseRoutine?.id}`,
+        {
+          weight,
+        }
+      )
+      .subscribe({
+        next: () => {
+          this.snackbarService.showSuccess('Peso registrado exitosamente');
+          this.saveWeight.emit(weight as number);
+          this.onClose();
+        },
+        error: () => {
+          this.snackbarService.showError('No se pudo registrar el peso');
+        },
+      });
   }
 }
