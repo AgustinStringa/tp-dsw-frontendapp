@@ -41,6 +41,7 @@ export class ClientsMembershipListComponent implements OnChanges {
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['clientList']) {
+      this.clientForRoutineList = [];
       this.clientList.forEach((c) => {
         const newClient = new ClientForRoutine(
           c.id,

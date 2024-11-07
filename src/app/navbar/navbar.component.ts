@@ -26,7 +26,8 @@ export class NavbarComponent {
   isDropdownOpen = false;
 
   constructor(private router: Router, public authService: AuthService) {
-    if (this.userSignal === null) {
+    this.authService.getUser();
+    if (this.userSignal() === null) {
       this.router.navigate(['/']);
     }
   }

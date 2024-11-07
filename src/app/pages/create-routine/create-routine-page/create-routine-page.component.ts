@@ -109,6 +109,7 @@ export class CreateRoutinePageComponent implements AfterViewInit {
       this.http
         .get<any>(environment.membershipsActive)
         .subscribe((res: any) => {
+          this.clientsWithmembership = [];
           Array.from(res.data).forEach((m: any) => {
             this.clientsWithmembership = [
               ...this.clientsWithmembership,
@@ -282,10 +283,10 @@ export class CreateRoutinePageComponent implements AfterViewInit {
         day: ex.day,
         series: ex.series,
         repetitions: ex.repetitions,
-        weight: 0,
         exercise: ex.exercise?.id,
       })),
     };
+
     try {
       this.http
         .post<any>(environment.routinesUrl, newRoutine)
@@ -313,7 +314,12 @@ export class CreateRoutinePageComponent implements AfterViewInit {
             .showSuccess('Rutina creada correctamente')
             .afterDismissed()
             .subscribe(() => {
-              this.reloadCurrentRoute();
+              this.resetForm();
+              window.scroll({
+                top: 0,
+                left: 0,
+                behavior: 'smooth',
+              });
             });
         });
     } catch (error: any) {}
@@ -339,8 +345,18 @@ export class CreateRoutinePageComponent implements AfterViewInit {
     this.setDateTo();
   }
 
-  reloadCurrentRoute() {
-    //ES UNA SOLUCION BASTANTE CUTRE, PERO CUMPLE
-    window.location.reload();
+  resetForm(): void {
+    try {
+      this.routineForm.patchValue({
+        client: null,
+        dateFrom: '',
+        dateTo: null,
+        exercisesRoutine: [],
+      });
+      this.weeks = [];
+      this.getClientsWithMembership();
+    } catch (error) {
+      console.log(error);
+    }
   }
 }

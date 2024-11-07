@@ -41,6 +41,7 @@ import { IExercise } from '../../../core/interfaces/exercise.interface.js';
 export class DialogNewExerciseRoutineComponent {
   readonly dialogRef = inject(MatDialogRef<DialogNewExerciseRoutineComponent>);
   readonly data = inject<DialogData>(MAT_DIALOG_DATA);
+
   exerciseRoutineForm = new FormGroup({
     exercise: new FormControl<IExercise | null>(null, Validators.required),
     series: new FormControl<number>(1, Validators.required),
@@ -50,11 +51,12 @@ export class DialogNewExerciseRoutineComponent {
   onNoClick(): void {
     this.dialogRef.close();
   }
+
   returnValues() {
     return {
       exerciseSelected: this.exerciseRoutineForm.value.exercise,
       series: this.exerciseRoutineForm.value.series,
-      reps: this.exerciseRoutineForm.value.reps,
+      repetitions: this.exerciseRoutineForm.value.reps,
     };
   }
 }
