@@ -1,7 +1,17 @@
 img {
-    margin-bottom: 2rem;
+    margin: 1rem 1rem 1rem 1.2rem;
 }
 
 p {
     font-size: 1.2rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.text-card {
+    display: flex;
+        justify-content: center;
+        align-items: center;
 }

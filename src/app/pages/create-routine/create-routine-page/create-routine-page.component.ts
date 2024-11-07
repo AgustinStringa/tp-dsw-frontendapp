@@ -34,6 +34,7 @@ import { ExerciseRoutineCardComponent } from '../exercise-routine-card/exercise-
 import { IExercise } from '../../../core/interfaces/exercise.interface.js';
 import { IExerciseRoutine } from '../../../core/interfaces/exercise-routine.inteface.js';
 import { SnackbarService } from '../../../services/snackbar.service.js';
+import { AuthService } from '../../../services/auth.service.js';
 
 interface Day {
   exercisesRoutine?: IExerciseRoutine[];
@@ -86,16 +87,20 @@ export class CreateRoutinePageComponent implements AfterViewInit {
   clientsWithmembership: Client[] = [];
   exercises: Object[] = [];
   today: Date = new Date();
+  trainerId: string | undefined = '';
+  isClientSelected: boolean = false;
 
   readonly dialog = inject(MatDialog);
 
   constructor(
     private http: HttpClient,
     private router: Router,
-    private snackbarService: SnackbarService
+    private snackbarService: SnackbarService,
+    private authService: AuthService
   ) {
     this.getClientsWithMembership();
     this.getExercises();
+    this.trainerId = this.authService.getUser()?.id;
   }
 
   public ngAfterViewInit(): void {
@@ -259,6 +264,7 @@ export class CreateRoutinePageComponent implements AfterViewInit {
     this.routineForm.patchValue({
       client: newSelectedClient,
     });
+    this.isClientSelected = newSelectedClient !== null;
   }
 
   onSubmit() {
@@ -271,7 +277,7 @@ export class CreateRoutinePageComponent implements AfterViewInit {
     //post
     //mensaje de exito XOR error
     const newRoutine = {
-      trainer: '66e9aa2e294b5091cfb08eb0',
+      trainer: this.trainerId,
       client: this.routineForm.value.client?.id,
       start: parseISO(this.routineForm.value.dateFrom || ''),
       end: this.routineForm.value.dateTo,
