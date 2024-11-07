@@ -20,13 +20,14 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { NgClass } from '@angular/common';
-import { MatIconModule } from '@angular/material/icon';
 import { CdkAccordionModule } from '@angular/cdk/accordion';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { MatDialog } from '@angular/material/dialog';
+import { MatIconModule } from '@angular/material/icon';
+import { NgClass } from '@angular/common';
 import { Router } from '@angular/router';
 import Client from '../../../core/classes/client.js';
+import { AuthService } from '../../../services/auth.service.js';
 import { ClientsMembershipListComponent } from '../clients-membership-list/clients-membership-list.component.js';
 import { DialogNewExerciseRoutineComponent } from '../dialog-new-exercise-routine/dialog-new-exercise-routine.component.js';
 import { environment } from '../../../../environments/environment.js';
@@ -92,7 +93,8 @@ export class CreateRoutinePageComponent implements AfterViewInit {
   constructor(
     private http: HttpClient,
     private router: Router,
-    private snackbarService: SnackbarService
+    private snackbarService: SnackbarService,
+    private authService: AuthService
   ) {
     this.getClientsWithMembership();
     this.getExercises();
@@ -271,7 +273,7 @@ export class CreateRoutinePageComponent implements AfterViewInit {
     //post
     //mensaje de exito XOR error
     const newRoutine = {
-      trainer: '66e9aa2e294b5091cfb08eb0',
+      trainer: this.authService.getUser()?.id,
       client: this.routineForm.value.client?.id,
       start: parseISO(this.routineForm.value.dateFrom || ''),
       end: this.routineForm.value.dateTo,

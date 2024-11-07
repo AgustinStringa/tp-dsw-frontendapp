@@ -9,6 +9,8 @@
     </div>
   </div>
 
+  @if (classes && classes.length > 0) {
+
   <div class="filter-container">
     <label for="dayFilter">Filtrar por día:</label>
     <select
@@ -50,12 +52,10 @@
         {{ trainer.firstName + " " + trainer.lastName }}
       </option>
     </select>
-    <button class="btn btn-primary" (click)="clearFilters()">
-      Limpiar filtros</button
-    ><!-- TODO debe resaltar menos, el principal es el botón nueva clase-->
+    <button class="btn" (click)="clearFilters()">Limpiar filtros</button>
   </div>
 
-  @if (filteredClasses !== null && filteredClasses.length > 0) {
+  } @if (filteredClasses && filteredClasses.length > 0) {
   <table>
     <thead>
       <tr>
@@ -104,13 +104,20 @@
       }
     </tbody>
   </table>
-  } @else if (filteredClasses !== null && filteredClasses.length == 0) {
-  <div class="alert alert-warning fs-6" role="alert">
-    No hay clases cargadas de esta categoría. Crea una para comenzar.
-  </div>
-  } @else {
+
+  } @else if (classes === null) {
   <div class="alert alert-danger fs-6" role="alert">
     No se pudieron cargar las clases.
+  </div>
+
+  } @else if (classes.length === 0){
+  <div class="alert alert-warning fs-6" role="alert">
+    No hay clases cargadas. Crea una para comenzar.
+  </div>
+
+  } @else {
+  <div class="alert alert-warning fs-6" role="alert">
+    Ninguna clase cumple con los criterios del filtro.
   </div>
   }
 </div>

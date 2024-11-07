@@ -1,38 +1,45 @@
-import { Component } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { Component, ViewChild } from '@angular/core';
+import { ComponentType } from '@angular/cdk/portal';
+import { FormsModule } from '@angular/forms';
 import { NgFor, NgIf } from '@angular/common';
 import { MatDialog } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
+import {
+  MatPaginatorIntl,
+  MatPaginatorModule,
+  PageEvent,
+} from '@angular/material/paginator';
+import { CustomPaginatorIntl } from '../../../core/classes/CustomPaginatorIntl';
 import { DeleteDialogComponent } from '../../../delete-dialog/delete-dialog.component';
-import { ComponentType } from '@angular/cdk/portal';
 import { environment } from '../../../../environments/environment';
 import { IUser } from '../../../core/interfaces/user.interface';
 import { UserDialogComponent } from '../../../user-dialog/user-dialog.component';
+import { UsersFilterComponent } from '../../../users-filter/users-filter.component';
 
 @Component({
   selector: 'app-clients-list',
   standalone: true,
-  imports: [NgFor, NgIf, MatIconModule],
+  imports: [
+    FormsModule,
+    MatIconModule,
+    MatPaginatorModule,
+    NgFor,
+    NgIf,
+    UsersFilterComponent,
+  ],
+  providers: [{ provide: MatPaginatorIntl, useClass: CustomPaginatorIntl }],
   templateUrl: './client-list.component.html',
   styleUrl: './client-list.component.css',
 })
 export class ClientListComponent {
+  @ViewChild(UsersFilterComponent) filter!: UsersFilterComponent;
+
   clients: IUser[] | null = null;
+  clientsExist: boolean = false;
+  clientsPage: IUser[] | null = null;
+  pageSize: number = 50;
 
-  constructor(private http: HttpClient, private dialog: MatDialog) {
-    this.getClients();
-  }
-
-  getClients() {
-    try {
-      this.http.get<any>(environment.clientsUrl).subscribe((res) => {
-        this.clients = res.data;
-      });
-    } catch (error: any) {
-      this.clients = null;
-      console.log(error);
-    }
-  }
+  constructor(private dialog: MatDialog) {}
 
   addUser(): void {
     this.openDialog(UserDialogComponent, {
@@ -70,8 +77,31 @@ export class ClientListComponent {
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result !== 'none') {
-        this.getClients();
+        this.filter.getUsers();
       }
     });
+  }
+
+  receiveClients(data: { users: IUser[]; usersExist: boolean } | null) {
+    if (data === null) this.clients = null;
+    else {
+      this.clients = data.users;
+      this.clientsExist = data.usersExist;
+
+      const e = new PageEvent();
+      e.length = this.clients.length;
+      e.pageIndex = 0;
+      e.pageSize = this.pageSize;
+      this.handlePageEvent(e);
+    }
+  }
+
+  handlePageEvent(e: PageEvent) {
+    if (this.clients !== null) {
+      const start = e.pageIndex * e.pageSize;
+      const end = (e.pageIndex + 1) * e.pageSize;
+
+      this.clientsPage = [...this.clients.slice(start, end)];
+    }
   }
 }
