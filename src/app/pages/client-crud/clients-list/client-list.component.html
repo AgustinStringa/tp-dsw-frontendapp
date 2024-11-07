@@ -9,21 +9,11 @@
     </div>
   </div>
 
-  @if (clients && clients.length > 0) {
-  <div class="filter-container">
-    <label for="name-filter">Filtrar por nombre y apellido:</label>
-    <input
-      type="text"
-      name="name-filter"
-      id="name-filter"
-      [(ngModel)]="nameFilter"
-      (ngModelChange)="applyFilter()"
-    />
-    <button class="btn" (click)="clearFilters()">Limpiar filtros</button>
-  </div>
+  <app-users-filter
+    (filteredUsersEvent)="receiveClients($event)"
+  ></app-users-filter>
 
-  } @if (filteredClients && clientsPage && clientsPage.length
-  > 0) {
+  @if (clients && clientsPage && clientsPage.length > 0) {
   <table>
     <thead>
       <tr>
@@ -64,7 +54,7 @@
   </table>
 
   <mat-paginator
-    [length]="filteredClients.length"
+    [length]="clients.length"
     [pageSize]="pageSize"
     [pageSizeOptions]="[20, 50, 100]"
     aria-label="Seleccionar página"
@@ -77,7 +67,7 @@
     No se pudieron cargar los clientes.
   </div>
 
-  } @else if (clients.length === 0){
+  } @else if (clientsExist === false){
   <div class="alert alert-warning fs-6" role="alert">
     No hay clientes cargados. Crea uno para comenzar.
   </div>

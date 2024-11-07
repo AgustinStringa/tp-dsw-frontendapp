@@ -1,7 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { ComponentType } from '@angular/cdk/portal';
 import { FormsModule } from '@angular/forms';
-import { HttpClient } from '@angular/common/http';
 import { NgFor, NgIf } from '@angular/common';
 import { MatDialog } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
@@ -15,47 +14,32 @@ import { DeleteDialogComponent } from '../../../delete-dialog/delete-dialog.comp
 import { environment } from '../../../../environments/environment';
 import { IUser } from '../../../core/interfaces/user.interface';
 import { UserDialogComponent } from '../../../user-dialog/user-dialog.component';
+import { UsersFilterComponent } from '../../../users-filter/users-filter.component';
 
 @Component({
   selector: 'app-clients-list',
   standalone: true,
-  imports: [FormsModule, MatIconModule, MatPaginatorModule, NgFor, NgIf],
+  imports: [
+    FormsModule,
+    MatIconModule,
+    MatPaginatorModule,
+    NgFor,
+    NgIf,
+    UsersFilterComponent,
+  ],
   providers: [{ provide: MatPaginatorIntl, useClass: CustomPaginatorIntl }],
   templateUrl: './client-list.component.html',
-  styleUrls: [
-    '../../../../assets/styles/filter-container.css',
-    './client-list.component.css',
-  ],
+  styleUrl: './client-list.component.css',
 })
 export class ClientListComponent {
-  clients: IUser[] | null = null;
-  filteredClients: IUser[] | null = null;
-  clientsPage: IUser[] | null = null;
+  @ViewChild(UsersFilterComponent) filter!: UsersFilterComponent;
 
-  nameFilter: string = '';
+  clients: IUser[] | null = null;
+  clientsExist: boolean = false;
+  clientsPage: IUser[] | null = null;
   pageSize: number = 50;
 
-  constructor(private http: HttpClient, private dialog: MatDialog) {
-    this.getClients();
-  }
-
-  getClients() {
-    this.http.get<any>(environment.clientsUrl).subscribe({
-      next: (res) => {
-        this.clients = res.data;
-        this.filteredClients = this.clients ? [...this.clients] : [];
-
-        const e = new PageEvent();
-        e.length = this.filteredClients.length;
-        e.pageIndex = 0;
-        e.pageSize = this.pageSize;
-        this.handlePageEvent(e);
-      },
-      error: () => {
-        this.clients = null;
-      },
-    });
-  }
+  constructor(private dialog: MatDialog) {}
 
   addUser(): void {
     this.openDialog(UserDialogComponent, {
@@ -93,49 +77,31 @@ export class ClientListComponent {
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result !== 'none') {
-        this.getClients();
+        this.filter.getUsers();
       }
     });
   }
 
-  applyFilter() {
-    this.filteredClients = this.clients ? [...this.clients] : [];
+  receiveClients(data: { users: IUser[]; usersExist: boolean } | null) {
+    if (data === null) this.clients = null;
+    else {
+      this.clients = data.users;
+      this.clientsExist = data.usersExist;
 
-    if (this.nameFilter) {
-      this.filteredClients = this.filteredClients.filter((client) => {
-        if (
-          `${client.lastName} ${client.firstName}`.match(
-            new RegExp(this.nameFilter, 'i')
-          )
-        )
-          return true;
-        if (
-          `${client.firstName} ${client.lastName}`.match(
-            new RegExp(this.nameFilter, 'i')
-          )
-        )
-          return true;
-        return false;
-      });
+      const e = new PageEvent();
+      e.length = this.clients.length;
+      e.pageIndex = 0;
+      e.pageSize = this.pageSize;
+      this.handlePageEvent(e);
     }
-    const e = new PageEvent();
-    e.length = this.filteredClients.length;
-    e.pageIndex = 0;
-    e.pageSize = this.pageSize;
-    this.handlePageEvent(e);
-  }
-
-  clearFilters() {
-    this.nameFilter = '';
-    this.applyFilter();
   }
 
   handlePageEvent(e: PageEvent) {
-    if (this.filteredClients !== null) {
+    if (this.clients !== null) {
       const start = e.pageIndex * e.pageSize;
       const end = (e.pageIndex + 1) * e.pageSize;
 
-      this.clientsPage = [...this.filteredClients.slice(start, end)];
+      this.clientsPage = [...this.clients.slice(start, end)];
     }
   }
 }
