@@ -20,11 +20,11 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { NgClass } from '@angular/common';
-import { MatIconModule } from '@angular/material/icon';
 import { CdkAccordionModule } from '@angular/cdk/accordion';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { MatDialog } from '@angular/material/dialog';
+import { MatIconModule } from '@angular/material/icon';
+import { NgClass } from '@angular/common';
 import { Router } from '@angular/router';
 import Client from '../../../core/classes/client.js';
 import { ClientsMembershipListComponent } from '../clients-membership-list/clients-membership-list.component.js';
@@ -101,7 +101,6 @@ export class CreateRoutinePageComponent implements AfterViewChecked {
   ) {
     this.getClientsWithMembership();
     this.getExercises();
-    this.trainerId = this.authService.getUser()?.id;
   }
 
   ngAfterViewChecked(): void {
@@ -280,7 +279,7 @@ export class CreateRoutinePageComponent implements AfterViewChecked {
     //post
     //mensaje de exito XOR error
     const newRoutine = {
-      trainer: this.trainerId,
+      trainer: this.authService.getUser()?.id,
       client: this.routineForm.value.client?.id,
       start: parseISO(this.routineForm.value.dateFrom || ''),
       end: this.routineForm.value.dateTo,
