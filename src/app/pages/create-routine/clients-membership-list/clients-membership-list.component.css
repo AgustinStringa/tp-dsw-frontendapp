@@ -22,3 +22,9 @@ thead tr th {
 table {
   border: 1px solid rgb(209, 209, 209);
 }
+
+p {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

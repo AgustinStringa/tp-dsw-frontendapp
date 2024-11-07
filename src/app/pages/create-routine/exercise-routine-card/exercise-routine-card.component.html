@@ -1,17 +1,16 @@
 <mat-card class="example-card" appearance="outlined">
-  <mat-card-header>
-    <div mat-card-avatar class="example-header-image"></div>
+  <mat-card-header class = "text-card">
     <mat-card-title>{{ exerciseRoutine?.exercise?.name }}</mat-card-title>
   </mat-card-header>
   <img
     mat-card-image
     src="https://media.glamour.mx/photos/644059493edc840ed9c5cfeb/master/pass/sentadilla_atg.jpg"
     alt="Photo of woman doing exercise"
-    width="424"
-    height="282"
+    width="200"
+    height="182"
   />
   <mat-card-content>
-    <p class="exercise-description">
+    <p class="text-card exercise-description">
       {{ exerciseRoutine?.exercise?.description }}
     </p>
     <p><span class="fw-bold">Series: </span>{{ exerciseRoutine?.series }}</p>

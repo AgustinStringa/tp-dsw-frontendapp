@@ -12,7 +12,7 @@ import {
   format,
   parse,
 } from 'date-fns';
-import { Component, inject, AfterViewInit } from '@angular/core';
+import { Component, inject, AfterViewChecked } from '@angular/core';
 import {
   FormsModule,
   FormControl,
@@ -27,7 +27,6 @@ import { MatIconModule } from '@angular/material/icon';
 import { NgClass } from '@angular/common';
 import { Router } from '@angular/router';
 import Client from '../../../core/classes/client.js';
-import { AuthService } from '../../../services/auth.service.js';
 import { ClientsMembershipListComponent } from '../clients-membership-list/clients-membership-list.component.js';
 import { DialogNewExerciseRoutineComponent } from '../dialog-new-exercise-routine/dialog-new-exercise-routine.component.js';
 import { environment } from '../../../../environments/environment.js';
@@ -35,6 +34,7 @@ import { ExerciseRoutineCardComponent } from '../exercise-routine-card/exercise-
 import { IExercise } from '../../../core/interfaces/exercise.interface.js';
 import { IExerciseRoutine } from '../../../core/interfaces/exercise-routine.inteface.js';
 import { SnackbarService } from '../../../services/snackbar.service.js';
+import { AuthService } from '../../../services/auth.service.js';
 
 interface Day {
   exercisesRoutine?: IExerciseRoutine[];
@@ -71,7 +71,7 @@ export interface DialogData {
   templateUrl: './create-routine-page.component.html',
   styleUrl: './create-routine-page.component.css',
 })
-export class CreateRoutinePageComponent implements AfterViewInit {
+export class CreateRoutinePageComponent implements AfterViewChecked {
   routineForm = new FormGroup({
     dateFrom: new FormControl('', Validators.required),
     dateTo: new FormControl<Date | null>(null, Validators.required),
@@ -87,6 +87,9 @@ export class CreateRoutinePageComponent implements AfterViewInit {
   clientsWithmembership: Client[] = [];
   exercises: Object[] = [];
   today: Date = new Date();
+  trainerId: string | undefined = '';
+  isClientSelected: boolean = false;
+  firstMonday = lightFormat(addDays(startOfWeek(new Date()), 1), 'yyyy-MM-dd');
 
   readonly dialog = inject(MatDialog);
 
@@ -100,8 +103,10 @@ export class CreateRoutinePageComponent implements AfterViewInit {
     this.getExercises();
   }
 
-  public ngAfterViewInit(): void {
-    this.startUpDatePicker();
+  ngAfterViewChecked(): void {
+    if (this.isClientSelected) {
+      this.startUpDatePicker();
+    }
   }
 
   getClientsWithMembership() {
@@ -175,15 +180,12 @@ export class CreateRoutinePageComponent implements AfterViewInit {
     } else return '';
   }
 
-  startUpDatePicker() {
+  async startUpDatePicker() {
     const inputDateFrom = document.querySelector(
       '#inputDateFrom'
     ) as HTMLInputElement;
-    const firstMonday = lightFormat(
-      addDays(startOfWeek(new Date()), 1),
-      'yyyy-MM-dd'
-    );
-    inputDateFrom.min = firstMonday;
+    if (inputDateFrom == null) return;
+    inputDateFrom.min = this.firstMonday;
     inputDateFrom.step = '7';
     this.setDateTo();
   }
@@ -262,6 +264,10 @@ export class CreateRoutinePageComponent implements AfterViewInit {
     this.routineForm.patchValue({
       client: newSelectedClient,
     });
+    this.isClientSelected = newSelectedClient !== null;
+    if (this.isClientSelected) {
+      this.startUpDatePicker();
+    }
   }
 
   onSubmit() {
