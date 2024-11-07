@@ -280,10 +280,10 @@ export class CreateRoutinePageComponent implements AfterViewInit {
         day: ex.day,
         series: ex.series,
         repetitions: ex.repetitions,
-        weight: 0,
         exercise: ex.exercise?.id,
       })),
     };
+
     try {
       this.http
         .post<any>(environment.routinesUrl, newRoutine)

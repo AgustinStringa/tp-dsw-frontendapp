@@ -1,14 +1,15 @@
 import { Component } from '@angular/core';
-import { environment } from '../../../environments/environment.js';
-import { HttpClient } from '@angular/common/http';
-import IRoutine from '../../core/interfaces/IRoutine.interface.js';
-import { IExerciseRoutine } from '../../core/interfaces/exercise-routine.inteface.js';
+import { differenceInWeeks } from 'date-fns';
 import { formatDate } from '@angular/common';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import {
   MatExpansionModule,
   MatExpansionPanel,
 } from '@angular/material/expansion';
+import { environment } from '../../../environments/environment.js';
+import IRoutine from '../../core/interfaces/IRoutine.interface.js';
 import { AuthService } from '../../services/auth.service.js';
+import { IExerciseRoutine } from '../../core/interfaces/exercise-routine.inteface.js';
 
 @Component({
   selector: 'app-show-client-routine',
@@ -18,8 +19,6 @@ import { AuthService } from '../../services/auth.service.js';
   styleUrl: './show-client-routine.component.css',
 })
 export class ShowClientRoutineComponent {
-  private urlRoutine: string = `${environment.routinesUrl}`;
-  private urlAuth: string = `${environment.authUrl}`;
   currentDayName: string = '';
   currentDayNumber: number = 0;
   userId: string = '';
@@ -27,8 +26,9 @@ export class ShowClientRoutineComponent {
   exercisesRoutine: IExerciseRoutine[] = [];
   startDate: string = '';
   endDate: string = '';
-  currentWeek: string = '';
+  currentWeek: number = 0;
   totalWeeks: number[] = [];
+  errorCode: number = -1;
 
   private daysOfWeek: string[] = [
     'Lunes',
@@ -55,7 +55,7 @@ export class ShowClientRoutineComponent {
     'Diciembre',
   ];
   currentDate = new Date();
-  currentNameOfTheMonth = this.months[this.currentDate.getMonth()];
+  currentMonthName = this.months[this.currentDate.getMonth()];
 
   constructor(private http: HttpClient, private authService: AuthService) {
     const user = this.authService.getUser();
@@ -71,18 +71,21 @@ export class ShowClientRoutineComponent {
     const today = new Date();
     this.currentDayName = this.getDayName(today.getDay());
     this.currentDayNumber = today.getDate();
+
     this.http
       .get<{ message: string; data: IRoutine }>(
-        `${this.urlRoutine}/${this.userId}/current`
+        `${environment.routinesUrl}/${this.userId}/current`
       )
-      .subscribe(
-        (response) => {
-          this.routine = response.data;
+      .subscribe({
+        next: (res) => {
+          this.routine = res.data;
+
           if (this.routine) {
             this.startDate =
               formatDate(this.routine.start, 'yyyy-MM-dd', 'en-US') || '';
             this.endDate =
               formatDate(this.routine.end, 'yyyy-MM-dd', 'en-US') || '';
+
             this.exercisesRoutine = this.routine.exercisesRoutine.map(
               (exerciseRoutine) => ({
                 id: exerciseRoutine.id,
@@ -91,13 +94,12 @@ export class ShowClientRoutineComponent {
                 repetitions: exerciseRoutine.repetitions || 0,
                 day: exerciseRoutine.day,
                 week: exerciseRoutine.week,
-                weight: exerciseRoutine.weight || null,
+                weight: exerciseRoutine.weight,
               })
             );
 
             this.currentWeek = this.getCurrentWeek(
-              new Date(this.routine.start),
-              new Date(this.routine.end)
+              new Date(this.routine.start)
             );
             this.totalWeeks = this.getWeeksArray(
               new Date(this.routine.start),
@@ -105,41 +107,22 @@ export class ShowClientRoutineComponent {
             );
           }
         },
-        (error) => {
-          console.error('Error loading routine:', error);
-        }
-      );
+        error: (err: HttpErrorResponse) => {
+          this.errorCode = err.status;
+        },
+      });
   }
 
   getDayName(dayIndex: number): string {
     return this.daysOfWeek[dayIndex] || '';
   }
 
-  getCurrentWeek(dateStart: Date, dateEnd: Date): string {
-    const start = new Date(dateStart);
-    const end = new Date(dateEnd);
-    const current = new Date();
-
-    if (current < start || current > end) {
-      return 'Fuera del rango de fechas';
-    }
-
-    const diffInMs = current.getTime() - start.getTime();
-    const diffInDays = diffInMs / (1000 * 60 * 60 * 24);
-
-    const weekNumber = Math.floor(diffInDays / 7) + 1;
-    return `${weekNumber}`;
+  getCurrentWeek(startDate: Date): number {
+    return differenceInWeeks(new Date(), startDate) + 1;
   }
 
-  getWeeksArray(dateStart: Date, dateEnd: Date): number[] {
-    const start = new Date(dateStart);
-    const end = new Date(dateEnd);
-
-    const diffInMs = end.getTime() - start.getTime();
-    const diffInDays = diffInMs / (1000 * 60 * 60 * 24);
-
-    const totalWeeks = Math.floor(diffInDays / 7) + 1;
-
+  getWeeksArray(startDate: Date, endDate: Date): number[] {
+    const totalWeeks = differenceInWeeks(endDate, startDate) + 1;
     return Array.from({ length: totalWeeks }, (_, index) => index + 1);
   }
 
@@ -163,5 +146,15 @@ export class ShowClientRoutineComponent {
     return this.exercisesRoutine.filter(
       (routine) => routine.week === week && routine.day === day
     );
+  }
+
+  getExerciseStatus(exerciseRoutine: IExerciseRoutine): string {
+    if (exerciseRoutine.weight === 0) return 'Realizado';
+    if (exerciseRoutine.weight === null) return 'No realizado';
+    return `Realizado con ${exerciseRoutine.weight} Kg`;
+  }
+
+  Array(count: number) {
+    return new Array(count).fill(0);
   }
 }
