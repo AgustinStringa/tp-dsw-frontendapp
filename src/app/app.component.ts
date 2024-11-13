@@ -12,13 +12,11 @@ import { NavbarComponent } from './navbar/navbar.component.js';
   standalone: true,
   imports: [
     RouterOutlet,
-    LoginComponent,
     MatSidenavModule,
     FooterComponent,
     MatIconModule,
     MatButtonModule,
     MatToolbarModule,
-    RouterLink,
     NavbarComponent,
   ],
   templateUrl: './app.component.html',

@@ -37,7 +37,6 @@ export class AuthService {
       })
       .pipe(
         tap((response: any) => {
-          sessionStorage.setItem('token', response.data.token);
           sessionStorage.setItem(
             'user',
             JSON.stringify({
@@ -52,28 +51,20 @@ export class AuthService {
   }
 
   login(user: { email: string; password: string }): Observable<any> {
-    return this.httpClient.post(`${environment.authUrl}`, user).pipe(
+    return this.httpClient.post(environment.authUrl, user).pipe(
       tap((response: any) => {
-        sessionStorage.setItem('token', response.data.token);
         sessionStorage.setItem(
           'user',
           JSON.stringify({
             ...response.data.user,
           })
         );
+
         this.userSignal.set({
           ...response.data.user,
         });
       })
     );
-  }
-
-  setSession(token: string) {
-    sessionStorage.setItem('token', token);
-  }
-
-  getToken(): string | null {
-    return sessionStorage.getItem('token');
   }
 
   getUser(): IUserSession | null {
@@ -95,14 +86,40 @@ export class AuthService {
         this.httpClient.post(`${environment.authUrl}/logout/`, {})
       );
 
-      this.userSignal.set(null);
-      sessionStorage.removeItem('token');
-      sessionStorage.removeItem('user');
-
+      this.clearUserSession();
       return true;
     } catch (error) {
       this.snackbarService.showError('No se pudo cerrar la sesión');
       return false;
     }
+  }
+
+  clearUserSession(): void {
+    this.userSignal.set(null);
+    sessionStorage.removeItem('user');
+  }
+
+  async extendSession(): Promise<boolean> {
+    return new Promise<boolean>((resolve, reject) => {
+      this.httpClient.post(`${environment.authUrl}/refresh/`, {}).subscribe({
+        next: (res: any) => {
+          sessionStorage.setItem(
+            'user',
+            JSON.stringify({
+              ...res.data.user,
+            })
+          );
+
+          this.userSignal.set({
+            ...res.data.user,
+          });
+
+          resolve(true);
+        },
+        error: () => {
+          resolve(false);
+        },
+      });
+    });
   }
 }

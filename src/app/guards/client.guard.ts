@@ -1,25 +1,24 @@
 import { CanActivateFn, Router } from '@angular/router';
 
+interface user {
+  dni: string;
+  email: string;
+  firstName: string;
+  id: string;
+  isClient: boolean;
+  lastName: string;
+  password: string;
+}
+
 export const clientGuard: CanActivateFn = (route, state) => {
   const JSONuser = sessionStorage.getItem('user');
-  const router = new Router();
-  if (JSONuser != null) {
-    const user: {
-      dni: string;
-      email: string;
-      firstName: string;
-      id: string;
-      isClient: boolean;
-      lastName: string;
-      password: string;
-    } = JSON.parse(JSONuser);
-    if (user.isClient) {
-      return true;
-    } else {
-      router.navigate(['/']);
-      return false;
-    }
+
+  if (JSONuser !== null) {
+    const user: user = JSON.parse(JSONuser);
+    if (user.isClient) return true;
   }
+
+  const router = new Router();
   router.navigate(['/']);
   return false;
 };

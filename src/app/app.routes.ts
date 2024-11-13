@@ -20,60 +20,60 @@ export const routes: Routes = [
   { path: '', component: LoginComponent },
   {
     path: 'class-types',
-    canActivate: [authGuard, trainerGuard],
+    canActivate: [trainerGuard],
     component: ClassTypeListComponent,
   },
   {
     path: 'classes',
-    canActivate: [authGuard, trainerGuard],
+    canActivate: [trainerGuard],
     component: ClassListComponent,
   },
   {
     path: 'clients',
     component: ClientListComponent,
-    canActivate: [authGuard, trainerGuard],
+    canActivate: [trainerGuard],
   },
   {
     path: 'create-routine',
     component: CreateRoutinePageComponent,
-    canActivate: [authGuard, trainerGuard],
+    canActivate: [trainerGuard],
   },
   {
     path: 'exercises',
     component: ExerciseListComponent,
-    canActivate: [authGuard, trainerGuard],
+    canActivate: [trainerGuard],
   },
   { path: 'home', component: HomePageComponent, canActivate: [authGuard] },
   {
     path: 'memberships',
     component: MembershipListComponent,
-    canActivate: [authGuard, trainerGuard],
+    canActivate: [trainerGuard],
   },
   {
     path: 'membership-types',
     component: MembershipTypeListComponent,
-    canActivate: [authGuard, trainerGuard],
+    canActivate: [trainerGuard],
   },
   {
     path: 'record-exercise-execution',
     component: DailyRoutineComponent,
-    canActivate: [authGuard, clientGuard],
+    canActivate: [clientGuard],
   },
   {
     path: 'registration',
     component: ClassListComponentForClient,
-    canActivate: [authGuard, clientGuard],
+    canActivate: [clientGuard],
   },
   {
     path: 'showClientRoutine',
     component: ShowClientRoutineComponent,
-    canActivate: [authGuard, clientGuard],
+    canActivate: [clientGuard],
   },
 
   {
     path: 'trainers',
     component: TrainerListComponent,
-    canActivate: [authGuard, trainerGuard],
+    canActivate: [trainerGuard],
   },
   { path: '**', redirectTo: '', pathMatch: 'full' },
 ];

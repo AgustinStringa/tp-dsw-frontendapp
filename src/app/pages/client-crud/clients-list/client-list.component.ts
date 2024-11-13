@@ -1,7 +1,6 @@
 import { Component, ViewChild } from '@angular/core';
 import { ComponentType } from '@angular/cdk/portal';
 import { FormsModule } from '@angular/forms';
-import { NgFor, NgIf } from '@angular/common';
 import { MatDialog } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import {
@@ -23,8 +22,6 @@ import { UsersFilterComponent } from '../../../users-filter/users-filter.compone
     FormsModule,
     MatIconModule,
     MatPaginatorModule,
-    NgFor,
-    NgIf,
     UsersFilterComponent,
   ],
   providers: [{ provide: MatPaginatorIntl, useClass: CustomPaginatorIntl }],

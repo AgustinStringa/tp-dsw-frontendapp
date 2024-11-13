@@ -2,10 +2,11 @@ import { NgClass } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
-import { HttpErrorResponse } from '@angular/common/http/index.js';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { AuthService } from '../services/auth.service.js';
 import { SnackbarService } from '../services/snackbar.service.js';
+import { environment } from '../../environments/environment.js';
 
 @Component({
   selector: 'app-login',
@@ -26,14 +27,19 @@ export class LoginComponent {
   isLoginVisible: boolean = true;
   isSpinnerVisible: boolean = false;
   public userSignal = this.authService.userSignal;
+
   constructor(
     private router: Router,
     private authService: AuthService,
     private snackbarService: SnackbarService
-  ) {
-    authService.getUser();
-    if (authService.userSignal() != null) {
+  ) {}
+
+  async ngOnInit() {
+    if (this.authService.getUser() !== null) {
       this.router.navigate(['/home']);
+    } else {
+      if (await this.authService.extendSession())
+        this.router.navigate(['/home']);
     }
   }
 
