@@ -2,7 +2,8 @@
   <h2 class="page-title">Registrar entrenamiento</h2>
   <div class="daily-routine-container">
     <!-- Información de la rutina -->
-    @if (this.routine) {
+     @if(this.activeMembership == true) {
+    @if (this.routine && this.activeMembership == true) {
     <div class="routine-info">
       <table class="routine-table">
         <tr>
@@ -18,10 +19,22 @@
         </tr>
       </table>
     </div>
+
+    <div class = "filteredExercisesRoutine">
+          <label class ="dayFilter" for="dayFilter">Filtrar por día:</label>
+          <select class="day-filter" id="dayFilter" [(ngModel)]="dayFilter" (ngModelChange)="applyFilter($event)">
+            <option [value]=0>Todos</option>
+                  @for (day of availableDays;track day) {
+                    <option [value]="day">
+                      Dia {{day}}
+                    </option>
+                  }
+          </select>
+        </div>
     }
 
     <div>
-      @if (this.exercisesRoutine && this.exercisesRoutine.length > 0) {
+      @if (this.filteredExerciseRoutine && this.filteredExerciseRoutine.length > 0) {
       <table class="exercises-table">
         <thead>
           <tr>
@@ -33,9 +46,8 @@
           </tr>
         </thead>
         <tbody>
-          @for (exerciseRoutine of exercisesRoutine; track
-          exerciseRoutine.exercise?.id) { @if (exerciseRoutine.day &&
-          exerciseRoutine.day === dayToday && exerciseRoutine.week &&
+          @for (exerciseRoutine of filteredExerciseRoutine;  track
+          exerciseRoutine.exercise?.id) { @if ( exerciseRoutine.week &&
           exerciseRoutine.week === currentWeek) {
 
           <tr>
@@ -98,5 +110,8 @@
       (saveWeight)="saveWeight($event)"
     ></app-dialog-add-weight>
     }
+  } @else {
+    <p	class="alert">No tiene una membresía activa</p>
+  }
   </div>
 </div>

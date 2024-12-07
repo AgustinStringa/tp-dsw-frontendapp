@@ -8,11 +8,12 @@ import { DialogAddWeightComponent } from '../dialog-add-weight/dialog-add-weight
 import { AuthService } from '../../../services/auth.service.js';
 import { SnackbarService } from '../../../services/snackbar.service.js';
 import { differenceInWeeks } from 'date-fns';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-daily-routine',
   standalone: true,
-  imports: [DialogAddWeightComponent],
+  imports: [DialogAddWeightComponent, FormsModule],
   templateUrl: './daily-routine.component.html',
   styleUrl: './daily-routine.component.css',
 })
@@ -27,8 +28,11 @@ export class DailyRoutineComponent {
   showModal: boolean = false;
   selectedExerciseRoutine: IExerciseRoutine | null = null;
   selectedWeight: number | null = null;
-  dayToday: number = new Date().getDay();
   userId: string = '';
+  dayFilter: number = 0;
+  filteredExerciseRoutine: IExerciseRoutine[] = [];
+  availableDays: number[] = [];
+  activeMembership: boolean = false;
 
   private daysOfWeek: string[] = [
     'Domingo',
@@ -66,6 +70,7 @@ export class DailyRoutineComponent {
     const user = this.authService.getUser();
     if (user) {
       this.userId = user.id;
+      this.getMembershipOfUser();
       this.loadRoutine();
     } else {
       console.error('No user found in session. Redirecting or handling error.');
@@ -104,6 +109,37 @@ export class DailyRoutineComponent {
             this.currentWeek = this.getCurrentWeek(
               new Date(this.routine.start)
             );
+            this.availableDays = this.getAvailableDays(this.exercisesRoutine);
+            this.applyFilter(this.dayFilter);
+          }
+        },
+        error: () => {},
+      });
+  }
+
+  applyFilter(day: number): void {
+    this.dayFilter = day;
+    if (day == 0) {
+      this.filteredExerciseRoutine = this.exercisesRoutine;
+    } else {
+      this.filteredExerciseRoutine = this.exercisesRoutine.filter(
+        (exerciseRoutine) => {
+          return Number(exerciseRoutine.day) === Number(day);
+        }
+      );
+    }
+  }
+
+  getMembershipOfUser() {
+    this.http
+      .get<{ message: string; data: any }>(
+        `${environment.membershipsActive}/${this.userId}`
+      )
+      .subscribe({
+        next: (res) => {
+          if (res.data) {
+            this.activeMembership = true;
+            return res.data;
           }
         },
         error: () => {},
@@ -138,5 +174,11 @@ export class DailyRoutineComponent {
     if (exerciseRoutine.weight === 0) return 'Realizado';
     if (exerciseRoutine.weight === null) return 'No realizado';
     return `Realizado con ${exerciseRoutine.weight} Kg`;
+  }
+
+  getAvailableDays(exercises: IExerciseRoutine[]): number[] {
+    const daysSet = new Set<number>();
+    exercises.forEach((exercise) => daysSet.add(Number(exercise.day)));
+    return Array.from(daysSet).sort((a, b) => a - b);
   }
 }
