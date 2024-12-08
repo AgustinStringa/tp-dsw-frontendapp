@@ -24,10 +24,10 @@
           <label class ="dayFilter" for="dayFilter">Filtrar por día:</label>
           <select class="day-filter" id="dayFilter" [(ngModel)]="dayFilter" (ngModelChange)="applyFilter($event)">
             <option [value]=0>Todos</option>
-                  @for (day of availableDays;track day) {
-                    <option [value]="day">
-                      Dia {{day}}
-                    </option>
+              @for (day of availableDays;track day) {
+                <option [value]="day">
+                  Dia {{day}}
+                </option>
                   }
           </select>
         </div>
@@ -97,9 +97,9 @@
       </table>
 
       } @else {
-      <p class="alert">
-        No tiene ninguna rutina registrada para el día de la fecha
-      </p>
+        <div class="alert alert-warning fs-6" role="alert">
+          No tiene ninguna rutina registrada para el día de la fecha
+        </div>
       }
     </div>
     <!-- Modal para cargar peso -->
@@ -111,7 +111,11 @@
     ></app-dialog-add-weight>
     }
   } @else {
-    <p	class="alert">No tiene una membresía activa</p>
+      <div class="alert alert-warning fs-6" role="alert">
+        No tiene una membresía activa
+      </div>
   }
   </div>
 </div>
+
+
