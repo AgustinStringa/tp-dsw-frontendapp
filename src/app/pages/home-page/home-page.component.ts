@@ -1,17 +1,20 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { AuthService } from '../../services/auth.service.js';
 import { environment } from '../../../environments/environment.js';
 import { IMembership } from '../../core/interfaces/membership.interface.js';
-
+import { OneRepMaxCalculatorComponent } from '../one-rep-max-calculator/one-rep-max-calculator.component.js';
+import { ComponentType } from '@angular/cdk/portal';
+import { MatDialog } from '@angular/material/dialog';
 @Component({
   selector: 'app-home-page',
   standalone: true,
-  imports: [],
+  imports: [OneRepMaxCalculatorComponent],
   templateUrl: './home-page.component.html',
   styleUrl: './home-page.component.css',
 })
 export class HomePageComponent {
+  readonly dialog = inject(MatDialog);
   public userSignal = this.authService.userSignal;
   //TODO: tipar interfaces goals, progresses
   public goals: [] = [];
@@ -83,5 +86,17 @@ export class HomePageComponent {
           error: (err) => {},
         });
     } catch (error) {}
+  }
+
+  calculateOneRepMax(): void {
+    this.openDialog(OneRepMaxCalculatorComponent, {});
+  }
+
+  openDialog(dialog: ComponentType<unknown>, data: object): void {
+    const dialogRef = this.dialog.open(dialog);
+  }
+
+  calculateIMLG(): void {
+    alert('Acá se calculará el Índice de Masa Libre de Grasa (IMLG).');
   }
 }

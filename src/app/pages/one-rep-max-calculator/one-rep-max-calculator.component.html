@@ -1,0 +1,29 @@
+<div class="modal-overlay d-flex align-items-center justify-content-center">
+  <div class="modal-content bg-white p-4 rounded shadow-lg">
+    <div class="modal-header">
+      <h5 class="modal-title fw-bold fs-5">Calculadora de Repetición Máxima</h5>
+      <button type="button" class="btn-close" aria-label="Cerrar" (click)="closeModal()"></button>
+    </div>
+    <div class="modal-body">
+      <form>
+        <div class="mb-3">
+          <label for="weightInput" class="form-label">Peso (kg)</label>
+          <input type="number" class="form-control" id="weightInput" [(ngModel)]="weight" name="weight"
+            placeholder="Ingrese el peso levantado" />
+        </div>
+        <div class="mb-3">
+          <label for="repsInput" class="form-label">Cantidad de Repeticiones</label>
+          <input type="number" class="form-control" id="repsInput" [(ngModel)]="reps" name="reps"
+            placeholder="Ingrese las repeticiones realizadas" />
+        </div>
+      </form>
+    </div>
+    <div class="modal-footer d-flex justify-content-between">
+      <button type="button" class="btn btn-secondary w-auto" (click)="closeModal()">Cancelar</button>
+      <button type="button" class="btn btn-success w-50" (click)="calculateOneRepMax()">
+        Calcular Repetición Máxima
+      </button>
+    </div>
+  </div>
+</div>
+
