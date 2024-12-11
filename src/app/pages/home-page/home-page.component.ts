@@ -6,10 +6,11 @@ import { IMembership } from '../../core/interfaces/membership.interface.js';
 import { OneRepMaxCalculatorComponent } from '../one-rep-max-calculator/one-rep-max-calculator.component.js';
 import { ComponentType } from '@angular/cdk/portal';
 import { MatDialog } from '@angular/material/dialog';
+import { ImlgCalculatorComponent } from '../imlg-calculator/imlg-calculator.component.js';
 @Component({
   selector: 'app-home-page',
   standalone: true,
-  imports: [OneRepMaxCalculatorComponent],
+  imports: [],
   templateUrl: './home-page.component.html',
   styleUrl: './home-page.component.css',
 })
@@ -97,6 +98,6 @@ export class HomePageComponent {
   }
 
   calculateIMLG(): void {
-    alert('Acá se calculará el Índice de Masa Libre de Grasa (IMLG).');
+    this.openDialog(ImlgCalculatorComponent, {});
   }
 }
