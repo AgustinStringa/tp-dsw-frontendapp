@@ -15,6 +15,7 @@ import { MembershipTypeListComponent } from './pages/membership-type-crud/member
 import { trainerGuard } from './guards/trainer.guard.js';
 import { TrainerListComponent } from './pages/trainer-crud/trainer-list/trainer-list.component.js';
 import { ShowClientRoutineComponent } from './pages/show-client-routine/show-client-routine.component.js';
+import { ChatComponent } from './pages/chat/chat.component.js';
 
 export const routes: Routes = [
   { path: '', component: LoginComponent },
@@ -22,6 +23,11 @@ export const routes: Routes = [
     path: 'class-types',
     canActivate: [trainerGuard],
     component: ClassTypeListComponent,
+  },
+  {
+    path: 'chat',
+    canActivate: [authGuard],
+    component: ChatComponent,
   },
   {
     path: 'classes',

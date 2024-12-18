@@ -1,0 +1,24 @@
+<div class="d-flex">
+  <app-trainer-selection (trainerSelected)="onTrainerSelected($event)"></app-trainer-selection>
+
+  <div class="container mt-4 p-3 border rounded bg-light flex-grow-1">
+    @if (selectedTrainer) {
+    <div class="alert alert-success mb-3">
+      Estás chateando con: <strong>{{ selectedTrainer.firstName }} {{ selectedTrainer.lastName}}</strong>
+    </div>
+    }
+    <h2 class="text-center mb-3">Chat en Tiempo Real</h2>
+    <div class="border rounded p-3 mb-3 bg-white" style="height: 300px; overflow-y: auto;">
+      @for (msg of messages; track msg) {
+      <div class="alert alert-info py-1 mb-2">
+        {{ msg }}
+      </div>
+      }
+    </div>
+
+    <div class="input-group">
+      <input [(ngModel)]="message" type="text" class="form-control" placeholder="Escribe un mensaje" />
+      <button (click)="sendMessage()" class="btn btn-primary">Enviar</button>
+    </div>
+  </div>
+</div>

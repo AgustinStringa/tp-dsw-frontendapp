@@ -1,0 +1,12 @@
+<div class="d-flex flex-column" style="height: 100vh;">
+  <div class="trainer-list border-end p-3" style="width: 250px; height: 100%; overflow-y: auto;">
+    <h5 class="fw-bold mb-3">Entrenadores</h5>
+    <ul class="list-group">
+      @for (trainer of trainers; track trainer.dni) {
+      <li class="list-group-item list-group-item-action" [class.active]="trainer === selectedTrainer"
+        (click)="selectTrainer(trainer)" style="cursor: pointer;">
+        {{ trainer.firstName }} {{ trainer.lastName }}
+      </li>
+      }
+    </ul>
+  </div>
