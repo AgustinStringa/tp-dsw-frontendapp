@@ -1,7 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { MatDialog } from '@angular/material/dialog';
 import { AuthService } from '../../services/auth.service.js';
 import { environment } from '../../../environments/environment.js';
+import { EmailSentDialogComponent } from '../../email-sent-dialog/email-sent-dialog.component.js';
 import { IMembership } from '../../core/interfaces/membership.interface.js';
 
 @Component({
@@ -19,6 +21,7 @@ export class HomePageComponent {
   public membership: IMembership | null = null;
   public classes: [] = [];
   public membershipDateTo: Date | null = null;
+  readonly emailSentDialog = inject(MatDialog);
 
   constructor(private http: HttpClient, private authService: AuthService) {
     authService.getUser();
@@ -83,5 +86,28 @@ export class HomePageComponent {
           error: (err) => {},
         });
     } catch (error) {}
+  }
+
+  showModalEmailSent(): void {
+    try {
+      this.http
+        .get(`${environment.authUrl}/request-change-password`)
+        .subscribe({
+          next: (res: any) => {
+            console.log(res);
+            const dialogRef = this.emailSentDialog.open(
+              EmailSentDialogComponent,
+              {
+                data: { email: this.userSignal()?.email || 'notemail' },
+              }
+            );
+          },
+          error: (err) => {
+            console.log(err);
+          },
+        });
+    } catch (error) {
+      //mostrar mensaje de error
+    }
   }
 }
