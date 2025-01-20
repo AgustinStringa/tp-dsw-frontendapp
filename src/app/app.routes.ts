@@ -12,9 +12,10 @@ import { HomePageComponent } from './pages/home-page/home-page.component.js';
 import { LoginComponent } from './login/login.component.js';
 import { MembershipListComponent } from './pages/membership-crud/membership-list/membership-list.component.js';
 import { MembershipTypeListComponent } from './pages/membership-type-crud/membership-type-list/membership-type-list.component.js';
+import { ResetPasswordComponent } from './pages/reset-password/reset-password/reset-password.component.js';
+import { ShowClientRoutineComponent } from './pages/show-client-routine/show-client-routine.component.js';
 import { trainerGuard } from './guards/trainer.guard.js';
 import { TrainerListComponent } from './pages/trainer-crud/trainer-list/trainer-list.component.js';
-import { ShowClientRoutineComponent } from './pages/show-client-routine/show-client-routine.component.js';
 
 export const routes: Routes = [
   { path: '', component: LoginComponent },
@@ -63,6 +64,11 @@ export const routes: Routes = [
     path: 'registration',
     component: ClassListComponentForClient,
     canActivate: [clientGuard],
+  },
+  {
+    path: 'reset-password/:token',
+    component: ResetPasswordComponent,
+    canActivate: [],
   },
   {
     path: 'showClientRoutine',
