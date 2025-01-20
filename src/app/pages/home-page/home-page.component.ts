@@ -92,7 +92,6 @@ export class HomePageComponent {
     this.isSpinnerVisible = true;
     this.http.get(`${environment.authUrl}/request-change-password`).subscribe({
       next: (res: any) => {
-        console.log(res);
         const dialogRef = this.emailSentDialog.open(EmailSentDialogComponent, {
           data: { email: this.userSignal()?.email || 'notemail' },
         });
