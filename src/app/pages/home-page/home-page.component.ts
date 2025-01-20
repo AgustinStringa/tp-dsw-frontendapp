@@ -1,19 +1,23 @@
+import { NgClass } from '@angular/common';
 import { Component, inject } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
 import { MatDialog } from '@angular/material/dialog';
-import { AuthService } from '../../services/auth.service.js';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { environment } from '../../../environments/environment.js';
-import { EmailSentDialogComponent } from '../../email-sent-dialog/email-sent-dialog.component.js';
 import { IMembership } from '../../core/interfaces/membership.interface.js';
+import { AuthService } from '../../services/auth.service.js';
+import { EmailSentDialogComponent } from '../../email-sent-dialog/email-sent-dialog.component.js';
+import { SnackbarService } from '../../services/snackbar.service.js';
 
 @Component({
   selector: 'app-home-page',
   standalone: true,
-  imports: [],
+  imports: [MatProgressSpinnerModule, NgClass],
   templateUrl: './home-page.component.html',
   styleUrl: './home-page.component.css',
 })
 export class HomePageComponent {
+  readonly emailSentDialog = inject(MatDialog);
   public userSignal = this.authService.userSignal;
   //TODO: tipar interfaces goals, progresses
   public goals: [] = [];
@@ -21,9 +25,13 @@ export class HomePageComponent {
   public membership: IMembership | null = null;
   public classes: [] = [];
   public membershipDateTo: Date | null = null;
-  readonly emailSentDialog = inject(MatDialog);
+  public isSpinnerVisible: boolean = false;
 
-  constructor(private http: HttpClient, private authService: AuthService) {
+  constructor(
+    private http: HttpClient,
+    private authService: AuthService,
+    private snackbarService: SnackbarService
+  ) {
     authService.getUser();
     if (this.userSignal()?.isClient) {
       this.getProgresses();
@@ -34,80 +42,68 @@ export class HomePageComponent {
   }
 
   getGoals(): void {
-    try {
-      this.http
-        .get(`${environment.goalsUrl}/client/${this.userSignal()?.id}`)
-        .subscribe({
-          next: (res: any) => {
-            this.goals = res.data;
-          },
-          error: (err) => {},
-        });
-    } catch (error) {}
+    this.http
+      .get(`${environment.goalsUrl}/client/${this.userSignal()?.id}`)
+      .subscribe({
+        next: (res: any) => {
+          this.goals = res.data;
+        },
+        error: (err) => {},
+      });
   }
 
   getProgresses(): void {
-    try {
-      this.http
-        .get(`${environment.progressesUrl}/client/${this.userSignal()?.id}`)
-        .subscribe({
-          next: (res: any) => {
-            this.progresses = res.data;
-          },
-          error: (err) => {},
-        });
-    } catch (error) {}
+    this.http
+      .get(`${environment.progressesUrl}/client/${this.userSignal()?.id}`)
+      .subscribe({
+        next: (res: any) => {
+          this.progresses = res.data;
+        },
+        error: (err) => {},
+      });
   }
 
   getMembership(): void {
-    try {
-      this.http
-        .get(`${environment.membershipsUrl}/active/${this.userSignal()?.id}`)
-        .subscribe({
-          next: (res: any) => {
-            this.membership = res.data;
-            if (this.membership?.dateTo != null) {
-              this.membershipDateTo = new Date(this.membership.dateTo);
-            }
-          },
-          error: (err) => {},
-        });
-    } catch (error) {}
+    this.http
+      .get(`${environment.membershipsUrl}/active/${this.userSignal()?.id}`)
+      .subscribe({
+        next: (res: any) => {
+          this.membership = res.data;
+          if (this.membership?.dateTo != null) {
+            this.membershipDateTo = new Date(this.membership.dateTo);
+          }
+        },
+        error: (err) => {},
+      });
   }
 
   getClasses(): void {
-    try {
-      this.http
-        .get(`${environment.registrationUrl}/client/${this.userSignal()?.id}`)
-        .subscribe({
-          next: (res: any) => {
-            this.classes = res.data;
-          },
-          error: (err) => {},
-        });
-    } catch (error) {}
+    this.http
+      .get(`${environment.registrationUrl}/client/${this.userSignal()?.id}`)
+      .subscribe({
+        next: (res: any) => {
+          this.classes = res.data;
+        },
+        error: (err) => {},
+      });
   }
 
   showModalEmailSent(): void {
-    try {
-      this.http
-        .get(`${environment.authUrl}/request-change-password`)
-        .subscribe({
-          next: (res: any) => {
-            console.log(res);
-            const dialogRef = this.emailSentDialog.open(
-              EmailSentDialogComponent,
-              {
-                data: { email: this.userSignal()?.email || 'notemail' },
-              }
-            );
-          },
-          error: (err) => {
-            console.log(err);
-          },
+    this.isSpinnerVisible = true;
+    this.http.get(`${environment.authUrl}/request-change-password`).subscribe({
+      next: (res: any) => {
+        console.log(res);
+        const dialogRef = this.emailSentDialog.open(EmailSentDialogComponent, {
+          data: { email: this.userSignal()?.email || 'notemail' },
         });
-    } catch (error) {
-      //mostrar mensaje de error
-    }
+        dialogRef.afterClosed().subscribe((_) => {
+          this.isSpinnerVisible = false;
+        });
+      },
+      error: (err) => {
+        this.isSpinnerVisible = false;
+        this.snackbarService.showError('Error al enviar la solicitud');
+      },
+    });
   }
 }

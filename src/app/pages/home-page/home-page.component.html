@@ -1,4 +1,4 @@
-<section style="background-color: #eee">
+<section>
   <div class="container py-5">
     <div class="row">
       <div class="col-lg-4">
@@ -8,7 +8,6 @@
               src="../../../assets/user-circle-svgrepo-com.svg"
               alt="avatar"
               class="rounded-circle img-fluid"
-              style="width: 150px"
             />
             <h4 class="my-3 text-muted">{{ this.userSignal()?.firstName }}</h4>
           </div>
@@ -21,30 +20,33 @@
                 class="list-group-item d-flex justify-content-between align-items-center p-3"
               >
                 {{ this.goals.length }}
-                <p class="mb-0">metas</p>
+                <p class="mb-0 fw-bold">metas</p>
               </li>
               <li
                 class="list-group-item d-flex justify-content-between align-items-center p-3"
               >
                 {{ this.progresses.length }}
-                <p class="mb-0">progresos</p>
+                <p class="mb-0 fw-bold">progresos</p>
               </li>
               <li
                 class="list-group-item d-flex justify-content-between align-items-center p-3"
               >
                 {{ this.classes.length }}
-                <p class="mb-0">clases</p>
+                <p class="mb-0 fw-bold">clases</p>
               </li>
               <li
                 class="list-group-item d-flex justify-content-between align-items-center p-3"
               >
-                {{ this.membership?.type?.name }}
+                @if(this.membership != null){
+                {{ this.membership.type.name }}
                 hasta @if(this.membershipDateTo!=null){
                 {{ this.membershipDateTo.getDay() + 1 }}/{{
                   this.membershipDateTo.getMonth() + 1
                 }}/{{ this.membershipDateTo.getFullYear() }}
+                } } @else {
+                <p class="mb-0">Sin membresía</p>
                 }
-                <p class="mb-0 text-end">membresía actual</p>
+                <p class="mb-0 text-end fw-bold">membresía actual</p>
               </li>
             </ul>
           </div>
@@ -101,8 +103,18 @@
                   data-mdb-ripple-init
                   class="btn btn-primary"
                   (click)="showModalEmailSent()"
+                  [disabled]="isSpinnerVisible"
                 >
-                  Cambiar
+                  @if (isSpinnerVisible) {
+                  <mat-progress-spinner
+                    color="accent"
+                    [mode]="'indeterminate'"
+                    [value]="'50'"
+                    diameter="20"
+                    [ngClass]="isSpinnerVisible ? 'd-block' : 'd-none'"
+                  ></mat-progress-spinner>
+
+                  } @else { Cambiar }
                 </button>
               </div>
             </div>
