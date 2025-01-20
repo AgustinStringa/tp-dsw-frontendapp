@@ -27,9 +27,6 @@ export class NavbarComponent {
 
   constructor(private router: Router, public authService: AuthService) {
     this.authService.getUser();
-    if (this.userSignal() === null) {
-      this.router.navigate(['/']);
-    }
   }
 
   ngOnInit(): void {
@@ -41,6 +38,12 @@ export class NavbarComponent {
       )
       .subscribe((event: NavigationEnd) => {
         this.currentRoute = event.urlAfterRedirects;
+        if (
+          this.userSignal() === null &&
+          !this.currentRoute.match(/^\/reset-password\/([a-zA-Z0-9]+)$/)
+        ) {
+          this.router.navigate(['/']);
+        }
       });
   }
 
