@@ -122,4 +122,16 @@ export class AuthService {
       });
     });
   }
+
+  setUser(user: IUserSession): void {
+    if (user != null) {
+      sessionStorage.setItem(
+        'user',
+        JSON.stringify({
+          ...user,
+        })
+      );
+      this.userSignal.set(user);
+    }
+  }
 }
