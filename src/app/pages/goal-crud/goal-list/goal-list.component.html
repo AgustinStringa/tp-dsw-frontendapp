@@ -1,0 +1,58 @@
+<div class="list-container">
+  <div class="title-div">
+    <h2 class="crud-page-title">Metas</h2>
+
+    <div class="my-4 text-end">
+      <button
+        type="button"
+        class="btn btn-primary btn-lg"
+        (click)="addGoal()"
+      >
+        Nueva meta
+      </button>
+    </div>
+  </div>
+
+  @if (goals !== null && goals.length > 0) {
+    <table>
+      <thead>
+        <tr>
+          <th>Fecha creacion</th>
+          <th>Porcentaje graso</th>
+          <th>Medidas corporales</th>
+          <th>Completada</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        @for (g of goals; track g) {
+          <tr>
+            <td>{{ g.createdAt | date: "dd/MM/yyyy" }}</td>
+            <td>{{ g.fatPercentage }}%</td>
+            <td>{{ g.bodyMeasurements }}</td>
+            <td>
+              <input type="checkbox" [(ngModel)]="g.done" (change)="toggleGoalDone(g)">
+            </td>
+            <td class="td-actions">
+              <button (click)="deleteGoal(g.id)" aria-label="Example icon button with a delete icon">
+                <mat-icon>delete</mat-icon>
+              </button>
+              <button (click)="updateGoal(g)" aria-label="Example icon button with a delete icon">
+                <mat-icon>edit</mat-icon>
+              </button>
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  } @else if (goals !== null && goals.length == 0) {
+    <div class="alert alert-warning fs-6" role="alert">
+      No hay metas cargadas. Crea una para comenzar.
+    </div>
+  } @else {
+    <div class="alert alert-danger fs-6" role="alert">
+      No se pudieron cargar las metas.
+    </div>
+  }
+</div>
