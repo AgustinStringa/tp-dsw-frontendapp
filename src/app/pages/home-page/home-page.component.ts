@@ -3,6 +3,8 @@ import { HttpClient } from '@angular/common/http';
 import { AuthService } from '../../services/auth.service.js';
 import { environment } from '../../../environments/environment.js';
 import { IMembership } from '../../core/interfaces/membership.interface.js';
+import { IGoal } from '../../core/interfaces/goal.interface.js';
+import { IProgress } from '../../core/interfaces/progress.interface.js';
 
 @Component({
   selector: 'app-home-page',
@@ -14,8 +16,8 @@ import { IMembership } from '../../core/interfaces/membership.interface.js';
 export class HomePageComponent {
   public userSignal = this.authService.userSignal;
   //TODO: tipar interfaces goals, progresses
-  public goals: [] = [];
-  public progresses: [] = [];
+  public goals: IGoal[] = [];
+  public progresses: IProgress[] = [];
   public membership: IMembership | null = null;
   public classes: [] = [];
   public membershipDateTo: Date | null = null;

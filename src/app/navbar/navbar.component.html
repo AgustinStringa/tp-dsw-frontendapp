@@ -120,6 +120,23 @@
           >
         </li>
 
+        <li class="nav-item">
+          <a
+            class="nav-link"
+            [ngClass]="{active: isActive('/goals')}"
+            routerLink="goals"
+            >Metas</a
+          >
+        </li>
+
+        <li class="nav-item">
+          <a
+            class="nav-link"
+            [ngClass]="{active: isActive('/progresses')}"
+            routerLink="progresses"
+            >Progresos</a>
+        </li>
+
         <!-- TODO no utilizar dropdown, ver otra forma de conectar la visualización de la rutina con la ejecución del ejercicio-->
         <li class="nav-item dropdown">
           <a

@@ -8,10 +8,12 @@ import { ClientListComponent } from './pages/client-crud/clients-list/client-lis
 import { CreateRoutinePageComponent } from './pages/create-routine/create-routine-page/create-routine-page.component.js';
 import { DailyRoutineComponent } from './pages/record-exercise-execution/daily-routine/daily-routine.component.js';
 import { ExerciseListComponent } from './pages/exercise-crud/exercise-list/exercise-list.component.js';
+import { GoalListComponent } from './pages/goal-crud/goal-list/goal-list.component.js';
 import { HomePageComponent } from './pages/home-page/home-page.component.js';
 import { LoginComponent } from './login/login.component.js';
 import { MembershipListComponent } from './pages/membership-crud/membership-list/membership-list.component.js';
 import { MembershipTypeListComponent } from './pages/membership-type-crud/membership-type-list/membership-type-list.component.js';
+import { ProgressListComponent } from './pages/progress-crud/progress-list/progress-list.component.js';
 import { trainerGuard } from './guards/trainer.guard.js';
 import { TrainerListComponent } from './pages/trainer-crud/trainer-list/trainer-list.component.js';
 import { ShowClientRoutineComponent } from './pages/show-client-routine/show-client-routine.component.js';
@@ -67,6 +69,18 @@ export const routes: Routes = [
   {
     path: 'showClientRoutine',
     component: ShowClientRoutineComponent,
+    canActivate: [clientGuard],
+  },
+
+  {
+    path: 'goals',
+    component: GoalListComponent,
+    canActivate: [clientGuard],
+  },
+
+  {
+    path: 'progresses',
+    component: ProgressListComponent,
     canActivate: [clientGuard],
   },
 
