@@ -23,7 +23,6 @@
     <div class = "filteredExercisesRoutine">
         <label class=" dayFilter" for="dayFilter">Filtrar por día:</label>
         <select class="day-filter" id="dayFilter" [(ngModel)]="dayFilter" (ngModelChange)="applyFilter($event)">
-          <option [value]=0>Todos</option>
           @for (day of availableDays; track day) {
           <option [value]="day">Día {{ day }}</option>
           }
@@ -98,11 +97,21 @@
           } }
         </tbody>
       </table>
+      @if(this.showUncompletedExercises && this.filteredExerciseRoutine.length === 1) {
+      <div class="mt-3 alert alert-warning fs-6" role="alert">
+        No tiene ejercicios pendientes para el día de la fecha
+      </div>}
 
       } @else {
+        @if(this.showUncompletedExercises) {
+          <div class="mt-3 alert alert-warning fs-6" role="alert">
+          No tiene ejercicios pendientes para el día de la fecha
+          </div>
+           } @else {
         <div class="alert alert-warning fs-6" role="alert">
           No tiene ninguna rutina registrada para el día de la fecha
         </div>
+        }
       }
     </div>
     <!-- Modal para cargar peso -->

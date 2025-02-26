@@ -29,7 +29,7 @@ export class DailyRoutineComponent {
   selectedExerciseRoutine: IExerciseRoutine | null = null;
   selectedWeight: number | null = null;
   userId: string = '';
-  dayFilter: number = 0;
+  dayFilter: number = 1;
   filteredExerciseRoutine: IExerciseRoutine[] = [];
   availableDays: number[] = [];
   activeMembership: boolean = false;
