@@ -33,6 +33,7 @@ export class DailyRoutineComponent {
   filteredExerciseRoutine: IExerciseRoutine[] = [];
   availableDays: number[] = [];
   activeMembership: boolean = false;
+  showUncompletedExercises: boolean = true;
 
   private daysOfWeek: string[] = [
     'Domingo',
@@ -119,15 +120,17 @@ export class DailyRoutineComponent {
 
   applyFilter(day: number): void {
     this.dayFilter = day;
-    if (day == 0) {
-      this.filteredExerciseRoutine = this.exercisesRoutine;
-    } else {
-      this.filteredExerciseRoutine = this.exercisesRoutine.filter(
-        (exerciseRoutine) => {
-          return Number(exerciseRoutine.day) === Number(day);
-        }
-      );
-    }
+    const filterUncompleted = this.showUncompletedExercises;
+
+    this.filteredExerciseRoutine = this.exercisesRoutine.filter(
+      (exerciseRoutine) => {
+        const matchesDay =
+          day === 0 || Number(exerciseRoutine.day) === Number(day);
+        const matchesCompletion =
+          !filterUncompleted || exerciseRoutine.weight === null;
+        return matchesDay && matchesCompletion;
+      }
+    );
   }
 
   getMembershipOfUser() {

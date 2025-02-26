@@ -21,15 +21,18 @@
     </div>
 
     <div class = "filteredExercisesRoutine">
-          <label class ="dayFilter" for="dayFilter">Filtrar por día:</label>
-          <select class="day-filter" id="dayFilter" [(ngModel)]="dayFilter" (ngModelChange)="applyFilter($event)">
-            <option [value]=0>Todos</option>
-              @for (day of availableDays;track day) {
-                <option [value]="day">
-                  Dia {{day}}
-                </option>
-                  }
-          </select>
+        <label class=" dayFilter" for="dayFilter">Filtrar por día:</label>
+        <select class="day-filter" id="dayFilter" [(ngModel)]="dayFilter" (ngModelChange)="applyFilter($event)">
+          <option [value]=0>Todos</option>
+          @for (day of availableDays; track day) {
+          <option [value]="day">Día {{ day }}</option>
+          }
+        </select>
+        
+        <label class="ms-4 me-1" for="uncompletedFilter">Ejercicios no realizados:</label>
+        <input type="checkbox" id="uncompletedFilter" [(ngModel)]="showUncompletedExercises" (change)="applyFilter(dayFilter)"
+          checked>
+
         </div>
     }
 
