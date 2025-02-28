@@ -1,10 +1,10 @@
 <div class="d-flex">
-  <app-trainer-selection (trainerSelected)="onTrainerSelected($event)"></app-trainer-selection>
+  <app-user-selection (userSelected)="onUserSelected($event)"></app-user-selection>
 
   <div class="container mt-4 p-3 border rounded bg-light flex-grow-1">
-    @if (selectedTrainer) {
+    @if (selectedUser) {
     <div class="alert alert-success mb-3">
-      Estás chateando con: <strong>{{ selectedTrainer.firstName }} {{ selectedTrainer.lastName}}</strong>
+      Estás chateando con: <strong>{{ selectedUser.firstName }} {{ selectedUser.lastName}}</strong>
     </div>
     }
     <h2 class="text-center mb-3">Chat en Tiempo Real</h2>

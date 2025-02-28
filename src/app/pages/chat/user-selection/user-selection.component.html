@@ -1,0 +1,12 @@
+<div class="d-flex flex-column" style="height: 100vh;">
+  <div class="trainer-list border-end p-3" style="width: 250px; height: 100%; overflow-y: auto;">
+    <h5 class="fw-bold mb-3">{{entity}}</h5>
+    <ul class="list-group">
+      @for (user of users; track user.dni) {
+      <li class="list-group-item list-group-item-action" [class.active]="user === selectedUser"
+        (click)="selectTrainer(user)" style="cursor: pointer;">
+        {{ user.firstName }} {{ user.lastName }}
+      </li>
+      }
+    </ul>
+  </div>

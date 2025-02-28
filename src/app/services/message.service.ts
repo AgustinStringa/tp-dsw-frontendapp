@@ -9,15 +9,12 @@ import { environment } from '../../environments/environment.js';
 export class MessageService {
   constructor(private http: HttpClient) {}
 
-  getMessagesForTrainer(userId: string): Observable<any> {
-    return this.http.get(`${environment.apiUrl}/messages/trainer/${userId}`, {
-      withCredentials: true,
-    });
-  }
-
-  getMessageForClient(userId: string): Observable<any> {
-    return this.http.get(`${environment.apiUrl}/messages/client/${userId}`, {
-      withCredentials: true,
-    });
+  getMessagesFrom(receiver: string, sender: string): Observable<any> {
+    return this.http.get(
+      `${environment.apiUrl}/messages/${receiver}/${sender}`,
+      {
+        withCredentials: true,
+      }
+    );
   }
 }
