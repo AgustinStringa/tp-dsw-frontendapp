@@ -8,10 +8,20 @@
     </div>
     }
     <h2 class="text-center mb-3">Chat en Tiempo Real</h2>
-    <div class="border rounded p-3 mb-3 bg-white" style="height: 300px; overflow-y: auto;">
+    <div class="border rounded p-3 mb-3 bg-white"
+      style="min-height: 300px; max-height: 600px; overflow-x: auto; overflow-y: auto;">
       @for (msg of messages; track msg) {
-      <div class="alert alert-info py-1 mb-2">
-        {{ msg }}
+      <div class="alert py-1 mb-2"
+        [ngClass]="{'message-sent': msg.sender === userId, 'message-received': msg.sender !== userId}">
+        <small class="d-block">
+          @if (msg.sender === userId) {
+            <strong>Tú</strong>
+          } @else {
+            <strong>{{ selectedUser?.firstName }}</strong>
+          }
+        </small>
+        <div>{{ msg.content }}</div>
+        <small class="text-muted">{{ msg.createdAt | date:'short' }}</small>
       </div>
       }
     </div>

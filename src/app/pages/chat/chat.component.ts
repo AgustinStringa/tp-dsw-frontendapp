@@ -5,17 +5,19 @@ import { IUser } from '../../core/interfaces/user.interface.js';
 import { MessageService } from '../../services/message.service.js';
 import { AuthService } from '../../services/auth.service.js';
 import { UserSelectionComponent } from './user-selection/user-selection.component.js';
+import IMessage from '../../core/interfaces/IMessage.interface.js';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-chat',
   standalone: true,
-  imports: [FormsModule, UserSelectionComponent],
+  imports: [FormsModule, UserSelectionComponent, CommonModule],
   templateUrl: './chat.component.html',
   styleUrl: './chat.component.css',
 })
 export class ChatComponent implements OnInit, OnDestroy {
   message: string = '';
-  messages: string[] = [];
+  messages: IMessage[] = [];
   selectedUser: IUser | null = null;
   userId: string;
   isClient: boolean;
@@ -31,9 +33,7 @@ export class ChatComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.socketService.onMessage('respuesta').subscribe((data: any) => {
-      this.messages.push(data.content);
-    });
+    this.socketService.onMessage('respuesta').subscribe((data: any) => {});
   }
 
   onUserSelected(user: IUser) {
@@ -44,9 +44,7 @@ export class ChatComponent implements OnInit, OnDestroy {
         next: (response) => {
           console.log('Mensajes con el usuario:', response.data);
 
-          response.data.forEach((element: any) => {
-            this.messages.push(element.content);
-          });
+          this.messages = response.data;
         },
         error: (error) => {
           console.error('Error obteniendo mensajes:', error);
@@ -56,13 +54,16 @@ export class ChatComponent implements OnInit, OnDestroy {
 
   sendMessage() {
     if (this.message.trim() && this.selectedUser) {
-      const messageData = {
+      const messageData: IMessage = {
         content: this.message,
+        sender: this.userId,
         receiver: this.selectedUser.id,
+        createdAt: new Date(),
         entity: this.isClient ? 'client' : 'trainer',
       };
       this.socketService.sendMessage('message', JSON.stringify(messageData));
       this.message = '';
+      this.messages.push(messageData);
     }
   }
 
