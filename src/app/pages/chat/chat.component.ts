@@ -33,7 +33,14 @@ export class ChatComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.socketService.onMessage('respuesta').subscribe((data: any) => {});
+    this.socketService.onMessage('respuesta').subscribe((data: any) => {
+      if (
+        data.sender === this.selectedUser?.id ||
+        data.receiver === this.selectedUser?.id
+      ) {
+        this.messages.push(data);
+      }
+    });
   }
 
   onUserSelected(user: IUser) {
@@ -63,7 +70,6 @@ export class ChatComponent implements OnInit, OnDestroy {
       };
       this.socketService.sendMessage('message', JSON.stringify(messageData));
       this.message = '';
-      this.messages.push(messageData);
     }
   }
 

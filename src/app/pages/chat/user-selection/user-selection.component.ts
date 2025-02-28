@@ -46,7 +46,7 @@ export class UserSelectionComponent {
     this.entity = 'Entrenadores';
   }
 
-  selectTrainer(user: IUser) {
+  selectUser(user: IUser) {
     this.selectedUser = user;
     this.userSelected.emit(this.selectedUser);
   }
