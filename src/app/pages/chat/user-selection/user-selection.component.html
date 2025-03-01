@@ -6,6 +6,9 @@
       <li class="list-group-item list-group-item-action" [class.active]="user === selectedUser"
         (click)="selectUser(user)" style="cursor: pointer;">
         {{ user.firstName }} {{ user.lastName }}
+        @if (unreadMessages[user.id]) {
+        <span class="badge bg-danger float-end">{{ unreadMessages[user.id] }}</span>
+        }
       </li>
       }
     </ul>

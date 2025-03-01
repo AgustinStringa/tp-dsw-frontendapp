@@ -4,4 +4,5 @@ export default interface IMessage {
   receiver: string;
   createdAt: Date;
   entity?: 'client' | 'trainer';
+  readAt?: Date | undefined;
 }

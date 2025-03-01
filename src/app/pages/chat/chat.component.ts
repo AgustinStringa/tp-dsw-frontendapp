@@ -21,6 +21,7 @@ export class ChatComponent implements OnInit, OnDestroy {
   selectedUser: IUser | null = null;
   userId: string;
   isClient: boolean;
+  unreadMessages: { [userId: string]: number } = {};
 
   constructor(
     private socketService: SocketService,
@@ -40,17 +41,47 @@ export class ChatComponent implements OnInit, OnDestroy {
       ) {
         this.messages.push(data);
       }
+      this.unreadMessages[data.sender] =
+        (this.unreadMessages[data.sender] || 0) + 1;
+    });
+    this.loadUnreadMessages();
+  }
+
+  loadUnreadMessages() {
+    this.messageService.getUnreadMessages(this.userId).subscribe({
+      next: (response) => {
+        if (response && Array.isArray(response.data)) {
+          response.data.forEach((msg: IMessage) => {
+            if (msg.sender !== this.userId) {
+              this.unreadMessages[msg.sender] =
+                (this.unreadMessages[msg.sender] || 0) + 1;
+            }
+          });
+        } else {
+          console.error('La respuesta no contiene un array válido:', response);
+        }
+      },
+      error: (error) => {
+        console.error('Error cargando mensajes no leídos:', error);
+      },
     });
   }
 
   onUserSelected(user: IUser) {
     this.selectedUser = user;
+    this.unreadMessages[user.id] = 0;
+
+    this.messageService.markMessagesAsRead(this.userId, user.id).subscribe({
+      next: () => {},
+      error: (error) => {
+        console.error('Error marcando mensajes como leídos:', error);
+      },
+    });
+
     this.messageService
       .getMessagesFrom(this.userId, this.selectedUser.id)
       .subscribe({
         next: (response) => {
-          console.log('Mensajes con el usuario:', response.data);
-
           this.messages = response.data;
         },
         error: (error) => {
@@ -59,6 +90,14 @@ export class ChatComponent implements OnInit, OnDestroy {
       });
   }
 
+  markMessagesAsRead(senderId: string) {
+    this.messageService.markMessagesAsRead(senderId, this.userId).subscribe({
+      next: () => {},
+      error: (error) => {
+        console.error('Error marcando mensajes como leídos:', error);
+      },
+    });
+  }
   sendMessage() {
     if (this.message.trim() && this.selectedUser) {
       const messageData: IMessage = {
@@ -66,6 +105,7 @@ export class ChatComponent implements OnInit, OnDestroy {
         sender: this.userId,
         receiver: this.selectedUser.id,
         createdAt: new Date(),
+        readAt: undefined,
         entity: this.isClient ? 'client' : 'trainer',
       };
       this.socketService.sendMessage('message', JSON.stringify(messageData));

@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { environment } from '../../../../environments/environment.js';
 import { HttpClient } from '@angular/common/http';
 import { IUser } from '../../../core/interfaces/user.interface.js';
@@ -12,6 +12,7 @@ import { AuthService } from '../../../services/auth.service.js';
 })
 export class UserSelectionComponent {
   @Output() userSelected = new EventEmitter<IUser>();
+  @Input() unreadMessages: { [userId: string]: number } = {};
   users: IUser[] = [];
   selectedUser: IUser | null = null;
   entity: string = '';

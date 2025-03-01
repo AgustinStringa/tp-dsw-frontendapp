@@ -1,5 +1,5 @@
 <div class="d-flex">
-  <app-user-selection (userSelected)="onUserSelected($event)"></app-user-selection>
+  <app-user-selection (userSelected)="onUserSelected($event)" [unreadMessages]="unreadMessages">></app-user-selection>
 
   <div class="container mt-4 p-3 border rounded bg-light flex-grow-1">
     @if (selectedUser) {

@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { map, Observable } from 'rxjs';
 import { environment } from '../../environments/environment.js';
+import IMessage from '../core/interfaces/IMessage.interface.js';
 
 @Injectable({
   providedIn: 'root',
@@ -16,5 +17,16 @@ export class MessageService {
         withCredentials: true,
       }
     );
+  }
+
+  getUnreadMessages(receiver: string): Observable<any> {
+    return this.http.post(`${environment.apiUrl}/messages/unread/${receiver}`, {
+      withCredentials: true,
+    });
+  }
+
+  markMessagesAsRead(sender: string, receiver: string): Observable<any> {
+    const url = `${environment.apiUrl}/messages/mark-as-read/${sender}/${receiver}`;
+    return this.http.post(url, {});
   }
 }
