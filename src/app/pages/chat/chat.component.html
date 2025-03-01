@@ -15,14 +15,19 @@
         [ngClass]="{'message-sent': msg.sender === userId, 'message-received': msg.sender !== userId}">
         <small class="d-block">
           @if (msg.sender === userId) {
-            <strong>Tú</strong>
+            <div class ="text-end">
+            <strong text-aling="right">Tú</strong>
+            <div>{{ msg.content }}</div>
+            <small class="text-muted">{{ msg.createdAt | date:'short' }}</small>
+            </div>
           } @else {
             <strong>{{ selectedUser?.firstName }}</strong>
+            <div>{{ msg.content }}</div>
+            <small class="text-muted">{{ msg.createdAt | date:'short' }}</small>
           }
         </small>
-        <div>{{ msg.content }}</div>
-        <small class="text-muted">{{ msg.createdAt | date:'short' }}</small>
       </div>
+      
       }
     </div>
 

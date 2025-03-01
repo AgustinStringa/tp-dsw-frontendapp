@@ -1,0 +1,63 @@
+
+<button class="chat-toggle-button" (click)="toggleChat()">
+  <i class="fas fa-comment"></i>
+</button>
+
+
+<div class="chat-container" *ngIf="isChatOpen">
+
+  <div class="chat-header">
+    <span>Chat</span>
+    <button (click)="toggleChat()" class="btn btn-sm btn-light">
+      <i class="fas fa-times"></i>
+    </button>
+  </div>
+  <div class = "chat-filter">
+    <input type="text" class="form-control" placeholder="Buscar..." [(ngModel)]="search" (ngModelChange)="filterUsers()" />
+  </div>
+
+
+
+  <div class="chat-body">
+
+    <div *ngIf="!selectedUser" class="contact-list">
+      <div class="contact-item" *ngFor="let user of filteredUsers" (click)="onUserSelected(user)">
+        <div class="contact-name">{{ user.firstName }} {{ user.lastName }}</div>
+        @if (user.entity === 'trainer') {
+        <i class="fas fa-dumbbell" title="Entrenador"></i> 
+        } @else {
+        <i class="fas fa-user" title="Cliente"></i> 
+        }
+        <div class="contact-info">{{ user.email }}</div>
+        @if (unreadMessages[user.id]) {
+        <span class="badge bg-danger">{{ unreadMessages[user.id] }}</span>
+        }
+      </div>
+    </div>
+
+
+<div *ngIf="selectedUser" class="chat-window">
+
+  <div class="chat-window-header">
+    <button (click)="selectedUser = null" class="btn btn-sm btn-light">
+      <i class="fas fa-arrow-left"></i> 
+    </button>
+    <span>{{ selectedUser.firstName }} {{ selectedUser.lastName }}</span>
+  </div>
+
+
+  <div #messagesContainer class="messages">
+    <div *ngFor="let msg of messages" class="message"
+      [ngClass]="{'message-sent': msg.sender === userId, 'message-received': msg.sender !== userId}">
+      <div class="message-content">{{ msg.content }}</div>
+      <div class="message-time">{{ msg.createdAt | date:'shortTime' }}</div>
+    </div>
+  </div>
+
+  <div class="chat-input">
+    <input [(ngModel)]="message" type="text" placeholder="Escribe un mensaje" />
+    <button (click)="sendMessage()">Enviar</button>
+  </div>
+</div>
+  </div>
+</div>

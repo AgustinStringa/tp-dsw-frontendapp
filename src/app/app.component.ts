@@ -7,6 +7,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { NavbarComponent } from './navbar/navbar.component.js';
+import { ChatWindowComponent } from './pages/chat/chat-window/chat-window.component.js';
 @Component({
   selector: 'app-root',
   standalone: true,
@@ -18,6 +19,7 @@ import { NavbarComponent } from './navbar/navbar.component.js';
     MatButtonModule,
     MatToolbarModule,
     NavbarComponent,
+    ChatWindowComponent,
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
