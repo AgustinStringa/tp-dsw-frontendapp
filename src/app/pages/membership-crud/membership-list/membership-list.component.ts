@@ -4,14 +4,14 @@ import { ComponentType } from '@angular/cdk/portal';
 import { HttpClient } from '@angular/common/http';
 import { MatDialog } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
-import { MembershipDialogComponent } from '../membership-dialog/membership-dialog.component.js';
+import { MembershipDialogComponent } from '../membership-dialog/membership-dialog.component';
 import { NgFor, NgIf } from '@angular/common';
-import { DeleteDialogComponent } from '../../../delete-dialog/delete-dialog.component.js';
-import { environment } from '../../../../environments/environment.js';
-import { IMembership } from '../../../core/interfaces/membership.interface.js';
-import { IMembershipType } from '../../../core/interfaces/membership-type.interface.js';
-import { IUser } from '../../../core/interfaces/user.interface.js';
-import { SnackbarService } from '../../../services/snackbar.service.js';
+import { DeleteDialogComponent } from '../../../delete-dialog/delete-dialog.component';
+import { environment } from '../../../../environments/environment';
+import { IMembership } from '../../../core/interfaces/membership.interface';
+import { IMembershipType } from '../../../core/interfaces/membership-type.interface';
+import { IUser } from '../../../core/interfaces/user.interface';
+import { SnackbarService } from '../../../services/snackbar.service';
 
 @Component({
   selector: 'app-membership-list',
