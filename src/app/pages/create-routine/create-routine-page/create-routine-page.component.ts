@@ -165,7 +165,10 @@ export class CreateRoutinePageComponent implements AfterViewChecked {
       });
       this.routineForm.patchValue({
         dateTo: startOfDay(
-          addWeeks(this.routineForm.value.dateFrom, weeksToAdd)
+          addWeeks(
+            startOfDay(addHours(this.routineForm.value.dateFrom, 3)),
+            weeksToAdd
+          )
         ),
       });
     }
@@ -281,7 +284,7 @@ export class CreateRoutinePageComponent implements AfterViewChecked {
     //mensaje de exito XOR error
     const newRoutine = {
       trainer: this.authService.getUser()?.id,
-      client: this.routineForm.value.client?.id,
+      clientId: this.routineForm.value.client?.id,
       start: parseISO(this.routineForm.value.dateFrom || ''),
       end: this.routineForm.value.dateTo,
       exercisesRoutine: this.routineForm.value.exercisesRoutine?.map((ex) => ({
