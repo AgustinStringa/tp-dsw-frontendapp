@@ -1,8 +1,8 @@
 import { Injectable, signal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { firstValueFrom, Observable, tap } from 'rxjs';
-import { environment } from '../../environments/environment.js';
-import { SnackbarService } from './snackbar.service.js';
+import { environment } from '../../environments/environment';
+import { SnackbarService } from './snackbar.service';
 
 interface IUserSession {
   id: string;

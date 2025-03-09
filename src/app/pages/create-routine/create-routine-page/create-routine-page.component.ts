@@ -26,15 +26,15 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { NgClass } from '@angular/common';
 import { Router } from '@angular/router';
-import Client from '../../../core/classes/client.js';
-import { ClientsMembershipListComponent } from '../clients-membership-list/clients-membership-list.component.js';
-import { DialogNewExerciseRoutineComponent } from '../dialog-new-exercise-routine/dialog-new-exercise-routine.component.js';
-import { environment } from '../../../../environments/environment.js';
-import { ExerciseRoutineCardComponent } from '../exercise-routine-card/exercise-routine-card.component.js';
-import { IExercise } from '../../../core/interfaces/exercise.interface.js';
-import { IExerciseRoutine } from '../../../core/interfaces/exercise-routine.inteface.js';
-import { SnackbarService } from '../../../services/snackbar.service.js';
-import { AuthService } from '../../../services/auth.service.js';
+import Client from '../../../core/classes/Client';
+import { ClientsMembershipListComponent } from '../clients-membership-list/clients-membership-list.component';
+import { DialogNewExerciseRoutineComponent } from '../dialog-new-exercise-routine/dialog-new-exercise-routine.component';
+import { environment } from '../../../../environments/environment';
+import { ExerciseRoutineCardComponent } from '../exercise-routine-card/exercise-routine-card.component';
+import { IExercise } from '../../../core/interfaces/exercise.interface';
+import { IExerciseRoutine } from '../../../core/interfaces/exercise-routine.inteface';
+import { SnackbarService } from '../../../services/snackbar.service';
+import { AuthService } from '../../../services/auth.service';
 
 interface Day {
   exercisesRoutine?: IExerciseRoutine[];

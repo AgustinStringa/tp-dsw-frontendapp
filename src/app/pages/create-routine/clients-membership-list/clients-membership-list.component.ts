@@ -11,8 +11,8 @@ import { es } from 'date-fns/locale';
 import { format } from 'date-fns';
 import { NgClass } from '@angular/common';
 import { SimpleChanges } from '@angular/core';
-import Client from '../../../core/classes/client.js';
-import { IMembership } from '../../../core/interfaces/membership.interface.js';
+import Client from '../../../core/classes/Client';
+import { IMembership } from '../../../core/interfaces/membership.interface';
 
 class ClientForRoutine extends Client {
   public selected: boolean;

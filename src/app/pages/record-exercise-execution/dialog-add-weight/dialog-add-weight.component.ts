@@ -13,7 +13,7 @@ import { environment } from '../../../../environments/environment';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
-import { SnackbarService } from '../../../services/snackbar.service.js';
+import { SnackbarService } from '../../../services/snackbar.service';
 
 @Component({
   selector: 'app-dialog-add-weight',

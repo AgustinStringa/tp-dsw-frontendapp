@@ -4,9 +4,9 @@ import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { AuthService } from '../services/auth.service.js';
-import { SnackbarService } from '../services/snackbar.service.js';
-import { environment } from '../../environments/environment.js';
+import { AuthService } from '../services/auth.service';
+import { SnackbarService } from '../services/snackbar.service';
+import { environment } from '../../environments/environment';
 
 @Component({
   selector: 'app-login',
