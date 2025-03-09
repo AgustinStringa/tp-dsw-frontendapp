@@ -1,15 +1,11 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { MembershipDialogComponent } from './membership-dialog.component';
-import {
-  MAT_DIALOG_DATA,
-  MatDialog,
-  MatDialogRef,
-} from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { HttpClientModule } from '@angular/common/http';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
-describe('MembershipsDialogComponent', () => {
+describe('MembershipDialogComponent', () => {
   let component: MembershipDialogComponent;
   let fixture: ComponentFixture<MembershipDialogComponent>;
 
@@ -21,10 +17,6 @@ describe('MembershipsDialogComponent', () => {
         NoopAnimationsModule,
       ],
       providers: [
-        {
-          provide: MatDialog,
-          useValue: {},
-        },
         {
           provide: MatDialogRef,
           useValue: {},

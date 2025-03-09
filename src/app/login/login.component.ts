@@ -30,7 +30,7 @@ export class LoginComponent {
 
   constructor(
     private router: Router,
-    private authService: AuthService,
+    public authService: AuthService,
     private snackbarService: SnackbarService
   ) {}
 
