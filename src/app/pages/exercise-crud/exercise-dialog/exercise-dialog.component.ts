@@ -19,9 +19,9 @@ import { DialogExerciseData } from '../exercise-list/exercise-list.component.js'
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { catchError } from 'rxjs/operators';
 import { throwError } from 'rxjs';
-import { environment } from '../../../../environments/environment.js';
-import { trimValidator } from '../../../core/Functions/trim-validator.js';
-import { SnackbarService } from '../../../services/snackbar.service.js';
+import { environment } from '../../../../environments/environment';
+import { trimValidator } from '../../../core/Functions/trim-validator';
+import { SnackbarService } from '../../../services/snackbar.service';
 
 @Component({
   selector: 'app-exercise-dialog',

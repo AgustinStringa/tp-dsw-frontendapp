@@ -1,12 +1,12 @@
 import { Component } from '@angular/core';
-import { IExerciseRoutine } from '../../../core/interfaces/exercise-routine.inteface.js';
-import { environment } from '../../../../environments/environment.js';
+import { IExerciseRoutine } from '../../../core/interfaces/exercise-routine.inteface';
+import { environment } from '../../../../environments/environment';
 import { formatDate } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
-import IRoutine from '../../../core/interfaces/IRoutine.interface.js';
-import { DialogAddWeightComponent } from '../dialog-add-weight/dialog-add-weight.component.js';
-import { AuthService } from '../../../services/auth.service.js';
-import { SnackbarService } from '../../../services/snackbar.service.js';
+import IRoutine from '../../../core/interfaces/IRoutine.interface';
+import { DialogAddWeightComponent } from '../dialog-add-weight/dialog-add-weight.component';
+import { AuthService } from '../../../services/auth.service';
+import { SnackbarService } from '../../../services/snackbar.service';
 import { differenceInWeeks } from 'date-fns';
 
 @Component({

@@ -16,10 +16,10 @@ import {
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { IMembershipType } from '../../../core/interfaces/membership-type.interface.js';
-import { environment } from '../../../../environments/environment.js';
-import { SnackbarService } from '../../../services/snackbar.service.js';
-import { trimValidator } from '../../../core/Functions/trim-validator.js';
+import { IMembershipType } from '../../../core/interfaces/membership-type.interface';
+import { environment } from '../../../../environments/environment';
+import { SnackbarService } from '../../../services/snackbar.service';
+import { trimValidator } from '../../../core/Functions/trim-validator';
 
 interface DialogData {
   title: string;

@@ -18,12 +18,11 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
-import { NgForOf } from '@angular/common';
-import { environment } from '../../../../environments/environment.js';
-import { IMembership } from '../../../core/interfaces/membership.interface.js';
-import { IMembershipType } from '../../../core/interfaces/membership-type.interface.js';
-import { IUser } from '../../../core/interfaces/user.interface.js';
-import { SnackbarService } from '../../../services/snackbar.service.js';
+import { environment } from '../../../../environments/environment';
+import { IMembership } from '../../../core/interfaces/membership.interface';
+import { IMembershipType } from '../../../core/interfaces/membership-type.interface';
+import { IUser } from '../../../core/interfaces/user.interface';
+import { SnackbarService } from '../../../services/snackbar.service';
 
 interface DialogData {
   title: string;
@@ -86,8 +85,8 @@ export class MembershipDialogComponent {
     const form = this.form.controls;
 
     let data: Record<string, any> = {
-      type: form.type.value,
-      client: form.client.value,
+      typeId: form.type.value,
+      clientId: form.client.value,
     };
 
     if (this.action === 'post') {

@@ -9,11 +9,11 @@ import {
 import { FormsModule } from '@angular/forms';
 import { IExerciseRoutine } from '../../../core/interfaces/exercise-routine.inteface.js';
 import { HttpClient } from '@angular/common/http';
-import { environment } from '../../../../environments/environment.js';
+import { environment } from '../../../../environments/environment';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
-import { SnackbarService } from '../../../services/snackbar.service.js';
+import { SnackbarService } from '../../../services/snackbar.service';
 
 @Component({
   selector: 'app-dialog-add-weight',

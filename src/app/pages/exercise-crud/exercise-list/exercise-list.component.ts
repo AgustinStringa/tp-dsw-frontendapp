@@ -3,11 +3,11 @@ import { HttpClient } from '@angular/common/http';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDialog } from '@angular/material/dialog';
 import { ComponentType } from '@angular/cdk/portal';
-import { DeleteDialogComponent } from '../../../delete-dialog/delete-dialog.component.js';
-import { environment } from '../../../../environments/environment.js';
-import { ExerciseDialogComponent } from '../exercise-dialog/exercise-dialog.component.js';
-import { IExercise } from '../../../core/interfaces/exercise.interface.js';
-import { SnackbarService } from '../../../services/snackbar.service.js';
+import { DeleteDialogComponent } from '../../../delete-dialog/delete-dialog.component';
+import { environment } from '../../../../environments/environment';
+import { ExerciseDialogComponent } from '../exercise-dialog/exercise-dialog.component';
+import { IExercise } from '../../../core/interfaces/exercise.interface';
+import { SnackbarService } from '../../../services/snackbar.service';
 
 export interface DialogExerciseData {
   exercise: IExercise;

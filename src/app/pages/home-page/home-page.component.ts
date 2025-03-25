@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { AuthService } from '../../services/auth.service.js';
-import { environment } from '../../../environments/environment.js';
-import { IMembership } from '../../core/interfaces/membership.interface.js';
+import { AuthService } from '../../services/auth.service';
+import { environment } from '../../../environments/environment';
+import { IMembership } from '../../core/interfaces/membership.interface';
 
 @Component({
   selector: 'app-home-page',

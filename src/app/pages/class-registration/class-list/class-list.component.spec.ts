@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ClassListComponent } from './class-list.component';
+import { HttpClientModule } from '@angular/common/http';
 
 describe('ClassListComponent', () => {
   let component: ClassListComponent;
@@ -8,10 +9,9 @@ describe('ClassListComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [ClassListComponent]
-    })
-    .compileComponents();
-    
+      imports: [ClassListComponent, HttpClientModule],
+    }).compileComponents();
+
     fixture = TestBed.createComponent(ClassListComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

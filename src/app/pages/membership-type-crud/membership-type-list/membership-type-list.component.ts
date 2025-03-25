@@ -4,10 +4,10 @@ import { HttpClient } from '@angular/common/http';
 import { MatDialog } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { NgFor, NgIf } from '@angular/common';
-import { DeleteDialogComponent } from '../../../delete-dialog/delete-dialog.component.js';
+import { DeleteDialogComponent } from '../../../delete-dialog/delete-dialog.component';
 import { environment } from '../../../../environments/environment';
 import { IMembershipType } from '../../../core/interfaces/membership-type.interface';
-import { MembershipTypeDialogComponent } from '../membership-type-dialog/membership-type-dialog.component.js';
+import { MembershipTypeDialogComponent } from '../membership-type-dialog/membership-type-dialog.component';
 
 @Component({
   selector: 'app-membership-types-list',
