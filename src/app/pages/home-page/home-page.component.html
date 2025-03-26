@@ -13,6 +13,7 @@
             <h4 class="my-3 text-muted">{{ this.userSignal()?.firstName }}</h4>
           </div>
         </div>
+
         @if(this.userSignal()?.isClient){
         <div class="card mb-4 mb-lg-0">
           <div class="card-body p-0">
@@ -38,13 +39,15 @@
               <li
                 class="list-group-item d-flex justify-content-between align-items-center p-3"
               >
-                {{ this.membership?.type?.name }}
-                hasta @if(this.membershipDateTo!=null){
-                {{ this.membershipDateTo.getDay() + 1 }}/{{
-                  this.membershipDateTo.getMonth() + 1
-                }}/{{ this.membershipDateTo.getFullYear() }}
-                }
+                @if (this.membership !== null) {
+                {{ this.membership.type.name }}
+                hasta {{ this.formatedDateTo }}
                 <p class="mb-0 text-end">membresía actual</p>
+                } @else {
+                <button (click)="openPayMembershipModal()">
+                  Comprar una Membresía
+                </button>
+                }
               </li>
             </ul>
           </div>

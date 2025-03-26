@@ -1,0 +1,61 @@
+<div class="container">
+  <div class="dialog-title">
+    <h2 mat-dialog-title>Comprar una Membresía</h2>
+    <button
+      type="button"
+      class="btn-close"
+      title="Cerrar ventana"
+      (click)="closeDialog('none')"
+    ></button>
+  </div>
+
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <mat-dialog-content class="common-dialog">
+      <div style="display: flex; flex-direction: row">
+        <div style="width: 40%">
+          <mat-label for="membershipType">Tipo de Membresía</mat-label>
+          <mat-radio-group
+            style="display: flex; flex-direction: column"
+            formControlName="membershipType"
+          >
+            @for (t of membershipTypes; track t){
+            <mat-radio-button
+              name="membershipType"
+              [value]="t.id"
+              (click)="onItemSelected(t)"
+            >
+              {{ t.name }}
+            </mat-radio-button>
+            }
+          </mat-radio-group>
+        </div>
+
+        <div style="width: 40%; display: flex; flex-direction: column">
+          <mat-label>Precio: {{ selectedMembershipType?.price }}</mat-label>
+          <mat-label
+            >Descripción: {{ selectedMembershipType?.description }}</mat-label
+          >
+        </div>
+      </div>
+    </mat-dialog-content>
+
+    <mat-dialog-actions class="common-dialog">
+      <button
+        mat-button
+        type="submit"
+        class="btn btn-success"
+        [disabled]="!form.valid"
+      >
+        Comprar
+      </button>
+      <button
+        mat-button
+        type="button"
+        class="btn-secondary"
+        (click)="closeDialog('none')"
+      >
+        Cancelar
+      </button>
+    </mat-dialog-actions>
+  </form>
+</div>
