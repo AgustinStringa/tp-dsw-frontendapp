@@ -10,7 +10,8 @@ export class SocketService {
 
   constructor() {
     this.socket = io('http://localhost:3000', {
-      withCredentials: true, // Permitir cookies en la conexión
+      withCredentials: true,
+      transports: ['websocket', 'polling'],
     });
 
     this.socket.on('connect', () => {
