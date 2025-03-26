@@ -15,6 +15,7 @@ import { MessageService } from '../../../services/message.service.js';
 import { AuthService } from '../../../services/auth.service.js';
 import { environment } from '../../../../environments/environment.js';
 import { HttpClient } from '@angular/common/http';
+import { SoundUtils } from '../../../core/functions/playSound.js';
 
 @Component({
   selector: 'app-chat-window',
@@ -28,6 +29,7 @@ export class ChatWindowComponent
 {
   @ViewChild('messagesContainer') private messagesContainer!: ElementRef;
   isChatOpen = false;
+  totalUnreadMessages = 0;
   selectedUser: IUser | null = null;
   message = '';
   messages: IMessage[] = [];
@@ -52,14 +54,26 @@ export class ChatWindowComponent
     this.loadUsers();
 
     this.socketService.onMessage('respuesta').subscribe((data: any) => {
+      const isMessageForCurrentUser = data.receiver === this.userId;
+      const isFromSelectedChat = data.sender === this.selectedUser?.id;
+      const isMessageSentByMe = data.sender === this.userId;
+
+      if (isMessageForCurrentUser && !isFromSelectedChat) {
+        SoundUtils.notification();
+      } else {
+        SoundUtils.sendMessage();
+      }
       if (
         data.sender === this.selectedUser?.id ||
         data.receiver === this.selectedUser?.id
       ) {
         this.messages.push(data);
       }
-      this.unreadMessages[data.sender] =
-        (this.unreadMessages[data.sender] || 0) + 1;
+      if (isMessageForCurrentUser && !isMessageSentByMe) {
+        this.unreadMessages[data.sender] =
+          (this.unreadMessages[data.sender] || 0) + 1;
+        this.calculateTotalUnread();
+      }
     });
 
     this.loadUnreadMessages();
@@ -158,6 +172,13 @@ export class ChatWindowComponent
     });
   }
 
+  calculateTotalUnread() {
+    this.totalUnreadMessages = Object.values(this.unreadMessages).reduce(
+      (acc, curr) => acc + curr,
+      0
+    );
+  }
+
   onUserSelected(user: IUser) {
     this.selectedUser = user;
     this.unreadMessages[user.id] = 0;
@@ -179,6 +200,7 @@ export class ChatWindowComponent
           console.error('Error obteniendo mensajes:', error);
         },
       });
+    this.calculateTotalUnread();
   }
 
   sendMessage() {

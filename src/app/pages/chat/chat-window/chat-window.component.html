@@ -1,16 +1,18 @@
 
 <button class="chat-toggle-button" (click)="toggleChat()">
   <i class="fas fa-comment"></i>
+    @if (totalUnreadMessages > 0 && !isChatOpen) {
+    <span class="chat-toggle-badge">{{ totalUnreadMessages }}</span>
+    }
 </button>
 
 
 <div class="chat-container" *ngIf="isChatOpen">
-
   <div class="chat-header">
     <span>Chat</span>
-    <button (click)="toggleChat()" class="btn btn-sm btn-light">
-      <i class="fas fa-times"></i>
-    </button>
+<button class="chat-toggle-button" (click)="toggleChat()">
+  <i class="fas fa-comment"></i>
+</button>
   </div>
   <div class = "chat-filter">
     <input type="text" class="form-control" placeholder="Buscar..." [(ngModel)]="search" (ngModelChange)="filterUsers()" />
