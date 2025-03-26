@@ -7,5 +7,5 @@ export interface IMembership {
   dateTo: Date;
   type: IMembershipType;
   client: IUser;
-  //payment
+  debt?: number;
 }

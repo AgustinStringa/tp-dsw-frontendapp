@@ -5,7 +5,6 @@ import { HttpClient } from '@angular/common/http';
 import { MatDialog } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { MembershipDialogComponent } from '../membership-dialog/membership-dialog.component.js';
-import { NgFor, NgIf } from '@angular/common';
 import { DeleteDialogComponent } from '../../../delete-dialog/delete-dialog.component.js';
 import { environment } from '../../../../environments/environment.js';
 import { IMembership } from '../../../core/interfaces/membership.interface.js';
@@ -16,7 +15,7 @@ import { SnackbarService } from '../../../services/snackbar.service.js';
 @Component({
   selector: 'app-membership-list',
   standalone: true,
-  imports: [CommonModule, NgFor, NgIf, MatIconModule],
+  imports: [CommonModule, MatIconModule],
   templateUrl: './membership-list.component.html',
   styleUrl: './membership-list.component.css',
 })
@@ -35,8 +34,7 @@ export class MembershipListComponent {
   }
 
   getActiveMemberships() {
-    this.http.get<any>(environment.membershipsActive).subscribe({
-      //TODO revisar si trae las activas.
+    this.http.get<any>(environment.activeMembershipsUrl).subscribe({
       next: (res) => {
         this.memberships = res.data;
       },

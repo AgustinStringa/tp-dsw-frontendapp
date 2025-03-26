@@ -86,8 +86,8 @@ export class MembershipDialogComponent {
     const form = this.form.controls;
 
     let data: Record<string, any> = {
-      type: form.type.value,
-      client: form.client.value,
+      typeId: form.type.value,
+      clientId: form.client.value,
     };
 
     if (this.action === 'post') {

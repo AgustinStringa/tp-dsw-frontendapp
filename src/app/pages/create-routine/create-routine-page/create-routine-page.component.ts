@@ -84,7 +84,7 @@ export class CreateRoutinePageComponent implements AfterViewChecked {
 
   weeks: Week[] = [];
   expandedIndex = 0;
-  clientsWithmembership: Client[] = [];
+  clients: Client[] = [];
   exercises: Object[] = [];
   today: Date = new Date();
   trainerId: string | undefined = '';
@@ -99,7 +99,7 @@ export class CreateRoutinePageComponent implements AfterViewChecked {
     private snackbarService: SnackbarService,
     private authService: AuthService
   ) {
-    this.getClientsWithMembership();
+    this.getClientsWithActiveMembership();
     this.getExercises();
   }
 
@@ -109,35 +109,35 @@ export class CreateRoutinePageComponent implements AfterViewChecked {
     }
   }
 
-  getClientsWithMembership() {
-    try {
-      this.http
-        .get<any>(environment.membershipsActive)
-        .subscribe((res: any) => {
-          this.clientsWithmembership = [];
-          Array.from(res.data).forEach((m: any) => {
-            this.clientsWithmembership = [
-              ...this.clientsWithmembership,
-              new Client(
-                m.client.id,
-                m.client.lastName,
-                m.client.firstName,
-                m.client.dni,
-                m.client.email,
-                {
-                  id: m.id,
-                  dateFrom: m.dateFrom,
-                  dateTo: m.dateTo,
-                  type: m.type,
-                  client: m.client,
-                }
-              ),
-            ];
-          });
+  getClientsWithActiveMembership() {
+    this.http.get<any>(environment.activeMembershipsUrl).subscribe({
+      next: (res) => {
+        this.clients = [];
+
+        Array.from(res.data).forEach((m: any) => {
+          this.clients = [
+            ...this.clients,
+            new Client(
+              m.client.id,
+              m.client.lastName,
+              m.client.firstName,
+              m.client.dni,
+              m.client.email,
+              {
+                id: m.id,
+                dateFrom: m.dateFrom,
+                dateTo: m.dateTo,
+                type: m.type,
+                client: m.client,
+              }
+            ),
+          ];
         });
-    } catch (error: any) {
-      console.log(error);
-    }
+      },
+      error: (err) => {
+        this.snackbarService.showError(err.message);
+      },
+    });
   }
 
   getExercises() {
@@ -360,7 +360,7 @@ export class CreateRoutinePageComponent implements AfterViewChecked {
         exercisesRoutine: [],
       });
       this.weeks = [];
-      this.getClientsWithMembership();
+      this.getClientsWithActiveMembership();
     } catch (error) {
       console.log(error);
     }
