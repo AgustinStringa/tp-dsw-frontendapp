@@ -1,16 +1,18 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { ComponentType } from '@angular/cdk/portal';
-import { HttpClient } from '@angular/common/http';
-import { MatDialog } from '@angular/material/dialog';
-import { MatIconModule } from '@angular/material/icon';
-import { MembershipDialogComponent } from '../membership-dialog/membership-dialog.component.js';
 import { DeleteDialogComponent } from '../../../delete-dialog/delete-dialog.component.js';
 import { environment } from '../../../../environments/environment.js';
 import { IMembership } from '../../../core/interfaces/membership.interface.js';
 import { IMembershipType } from '../../../core/interfaces/membership-type.interface.js';
 import { IUser } from '../../../core/interfaces/user.interface.js';
-import { SnackbarService } from '../../../services/snackbar.service.js';
+import { MatDialog } from '@angular/material/dialog';
+import { MatIconModule } from '@angular/material/icon';
+import { MembershipDialogComponent } from '../membership-dialog/membership-dialog.component.js';
+import { MembershipService } from '../../../core/services/membership.service.js';
+import { PaymentDialogComponent } from '../payment-dialog/payment-dialog.component.js';
+import { PaymentListComponent } from '../payment-list/payment-list.component';
+import { SnackbarService } from '../../../core/services/snackbar.service.js';
 
 @Component({
   selector: 'app-membership-list',
@@ -26,15 +28,15 @@ export class MembershipListComponent {
   activeMemberships: { [clientId: string]: IMembership | null } = {};
 
   constructor(
-    private http: HttpClient,
     private dialog: MatDialog,
+    private membershipService: MembershipService,
     private snackbarService: SnackbarService
   ) {
     this.getActiveMemberships();
   }
 
   getActiveMemberships() {
-    this.http.get<any>(environment.activeMembershipsUrl).subscribe({
+    this.membershipService.getActive().subscribe({
       next: (res) => {
         this.memberships = res.data;
       },
@@ -49,6 +51,16 @@ export class MembershipListComponent {
       data: {
         title: 'Nueva Membresía',
         action: 'post',
+      },
+    });
+  }
+
+  addPayment(membership: IMembership) {
+    this.openDialog(PaymentDialogComponent, {
+      data: {
+        title: 'Nuevo Pago',
+        action: 'post',
+        membership,
       },
     });
   }

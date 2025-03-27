@@ -1,0 +1,13 @@
+.container {
+  width: 400px;
+}
+
+.btn-close {
+  margin-left: auto;
+}
+
+h2.mat-dialog-title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}

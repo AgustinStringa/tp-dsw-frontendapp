@@ -35,11 +35,19 @@
 
         <td class="td-actions">
           <button
+            (click)="addPayment(m)"
+            aria-label="Example icon button with a new payment icon"
+          >
+            <mat-icon>payments</mat-icon>
+          </button>
+
+          <button
             (click)="deleteMembership(m.id)"
             aria-label="Example icon button with a delete icon"
           >
             <mat-icon>delete</mat-icon>
           </button>
+
           <button
             (click)="updateMembership(m)"
             aria-label="Example icon button with an edit icon"
