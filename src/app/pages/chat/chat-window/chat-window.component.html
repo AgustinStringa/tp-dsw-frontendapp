@@ -8,8 +8,9 @@
 
 
 <div class="chat-container" *ngIf="isChatOpen">
-  <div (click)="toggleChat()" class="pointer chat-header">
-    <span>Chat</span>
+  <div class="chat-header">
+    <div class="chat-close"(click)="toggleChat()"><span>Chat</span></div>
+    
 
 <div class="chat-header-actions">
 

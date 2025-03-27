@@ -9,15 +9,12 @@
   bottom: 80px;
   right: 20px;
   width: 350px;
-  height: calc(58.9% - 40px);
+  height: calc(59.9% - 40px);
   background-color: rgba(0, 0, 0, 0.5);
   z-index: 1001;
   display: flex;
   align-items: center;
   justify-content: center;
-}
-.pointer {
-  cursor: pointer;
 }
 
 .disconnected-message {
@@ -205,7 +202,7 @@
 .chat-header {
   background-color: #007bff;
   color: white;
-  padding: 10px;
+ 
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
   display: flex;
@@ -213,7 +210,13 @@
   align-items: center;
   flex-shrink: 0;
 }
-
+.chat-close {
+  padding: 10px;
+  cursor: pointer;
+  width: 90%;
+  height: 100%;
+  text-align: left;
+}
 .message-sent {
   background-color: #007bff;
   color: white;
@@ -249,7 +252,7 @@
 }
 
 .contact-list {
-  padding: 10px;
+  padding: 0px 10px 10px 10px;
 }
 
 .contact-item {
