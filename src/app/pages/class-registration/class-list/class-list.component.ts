@@ -1,15 +1,15 @@
-import { NgIf } from '@angular/common';
-import { HttpClient } from '@angular/common/http';
+import { AuthService } from '../../../core/services/auth.service.js';
 import { Component, inject } from '@angular/core';
+import { DialogConfirmRegistrationComponent } from '../dialog-confirm-registration/dialog-confirm-registration.component.js';
 import { environment } from '../../../../environments/environment.js';
-import { IClassType } from '../../../core/interfaces/class-type.interface.js';
+import { HttpClient } from '@angular/common/http';
 import { IClass } from '../../../core/interfaces/class.interface.js';
+import { IClassType } from '../../../core/interfaces/class-type.interface.js';
 import { IRegistration } from '../../../core/interfaces/registration.interface.js';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatDialog } from '@angular/material/dialog';
-import { DialogConfirmRegistrationComponent } from '../dialog-confirm-registration/dialog-confirm-registration.component.js';
-import { AuthService } from '../../../services/auth.service.js';
-import { SnackbarService } from '../../../services/snackbar.service.js';
+import { NgIf } from '@angular/common';
+import { SnackbarService } from '../../../core/services/snackbar.service.js';
 
 @Component({
   selector: 'app-class-list',

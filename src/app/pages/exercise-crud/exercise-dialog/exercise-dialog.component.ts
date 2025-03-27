@@ -1,9 +1,9 @@
 import { Component, inject } from '@angular/core';
 import {
-  Validators,
   FormControl,
   FormGroup,
   ReactiveFormsModule,
+  Validators,
 } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import {
@@ -20,8 +20,8 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { catchError } from 'rxjs/operators';
 import { throwError } from 'rxjs';
 import { environment } from '../../../../environments/environment.js';
-import { trimValidator } from '../../../core/Functions/trim-validator.js';
-import { SnackbarService } from '../../../services/snackbar.service.js';
+import { trimValidator } from '../../../core/functions/trim-validator.js';
+import { SnackbarService } from '../../../core/services/snackbar.service.js';
 
 @Component({
   selector: 'app-exercise-dialog',

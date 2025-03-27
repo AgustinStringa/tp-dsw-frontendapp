@@ -5,8 +5,8 @@ import { formatDate } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import IRoutine from '../../../core/interfaces/IRoutine.interface.js';
 import { DialogAddWeightComponent } from '../dialog-add-weight/dialog-add-weight.component.js';
-import { AuthService } from '../../../services/auth.service.js';
-import { SnackbarService } from '../../../services/snackbar.service.js';
+import { AuthService } from '../../../core/services/auth.service.js';
+import { SnackbarService } from '../../../core/services/snackbar.service.js';
 import { differenceInWeeks } from 'date-fns';
 
 @Component({

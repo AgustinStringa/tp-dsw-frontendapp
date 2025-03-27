@@ -7,7 +7,7 @@ import { DeleteDialogComponent } from '../../../delete-dialog/delete-dialog.comp
 import { environment } from '../../../../environments/environment.js';
 import { ExerciseDialogComponent } from '../exercise-dialog/exercise-dialog.component.js';
 import { IExercise } from '../../../core/interfaces/exercise.interface.js';
-import { SnackbarService } from '../../../services/snackbar.service.js';
+import { SnackbarService } from '../../../core/services/snackbar.service.js';
 
 export interface DialogExerciseData {
   exercise: IExercise;

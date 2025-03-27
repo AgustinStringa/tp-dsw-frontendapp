@@ -1,15 +1,15 @@
+import { AuthService } from '../../core/services/auth.service.js';
 import { Component } from '@angular/core';
 import { differenceInWeeks } from 'date-fns';
+import { environment } from '../../../environments/environment.js';
 import { formatDate } from '@angular/common';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { IExerciseRoutine } from '../../core/interfaces/exercise-routine.inteface.js';
+import { IRoutine } from '../../core/interfaces/routine.interface.js';
 import {
   MatExpansionModule,
   MatExpansionPanel,
 } from '@angular/material/expansion';
-import { environment } from '../../../environments/environment.js';
-import IRoutine from '../../core/interfaces/IRoutine.interface.js';
-import { AuthService } from '../../services/auth.service.js';
-import { IExerciseRoutine } from '../../core/interfaces/exercise-routine.inteface.js';
 
 @Component({
   selector: 'app-show-client-routine',

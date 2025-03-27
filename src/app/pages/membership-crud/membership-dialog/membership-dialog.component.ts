@@ -1,4 +1,5 @@
 import { Component, Inject } from '@angular/core';
+import { environment } from '../../../../environments/environment.js';
 import {
   FormControl,
   FormGroup,
@@ -6,6 +7,11 @@ import {
   Validators,
 } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
+import { IMembership } from '../../../core/interfaces/membership.interface.js';
+import { IMembershipType } from '../../../core/interfaces/membership-type.interface.js';
+import { IUser } from '../../../core/interfaces/user.interface.js';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 import {
   MAT_DIALOG_DATA,
   MatDialogRef,
@@ -13,17 +19,10 @@ import {
   MatDialogContent,
   MatDialogActions,
 } from '@angular/material/dialog';
-import { MatButtonModule } from '@angular/material/button';
-import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
-import { NgForOf } from '@angular/common';
-import { environment } from '../../../../environments/environment.js';
-import { IMembership } from '../../../core/interfaces/membership.interface.js';
-import { IMembershipType } from '../../../core/interfaces/membership-type.interface.js';
-import { IUser } from '../../../core/interfaces/user.interface.js';
-import { SnackbarService } from '../../../services/snackbar.service.js';
+import { SnackbarService } from '../../../core/services/snackbar.service.js';
 
 interface DialogData {
   title: string;

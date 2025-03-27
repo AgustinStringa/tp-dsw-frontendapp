@@ -1,12 +1,11 @@
-import { NgClass } from '@angular/common';
+import { AuthService } from '../core/services/auth.service.js';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { Router } from '@angular/router';
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { HttpErrorResponse } from '@angular/common/http';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { AuthService } from '../services/auth.service.js';
-import { SnackbarService } from '../services/snackbar.service.js';
-import { environment } from '../../environments/environment.js';
+import { NgClass } from '@angular/common';
+import { Router } from '@angular/router';
+import { SnackbarService } from '../core/services/snackbar.service';
 
 @Component({
   selector: 'app-login',
@@ -118,7 +117,7 @@ export class LoginComponent {
           next: () => {
             this.router.navigate(['/home']);
           },
-          error: (error) => {
+          error: (error: any) => {
             //TODO mostrar si el error se debe a que ya se usó el correo
             this.snackbarService.showError('Error al crear usuario');
           },

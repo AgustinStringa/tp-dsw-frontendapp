@@ -3,7 +3,6 @@ import { ComponentType } from '@angular/cdk/portal';
 import { HttpClient } from '@angular/common/http';
 import { MatDialog } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
-import { NgFor, NgIf } from '@angular/common';
 import { DeleteDialogComponent } from '../../../delete-dialog/delete-dialog.component.js';
 import { environment } from '../../../../environments/environment';
 import { IMembershipType } from '../../../core/interfaces/membership-type.interface';

@@ -1,4 +1,5 @@
 import { Component, Inject } from '@angular/core';
+import { environment } from '../../../../environments/environment.js';
 import {
   FormControl,
   FormGroup,
@@ -6,6 +7,8 @@ import {
   Validators,
 } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
+import { IMembershipType } from '../../../core/interfaces/membership-type.interface.js';
+import { MatButtonModule } from '@angular/material/button';
 import {
   MAT_DIALOG_DATA,
   MatDialogActions,
@@ -13,13 +16,10 @@ import {
   MatDialogRef,
   MatDialogTitle,
 } from '@angular/material/dialog';
-import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { IMembershipType } from '../../../core/interfaces/membership-type.interface.js';
-import { environment } from '../../../../environments/environment.js';
-import { SnackbarService } from '../../../services/snackbar.service.js';
-import { trimValidator } from '../../../core/Functions/trim-validator.js';
+import { SnackbarService } from '../../../core/services/snackbar.service.js';
+import { trimValidator } from '../../../core/functions/trim-validator.js';
 
 interface DialogData {
   title: string;

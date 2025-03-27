@@ -1,4 +1,4 @@
-import { AuthService } from '../../services/auth.service.js';
+import { AuthService } from '../../core/services/auth.service.js';
 import { Component } from '@angular/core';
 import { environment } from '../../../environments/environment.js';
 import { HttpClient } from '@angular/common/http';

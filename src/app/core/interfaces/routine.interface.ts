@@ -1,7 +1,7 @@
 import { IExerciseRoutine } from './exercise-routine.inteface.js';
-import ITrainer from './ITrainer.interface.js';
+import { ITrainer } from './ITrainer.interface.js';
 
-export default interface IRoutine {
+export interface IRoutine {
   id: number;
   start: Date;
   end: Date;

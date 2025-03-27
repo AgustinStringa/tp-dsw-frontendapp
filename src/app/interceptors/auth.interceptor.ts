@@ -1,4 +1,5 @@
-import { Injectable } from '@angular/core';
+import { AuthService } from '../core/services/auth.service';
+import { catchError, Observable } from 'rxjs';
 import {
   HttpInterceptor,
   HttpRequest,
@@ -6,8 +7,7 @@ import {
   HttpEvent,
   HttpErrorResponse,
 } from '@angular/common/http';
-import { catchError, Observable } from 'rxjs';
-import { AuthService } from '../services/auth.service.js';
+import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 
 @Injectable()

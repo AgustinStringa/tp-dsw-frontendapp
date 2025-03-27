@@ -1,4 +1,4 @@
-import { AuthService } from '../services/auth.service';
+import { AuthService } from '../core/services/auth.service';
 import { Component } from '@angular/core';
 import { environment } from '../../environments/environment';
 import {
@@ -22,7 +22,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatListModule } from '@angular/material/list';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatSelectModule } from '@angular/material/select';
-import { SnackbarService } from '../services/snackbar.service';
+import { SnackbarService } from '../core/services/snackbar.service';
 
 @Component({
   selector: 'app-pay-membership-dialog',

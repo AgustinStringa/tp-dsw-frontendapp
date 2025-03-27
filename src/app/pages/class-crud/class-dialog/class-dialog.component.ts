@@ -1,4 +1,6 @@
 import { Component, Inject } from '@angular/core';
+import { ClassTypeDialogComponent } from '../../class-type-crud/class-type-dialog/class-type-dialog.component';
+import { environment } from '../../../../environments/environment';
 import {
   FormControl,
   FormGroup,
@@ -6,6 +8,10 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
+import { HttpClient } from '@angular/common/http';
+import { IClass } from '../../../core/interfaces/class.interface';
+import { IClassType } from '../../../core/interfaces/class-type.interface';
+import { IUser } from '../../../core/interfaces/user.interface';
 import {
   MAT_DIALOG_DATA,
   MatDialogActions,
@@ -13,18 +19,12 @@ import {
   MatDialogRef,
   MatDialogTitle,
 } from '@angular/material/dialog';
-import { HttpClient } from '@angular/common/http';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
-import { ClassTypeDialogComponent } from '../../class-type-crud/class-type-dialog/class-type-dialog.component';
-import { environment } from '../../../../environments/environment';
-import { IClass } from '../../../core/interfaces/class.interface';
-import { IClassType } from '../../../core/interfaces/class-type.interface';
-import { IUser } from '../../../core/interfaces/user.interface';
-import { trimValidator } from '../../../core/Functions/trim-validator';
+import { trimValidator } from '../../../core/functions/trim-validator';
 
 interface DialogData {
   title: string;

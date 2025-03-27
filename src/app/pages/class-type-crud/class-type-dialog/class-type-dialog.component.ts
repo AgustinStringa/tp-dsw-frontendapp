@@ -1,4 +1,5 @@
 import { Component, Inject } from '@angular/core';
+import { environment } from '../../../../environments/environment';
 import {
   FormsModule,
   Validators,
@@ -6,8 +7,9 @@ import {
   FormGroup,
   ReactiveFormsModule,
 } from '@angular/forms';
+import { HttpClient } from '@angular/common/http';
+import { IClassType } from '../../../core/interfaces/class-type.interface';
 import { MatButtonModule } from '@angular/material/button';
-import { MatSelectModule } from '@angular/material/select';
 import {
   MAT_DIALOG_DATA,
   MatDialogActions,
@@ -17,12 +19,10 @@ import {
 } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { HttpClient } from '@angular/common/http';
-import { environment } from '../../../../environments/environment';
-import { IClassType } from '../../../core/interfaces/class-type.interface';
-import { trimValidator } from '../../../core/Functions/trim-validator';
+import { MatSelectModule } from '@angular/material/select';
 import { NgClass } from '@angular/common';
-import { SnackbarService } from '../../../services/snackbar.service';
+import { SnackbarService } from '../../../core/services/snackbar.service';
+import { trimValidator } from '../../../core/functions/trim-validator';
 
 interface DialogData {
   title: string;

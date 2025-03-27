@@ -5,6 +5,9 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
+import { HttpClient } from '@angular/common/http';
+import { IUser } from '../core/interfaces/user.interface';
+import { MatButtonModule } from '@angular/material/button';
 import {
   MAT_DIALOG_DATA,
   MatDialogRef,
@@ -12,13 +15,10 @@ import {
   MatDialogActions,
   MatDialogTitle,
 } from '@angular/material/dialog';
-import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { HttpClient } from '@angular/common/http';
-import { IUser } from '../core/interfaces/user.interface';
-import { trimValidator } from '../core/Functions/trim-validator';
-import { SnackbarService } from '../services/snackbar.service';
+import { SnackbarService } from '../core/services/snackbar.service';
+import { trimValidator } from '../core/functions/trim-validator';
 
 interface DialogData {
   title: string;

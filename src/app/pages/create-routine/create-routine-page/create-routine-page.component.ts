@@ -1,3 +1,4 @@
+import { AuthService } from '../../../core/services/auth.service.js';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
@@ -33,8 +34,7 @@ import { environment } from '../../../../environments/environment.js';
 import { ExerciseRoutineCardComponent } from '../exercise-routine-card/exercise-routine-card.component.js';
 import { IExercise } from '../../../core/interfaces/exercise.interface.js';
 import { IExerciseRoutine } from '../../../core/interfaces/exercise-routine.inteface.js';
-import { SnackbarService } from '../../../services/snackbar.service.js';
-import { AuthService } from '../../../services/auth.service.js';
+import { SnackbarService } from '../../../core/services/snackbar.service.js';
 
 interface Day {
   exercisesRoutine?: IExerciseRoutine[];

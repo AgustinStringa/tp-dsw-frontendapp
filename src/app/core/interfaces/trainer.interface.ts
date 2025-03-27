@@ -1,4 +1,4 @@
-export default interface ITrainer {
+export interface ITrainer {
   id: number;
   username: string;
   email: string;

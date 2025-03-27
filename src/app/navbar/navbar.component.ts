@@ -1,11 +1,11 @@
+import { AuthService } from '../core/services/auth.service';
 import { Component } from '@angular/core';
-import { RouterLink, Router, NavigationEnd } from '@angular/router';
-import { NgClass } from '@angular/common';
-import { MdbCollapseModule } from 'mdb-angular-ui-kit/collapse';
-import { MatMenuModule } from '@angular/material/menu';
-import { MatButtonModule } from '@angular/material/button';
 import { filter } from 'rxjs';
-import { AuthService } from '../services/auth.service.js';
+import { MatButtonModule } from '@angular/material/button';
+import { MatMenuModule } from '@angular/material/menu';
+import { MdbCollapseModule } from 'mdb-angular-ui-kit/collapse';
+import { NgClass } from '@angular/common';
+import { RouterLink, Router, NavigationEnd } from '@angular/router';
 
 @Component({
   selector: 'app-navbar',
