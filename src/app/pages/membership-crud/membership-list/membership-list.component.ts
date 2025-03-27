@@ -11,7 +11,6 @@ import { MatIconModule } from '@angular/material/icon';
 import { MembershipDialogComponent } from '../membership-dialog/membership-dialog.component.js';
 import { MembershipService } from '../../../core/services/membership.service.js';
 import { PaymentDialogComponent } from '../payment-dialog/payment-dialog.component.js';
-import { PaymentListComponent } from '../payment-list/payment-list.component';
 import { SnackbarService } from '../../../core/services/snackbar.service.js';
 
 @Component({
@@ -25,7 +24,7 @@ export class MembershipListComponent {
   memberships: IMembership[] | null = null;
   clients: IUser[] = [];
   types: IMembershipType[] = [];
-  activeMemberships: { [clientId: string]: IMembership | null } = {};
+  activeMemberships: Record<string, IMembership | null> = {};
 
   constructor(
     private dialog: MatDialog,

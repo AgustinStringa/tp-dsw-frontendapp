@@ -32,9 +32,9 @@ export class ClientListComponent {
   @ViewChild(UsersFilterComponent) filter!: UsersFilterComponent;
 
   clients: IUser[] | null = null;
-  clientsExist: boolean = false;
+  clientsExist = false;
   clientsPage: IUser[] | null = null;
-  pageSize: number = 50;
+  pageSize = 50;
 
   constructor(private dialog: MatDialog) {}
 

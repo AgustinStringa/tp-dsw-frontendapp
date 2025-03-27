@@ -19,7 +19,7 @@ import { SnackbarService } from '../../../core/services/snackbar.service.js';
   styleUrl: './class-list.component.css',
 })
 export class ClassListComponent {
-  urlClass: string = '';
+  urlClass = '';
   classtypes: IClassType[] = [];
   selectedClass: IClass | null = null;
   selectedClassType: IClassType | null = null;

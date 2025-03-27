@@ -14,10 +14,10 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import {
   MAT_DIALOG_DATA,
-  MatDialogRef,
-  MatDialogModule,
-  MatDialogContent,
   MatDialogActions,
+  MatDialogContent,
+  MatDialogModule,
+  MatDialogRef,
 } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -84,7 +84,7 @@ export class MembershipDialogComponent {
   onSubmit(): void {
     const form = this.form.controls;
 
-    let data: Record<string, any> = {
+    const data: Record<string, any> = {
       typeId: form.type.value,
       clientId: form.client.value,
     };

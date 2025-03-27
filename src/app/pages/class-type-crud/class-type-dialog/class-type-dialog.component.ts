@@ -1,11 +1,11 @@
 import { Component, Inject } from '@angular/core';
 import { environment } from '../../../../environments/environment';
 import {
-  FormsModule,
-  Validators,
   FormControl,
   FormGroup,
+  FormsModule,
   ReactiveFormsModule,
+  Validators,
 } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { IClassType } from '../../../core/interfaces/class-type.interface';
@@ -77,7 +77,7 @@ export class ClassTypeDialogComponent {
   }
 
   onSubmit(): void {
-    let data: Record<string, any> = {
+    const data: Record<string, any> = {
       name: this.form.get('name')?.value,
       description: this.form.get('description')?.value,
     };

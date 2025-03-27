@@ -3,21 +3,21 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import {
-  startOfWeek,
   addDays,
-  lightFormat,
+  addHours,
   addWeeks,
+  format,
+  lightFormat,
+  parse,
   parseISO,
   startOfDay,
-  addHours,
-  format,
-  parse,
+  startOfWeek,
 } from 'date-fns';
-import { Component, inject, AfterViewChecked } from '@angular/core';
+import { AfterViewChecked, Component, inject } from '@angular/core';
 import {
-  FormsModule,
   FormControl,
   FormGroup,
+  FormsModule,
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
@@ -85,10 +85,10 @@ export class CreateRoutinePageComponent implements AfterViewChecked {
   weeks: Week[] = [];
   expandedIndex = 0;
   clients: Client[] = [];
-  exercises: Object[] = [];
+  exercises: object[] = [];
   today: Date = new Date();
   trainerId: string | undefined = '';
-  isClientSelected: boolean = false;
+  isClientSelected = false;
   firstMonday = lightFormat(addDays(startOfWeek(new Date()), 1), 'yyyy-MM-dd');
 
   readonly dialog = inject(MatDialog);

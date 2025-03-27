@@ -39,8 +39,8 @@ import { SnackbarService } from '../../../core/services/snackbar.service.js';
   styleUrl: './exercise-dialog.component.css',
 })
 export class ExerciseDialogComponent {
-  title: string = '';
-  action: string = '';
+  title = '';
+  action = '';
   readonly dialogRef = inject(MatDialogRef<DialogExerciseData>);
   readonly data = inject<DialogExerciseData>(MAT_DIALOG_DATA);
 

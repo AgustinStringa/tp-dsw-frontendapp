@@ -79,7 +79,7 @@ export class MembershipTypeDialogComponent {
 
   onSubmit(): void {
     const form = this.form.controls;
-    let data: Record<string, any> = {
+    const data: Record<string, any> = {
       name: form.name.value,
       description: form.description.value?.trim(),
       price: Number(form.price.value),

@@ -1,10 +1,10 @@
 import { Component, inject } from '@angular/core';
 import {
-  FormsModule,
-  Validators,
   FormControl,
   FormGroup,
+  FormsModule,
   ReactiveFormsModule,
+  Validators,
 } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSelectModule } from '@angular/material/select';

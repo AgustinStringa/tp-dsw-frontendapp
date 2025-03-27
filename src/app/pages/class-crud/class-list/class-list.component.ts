@@ -28,9 +28,9 @@ export class ClassListComponent {
   classTypes: IClassType[] | null = null;
   classes: IClass[] | null = null;
   filteredClasses: IClass[] | null = null;
-  dayFilter: string = '';
-  classTypeFilter: string = '';
-  trainerFilter: string = '';
+  dayFilter = '';
+  classTypeFilter = '';
+  trainerFilter = '';
 
   constructor(private http: HttpClient) {
     this.getClasses();
