@@ -34,6 +34,15 @@ export class SocketService {
       });
     });
   }
+  connect() {
+    if (this.socket) {
+      this.socket.disconnect();
+    }
+    this.socket = io('http://localhost:3000', {
+      withCredentials: true,
+      transports: ['websocket', 'polling'],
+    });
+  }
 
   disconnect() {
     this.socket?.disconnect();

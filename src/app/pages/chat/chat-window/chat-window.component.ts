@@ -28,7 +28,10 @@ export class ChatWindowComponent
   implements OnInit, OnDestroy, AfterViewChecked
 {
   @ViewChild('messagesContainer') private messagesContainer!: ElementRef;
+  soundsEnabled = true;
   isChatOpen = false;
+  isChatConnected = true;
+  showSettingsMenu = false;
   totalUnreadMessages = 0;
   selectedUser: IUser | null = null;
   message = '';
@@ -65,9 +68,14 @@ export class ChatWindowComponent
       const isMessageForCurrentUser = data.receiver === this.userId;
       const isFromSelectedChat = data.sender === this.selectedUser?.id;
       const isMessageSentByMe = data.sender === this.userId;
-      if (isMessageForCurrentUser && !isFromSelectedChat) {
+
+      if (
+        isMessageForCurrentUser &&
+        !isFromSelectedChat &&
+        this.soundsEnabled
+      ) {
         SoundUtils.notification();
-      } else {
+      } else if (this.soundsEnabled) {
         SoundUtils.sendMessage();
       }
       if (
@@ -115,6 +123,22 @@ export class ChatWindowComponent
     });
   }
 
+  async toggleChatConnection() {
+    this.isChatConnected = !this.isChatConnected;
+
+    if (this.isChatConnected) {
+      this.socketService.connect();
+      this.setupSocketListeners();
+      await this.loadUnreadMessages();
+    } else {
+      this.socketService.disconnect();
+      this.unreadMessages = {};
+      this.totalUnreadMessages = 0;
+      this.messages = [];
+    }
+
+    this.showSettingsMenu = false;
+  }
   getClients() {
     this.http.get<any>(environment.clientsUrl).subscribe({
       next: (res) => {
@@ -223,6 +247,10 @@ export class ChatWindowComponent
       this.message = '';
     }
     this.scrollToBottom();
+  }
+
+  toggleSounds() {
+    this.soundsEnabled = !this.soundsEnabled;
   }
 
   toggleChat() {
