@@ -3,7 +3,7 @@ import { ComponentType } from '@angular/cdk/portal';
 import { HttpClient } from '@angular/common/http';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
-import { NgFor, NgIf } from '@angular/common';
+import { NgFor } from '@angular/common';
 import { ClassDialogComponent } from '../class-dialog/class-dialog.component';
 import { DeleteDialogComponent } from '../../../delete-dialog/delete-dialog.component';
 import { environment } from '../../../../environments/environment';

@@ -27,8 +27,8 @@ interface DialogData {
   styleUrl: './delete-dialog.component.css',
 })
 export class DeleteDialogComponent {
-  url: string = '';
-  title: string = '';
+  url: string;
+  title: string;
 
   constructor(
     public dialogRef: MatDialogRef<DeleteDialogComponent>,

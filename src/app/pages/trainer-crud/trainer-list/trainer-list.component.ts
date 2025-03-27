@@ -6,13 +6,12 @@ import { environment } from '../../../../environments/environment';
 import { IUser } from '../../../core/interfaces/user.interface';
 import { MatDialog } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
-import { NgFor, NgIf } from '@angular/common';
 import { UserDialogComponent } from '../../../user-dialog/user-dialog.component';
 
 @Component({
   selector: 'app-trainers-list',
   standalone: true,
-  imports: [NgFor, NgIf, MatIconModule],
+  imports: [MatIconModule],
   templateUrl: './trainer-list.component.html',
   styleUrl: './trainer-list.component.css',
 })

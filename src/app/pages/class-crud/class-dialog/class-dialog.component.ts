@@ -100,7 +100,7 @@ export class ClassDialogComponent {
 
   onSubmit(): void {
     const form = this.form.controls;
-    let data: Record<string, any> = {
+    const data: Record<string, any> = {
       day: Number(form.day.value),
       startTime: form.startTime.value,
       endTime: form.endTime.value,

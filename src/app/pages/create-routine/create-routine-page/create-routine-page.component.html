@@ -22,7 +22,7 @@
         required=""
         (input)="handleInputDateFrom()"
       />
-      @if (routineForm.value.dateFrom != '' &&
+      @if (routineForm.value.dateFrom !== '' &&
       routineForm.controls.dateFrom.invalid) {
       <div class="alert alert-error">
         {{ "Selecciona una fecha" }}
@@ -34,9 +34,9 @@
         {{ getDateToWithFormat() }}
       </p>
 
-      @if (weeks.length==0) {
+      @if (weeks.length === 0) {
       <div class="alert alert-warning">Agrega una semana</div>
-      } @if (getDateToWithFormat() == '') {
+      } @if (getDateToWithFormat() === '') {
       <div class="alert alert-warning">Selecciona una fecha desde</div>
       }
     </div>
@@ -65,7 +65,7 @@
                 Click para {{ accordionItem.expanded ? "cerrar" : "abrir" }}
               </span>
             </div>
-            @if (item.number == weeks.length) {
+            @if (item.number === weeks.length) {
             <div class="example-button-container">
               <button
                 type="button"
@@ -109,7 +109,7 @@
                       {{ accordionItem.expanded ? "cerrar" : "abrir" }}
                     </span>
                   </div>
-                  @if (day.number == item.days.length) {
+                  @if (day.number === item.days.length) {
                   <div class="example-button-container">
                     <button
                       type="button"
