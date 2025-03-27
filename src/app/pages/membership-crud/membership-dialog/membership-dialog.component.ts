@@ -1,17 +1,14 @@
 import { Component, Inject } from '@angular/core';
-import { environment } from '../../../../environments/environment.js';
 import {
   FormControl,
   FormGroup,
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { HttpClient } from '@angular/common/http';
-import { IMembership } from '../../../core/interfaces/membership.interface.js';
-import { IMembershipType } from '../../../core/interfaces/membership-type.interface.js';
-import { IUser } from '../../../core/interfaces/user.interface.js';
-import { MatButtonModule } from '@angular/material/button';
-import { MatCheckboxModule } from '@angular/material/checkbox';
+import {
+  IMembershipCreate,
+  MembershipService,
+} from '../../../core/services/membership.service.js';
 import {
   MAT_DIALOG_DATA,
   MatDialogActions,
@@ -19,6 +16,13 @@ import {
   MatDialogModule,
   MatDialogRef,
 } from '@angular/material/dialog';
+import { environment } from '../../../../environments/environment.js';
+import { HttpClient } from '@angular/common/http';
+import { IMembership } from '../../../core/interfaces/membership.interface.js';
+import { IMembershipType } from '../../../core/interfaces/membership-type.interface.js';
+import { IUser } from '../../../core/interfaces/user.interface.js';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
@@ -64,7 +68,8 @@ export class MembershipDialogComponent {
     @Inject(MAT_DIALOG_DATA) public data: DialogData,
     public dialogRef: MatDialogRef<MembershipDialogComponent>,
     private snackbarService: SnackbarService,
-    private http: HttpClient
+    private http: HttpClient,
+    private membershipService: MembershipService
   ) {
     this.title = data.title;
     this.action = data.action;
@@ -84,31 +89,29 @@ export class MembershipDialogComponent {
   onSubmit(): void {
     const form = this.form.controls;
 
-    const data: Record<string, any> = {
-      typeId: form.type.value,
-      clientId: form.client.value,
+    const data: IMembershipCreate = {
+      typeId: form.type.value!,
+      clientId: form.client.value!,
     };
 
     if (this.action === 'post') {
-      this.http.post<any>(environment.membershipsUrl, data).subscribe({
+      this.membershipService.create(data).subscribe({
         next: () => {
           this.closeDialog('created');
         },
-        error: (error) => {
-          this.snackbarService.showError('Error al crear la membresía');
+        error: (err) => {
+          this.snackbarService.showError(err.error.message);
         },
       });
     } else if (this.action == 'put') {
-      this.http
-        .put<any>(environment.membershipsUrl + '/' + this.membershipId, data)
-        .subscribe({
-          next: () => {
-            this.closeDialog('updated');
-          },
-          error: () => {
-            this.snackbarService.showError('Error al modificar la membresía');
-          },
-        });
+      this.membershipService.update(this.membershipId!, data).subscribe({
+        next: () => {
+          this.closeDialog('updated');
+        },
+        error: (err) => {
+          this.snackbarService.showError(err.error.message);
+        },
+      });
     }
   }
 

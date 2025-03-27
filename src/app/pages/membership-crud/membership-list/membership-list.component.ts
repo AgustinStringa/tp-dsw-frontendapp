@@ -11,12 +11,13 @@ import { MatIconModule } from '@angular/material/icon';
 import { MembershipDialogComponent } from '../membership-dialog/membership-dialog.component.js';
 import { MembershipService } from '../../../core/services/membership.service.js';
 import { PaymentDialogComponent } from '../payment-dialog/payment-dialog.component.js';
+import { PaymentListComponent } from '../payment-list/payment-list.component.js';
 import { SnackbarService } from '../../../core/services/snackbar.service.js';
 
 @Component({
   selector: 'app-membership-list',
   standalone: true,
-  imports: [CommonModule, MatIconModule],
+  imports: [CommonModule, MatIconModule, PaymentListComponent],
   templateUrl: './membership-list.component.html',
   styleUrl: './membership-list.component.css',
 })
@@ -25,6 +26,8 @@ export class MembershipListComponent {
   clients: IUser[] = [];
   types: IMembershipType[] = [];
   activeMemberships: Record<string, IMembership | null> = {};
+  showPayments = false;
+  selectedMembership: IMembership | null = null;
 
   constructor(
     private dialog: MatDialog,
@@ -62,6 +65,12 @@ export class MembershipListComponent {
         membership,
       },
     });
+  }
+
+  listPayments(membership: IMembership) {
+    console.log(membership);
+    this.selectedMembership = membership;
+    this.showPayments = true;
   }
 
   updateMembership(membership: IMembership) {

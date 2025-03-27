@@ -13,11 +13,19 @@
 
   <form [formGroup]="form" (ngSubmit)="onSubmit()">
     <mat-dialog-content class="common-dialog">
-      <!-- TODO mostrar cliente y tipo de membresía de onda-->
+      <!-- TODO mostrar nombre del cliente y nombre del tipo de membresía -->
 
       <mat-form-field>
         <mat-label for="amount">Monto</mat-label>
-        <input type="number" formControlName="amount" id="amount" matInput />
+        <input
+          type="number"
+          formControlName="amount"
+          id="amount"
+          min="0.01"
+          step="0.01"
+          pattern="^\d+(\.\d{1,2})?$"
+          matInput
+        />
       </mat-form-field>
 
       <mat-form-field>

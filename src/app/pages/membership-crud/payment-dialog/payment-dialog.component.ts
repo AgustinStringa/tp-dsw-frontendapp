@@ -5,10 +5,10 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { IMembership } from '../../../core/interfaces/membership.interface.js';
-import { IPayment } from '../../../core/interfaces/payment.interface.js';
-import { MatButtonModule } from '@angular/material/button';
-import { MatCheckboxModule } from '@angular/material/checkbox';
+import {
+  IPaymentCreate,
+  PaymentService,
+} from '../../../core/services/payment.service.js';
 import {
   MAT_DIALOG_DATA,
   MatDialogActions,
@@ -16,11 +16,14 @@ import {
   MatDialogModule,
   MatDialogRef,
 } from '@angular/material/dialog';
+import { IMembership } from '../../../core/interfaces/membership.interface.js';
+import { IPayment } from '../../../core/interfaces/payment.interface.js';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { PaymentMethodEnum } from '../../../core/enums/payment-method.enum.js';
-import { PaymentService } from '../../../core/services/payment.service.js';
 import { SnackbarService } from '../../../core/services/snackbar.service.js';
 
 interface DialogData {
@@ -56,7 +59,7 @@ export class PaymentDialogComponent {
   paymentMethods = Object.values(PaymentMethodEnum);
 
   form = new FormGroup({
-    amount: new FormControl('', [Validators.required]), //TODO poner la pinchila que no mas de $1.010,001
+    amount: new FormControl('', [Validators.required]),
     paymentMethod: new FormControl('', [Validators.required]),
   });
 
@@ -82,15 +85,10 @@ export class PaymentDialogComponent {
   onSubmit(): void {
     const form = this.form.controls;
 
-    //TODO tipar?
-    const data: {
-      amount: number;
-      membershipId: string;
-      paymentMethod: string;
-    } = {
+    const data: IPaymentCreate = {
       amount: Number(form.amount.value),
       membershipId: this.membership.id,
-      paymentMethod: form.paymentMethod.value ?? '',
+      paymentMethod: form.paymentMethod.value as PaymentMethodEnum,
     };
 
     if (this.action === 'post') {
@@ -102,7 +100,7 @@ export class PaymentDialogComponent {
           this.snackbarService.showError(err.error.message);
         },
       });
-    } else if (this.action == 'put') {
+    } else if (this.action === 'put') {
       this.paymentService.update(this.paymentId!, data).subscribe({
         next: () => {
           this.closeDialog('updated');

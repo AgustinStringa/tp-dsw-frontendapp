@@ -1,14 +1,13 @@
+import { ApiResponse } from '../interfaces/api-response.interface';
 import { environment } from '../../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { IMembership } from '../interfaces/membership.interface';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
-//TODO tipar errores?
-export interface ApiResponse<T> {
-  //TODO moverla
-  message: string;
-  data: T;
+export interface IMembershipCreate {
+  typeId: string;
+  clientId: string;
 }
 
 @Injectable({
@@ -47,14 +46,17 @@ export class MembershipService {
     );
   }
 
-  create(membership: {}): Observable<ApiResponse<IMembership>> {
+  create(membership: IMembershipCreate): Observable<ApiResponse<IMembership>> {
     return this.http.post<ApiResponse<IMembership>>(
       this.membershipsUrl,
       membership
     );
   }
 
-  update(id: string, membership: {}): Observable<ApiResponse<IMembership>> {
+  update(
+    id: string,
+    membership: IMembershipCreate
+  ): Observable<ApiResponse<IMembership>> {
     return this.http.put<ApiResponse<IMembership>>(
       `${this.membershipsUrl}/${id}`,
       membership

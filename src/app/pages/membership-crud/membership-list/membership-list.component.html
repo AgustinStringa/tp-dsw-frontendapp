@@ -11,7 +11,13 @@
       </button>
     </div>
   </div>
-  @if (memberships !== null && memberships.length > 0) {
+
+  @if (showPayments) {
+  <app-payment-list
+    [membership]="selectedMembership!"
+    (componentVisible)="showPayments = $event"
+  ></app-payment-list>
+  } @if (memberships !== null && memberships.length > 0) {
   <table>
     <thead>
       <tr>
@@ -39,6 +45,13 @@
             aria-label="Example icon button with a new payment icon"
           >
             <mat-icon>payments</mat-icon>
+          </button>
+
+          <button
+            (click)="listPayments(m)"
+            aria-label="Example icon button with a payment list icon"
+          >
+            <mat-icon>list</mat-icon>
           </button>
 
           <button
