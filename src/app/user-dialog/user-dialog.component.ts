@@ -5,16 +5,16 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
+import {
+  MAT_DIALOG_DATA,
+  MatDialogActions,
+  MatDialogContent,
+  MatDialogRef,
+  MatDialogTitle,
+} from '@angular/material/dialog';
 import { HttpClient } from '@angular/common/http';
 import { IUser } from '../core/interfaces/user.interface';
 import { MatButtonModule } from '@angular/material/button';
-import {
-  MAT_DIALOG_DATA,
-  MatDialogRef,
-  MatDialogContent,
-  MatDialogActions,
-  MatDialogTitle,
-} from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { SnackbarService } from '../core/services/snackbar.service';
@@ -87,7 +87,7 @@ export class UserDialogComponent {
 
   onSubmit(): void {
     const form = this.form.controls;
-    let data: Record<string, any> = {
+    const data: Record<string, any> = {
       firstName: form.firstName.value,
       lastName: form.lastName.value,
       dni: form.dni.value?.toString(),

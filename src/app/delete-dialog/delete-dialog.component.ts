@@ -1,12 +1,12 @@
 import { Component, Inject } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { MatButtonModule } from '@angular/material/button';
 import {
   MAT_DIALOG_DATA,
   MatDialogRef,
   MatDialogTitle,
 } from '@angular/material/dialog';
-import { MatDialogContent, MatDialogActions } from '@angular/material/dialog';
+import { MatDialogActions, MatDialogContent } from '@angular/material/dialog';
+import { HttpClient } from '@angular/common/http';
+import { MatButtonModule } from '@angular/material/button';
 
 interface DialogData {
   id: string;

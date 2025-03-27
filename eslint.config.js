@@ -30,6 +30,16 @@ module.exports = tseslint.config(
           style: "kebab-case",
         },
       ],
+      "sort-imports": [
+        "warn",
+        {
+          ignoreCase: true,
+          ignoreDeclarationSort: false,
+          ignoreMemberSort: false,
+          memberSyntaxSortOrder: ["none", "all", "multiple", "single"],
+          allowSeparatedGroups: false,
+        },
+      ],
     },
   },
   {

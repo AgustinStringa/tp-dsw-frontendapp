@@ -1,5 +1,4 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { TrainerListComponent } from './trainer-list.component';
 
 describe('TrainerListComponent', () => {

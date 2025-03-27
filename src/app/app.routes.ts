@@ -1,4 +1,3 @@
-import { Routes } from '@angular/router';
 import { authGuard } from './guards/auth.guard.js';
 import { ClassListComponent } from './pages/class-crud/class-list/class-list.component.js';
 import { ClassListComponent as ClassListComponentForClient } from './pages/class-registration/class-list/class-list.component.js';
@@ -12,9 +11,10 @@ import { HomePageComponent } from './pages/home-page/home-page.component.js';
 import { LoginComponent } from './login/login.component.js';
 import { MembershipListComponent } from './pages/membership-crud/membership-list/membership-list.component.js';
 import { MembershipTypeListComponent } from './pages/membership-type-crud/membership-type-list/membership-type-list.component.js';
+import { Routes } from '@angular/router';
+import { ShowClientRoutineComponent } from './pages/show-client-routine/show-client-routine.component.js';
 import { trainerGuard } from './guards/trainer.guard.js';
 import { TrainerListComponent } from './pages/trainer-crud/trainer-list/trainer-list.component.js';
-import { ShowClientRoutineComponent } from './pages/show-client-routine/show-client-routine.component.js';
 
 export const routes: Routes = [
   { path: '', component: LoginComponent },

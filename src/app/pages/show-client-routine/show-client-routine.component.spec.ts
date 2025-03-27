@@ -1,5 +1,4 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { ShowClientRoutineComponent } from './show-client-routine.component';
 
 describe('ShowClientRoutineComponent', () => {
@@ -8,10 +7,9 @@ describe('ShowClientRoutineComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [ShowClientRoutineComponent]
-    })
-    .compileComponents();
-    
+      imports: [ShowClientRoutineComponent],
+    }).compileComponents();
+
     fixture = TestBed.createComponent(ShowClientRoutineComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

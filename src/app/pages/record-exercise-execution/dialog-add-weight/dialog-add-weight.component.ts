@@ -2,6 +2,7 @@ import {
   Component,
   EventEmitter,
   Input,
+  OnChanges,
   Output,
   SimpleChanges,
 } from '@angular/core';
@@ -21,12 +22,12 @@ import { SnackbarService } from '../../../core/services/snackbar.service.js';
   templateUrl: './dialog-add-weight.component.html',
   styleUrl: './dialog-add-weight.component.css',
 })
-export class DialogAddWeightComponent {
+export class DialogAddWeightComponent implements OnChanges {
   @Input() exerciseRoutine: IExerciseRoutine | null = null;
   @Output() closeModal = new EventEmitter<void>();
   @Output() saveWeight = new EventEmitter<number>();
 
-  withoutWeight: boolean = false;
+  withoutWeight = false;
   selectedWeight: number | null = null;
 
   constructor(

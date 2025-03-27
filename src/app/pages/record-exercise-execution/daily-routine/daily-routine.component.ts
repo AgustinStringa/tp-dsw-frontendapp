@@ -1,13 +1,13 @@
+import { AuthService } from '../../../core/services/auth.service.js';
 import { Component } from '@angular/core';
-import { IExerciseRoutine } from '../../../core/interfaces/exercise-routine.inteface.js';
+import { DialogAddWeightComponent } from '../dialog-add-weight/dialog-add-weight.component.js';
+import { differenceInWeeks } from 'date-fns';
 import { environment } from '../../../../environments/environment.js';
 import { formatDate } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
-import IRoutine from '../../../core/interfaces/IRoutine.interface.js';
-import { DialogAddWeightComponent } from '../dialog-add-weight/dialog-add-weight.component.js';
-import { AuthService } from '../../../core/services/auth.service.js';
+import { IExerciseRoutine } from '../../../core/interfaces/exercise-routine.inteface.js';
+import { IRoutine } from '../../../core/interfaces/routine.interface.js';
 import { SnackbarService } from '../../../core/services/snackbar.service.js';
-import { differenceInWeeks } from 'date-fns';
 
 @Component({
   selector: 'app-daily-routine',
@@ -19,16 +19,16 @@ import { differenceInWeeks } from 'date-fns';
 export class DailyRoutineComponent {
   routine: IRoutine | null = null;
   exercisesRoutine: IExerciseRoutine[] = [];
-  startDate: string = '';
-  endDate: string = '';
-  currentWeek: number = 0;
-  currentDayName: string = '';
-  currentDayNumber: number = 0;
-  showModal: boolean = false;
+  startDate = '';
+  endDate = '';
+  currentWeek = 0;
+  currentDayName = '';
+  currentDayNumber = 0;
+  showModal = false;
   selectedExerciseRoutine: IExerciseRoutine | null = null;
   selectedWeight: number | null = null;
   dayToday: number = new Date().getDay();
-  userId: string = '';
+  userId = '';
 
   private daysOfWeek: string[] = [
     'Domingo',

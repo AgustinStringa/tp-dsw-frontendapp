@@ -1,7 +1,7 @@
-import { environment } from '../../../environments/environment';
 import { firstValueFrom, Observable, tap } from 'rxjs';
-import { HttpClient } from '@angular/common/http';
 import { Injectable, signal } from '@angular/core';
+import { environment } from '../../../environments/environment';
+import { HttpClient } from '@angular/common/http';
 import { SnackbarService } from './snackbar.service.js';
 
 interface IUserSession {

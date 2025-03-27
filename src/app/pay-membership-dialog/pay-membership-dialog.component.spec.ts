@@ -1,5 +1,4 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { PayMembershipDialogComponent } from './pay-membership-dialog.component';
 
 describe('PayMembershipDialogComponent', () => {
@@ -8,10 +7,9 @@ describe('PayMembershipDialogComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [PayMembershipDialogComponent]
-    })
-    .compileComponents();
-    
+      imports: [PayMembershipDialogComponent],
+    }).compileComponents();
+
     fixture = TestBed.createComponent(PayMembershipDialogComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

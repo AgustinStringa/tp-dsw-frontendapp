@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { ComponentType } from '@angular/cdk/overlay/index.js';
-import { HttpClient } from '@angular/common/http';
 import { DeleteDialogComponent } from '../../../delete-dialog/delete-dialog.component';
 import { environment } from '../../../../environments/environment';
+import { HttpClient } from '@angular/common/http';
 import { IUser } from '../../../core/interfaces/user.interface';
 import { MatDialog } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';

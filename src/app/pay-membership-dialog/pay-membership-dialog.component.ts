@@ -1,6 +1,3 @@
-import { AuthService } from '../core/services/auth.service';
-import { Component } from '@angular/core';
-import { environment } from '../../environments/environment';
 import {
   FormControl,
   FormGroup,
@@ -8,15 +5,18 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { HttpClient } from '@angular/common/http';
-import { IMembershipType } from '../core/interfaces/membership-type.interface';
-import { MatButtonModule } from '@angular/material/button';
 import {
   MatDialogActions,
   MatDialogContent,
   MatDialogRef,
   MatDialogTitle,
 } from '@angular/material/dialog';
+import { AuthService } from '../core/services/auth.service';
+import { Component } from '@angular/core';
+import { environment } from '../../environments/environment';
+import { HttpClient } from '@angular/common/http';
+import { IMembershipType } from '../core/interfaces/membership-type.interface';
+import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatListModule } from '@angular/material/list';

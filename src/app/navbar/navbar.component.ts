@@ -1,11 +1,11 @@
+import { Component, OnInit } from '@angular/core';
+import { NavigationEnd, Router, RouterLink } from '@angular/router';
 import { AuthService } from '../core/services/auth.service';
-import { Component } from '@angular/core';
 import { filter } from 'rxjs';
 import { MatButtonModule } from '@angular/material/button';
 import { MatMenuModule } from '@angular/material/menu';
 import { MdbCollapseModule } from 'mdb-angular-ui-kit/collapse';
 import { NgClass } from '@angular/common';
-import { RouterLink, Router, NavigationEnd } from '@angular/router';
 
 @Component({
   selector: 'app-navbar',
@@ -20,8 +20,8 @@ import { RouterLink, Router, NavigationEnd } from '@angular/router';
   templateUrl: './navbar.component.html',
   styleUrl: './navbar.component.css',
 })
-export class NavbarComponent {
-  private currentRoute: string = '';
+export class NavbarComponent implements OnInit {
+  private currentRoute = '';
   public userSignal = this.authService.userSignal;
   isDropdownOpen = false;
 

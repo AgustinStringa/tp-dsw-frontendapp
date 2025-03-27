@@ -1,5 +1,5 @@
+import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../core/services/auth.service.js';
-import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpErrorResponse } from '@angular/common/http';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
@@ -14,17 +14,17 @@ import { SnackbarService } from '../core/services/snackbar.service';
   templateUrl: './login.component.html',
   styleUrl: './login.component.css',
 })
-export class LoginComponent {
-  email: string = '';
-  password: string = '';
-  firstName: string = '';
-  lastName: string = '';
-  dni: string = '';
-  user: string = '';
-  aqua: string = '#a7ebf3';
+export class LoginComponent implements OnInit {
+  email = '';
+  password = '';
+  firstName = '';
+  lastName = '';
+  dni = '';
+  user = '';
+  aqua = '#a7ebf3';
 
-  isLoginVisible: boolean = true;
-  isSpinnerVisible: boolean = false;
+  isLoginVisible = true;
+  isSpinnerVisible = false;
   public userSignal = this.authService.userSignal;
 
   constructor(
