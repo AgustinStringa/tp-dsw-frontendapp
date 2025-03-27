@@ -5,7 +5,7 @@ import { MdbCollapseModule } from 'mdb-angular-ui-kit/collapse';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatButtonModule } from '@angular/material/button';
 import { filter } from 'rxjs';
-import { AuthService } from '../services/auth.service.js';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-navbar',

@@ -1,15 +1,15 @@
 import { NgIf } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Component, inject } from '@angular/core';
-import { environment } from '../../../../environments/environment.js';
-import { IClassType } from '../../../core/interfaces/class-type.interface.js';
-import { IClass } from '../../../core/interfaces/class.interface.js';
-import { IRegistration } from '../../../core/interfaces/registration.interface.js';
+import { environment } from '../../../../environments/environment';
+import { IClassType } from '../../../core/interfaces/class-type.interface';
+import { IClass } from '../../../core/interfaces/class.interface';
+import { IRegistration } from '../../../core/interfaces/registration.interface';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatDialog } from '@angular/material/dialog';
-import { DialogConfirmRegistrationComponent } from '../dialog-confirm-registration/dialog-confirm-registration.component.js';
-import { AuthService } from '../../../services/auth.service.js';
-import { SnackbarService } from '../../../services/snackbar.service.js';
+import { DialogConfirmRegistrationComponent } from '../dialog-confirm-registration/dialog-confirm-registration.component';
+import { AuthService } from '../../../services/auth.service';
+import { SnackbarService } from '../../../services/snackbar.service';
 
 @Component({
   selector: 'app-class-list',

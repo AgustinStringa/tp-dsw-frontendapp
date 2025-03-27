@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { CreateRoutinePageComponent } from './create-routine-page.component';
+import { HttpClientModule } from '@angular/common/http';
 
 describe('CreateRoutinePageComponent', () => {
   let component: CreateRoutinePageComponent;
@@ -8,10 +9,9 @@ describe('CreateRoutinePageComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [CreateRoutinePageComponent]
-    })
-    .compileComponents();
-    
+      imports: [CreateRoutinePageComponent, HttpClientModule],
+    }).compileComponents();
+
     fixture = TestBed.createComponent(CreateRoutinePageComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
