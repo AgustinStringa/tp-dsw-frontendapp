@@ -41,7 +41,7 @@ export class ChatWindowComponent
   unreadMessages: { [userId: string]: number } = {};
   users: IUser[] = [];
   search = '';
-  filteredUsers: IUser[] | null = null;
+  filteredUsers: IUser[] = [];
   constructor(
     private socketService: SocketService,
     private messageService: MessageService,
@@ -106,11 +106,11 @@ export class ChatWindowComponent
   }
 
   async loadUsers() {
-    this.getTrainers();
-    this.getClients();
+    await this.getTrainers();
+    await this.getClients();
   }
 
-  filterUsers() {
+  async filterUsers() {
     if (!this.search) {
       this.filteredUsers = this.users ? [...this.users] : [];
       return;
@@ -130,6 +130,9 @@ export class ChatWindowComponent
       this.socketService.connect();
       this.setupSocketListeners();
       await this.loadUnreadMessages();
+      if (this.selectedUser) {
+        this.onUserSelected(this.selectedUser);
+      }
     } else {
       this.socketService.disconnect();
       this.unreadMessages = {};
@@ -139,7 +142,7 @@ export class ChatWindowComponent
 
     this.showSettingsMenu = false;
   }
-  getClients() {
+  async getClients() {
     this.http.get<any>(environment.clientsUrl).subscribe({
       next: (res) => {
         const filteredClients = res.data.filter(
@@ -160,7 +163,7 @@ export class ChatWindowComponent
     });
   }
 
-  getTrainers() {
+  async getTrainers() {
     this.http.get<any>(environment.trainersUrl).subscribe({
       next: (res) => {
         const filteredTrainers = res.data.filter(
