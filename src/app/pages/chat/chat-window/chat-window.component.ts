@@ -50,14 +50,21 @@ export class ChatWindowComponent
     this.isClient = user ? user.isClient : false;
   }
 
-  ngOnInit() {
-    this.loadUsers();
+  async ngOnInit() {
+    await this.loadUsers();
+    this.setupSocketListeners();
+    await this.loadUnreadMessages();
+  }
 
+  ngAfterViewChecked() {
+    this.scrollToBottom();
+  }
+
+  private setupSocketListeners() {
     this.socketService.onMessage('respuesta').subscribe((data: any) => {
       const isMessageForCurrentUser = data.receiver === this.userId;
       const isFromSelectedChat = data.sender === this.selectedUser?.id;
       const isMessageSentByMe = data.sender === this.userId;
-
       if (isMessageForCurrentUser && !isFromSelectedChat) {
         SoundUtils.notification();
       } else {
@@ -69,18 +76,16 @@ export class ChatWindowComponent
       ) {
         this.messages.push(data);
       }
-      if (isMessageForCurrentUser && !isMessageSentByMe) {
+      if (
+        isMessageForCurrentUser &&
+        !isMessageSentByMe &&
+        !isFromSelectedChat
+      ) {
         this.unreadMessages[data.sender] =
           (this.unreadMessages[data.sender] || 0) + 1;
         this.calculateTotalUnread();
       }
     });
-
-    this.loadUnreadMessages();
-  }
-
-  ngAfterViewChecked() {
-    this.scrollToBottom();
   }
 
   scrollToBottom(): void {
@@ -152,7 +157,7 @@ export class ChatWindowComponent
     });
   }
 
-  loadUnreadMessages() {
+  async loadUnreadMessages() {
     this.messageService.getUnreadMessages(this.userId).subscribe({
       next: (response) => {
         if (response && Array.isArray(response.data)) {
@@ -162,6 +167,7 @@ export class ChatWindowComponent
                 (this.unreadMessages[msg.sender] || 0) + 1;
             }
           });
+          this.calculateTotalUnread();
         } else {
           console.error('La respuesta no contiene un array válido:', response);
         }
