@@ -23,6 +23,7 @@ import { MatListModule } from '@angular/material/list';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatSelectModule } from '@angular/material/select';
 import { SnackbarService } from '../core/services/snackbar.service';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-pay-membership-dialog',
@@ -30,14 +31,12 @@ import { SnackbarService } from '../core/services/snackbar.service';
   imports: [
     ReactiveFormsModule,
     MatFormFieldModule,
-    MatDialogContent,
-    MatDialogActions,
     MatSelectModule,
     MatInputModule,
     MatButtonModule,
-    MatDialogTitle,
     MatListModule,
     MatRadioModule,
+    CommonModule,
     FormsModule,
   ],
   templateUrl: './pay-membership-dialog.component.html',
@@ -96,5 +95,6 @@ export class PayMembershipDialogComponent {
 
   onItemSelected(membershipType: IMembershipType) {
     this.selectedMembershipType = membershipType;
+    this.form.controls.membershipType.setValue(membershipType.id);
   }
 }

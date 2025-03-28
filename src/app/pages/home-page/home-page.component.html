@@ -22,29 +22,29 @@
                 class="list-group-item d-flex justify-content-between align-items-center p-3"
               >
                 {{ this.goals.length }}
-                <p class="mb-0">metas</p>
+                <p class="mb-0">Metas</p>
               </li>
               <li
                 class="list-group-item d-flex justify-content-between align-items-center p-3"
               >
                 {{ this.progresses.length }}
-                <p class="mb-0">progresos</p>
+                <p class="mb-0">Progresos</p>
               </li>
               <li
                 class="list-group-item d-flex justify-content-between align-items-center p-3"
               >
                 {{ this.classes.length }}
-                <p class="mb-0">clases</p>
+                <p class="mb-0">Clases</p>
               </li>
               <li
-                class="list-group-item d-flex justify-content-between align-items-center p-3"
+                class="list-group-item d-flex justify-content-center align-items-center p-3"
               >
                 @if (this.membership !== null) {
                 {{ this.membership.type.name }}
                 hasta {{ this.formatedDateTo }}
-                <p class="mb-0 text-end">membresía actual</p>
+                <p class="mb-0 text-end">Membresía actual</p>
                 } @else {
-                <button (click)="openPayMembershipModal()">
+                <button class ="btn btn-primary"(click)="openPayMembershipModal()">
                   Comprar una Membresía
                 </button>
                 }
