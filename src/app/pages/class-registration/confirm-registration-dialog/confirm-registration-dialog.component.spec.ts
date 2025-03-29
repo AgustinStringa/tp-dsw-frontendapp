@@ -1,14 +1,14 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { DialogConfirmRegistrationComponent } from './dialog-confirm-registration.component';
+import { ConfirmRegistrationDialogComponent } from './confirm-registration-dialog.component';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 
-describe('DialogConfirmRegistrationComponent', () => {
-  let component: DialogConfirmRegistrationComponent;
-  let fixture: ComponentFixture<DialogConfirmRegistrationComponent>;
+describe('ConfirmRegistrationDialogComponent', () => {
+  let component: ConfirmRegistrationDialogComponent;
+  let fixture: ComponentFixture<ConfirmRegistrationDialogComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [DialogConfirmRegistrationComponent],
+      imports: [ConfirmRegistrationDialogComponent],
       providers: [
         {
           provide: MatDialogRef,
@@ -25,7 +25,7 @@ describe('DialogConfirmRegistrationComponent', () => {
       ],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(DialogConfirmRegistrationComponent);
+    fixture = TestBed.createComponent(ConfirmRegistrationDialogComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

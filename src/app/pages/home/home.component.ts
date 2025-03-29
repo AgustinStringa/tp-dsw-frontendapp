@@ -8,10 +8,10 @@ import { IMembership } from '../../core/interfaces/membership.interface';
   selector: 'app-home-page',
   standalone: true,
   imports: [],
-  templateUrl: './home-page.component.html',
-  styleUrl: './home-page.component.css',
+  templateUrl: './home.component.html',
+  styleUrl: './home.component.css',
 })
-export class HomePageComponent {
+export class HomeComponent {
   public userSignal = this.authService.userSignal;
   //TODO: tipar interfaces goals, progresses
   public goals: [] = [];

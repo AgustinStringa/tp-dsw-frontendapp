@@ -1,16 +1,16 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { DialogNewExerciseRoutineComponent } from './dialog-new-exercise-routine.component';
+import { NewExerciseRoutineDialogComponent } from './new-exercise-routine-dialog.component';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
-describe('DialogNewExerciseRoutineComponent', () => {
-  let component: DialogNewExerciseRoutineComponent;
-  let fixture: ComponentFixture<DialogNewExerciseRoutineComponent>;
+describe('NewExerciseRoutineDialogComponent', () => {
+  let component: NewExerciseRoutineDialogComponent;
+  let fixture: ComponentFixture<NewExerciseRoutineDialogComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [DialogNewExerciseRoutineComponent, NoopAnimationsModule],
+      imports: [NewExerciseRoutineDialogComponent, NoopAnimationsModule],
       providers: [
         {
           provide: MatDialogRef,
@@ -28,7 +28,7 @@ describe('DialogNewExerciseRoutineComponent', () => {
       ],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(DialogNewExerciseRoutineComponent);
+    fixture = TestBed.createComponent(NewExerciseRoutineDialogComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

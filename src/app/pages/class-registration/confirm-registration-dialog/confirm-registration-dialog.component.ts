@@ -27,12 +27,12 @@ interface DialogData {
     MatButtonModule,
     MatDialogTitle,
   ],
-  templateUrl: './dialog-confirm-registration.component.html',
-  styleUrl: './dialog-confirm-registration.component.css',
+  templateUrl: './confirm-registration-dialog.component.html',
+  styleUrl: './confirm-registration-dialog.component.css',
 })
-export class DialogConfirmRegistrationComponent {
+export class ConfirmRegistrationDialogComponent {
   constructor(
-    public dialogRef: MatDialogRef<DialogConfirmRegistrationComponent>,
+    public dialogRef: MatDialogRef<ConfirmRegistrationDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: DialogData
   ) {}
 

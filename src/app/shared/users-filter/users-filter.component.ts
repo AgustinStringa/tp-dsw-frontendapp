@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { environment } from '../../environments/environment';
-import { IUser } from '../core/interfaces/user.interface';
+import { environment } from '../../../environments/environment';
+import { IUser } from '../../core/interfaces/user.interface';
 import { FormsModule } from '@angular/forms';
 
 @Component({
@@ -10,7 +10,7 @@ import { FormsModule } from '@angular/forms';
   imports: [FormsModule],
   templateUrl: './users-filter.component.html',
   styleUrls: [
-    '../../assets/styles/filter-container.css',
+    '../../../assets/styles/filter-container.css',
     './users-filter.component.css',
   ],
 })
