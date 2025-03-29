@@ -7,7 +7,7 @@ import { IClass } from '../../../core/interfaces/class.interface';
 import { IRegistration } from '../../../core/interfaces/registration.interface';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatDialog } from '@angular/material/dialog';
-import { DialogConfirmRegistrationComponent } from '../dialog-confirm-registration/dialog-confirm-registration.component';
+import { ConfirmRegistrationDialogComponent } from '../confirm-registration-dialog/confirm-registration-dialog.component';
 import { AuthService } from '../../../services/auth.service';
 import { SnackbarService } from '../../../services/snackbar.service';
 
@@ -65,7 +65,7 @@ export class ClassListComponent {
         .get<any>(`${environment.registrationUrl}/client/${this.userId}`)
         .subscribe((res) => {
           this.registeredClassIds = res.data.map(
-            (registration: IRegistration) => registration.class
+            (registration: IRegistration) => registration.classId
           );
         });
     } catch (error: any) {
@@ -96,7 +96,7 @@ export class ClassListComponent {
   selectClass(classItem: IClass) {
     this.selectedClass = classItem;
 
-    const dialogRef = this.dialog.open(DialogConfirmRegistrationComponent, {
+    const dialogRef = this.dialog.open(ConfirmRegistrationDialogComponent, {
       data: {
         className: classItem.classType.name, //TODO enviar nombre de la clase
         trainer: classItem.trainer.firstName + ' ' + classItem.trainer.lastName,
@@ -108,8 +108,8 @@ export class ClassListComponent {
     dialogRef.afterClosed().subscribe((result) => {
       if (result && this.selectedClass) {
         const registration: IRegistration = {
-          client: this.userId,
-          class: this.selectedClass.id,
+          clientId: this.userId,
+          classId: this.selectedClass.id,
         };
 
         this.http

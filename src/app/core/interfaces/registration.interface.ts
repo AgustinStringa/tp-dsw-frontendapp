@@ -1,4 +1,4 @@
 export interface IRegistration {
-  class: string;
-  client: string;
+  classId: string;
+  clientId: string;
 }

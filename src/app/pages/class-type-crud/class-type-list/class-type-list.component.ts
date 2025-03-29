@@ -2,7 +2,7 @@ import { Component, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { MatDialog } from '@angular/material/dialog';
 import { ClassTypeDialogComponent } from '../class-type-dialog/class-type-dialog.component';
-import { DeleteDialogComponent } from '../../../delete-dialog/delete-dialog.component';
+import { DeleteDialogComponent } from '../../../shared/delete-dialog/delete-dialog.component';
 import { environment } from '../../../../environments/environment';
 import { IClassType } from '../../../core/interfaces/class-type.interface';
 import { ComponentType } from '@angular/cdk/portal';

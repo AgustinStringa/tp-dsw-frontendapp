@@ -5,8 +5,7 @@ import { HttpClient } from '@angular/common/http';
 import { MatDialog } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { MembershipDialogComponent } from '../membership-dialog/membership-dialog.component';
-import { NgFor, NgIf } from '@angular/common';
-import { DeleteDialogComponent } from '../../../delete-dialog/delete-dialog.component';
+import { DeleteDialogComponent } from '../../../shared/delete-dialog/delete-dialog.component';
 import { environment } from '../../../../environments/environment';
 import { IMembership } from '../../../core/interfaces/membership.interface';
 import { IMembershipType } from '../../../core/interfaces/membership-type.interface';
@@ -16,7 +15,7 @@ import { SnackbarService } from '../../../services/snackbar.service';
 @Component({
   selector: 'app-membership-list',
   standalone: true,
-  imports: [CommonModule, NgFor, NgIf, MatIconModule],
+  imports: [CommonModule, MatIconModule],
   templateUrl: './membership-list.component.html',
   styleUrl: './membership-list.component.css',
 })
