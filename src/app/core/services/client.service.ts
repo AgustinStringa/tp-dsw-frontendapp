@@ -5,7 +5,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { IUser } from '../interfaces/user.interface';
 
-export interface ITrainerCreate {
+export interface ClientCreate {
   lastName: string;
   firstName: string;
   dni: string;
@@ -16,8 +16,8 @@ export interface ITrainerCreate {
 @Injectable({
   providedIn: 'root',
 })
-export class TrainerService {
-  private url = environment.trainersUrl;
+export class ClientService {
+  private url = environment.clientsUrl;
 
   constructor(private http: HttpClient) {}
 
@@ -29,12 +29,12 @@ export class TrainerService {
     return this.http.get<ApiResponse<IUser>>(`${this.url}/${id}`);
   }
 
-  create(trainer: ITrainerCreate): Observable<ApiResponse<IUser>> {
-    return this.http.post<ApiResponse<IUser>>(this.url, trainer);
+  create(client: ClientCreate): Observable<ApiResponse<IUser>> {
+    return this.http.post<ApiResponse<IUser>>(this.url, client);
   }
 
-  update(id: string, trainer: ITrainerCreate): Observable<ApiResponse<IUser>> {
-    return this.http.put<ApiResponse<IUser>>(`${this.url}/${id}`, trainer);
+  update(id: string, client: ClientCreate): Observable<ApiResponse<IUser>> {
+    return this.http.put<ApiResponse<IUser>>(`${this.url}/${id}`, client);
   }
 
   delete(id: string): Observable<ApiResponse<IUser>> {
