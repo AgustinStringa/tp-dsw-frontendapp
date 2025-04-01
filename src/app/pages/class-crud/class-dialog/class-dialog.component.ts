@@ -1,6 +1,8 @@
+import {
+  ClassService,
+  IClassCreate,
+} from '../../../core/services/class.service';
 import { Component, Inject } from '@angular/core';
-import { ClassTypeDialogComponent } from '../../class-type-crud/class-type-dialog/class-type-dialog.component';
-import { environment } from '../../../../environments/environment';
 import {
   FormControl,
   FormGroup,
@@ -8,10 +10,6 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { HttpClient } from '@angular/common/http';
-import { IClass } from '../../../core/interfaces/class.interface';
-import { IClassType } from '../../../core/interfaces/class-type.interface';
-import { IUser } from '../../../core/interfaces/user.interface';
 import {
   MAT_DIALOG_DATA,
   MatDialogActions,
@@ -19,11 +17,17 @@ import {
   MatDialogRef,
   MatDialogTitle,
 } from '@angular/material/dialog';
+import { ClassTypeDialogComponent } from '../../class-type-crud/class-type-dialog/class-type-dialog.component';
+import { HttpErrorResponse } from '@angular/common/http';
+import { IClass } from '../../../core/interfaces/class.interface';
+import { IClassType } from '../../../core/interfaces/class-type.interface';
+import { IUser } from '../../../core/interfaces/user.interface';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
+import { SnackbarService } from '../../../core/services/snackbar.service';
 import { trimValidator } from '../../../core/functions/trim-validator';
 
 interface DialogData {
@@ -76,7 +80,8 @@ export class ClassDialogComponent {
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: DialogData,
     public dialogRef: MatDialogRef<ClassTypeDialogComponent>,
-    private http: HttpClient
+    private classService: ClassService,
+    private snackbarService: SnackbarService
   ) {
     this.action = data.action;
     this.title = data.title;
@@ -100,37 +105,39 @@ export class ClassDialogComponent {
 
   onSubmit(): void {
     const form = this.form.controls;
-    const data: Record<string, any> = {
+    const data: IClassCreate = {
       day: Number(form.day.value),
-      startTime: form.startTime.value,
-      endTime: form.endTime.value,
-      maxCapacity: form.maxCapacity.value,
-      location: form.location.value,
-      classType: form.classType.value,
-      trainer: form.trainer.value,
-      active: form.active.value,
+      startTime: form.startTime.value!,
+      endTime: form.endTime.value!,
+      maxCapacity: form.maxCapacity.value!,
+      location: form.location.value!,
+      active: form.active.value!,
+      classTypeId: form.classType.value!,
+      trainerId: form.trainer.value!,
     };
 
     if (this.action === 'post') {
-      this.http.post<any>(environment.classesUrl, data).subscribe({
+      this.classService.create(data).subscribe({
         next: () => {
           this.closeDialog('created');
         },
-        error: (error) => {
-          console.error('Error en la petición:', error);
+        error: (err: HttpErrorResponse) => {
+          if (err.error.isUserFriendly)
+            this.snackbarService.showError(err.error.message);
+          else this.snackbarService.showError('Error al crear la clase.');
         },
       });
     } else if (this.action === 'put') {
-      this.http
-        .put<any>(environment.classesUrl + '/' + this.classId, data)
-        .subscribe({
-          next: () => {
-            this.closeDialog('updated');
-          },
-          error: (error) => {
-            console.error('Error en la petición:', error);
-          },
-        });
+      this.classService.update(this.classId!, data).subscribe({
+        next: () => {
+          this.closeDialog('updated');
+        },
+        error: (err: HttpErrorResponse) => {
+          if (err.error.isUserFriendly)
+            this.snackbarService.showError(err.error.message);
+          else this.snackbarService.showError('Error al actualizar la clase.');
+        },
+      });
     }
   }
 
