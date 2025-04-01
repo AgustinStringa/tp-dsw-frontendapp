@@ -68,7 +68,7 @@ export class LoginComponent implements OnInit {
               //email o usuario incorrecto
               //poner los controles en rojo?
 
-              if (httperror.error.message == 'Wrong email or password') {
+              if (httperror.error.message == 'Email y/o contraseña incorrectos.') {
                 document
                   .getElementById('loginEmail')
                   ?.classList.add(
