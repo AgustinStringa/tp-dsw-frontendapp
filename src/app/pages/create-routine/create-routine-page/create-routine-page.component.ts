@@ -26,9 +26,9 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { NgClass } from '@angular/common';
 import { Router } from '@angular/router';
-import Client from '../../../core/classes/Client';
+import Client from '../../../core/classes/client';
 import { ClientsMembershipListComponent } from '../clients-membership-list/clients-membership-list.component';
-import { DialogNewExerciseRoutineComponent } from '../dialog-new-exercise-routine/dialog-new-exercise-routine.component';
+import { NewExerciseRoutineDialogComponent } from '../new-exercise-routine-dialog/new-exercise-routine-dialog.component';
 import { environment } from '../../../../environments/environment';
 import { ExerciseRoutineCardComponent } from '../exercise-routine-card/exercise-routine-card.component';
 import { IExercise } from '../../../core/interfaces/exercise.interface';
@@ -208,7 +208,7 @@ export class CreateRoutinePageComponent implements AfterViewChecked {
   }
 
   addExercise(day: Day) {
-    const dialogRef = this.dialog.open(DialogNewExerciseRoutineComponent, {
+    const dialogRef = this.dialog.open(NewExerciseRoutineDialogComponent, {
       data: {
         exercises: this.exercises,
         exerciseSelected: null,

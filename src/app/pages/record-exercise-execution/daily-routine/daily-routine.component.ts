@@ -4,7 +4,7 @@ import { environment } from '../../../../environments/environment';
 import { formatDate } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import IRoutine from '../../../core/interfaces/IRoutine.interface';
-import { DialogAddWeightComponent } from '../dialog-add-weight/dialog-add-weight.component';
+import { AddWeightDialogComponent } from '../add-weight-dialog/add-weight-dialog.component';
 import { AuthService } from '../../../services/auth.service';
 import { SnackbarService } from '../../../services/snackbar.service';
 import { differenceInWeeks } from 'date-fns';
@@ -12,7 +12,7 @@ import { differenceInWeeks } from 'date-fns';
 @Component({
   selector: 'app-daily-routine',
   standalone: true,
-  imports: [DialogAddWeightComponent],
+  imports: [AddWeightDialogComponent],
   templateUrl: './daily-routine.component.html',
   styleUrl: './daily-routine.component.css',
 })

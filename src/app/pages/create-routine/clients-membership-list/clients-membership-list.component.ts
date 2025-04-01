@@ -11,7 +11,7 @@ import { es } from 'date-fns/locale';
 import { format } from 'date-fns';
 import { NgClass } from '@angular/common';
 import { SimpleChanges } from '@angular/core';
-import Client from '../../../core/classes/Client';
+import Client from '../../../core/classes/client';
 import { IMembership } from '../../../core/interfaces/membership.interface';
 
 class ClientForRoutine extends Client {

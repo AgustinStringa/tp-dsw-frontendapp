@@ -1,7 +1,6 @@
 import {
   Component,
   EventEmitter,
-  inject,
   Input,
   Output,
   SimpleChanges,
@@ -19,10 +18,10 @@ import { SnackbarService } from '../../../services/snackbar.service';
   selector: 'app-dialog-add-weight',
   standalone: true,
   imports: [FormsModule, MatFormFieldModule, MatInputModule, MatButtonModule],
-  templateUrl: './dialog-add-weight.component.html',
-  styleUrl: './dialog-add-weight.component.css',
+  templateUrl: './add-weight-dialog.component.html',
+  styleUrl: './add-weight-dialog.component.css',
 })
-export class DialogAddWeightComponent {
+export class AddWeightDialogComponent {
   @Input() exerciseRoutine: IExerciseRoutine | null = null;
   @Output() closeModal = new EventEmitter<void>();
   @Output() saveWeight = new EventEmitter<number>();

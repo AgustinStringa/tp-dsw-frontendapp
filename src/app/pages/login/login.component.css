@@ -85,7 +85,7 @@ h3.home-section-header {
 
 .hero {
   position: relative;
-  background-image: url("../../assets/pexels-leonardho-1552242.jpg");
+  background-image: url("../../../assets/pexels-leonardho-1552242.jpg");
   background-repeat: no-repeat;
   background-attachment: fixed;
   background-position: center;
@@ -112,7 +112,7 @@ h1 {
 }
 
 .registrar-rutina {
-  background-image: url("../../assets/pexels-pavel-danilyuk-6339722.jpg");
+  background-image: url("../../../assets/pexels-pavel-danilyuk-6339722.jpg");
   background-repeat: no-repeat;
   background-position: 100% 90%;
   background-size: cover;
@@ -127,7 +127,7 @@ h1 {
 }
 
 .inscripcion-clase {
-  background-image: url("../../assets/pexels-olly-868483.jpg");
+  background-image: url("../../../assets/pexels-olly-868483.jpg");
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;

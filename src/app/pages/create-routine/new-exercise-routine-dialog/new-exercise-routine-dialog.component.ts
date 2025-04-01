@@ -35,11 +35,11 @@ import { IExercise } from '../../../core/interfaces/exercise.interface.js';
     MatButtonModule,
     ReactiveFormsModule,
   ],
-  templateUrl: './dialog-new-exercise-routine.component.html',
-  styleUrl: './dialog-new-exercise-routine.component.css',
+  templateUrl: './new-exercise-routine-dialog.component.html',
+  styleUrl: './new-exercise-routine-dialog.component.css',
 })
-export class DialogNewExerciseRoutineComponent {
-  readonly dialogRef = inject(MatDialogRef<DialogNewExerciseRoutineComponent>);
+export class NewExerciseRoutineDialogComponent {
+  readonly dialogRef = inject(MatDialogRef<NewExerciseRoutineDialogComponent>);
   readonly data = inject<DialogData>(MAT_DIALOG_DATA);
 
   exerciseRoutineForm = new FormGroup({

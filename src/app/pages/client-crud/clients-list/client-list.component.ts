@@ -8,12 +8,12 @@ import {
   MatPaginatorModule,
   PageEvent,
 } from '@angular/material/paginator';
-import { CustomPaginatorIntl } from '../../../core/classes/CustomPaginatorIntl';
-import { DeleteDialogComponent } from '../../../delete-dialog/delete-dialog.component';
+import { CustomPaginatorIntl } from '../../../core/classes/custom-paginator-intl';
+import { DeleteDialogComponent } from '../../../shared/delete-dialog/delete-dialog.component';
 import { environment } from '../../../../environments/environment';
 import { IUser } from '../../../core/interfaces/user.interface';
-import { UserDialogComponent } from '../../../user-dialog/user-dialog.component';
-import { UsersFilterComponent } from '../../../users-filter/users-filter.component';
+import { UserDialogComponent } from '../../../shared/user-dialog/user-dialog.component';
+import { UsersFilterComponent } from '../../../shared/users-filter/users-filter.component';
 
 @Component({
   selector: 'app-clients-list',
