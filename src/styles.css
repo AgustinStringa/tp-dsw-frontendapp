@@ -46,6 +46,10 @@ body {
   justify-content: space-between;
 }
 
+.table-container {
+  overflow-x: auto;
+}
+
 .list-container table {
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   grid-row: auto;

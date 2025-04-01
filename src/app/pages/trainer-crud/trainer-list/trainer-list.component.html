@@ -13,42 +13,44 @@
   </div>
 
   @if (trainers !== null && trainers.length > 0) {
-  <table>
-    <thead>
-      <tr>
-        <th>Apellido</th>
-        <th>Nombre</th>
-        <th>Dni</th>
-        <th>Correo electrónico</th>
-        <th>Acciones</th>
-      </tr>
-    </thead>
+  <div class="table-container">
+    <table>
+      <thead>
+        <tr>
+          <th>Apellido</th>
+          <th>Nombre</th>
+          <th>Dni</th>
+          <th>Correo electrónico</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
 
-    @for (trainer of trainers; track trainer.dni) {
-    <tr>
-      <td>{{ trainer.lastName }}</td>
-      <td>{{ trainer.firstName }}</td>
-      <td>{{ trainer.dni }}</td>
-      <td>
-        {{ trainer.email }}
-      </td>
-      <td class="td-actions">
-        <button
-          (click)="deleteTrainer(trainer.id)"
-          aria-label="Example icon button with a delete icon"
-        >
-          <mat-icon>delete</mat-icon>
-        </button>
-        <button
-          (click)="updateTrainer(trainer)"
-          aria-label="Example icon button with a delete icon"
-        >
-          <mat-icon>edit</mat-icon>
-        </button>
-      </td>
-    </tr>
-    }
-  </table>
+      @for (trainer of trainers; track trainer.dni) {
+      <tr>
+        <td>{{ trainer.lastName }}</td>
+        <td>{{ trainer.firstName }}</td>
+        <td>{{ trainer.dni }}</td>
+        <td>
+          {{ trainer.email }}
+        </td>
+        <td class="td-actions">
+          <button
+            (click)="deleteTrainer(trainer.id)"
+            aria-label="Example icon button with a delete icon"
+          >
+            <mat-icon>delete</mat-icon>
+          </button>
+          <button
+            (click)="updateTrainer(trainer)"
+            aria-label="Example icon button with a delete icon"
+          >
+            <mat-icon>edit</mat-icon>
+          </button>
+        </td>
+      </tr>
+      }
+    </table>
+  </div>
   } @else if (trainers !== null && trainers.length === 0){
   <div class="alert alert-warning fs-6" role="alert">
     No hay entrenadores cargados. Crea uno para comenzar.

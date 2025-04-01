@@ -14,44 +14,46 @@
   ></app-users-filter>
 
   @if (clients && clientsPage && clientsPage.length > 0) {
-  <table>
-    <thead>
-      <tr>
-        <th>Apellido</th>
-        <th>Nombre</th>
-        <th>DNI</th>
-        <th>Correo electrónico</th>
-        <th>Acciones</th>
-      </tr>
-    </thead>
+  <div class="table-container">
+    <table>
+      <thead>
+        <tr>
+          <th>Apellido</th>
+          <th>Nombre</th>
+          <th>DNI</th>
+          <th>Correo electrónico</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
 
-    <tbody>
-      @for (c of clientsPage; track c) {
-      <tr>
-        <td>{{ c.lastName }}</td>
-        <td>{{ c.firstName }}</td>
-        <td>{{ c.dni }}</td>
-        <td>
-          {{ c.email }}
-        </td>
-        <td class="td-actions">
-          <button
-            (click)="deleteUser(c.id)"
-            aria-label="Example icon button with a delete icon"
-          >
-            <mat-icon>delete</mat-icon>
-          </button>
-          <button
-            (click)="updateUser(c)"
-            aria-label="Example icon button with an edit icon"
-          >
-            <mat-icon>edit</mat-icon>
-          </button>
-        </td>
-      </tr>
-      }
-    </tbody>
-  </table>
+      <tbody>
+        @for (c of clientsPage; track c) {
+        <tr>
+          <td>{{ c.lastName }}</td>
+          <td>{{ c.firstName }}</td>
+          <td>{{ c.dni }}</td>
+          <td>
+            {{ c.email }}
+          </td>
+          <td class="td-actions">
+            <button
+              (click)="deleteUser(c.id)"
+              aria-label="Example icon button with a delete icon"
+            >
+              <mat-icon>delete</mat-icon>
+            </button>
+            <button
+              (click)="updateUser(c)"
+              aria-label="Example icon button with an edit icon"
+            >
+              <mat-icon>edit</mat-icon>
+            </button>
+          </td>
+        </tr>
+        }
+      </tbody>
+    </table>
+  </div>
 
   <mat-paginator
     [length]="clients.length"

@@ -18,61 +18,62 @@
     (componentVisible)="showPayments = $event"
   ></app-payment-list>
   } @if (memberships !== null && memberships.length > 0) {
-  <table>
-    <thead>
-      <tr>
-        <th>Fecha desde</th>
-        <th>Fecha hasta</th>
-        <th>Tipo de membresía</th>
-        <th>Cliente</th>
-        <th>Deuda</th>
-        <th>Acciones</th>
-      </tr>
-    </thead>
+  <div class="table-container">
+    <table>
+      <thead>
+        <tr>
+          <th>Fecha desde</th>
+          <th>Fecha hasta</th>
+          <th>Tipo de membresía</th>
+          <th>Cliente</th>
+          <th>Deuda</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
 
-    <tbody>
-      @for (m of memberships; track m) {
-      <tr>
-        <td>{{ m.dateFrom | date : "dd/MM/yyyy" }}</td>
-        <td>{{ m.dateTo | date : "dd/MM/yyyy" }}</td>
-        <td>{{ m.type.name }}</td>
-        <td>{{ m.client.firstName + " " + m.client.lastName }}</td>
-        <td>{{ m.debt }}</td>
+      <tbody>
+        @for (m of memberships; track m) {
+        <tr>
+          <td>{{ m.dateFrom | date : "dd/MM/yyyy" }}</td>
+          <td>{{ m.dateTo | date : "dd/MM/yyyy" }}</td>
+          <td>{{ m.type.name }}</td>
+          <td>{{ m.client.firstName + " " + m.client.lastName }}</td>
+          <td>{{ m.debt }}</td>
 
-        <td class="td-actions">
-          <button
-            (click)="addPayment(m)"
-            aria-label="Example icon button with a new payment icon"
-          >
-            <mat-icon>payments</mat-icon>
-          </button>
+          <td class="td-actions">
+            <button
+              (click)="addPayment(m)"
+              aria-label="Example icon button with a new payment icon"
+            >
+              <mat-icon>payments</mat-icon>
+            </button>
 
-          <button
-            (click)="listPayments(m)"
-            aria-label="Example icon button with a payment list icon"
-          >
-            <mat-icon>list</mat-icon>
-          </button>
+            <button
+              (click)="listPayments(m)"
+              aria-label="Example icon button with a payment list icon"
+            >
+              <mat-icon>list</mat-icon>
+            </button>
 
-          <button
-            (click)="deleteMembership(m.id)"
-            aria-label="Example icon button with a delete icon"
-          >
-            <mat-icon>delete</mat-icon>
-          </button>
+            <button
+              (click)="deleteMembership(m.id)"
+              aria-label="Example icon button with a delete icon"
+            >
+              <mat-icon>delete</mat-icon>
+            </button>
 
-          <button
-            (click)="updateMembership(m)"
-            aria-label="Example icon button with an edit icon"
-          >
-            <mat-icon>edit</mat-icon>
-          </button>
-        </td>
-      </tr>
-      }
-    </tbody>
-  </table>
-
+            <button
+              (click)="updateMembership(m)"
+              aria-label="Example icon button with an edit icon"
+            >
+              <mat-icon>edit</mat-icon>
+            </button>
+          </td>
+        </tr>
+        }
+      </tbody>
+    </table>
+  </div>
   } @else if (memberships !== null && memberships.length === 0){
   <div class="alert alert-warning fs-6" role="alert">
     No hay membresías vigentes.
