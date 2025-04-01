@@ -1,6 +1,7 @@
 import { ApiResponse } from '../interfaces/api-response.interface';
 import { environment } from '../../../environments/environment';
 import { HttpClient } from '@angular/common/http';
+import { ICrudService } from '../interfaces/crud-service.interface';
 import { Injectable } from '@angular/core';
 import { IPayment } from '../interfaces/payment.interface';
 import { Observable } from 'rxjs';
@@ -15,7 +16,7 @@ export interface IPaymentCreate {
 @Injectable({
   providedIn: 'root',
 })
-export class PaymentService {
+export class PaymentService implements ICrudService<IPayment, IPaymentCreate> {
   private url = environment.paymentsUrl;
 
   constructor(private http: HttpClient) {}

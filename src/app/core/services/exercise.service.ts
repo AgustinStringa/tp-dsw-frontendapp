@@ -1,9 +1,10 @@
-import { Injectable } from '@angular/core';
+import { ApiResponse } from '../interfaces/api-response.interface';
 import { environment } from '../../../environments/environment';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
-import { ApiResponse } from '../interfaces/api-response.interface';
+import { ICrudService } from '../interfaces/crud-service.interface';
 import { IExercise } from '../interfaces/exercise.interface';
+import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
 
 export interface IExerciseCreate {
   name: string;
@@ -14,7 +15,9 @@ export interface IExerciseCreate {
 @Injectable({
   providedIn: 'root',
 })
-export class ExerciseService {
+export class ExerciseService
+  implements ICrudService<IExercise, IExerciseCreate>
+{
   private url = environment.exercisesUrl;
 
   constructor(private http: HttpClient) {}

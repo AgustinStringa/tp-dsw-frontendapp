@@ -65,7 +65,7 @@ export class ClassListComponent {
         .get<any>(`${environment.registrationUrl}/client/${this.userId}`)
         .subscribe((res) => {
           this.registeredClassIds = res.data.map(
-            (registration: IRegistration) => registration.class
+            (registration: any) => registration.classId
           );
         });
     } catch (error: any) {
@@ -107,9 +107,9 @@ export class ClassListComponent {
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result && this.selectedClass) {
-        const registration: IRegistration = {
-          client: this.userId,
-          class: this.selectedClass.id,
+        const registration: any = {
+          clientId: this.userId,
+          classId: this.selectedClass.id,
         };
 
         this.http

@@ -1,6 +1,7 @@
 import { IMembership } from '../interfaces/membership.interface';
+import { IUser } from '../interfaces/user.interface';
 
-export default class Client {
+export default class Client implements IUser {
   id: string;
   lastName: string;
   firstName: string;

@@ -2,7 +2,6 @@ import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { ComponentType } from '@angular/cdk/portal';
 import { DeleteDialogComponent } from '../../../delete-dialog/delete-dialog.component.js';
-import { environment } from '../../../../environments/environment.js';
 import { IMembership } from '../../../core/interfaces/membership.interface.js';
 import { IMembershipType } from '../../../core/interfaces/membership-type.interface.js';
 import { IUser } from '../../../core/interfaces/user.interface.js';
@@ -12,7 +11,6 @@ import { MembershipDialogComponent } from '../membership-dialog/membership-dialo
 import { MembershipService } from '../../../core/services/membership.service.js';
 import { PaymentDialogComponent } from '../payment-dialog/payment-dialog.component.js';
 import { PaymentListComponent } from '../payment-list/payment-list.component.js';
-import { SnackbarService } from '../../../core/services/snackbar.service.js';
 
 @Component({
   selector: 'app-membership-list',
@@ -31,8 +29,7 @@ export class MembershipListComponent {
 
   constructor(
     private dialog: MatDialog,
-    private membershipService: MembershipService,
-    private snackbarService: SnackbarService
+    private membershipService: MembershipService
   ) {
     this.getActiveMemberships();
   }
@@ -68,7 +65,6 @@ export class MembershipListComponent {
   }
 
   listPayments(membership: IMembership) {
-    console.log(membership);
     this.selectedMembership = membership;
     this.showPayments = true;
   }
@@ -88,7 +84,7 @@ export class MembershipListComponent {
       data: {
         id: id,
         title: 'Eliminar Membresía',
-        url: environment.membershipsUrl,
+        service: this.membershipService,
       },
     });
   }

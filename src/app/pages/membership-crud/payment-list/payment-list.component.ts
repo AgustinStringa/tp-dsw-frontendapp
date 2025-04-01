@@ -69,7 +69,7 @@ export class PaymentListComponent implements OnInit {
       data: {
         id: id,
         title: 'Eliminar Pago',
-        url: environment.paymentsUrl,
+        service: this.paymentService,
       },
     });
   }

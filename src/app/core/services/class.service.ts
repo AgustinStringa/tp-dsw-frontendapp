@@ -2,6 +2,7 @@ import { ApiResponse } from '../interfaces/api-response.interface';
 import { environment } from '../../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { IClass } from '../interfaces/class.interface';
+import { ICrudService } from '../interfaces/crud-service.interface';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
@@ -19,7 +20,7 @@ export interface IClassCreate {
 @Injectable({
   providedIn: 'root',
 })
-export class ClassService {
+export class ClassService implements ICrudService<IClass, IClassCreate> {
   private classesUrl = environment.classesUrl;
 
   constructor(private http: HttpClient) {}

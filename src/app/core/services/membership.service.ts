@@ -1,6 +1,7 @@
 import { ApiResponse } from '../interfaces/api-response.interface';
 import { environment } from '../../../environments/environment';
 import { HttpClient } from '@angular/common/http';
+import { ICrudService } from '../interfaces/crud-service.interface';
 import { IMembership } from '../interfaces/membership.interface';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
@@ -13,7 +14,9 @@ export interface IMembershipCreate {
 @Injectable({
   providedIn: 'root',
 })
-export class MembershipService {
+export class MembershipService
+  implements ICrudService<IMembership, IMembershipCreate>
+{
   private membershipsUrl = environment.membershipsUrl;
 
   constructor(private http: HttpClient) {}

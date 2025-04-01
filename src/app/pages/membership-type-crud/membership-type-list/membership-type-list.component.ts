@@ -1,12 +1,11 @@
 import { Component } from '@angular/core';
 import { ComponentType } from '@angular/cdk/portal';
-import { HttpClient } from '@angular/common/http';
+import { DeleteDialogComponent } from '../../../delete-dialog/delete-dialog.component.js';
+import { IMembershipType } from '../../../core/interfaces/membership-type.interface';
 import { MatDialog } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
-import { DeleteDialogComponent } from '../../../delete-dialog/delete-dialog.component.js';
-import { environment } from '../../../../environments/environment';
-import { IMembershipType } from '../../../core/interfaces/membership-type.interface';
 import { MembershipTypeDialogComponent } from '../membership-type-dialog/membership-type-dialog.component.js';
+import { MembershipTypeService } from '../../../core/services/membership-type.service.js';
 
 @Component({
   selector: 'app-membership-types-list',
@@ -18,12 +17,15 @@ import { MembershipTypeDialogComponent } from '../membership-type-dialog/members
 export class MembershipTypeListComponent {
   membershipTypes: IMembershipType[] | null = null;
 
-  constructor(private http: HttpClient, private dialog: MatDialog) {
+  constructor(
+    private membershipTypeService: MembershipTypeService,
+    private dialog: MatDialog
+  ) {
     this.getMembershipTypes();
   }
 
   getMembershipTypes() {
-    this.http.get<any>(environment.membershipTypesUrl).subscribe({
+    this.membershipTypeService.getAll().subscribe({
       next: (res) => {
         this.membershipTypes = res.data;
       },
@@ -38,7 +40,6 @@ export class MembershipTypeListComponent {
       data: {
         title: 'Nuevo Tipo de Membresía',
         action: 'post',
-        url: environment.membershipTypesUrl,
       },
     });
   }
@@ -49,7 +50,6 @@ export class MembershipTypeListComponent {
         title: 'Modificar Tipo de Membresía',
         action: 'put',
         membershipType: membershipType,
-        url: environment.membershipTypesUrl,
       },
     });
   }
@@ -58,9 +58,8 @@ export class MembershipTypeListComponent {
     this.openDialog(DeleteDialogComponent, {
       data: {
         id: id,
-        entity: 'membershiptype',
         title: 'Eliminar Tipo de Membresía',
-        url: environment.membershipTypesUrl,
+        service: this.membershipTypeService,
       },
     });
   }

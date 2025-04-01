@@ -1,11 +1,11 @@
-import { Injectable } from '@angular/core';
+import { ApiResponse } from '../interfaces/api-response.interface';
 import { environment } from '../../../environments/environment';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
-import { ApiResponse } from '../interfaces/api-response.interface';
-import { IExercise } from '../interfaces/exercise.interface';
+import { ICrudService } from '../interfaces/crud-service.interface';
 import { IExerciseRoutine } from '../interfaces/exercise-routine.inteface';
+import { Injectable } from '@angular/core';
 import { IRoutine } from '../interfaces/routine.interface';
+import { Observable } from 'rxjs';
 
 export interface IRoutineCreate {
   start: Date;
@@ -17,7 +17,7 @@ export interface IRoutineCreate {
 @Injectable({
   providedIn: 'root',
 })
-export class IRutineService {
+export class IRoutineService implements ICrudService<IRoutine, IRoutineCreate> {
   private url = environment.routinesUrl;
 
   constructor(private http: HttpClient) {}

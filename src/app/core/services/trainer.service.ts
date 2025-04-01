@@ -1,11 +1,12 @@
 import { ApiResponse } from '../interfaces/api-response.interface';
 import { environment } from '../../../environments/environment';
 import { HttpClient } from '@angular/common/http';
+import { ICrudService } from '../interfaces/crud-service.interface';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
 import { IUser } from '../interfaces/user.interface';
+import { Observable } from 'rxjs';
 
-export interface ITrainerCreate {
+export interface IUserCreate {
   lastName: string;
   firstName: string;
   dni: string;
@@ -16,7 +17,7 @@ export interface ITrainerCreate {
 @Injectable({
   providedIn: 'root',
 })
-export class TrainerService {
+export class TrainerService implements ICrudService<IUser, IUserCreate> {
   private url = environment.trainersUrl;
 
   constructor(private http: HttpClient) {}
@@ -29,11 +30,11 @@ export class TrainerService {
     return this.http.get<ApiResponse<IUser>>(`${this.url}/${id}`);
   }
 
-  create(trainer: ITrainerCreate): Observable<ApiResponse<IUser>> {
+  create(trainer: IUserCreate): Observable<ApiResponse<IUser>> {
     return this.http.post<ApiResponse<IUser>>(this.url, trainer);
   }
 
-  update(id: string, trainer: ITrainerCreate): Observable<ApiResponse<IUser>> {
+  update(id: string, trainer: IUserCreate): Observable<ApiResponse<IUser>> {
     return this.http.put<ApiResponse<IUser>>(`${this.url}/${id}`, trainer);
   }
 
