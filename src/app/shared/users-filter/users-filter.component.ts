@@ -1,7 +1,6 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 import { environment } from '../../../environments/environment';
 import { FormsModule } from '@angular/forms';
-import { HttpClient } from '@angular/common/http';
 import { IUser } from '../../core/interfaces/user.interface';
 
 @Component({
@@ -25,7 +24,7 @@ export class UsersFilterComponent {
 
   nameFilter = '';
 
-  constructor(private http: HttpClient) {
+  constructor() {
     this.getUsers();
   }
 

@@ -12,7 +12,6 @@ import {
   MatDialogRef,
   MatDialogTitle,
 } from '@angular/material/dialog';
-import { HttpClient } from '@angular/common/http';
 import { IUser } from '../../core/interfaces/user.interface';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -66,8 +65,7 @@ export class UserDialogComponent {
     @Inject(MAT_DIALOG_DATA)
     public dialogData: DialogData,
     public dialogRef: MatDialogRef<UserDialogComponent>,
-    private snackbarService: SnackbarService,
-    private http: HttpClient
+    private snackbarService: SnackbarService
   ) {
     this.title = dialogData.title;
     this.action = dialogData.action;

@@ -22,11 +22,7 @@ export class HomeComponent {
   public formatedDateTo: string | null = null;
   public classes: [] = [];
 
-  constructor(
-    private http: HttpClient,
-    private authService: AuthService,
-    private dialog: MatDialog
-  ) {
+  constructor(private authService: AuthService, private dialog: MatDialog) {
     authService.getUser();
     if (this.userSignal()?.isClient) {
       this.getProgresses();

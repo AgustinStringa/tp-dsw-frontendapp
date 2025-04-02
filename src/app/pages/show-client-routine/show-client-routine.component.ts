@@ -57,7 +57,7 @@ export class ShowClientRoutineComponent {
   currentDate = new Date();
   currentMonthName = this.months[this.currentDate.getMonth()];
 
-  constructor(private http: HttpClient, private authService: AuthService) {
+  constructor(private authService: AuthService) {
     const user = this.authService.getUser();
     if (user) {
       this.userId = user.id;

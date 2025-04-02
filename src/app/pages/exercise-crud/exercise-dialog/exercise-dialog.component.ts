@@ -50,10 +50,7 @@ export class ExerciseDialogComponent {
     urlVideo: new FormControl<string>(''),
   });
 
-  constructor(
-    private http: HttpClient,
-    private snackbarService: SnackbarService
-  ) {
+  constructor(private snackbarService: SnackbarService) {
     this.title = this.data.title;
     if (this.data.action == 'put') {
       this.exerciseForm.patchValue({

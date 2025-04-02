@@ -9,7 +9,6 @@ import { AuthService } from '../../../core/services/auth.service';
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { environment } from '../../../../environments/environment';
-import { HttpClient } from '@angular/common/http';
 import { IMembershipType } from '../../../core/interfaces/membership-type.interface';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialogRef } from '@angular/material/dialog';
@@ -19,6 +18,7 @@ import { MatListModule } from '@angular/material/list';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatSelectModule } from '@angular/material/select';
 import { SnackbarService } from '../../../core/services/snackbar.service';
+import { PaymentService } from '../../../core/services/payment.service';
 
 @Component({
   selector: 'app-pay-membership-dialog',
@@ -46,9 +46,9 @@ export class PayMembershipDialogComponent {
 
   constructor(
     public dialogRef: MatDialogRef<PayMembershipDialogComponent>,
-    private snackbarService: SnackbarService,
-    private http: HttpClient,
-    private authService: AuthService
+    private authService: AuthService,
+    private paymentService: PaymentService,
+    private snackbarService: SnackbarService
   ) {
     this.getMembershipTypes();
   }

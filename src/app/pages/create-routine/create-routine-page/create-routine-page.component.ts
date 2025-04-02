@@ -92,7 +92,6 @@ export class CreateRoutinePageComponent implements AfterViewChecked {
   readonly dialog = inject(MatDialog);
 
   constructor(
-    private http: HttpClient,
     private router: Router,
     private snackbarService: SnackbarService,
     private authService: AuthService

@@ -17,7 +17,7 @@ export interface IRoutineCreate {
 @Injectable({
   providedIn: 'root',
 })
-export class IRoutineService implements ICrudService<IRoutine, IRoutineCreate> {
+export class RoutineService implements ICrudService<IRoutine, IRoutineCreate> {
   private url = environment.routinesUrl;
 
   constructor(private http: HttpClient) {}
@@ -27,6 +27,12 @@ export class IRoutineService implements ICrudService<IRoutine, IRoutineCreate> {
 
   getById(id: string): Observable<ApiResponse<IRoutine>> {
     return this.http.get<ApiResponse<IRoutine>>(`${this.url}/${id}`);
+  }
+
+  getCurrentByClient(clientId: string): Observable<ApiResponse<IRoutine>> {
+    return this.http.get<ApiResponse<IRoutine>>(
+      `${this.url}/clients/${clientId}/current`
+    );
   }
 
   create(routine: IRoutineCreate): Observable<ApiResponse<IRoutine>> {
