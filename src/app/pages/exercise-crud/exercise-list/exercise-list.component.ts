@@ -8,7 +8,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { SnackbarService } from '../../../core/services/snackbar.service';
 
-export interface DialogExerciseData {
+export interface ExerciseDialogData {
   exercise: IExercise;
   action: string;
   title: string;

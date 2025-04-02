@@ -1,10 +1,12 @@
 import { AuthService } from '../../core/services/auth.service';
 import { Component } from '@angular/core';
 import { environment } from '../../../environments/environment';
-import { HttpClient } from '@angular/common/http';
+import { IGoal } from '../../core/interfaces/goal.interface';
 import { IMembership } from '../../core/interfaces/membership.interface';
+import { IProgress } from '../../core/interfaces/progress.interface';
 import { MatDialog } from '@angular/material/dialog';
 import { PayMembershipDialogComponent } from '../client-payment/pay-membership-dialog/pay-membership-dialog.component';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-home-page',
@@ -15,14 +17,18 @@ import { PayMembershipDialogComponent } from '../client-payment/pay-membership-d
 })
 export class HomeComponent {
   public userSignal = this.authService.userSignal;
-  //TODO: tipar interfaces goals, progresses
-  public goals: [] = [];
-  public progresses: [] = [];
+  public goals: IGoal[] = [];
+  public progresses: IProgress[] = [];
   public membership: IMembership | null = null;
   public formatedDateTo: string | null = null;
   public classes: [] = [];
 
-  constructor(private authService: AuthService, private dialog: MatDialog) {
+  constructor(
+    private authService: AuthService,
+    private dialog: MatDialog,
+    private http: HttpClient
+  ) {
+    //TODO hacer una única peticion que devuelva home information...
     authService.getUser();
     if (this.userSignal()?.isClient) {
       this.getProgresses();

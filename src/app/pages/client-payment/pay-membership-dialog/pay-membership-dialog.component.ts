@@ -5,10 +5,14 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
+import {
+  IUserPaymentCreate,
+  PaymentService,
+} from '../../../core/services/payment.service';
 import { AuthService } from '../../../core/services/auth.service';
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { environment } from '../../../../environments/environment';
+import { HttpErrorResponse } from '@angular/common/http';
 import { IMembershipType } from '../../../core/interfaces/membership-type.interface';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialogRef } from '@angular/material/dialog';
@@ -17,8 +21,8 @@ import { MatInputModule } from '@angular/material/input';
 import { MatListModule } from '@angular/material/list';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatSelectModule } from '@angular/material/select';
+import { MembershipTypeService } from '../../../core/services/membership-type.service';
 import { SnackbarService } from '../../../core/services/snackbar.service';
-import { PaymentService } from '../../../core/services/payment.service';
 
 @Component({
   selector: 'app-pay-membership-dialog',
@@ -40,6 +44,8 @@ import { PaymentService } from '../../../core/services/payment.service';
 export class PayMembershipDialogComponent {
   membershipTypes: IMembershipType[] | undefined;
   selectedMembershipType: IMembershipType | undefined;
+  clientId: string;
+
   form = new FormGroup({
     membershipType: new FormControl('', [Validators.required]),
   });
@@ -48,42 +54,51 @@ export class PayMembershipDialogComponent {
     public dialogRef: MatDialogRef<PayMembershipDialogComponent>,
     private authService: AuthService,
     private paymentService: PaymentService,
+    private membershipTypeService: MembershipTypeService,
     private snackbarService: SnackbarService
   ) {
     this.getMembershipTypes();
+    this.clientId = this.authService.getUser()!.id; //TODO ver qué puedo hacer para mejorarlo
   }
 
   onSubmit(): void {
-    const form = this.form.controls;
-    const data: Record<string, any> = {
-      clientId: this.authService.getUser()?.id,
-      membershipTypeId: form.membershipType.value,
+    const form = this.form.value;
+    const data: IUserPaymentCreate = {
+      clientId: this.clientId,
+      membershipTypeId: form.membershipType!,
     };
 
-    this.http.post<any>(environment.userPaymentUrl, data).subscribe({
+    this.paymentService.startUserPayment(data).subscribe({
       next: (res) => {
         window.location.href = res;
       },
       error: (err) => {
-        this.snackbarService.showError(err.error.message);
+        if (err.error.isUserFriendly)
+          this.snackbarService.showError(err.error.message);
+        else
+          this.snackbarService.showError(
+            'Error al iniciar la compra de la membresía.'
+          );
       },
     });
   }
 
   closeDialog(result: string) {
-    this.dialogRef.close(result); //TODO
+    this.dialogRef.close(result);
   }
 
-  //TODO hacerlo service??
   getMembershipTypes() {
-    this.http.get<any>(environment.membershipTypesUrl).subscribe({
+    this.membershipTypeService.getAll().subscribe({
       next: (res) => {
         this.membershipTypes = res.data;
       },
-      error: () => {
-        this.snackbarService.showError(
-          'Error al obtener los tipos de membresías'
-        );
+      error: (err: HttpErrorResponse) => {
+        if (err.error.isUserFriendly)
+          this.snackbarService.showError(err.error.message);
+        else
+          this.snackbarService.showError(
+            'Error al obtener los tipos de membresías.'
+          );
       },
     });
   }

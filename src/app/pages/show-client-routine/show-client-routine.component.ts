@@ -1,4 +1,3 @@
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import {
   MatExpansionModule,
   MatExpansionPanel,
@@ -6,10 +5,11 @@ import {
 import { AuthService } from '../../core/services/auth.service';
 import { Component } from '@angular/core';
 import { differenceInWeeks } from 'date-fns';
-import { environment } from '../../../environments/environment';
 import { formatDate } from '@angular/common';
+import { HttpErrorResponse } from '@angular/common/http';
 import { IExerciseRoutine } from '../../core/interfaces/exercise-routine.inteface';
 import { IRoutine } from '../../core/interfaces/routine.interface';
+import { RoutineService } from '../../core/services/routine.service';
 
 @Component({
   selector: 'app-show-client-routine',
@@ -57,7 +57,10 @@ export class ShowClientRoutineComponent {
   currentDate = new Date();
   currentMonthName = this.months[this.currentDate.getMonth()];
 
-  constructor(private authService: AuthService) {
+  constructor(
+    private authService: AuthService,
+    private routineService: RoutineService
+  ) {
     const user = this.authService.getUser();
     if (user) {
       this.userId = user.id;
@@ -72,10 +75,7 @@ export class ShowClientRoutineComponent {
     this.currentDayName = this.getDayName(today.getDay());
     this.currentDayNumber = today.getDate();
 
-    this.http
-      .get<{ message: string; data: IRoutine }>(
-        `${environment.routinesUrl}/${this.userId}/current`
-      )
+    this.routineService.getCurrentByClient(this.userId)
       .subscribe({
         next: (res) => {
           this.routine = res.data;

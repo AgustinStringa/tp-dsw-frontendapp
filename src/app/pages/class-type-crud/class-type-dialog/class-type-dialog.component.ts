@@ -1,6 +1,10 @@
+import {
+  ClassTypeService,
+  IClassTypeCreate,
+} from '../../../core/services/class-type.service';
 import { Component, Inject } from '@angular/core';
 import {
-  FormControl,
+FormControl,
   FormGroup,
   FormsModule,
   ReactiveFormsModule,
@@ -13,10 +17,6 @@ import {
   MatDialogRef,
   MatDialogTitle,
 } from '@angular/material/dialog';
-import {
-  ClassTypeService,
-  IClassTypeCreate,
-} from '../../../core/services/class-type.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { IClassType } from '../../../core/interfaces/class-type.interface';
 import { MatButtonModule } from '@angular/material/button';
@@ -80,9 +80,10 @@ export class ClassTypeDialogComponent {
   }
 
   onSubmit(): void {
+    const form = this.form.controls;
     const data: IClassTypeCreate = {
-      name: this.form.get('name').value,
-      description: this.form.get('description')?.value,
+      name: form.name.value!,
+      description: form.description.value!,
     };
 
     if (this.action === 'post') {

@@ -1,7 +1,8 @@
-import { Component, EventEmitter, Output } from '@angular/core';
-import { environment } from '../../../environments/environment';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { ClientService } from '../../core/services/client.service';
 import { FormsModule } from '@angular/forms';
 import { IUser } from '../../core/interfaces/user.interface';
+import { TrainerService } from '../../core/services/trainer.service';
 
 @Component({
   selector: 'app-users-filter',
@@ -13,8 +14,11 @@ import { IUser } from '../../core/interfaces/user.interface';
     './users-filter.component.css',
   ],
 })
-export class UsersFilterComponent {
-  @Output() filteredUsersEvent = new EventEmitter<{
+export class UsersFilterComponent implements OnInit {
+  @Input({ required: true }) crudService!: TrainerService | ClientService;
+
+  @Output()
+  filteredUsersEvent = new EventEmitter<{
     users: IUser[];
     usersExist: boolean;
   } | null>();
@@ -24,13 +28,14 @@ export class UsersFilterComponent {
 
   nameFilter = '';
 
-  constructor() {
+  constructor() {}
+
+  ngOnInit() {
     this.getUsers();
   }
 
   getUsers() {
-    //TODO si se filtran trainers en el futuro, pasarle como parámetro al componente la colección a filtrar y decidir ruta con if.
-    this.http.get<any>(environment.clientsUrl).subscribe({
+    this.crudService.getAll().subscribe({
       next: (res) => {
         this.users = res.data;
         this.filteredUsers = this.users ? [...this.users] : [];

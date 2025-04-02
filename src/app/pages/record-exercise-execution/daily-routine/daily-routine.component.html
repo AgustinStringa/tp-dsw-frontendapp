@@ -39,9 +39,9 @@
           exerciseRoutine.week === currentWeek) {
 
           <tr>
-            <td>{{ exerciseRoutine.exercise?.name || "No Disponible" }}</td>
-            <td>{{ exerciseRoutine.series || "N/A" }}</td>
-            <td>{{ exerciseRoutine.repetitions || "N/A" }}</td>
+            <td>{{ exerciseRoutine.exercise.name }}</td>
+            <td>{{ exerciseRoutine.series }}</td>
+            <td>{{ exerciseRoutine.repetitions }}</td>
             <td>{{ getExerciseStatus(exerciseRoutine) }}</td>
 
             <td
@@ -73,7 +73,7 @@
                 <a
                   target="_blank"
                   class="text-white"
-                  href="{{ exerciseRoutine.exercise?.urlVideo }}"
+                  href="{{ exerciseRoutine.exercise.urlVideo }}"
                 >
                   Ver Video</a
                 >

@@ -17,21 +17,26 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
+import {
+  IRoutineCreate,
+  RoutineService,
+} from '../../../core/services/routine.service';
 import { AuthService } from '../../../core/services/auth.service';
 import { CdkAccordionModule } from '@angular/cdk/accordion';
 import Client from '../../../core/classes/client';
 import { ClientsMembershipListComponent } from '../clients-membership-list/clients-membership-list.component';
-import { environment } from '../../../../environments/environment';
 import { ExerciseRoutineCardComponent } from '../exercise-routine-card/exercise-routine-card.component';
-import { HttpClient } from '@angular/common/http';
+import { ExerciseService } from '../../../core/services/exercise.service';
+import { HttpErrorResponse } from '@angular/common/http';
 import { IExercise } from '../../../core/interfaces/exercise.interface';
 import { IExerciseRoutine } from '../../../core/interfaces/exercise-routine.inteface';
+import { IMembership } from '../../../core/interfaces/membership.interface';
 import { MatDialog } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
+import { MembershipService } from '../../../core/services/membership.service';
 import { NewExerciseRoutineDialogComponent } from '../new-exercise-routine-dialog/new-exercise-routine-dialog.component';
 import { NgClass } from '@angular/common';
-import { Router } from '@angular/router';
 import { SnackbarService } from '../../../core/services/snackbar.service';
 
 interface Day {
@@ -92,9 +97,11 @@ export class CreateRoutinePageComponent implements AfterViewChecked {
   readonly dialog = inject(MatDialog);
 
   constructor(
-    private router: Router,
-    private snackbarService: SnackbarService,
-    private authService: AuthService
+    private authService: AuthService,
+    private routineService: RoutineService,
+    private exerciseService: ExerciseService,
+    private membershipService: MembershipService,
+    private snackbarService: SnackbarService
   ) {
     this.getClientsWithActiveMembership();
     this.getExercises();
@@ -107,11 +114,11 @@ export class CreateRoutinePageComponent implements AfterViewChecked {
   }
 
   getClientsWithActiveMembership() {
-    this.http.get<any>(environment.activeMembershipsUrl).subscribe({
+    this.membershipService.getActive().subscribe({
       next: (res) => {
         this.clients = [];
 
-        Array.from(res.data).forEach((m: any) => {
+        Array.from(res.data).forEach((m: IMembership) => {
           this.clients = [
             ...this.clients,
             new Client(
@@ -132,19 +139,27 @@ export class CreateRoutinePageComponent implements AfterViewChecked {
         });
       },
       error: (err) => {
-        this.snackbarService.showError(err.message);
+        if (err.error.isUserFriendly)
+          this.snackbarService.showError(err.error.message);
+        else
+          this.snackbarService.showError(
+            'Error al obtener los clientes con membresías vigentes.'
+          );
       },
     });
   }
 
   getExercises() {
-    try {
-      this.http.get<any>(environment.exercisesUrl).subscribe((res: any) => {
+    this.exerciseService.getAll().subscribe({
+      next: (res) => {
         this.exercises = res.data;
-      });
-    } catch (error: any) {
-      console.log(error);
-    }
+      },
+      error: (err: HttpErrorResponse) => {
+        if (err.error.isUserFriendly)
+          this.snackbarService.showError(err.error.message);
+        else this.snackbarService.showError('Error al obtener los ejercicios.');
+      },
+    });
   }
 
   setDateTo() {
@@ -271,32 +286,24 @@ export class CreateRoutinePageComponent implements AfterViewChecked {
   }
 
   onSubmit() {
-    //validaciones variadas
-    /**
-     * fecha desde mayor o igual a hoy
-     * superposicion de rutinas? o bloquear rango si superpone?
-     * verificar que exista al menos una semana con un dia con un ejercicio -> si no, rutina vacia
-     */
-    //post
-    //mensaje de exito XOR error
-    const newRoutine = {
-      trainerId: this.authService.getUser()?.id,
-      clientId: this.routineForm.value.client?.id,
-      start: parseISO(this.routineForm.value.dateFrom || ''),
-      end: this.routineForm.value.dateTo,
-      exercisesRoutine: this.routineForm.value.exercisesRoutine?.map((ex) => ({
+    const form = this.routineForm.value;
+    const newRoutine: IRoutineCreate = {
+      clientId: form.client!.id,
+      start: parseISO(form.dateFrom || ''),
+      end: form.dateTo!,
+      exercisesRoutine: this.routineForm.value.exercisesRoutine!.map((ex) => ({
         week: ex.week,
         day: ex.day,
         series: ex.series,
         repetitions: ex.repetitions,
-        exercise: ex.exercise?.id,
+        exercise: ex.exercise.id,
       })),
     };
 
-    this.http.post<any>(environment.routinesUrl, newRoutine).subscribe({
+    this.routineService.create(newRoutine).subscribe({
       next: () => {
         this.snackbarService
-          .showSuccess('Rutina creada correctamente')
+          .showSuccess('Rutina creada correctamente.')
           .afterDismissed()
           .subscribe(() => {
             this.resetForm();
@@ -307,11 +314,11 @@ export class CreateRoutinePageComponent implements AfterViewChecked {
             });
           });
       },
-      error: (err: any) => {
+      error: (err: HttpErrorResponse) => {
         if (err.error.isUserFriendly) {
           this.snackbarService.showError(err.error.message);
         } else {
-          this.snackbarService.showError('Error al crear la rutina');
+          this.snackbarService.showError('Error al crear la rutina.');
         }
       },
     });
@@ -338,17 +345,14 @@ export class CreateRoutinePageComponent implements AfterViewChecked {
   }
 
   resetForm(): void {
-    try {
-      this.routineForm.patchValue({
-        client: null,
-        dateFrom: '',
-        dateTo: null,
-        exercisesRoutine: [],
-      });
-      this.weeks = [];
-      this.getClientsWithActiveMembership();
-    } catch (error) {
-      console.log(error);
-    }
+    this.routineForm.patchValue({
+      client: null,
+      dateFrom: '',
+      dateTo: null,
+      exercisesRoutine: [],
+    });
+    this.weeks = [];
+    this.getClientsWithActiveMembership();
+    this.getExercises();
   }
 }

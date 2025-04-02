@@ -5,6 +5,14 @@ import { IExerciseRoutine } from '../interfaces/exercise-routine.inteface';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
+export interface IExerciseRoutineCreate {
+  week: number;
+  day: number;
+  series: number;
+  repetitions: number;
+  exercise: string;
+}
+
 export interface IExerciseRoutineUpdate {
   weight: number;
 }
