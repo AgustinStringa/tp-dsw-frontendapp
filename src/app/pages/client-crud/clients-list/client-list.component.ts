@@ -1,17 +1,18 @@
 import { Component, ViewChild } from '@angular/core';
-import { ComponentType } from '@angular/cdk/portal';
-import { FormsModule } from '@angular/forms';
-import { MatDialog } from '@angular/material/dialog';
-import { MatIconModule } from '@angular/material/icon';
 import {
   MatPaginatorIntl,
   MatPaginatorModule,
   PageEvent,
 } from '@angular/material/paginator';
+import { ClientService } from '../../../core/services/client.service';
+import { ComponentType } from '@angular/cdk/portal';
 import { CustomPaginatorIntl } from '../../../core/classes/custom-paginator-intl';
 import { DeleteDialogComponent } from '../../../shared/delete-dialog/delete-dialog.component';
 import { environment } from '../../../../environments/environment';
+import { FormsModule } from '@angular/forms';
 import { IUser } from '../../../core/interfaces/user.interface';
+import { MatDialog } from '@angular/material/dialog';
+import { MatIconModule } from '@angular/material/icon';
 import { UserDialogComponent } from '../../../shared/user-dialog/user-dialog.component';
 import { UsersFilterComponent } from '../../../shared/users-filter/users-filter.component';
 
@@ -32,11 +33,14 @@ export class ClientListComponent {
   @ViewChild(UsersFilterComponent) filter!: UsersFilterComponent;
 
   clients: IUser[] | null = null;
-  clientsExist: boolean = false;
+  clientsExist = false;
   clientsPage: IUser[] | null = null;
-  pageSize: number = 50;
+  pageSize = 50;
 
-  constructor(private dialog: MatDialog) {}
+  constructor(
+    private dialog: MatDialog,
+    private clientService: ClientService
+  ) {}
 
   addUser(): void {
     this.openDialog(UserDialogComponent, {
@@ -64,7 +68,7 @@ export class ClientListComponent {
       data: {
         id: id,
         title: 'Eliminar Cliente',
-        url: environment.clientsUrl,
+        service: this.clientService,
       },
     });
   }

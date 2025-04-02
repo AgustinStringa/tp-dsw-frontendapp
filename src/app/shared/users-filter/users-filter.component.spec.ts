@@ -1,7 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
-import { UsersFilterComponent } from './users-filter.component';
 import { HttpClientModule } from '@angular/common/http';
+import { UsersFilterComponent } from './users-filter.component';
 
 describe('UsersFilterComponent', () => {
   let component: UsersFilterComponent;

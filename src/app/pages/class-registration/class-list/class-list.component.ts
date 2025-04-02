@@ -1,15 +1,15 @@
-import { NgIf } from '@angular/common';
-import { HttpClient } from '@angular/common/http';
+import { AuthService } from '../../../core/services/auth.service';
 import { Component, inject } from '@angular/core';
 import { environment } from '../../../../environments/environment';
-import { IClassType } from '../../../core/interfaces/class-type.interface';
+import { HttpClient } from '@angular/common/http';
 import { IClass } from '../../../core/interfaces/class.interface';
+import { IClassType } from '../../../core/interfaces/class-type.interface';
 import { IRegistration } from '../../../core/interfaces/registration.interface';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatDialog } from '@angular/material/dialog';
+import { NgIf } from '@angular/common';
+import { SnackbarService } from '../../../core/services/snackbar.service';
 import { ConfirmRegistrationDialogComponent } from '../confirm-registration-dialog/confirm-registration-dialog.component';
-import { AuthService } from '../../../services/auth.service';
-import { SnackbarService } from '../../../services/snackbar.service';
 
 @Component({
   selector: 'app-class-list',
@@ -19,7 +19,7 @@ import { SnackbarService } from '../../../services/snackbar.service';
   styleUrl: './class-list.component.css',
 })
 export class ClassListComponent {
-  urlClass: string = '';
+  urlClass = '';
   classtypes: IClassType[] = [];
   selectedClass: IClass | null = null;
   selectedClassType: IClassType | null = null;
@@ -65,7 +65,7 @@ export class ClassListComponent {
         .get<any>(`${environment.registrationUrl}/client/${this.userId}`)
         .subscribe((res) => {
           this.registeredClassIds = res.data.map(
-            (registration: IRegistration) => registration.classId
+            (registration: any) => registration.classId
           );
         });
     } catch (error: any) {
@@ -107,7 +107,7 @@ export class ClassListComponent {
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result && this.selectedClass) {
-        const registration: IRegistration = {
+        const registration: any = {
           clientId: this.userId,
           classId: this.selectedClass.id,
         };

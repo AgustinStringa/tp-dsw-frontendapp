@@ -1,0 +1,60 @@
+<div class="dialog-container">
+  <div class="dialog-title">
+    <h2 mat-dialog-title>
+      {{ title }}
+    </h2>
+    <button
+      type="button"
+      class="btn-close"
+      title="Cerrar ventana"
+      (click)="closeDialog('none')"
+    ></button>
+  </div>
+
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <mat-dialog-content class="common-dialog">
+      <!-- TODO mostrar nombre del cliente y nombre del tipo de membresía -->
+
+      <mat-form-field>
+        <mat-label for="amount">Monto</mat-label>
+        <input
+          type="number"
+          formControlName="amount"
+          id="amount"
+          min="0.01"
+          step="0.01"
+          pattern="^\d+(\.\d{1,2})?$"
+          matInput
+        />
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label for="paymentMethod">Método de pago</mat-label>
+        <mat-select formControlName="paymentMethod" id="paymentMethod">
+          @for (p of paymentMethods; track p) {
+          <mat-option value="{{ p }}">{{ p }}</mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
+    </mat-dialog-content>
+
+    <mat-dialog-actions class="common-dialog">
+      <button
+        mat-button
+        type="submit"
+        class="btn btn-primary btn-success"
+        [disabled]="!form.valid"
+      >
+        Guardar
+      </button>
+      <button
+        mat-button
+        type="button"
+        class="btn-secondary"
+        (click)="closeDialog('none')"
+      >
+        Cancelar
+      </button>
+    </mat-dialog-actions>
+  </form>
+</div>

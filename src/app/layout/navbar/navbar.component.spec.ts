@@ -1,7 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
-import { NavbarComponent } from './navbar.component';
 import { HttpClientModule } from '@angular/common/http';
+import { NavbarComponent } from './navbar.component';
 import { RouterModule } from '@angular/router';
 
 describe('NavbarComponent', () => {

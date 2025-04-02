@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
 import { ComponentType } from '@angular/cdk/overlay/index.js';
-import { HttpClient } from '@angular/common/http';
 import { DeleteDialogComponent } from '../../../shared/delete-dialog/delete-dialog.component';
 import { environment } from '../../../../environments/environment';
 import { IUser } from '../../../core/interfaces/user.interface';
 import { MatDialog } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
+import { TrainerService } from '../../../core/services/trainer.service';
 import { UserDialogComponent } from '../../../shared/user-dialog/user-dialog.component';
 
 @Component({
@@ -18,12 +18,15 @@ import { UserDialogComponent } from '../../../shared/user-dialog/user-dialog.com
 export class TrainerListComponent {
   trainers: IUser[] | null = null;
 
-  constructor(private http: HttpClient, private dialog: MatDialog) {
+  constructor(
+    private trainerService: TrainerService,
+    private dialog: MatDialog
+  ) {
     this.getTrainers();
   }
 
   getTrainers() {
-    this.http.get<any>(environment.trainersUrl).subscribe({
+    this.trainerService.getAll().subscribe({
       next: (res) => {
         this.trainers = res.data;
       },
@@ -58,9 +61,8 @@ export class TrainerListComponent {
     this.openDialog(DeleteDialogComponent, {
       data: {
         id: id,
-        entity: 'trainer',
         title: 'Eliminar Entrenador',
-        url: environment.trainersUrl,
+        service: this.trainerService,
       },
     });
   }

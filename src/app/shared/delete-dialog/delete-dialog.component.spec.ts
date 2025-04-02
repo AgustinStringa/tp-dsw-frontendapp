@@ -1,7 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { DeleteDialogComponent } from './delete-dialog.component';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { HttpClientModule } from '@angular/common/http';
 
 describe('DeleteDialogComponent', () => {
@@ -21,7 +20,7 @@ describe('DeleteDialogComponent', () => {
           useValue: {
             id: 'string;',
             title: 'string;',
-            url: 'string;',
+            url: 'string;', //TODO ahora se envía un service
           },
         },
       ],

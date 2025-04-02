@@ -1,11 +1,11 @@
 import { Component, inject } from '@angular/core';
 import {
-  Validators,
   FormControl,
   FormGroup,
   ReactiveFormsModule,
+  Validators,
 } from '@angular/forms';
-import { MatButtonModule } from '@angular/material/button';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import {
   MAT_DIALOG_DATA,
   MatDialogActions,
@@ -13,15 +13,15 @@ import {
   MatDialogRef,
   MatDialogTitle,
 } from '@angular/material/dialog';
+import { catchError } from 'rxjs/operators';
+import { DialogExerciseData } from '../exercise-list/exercise-list.component.js';
+import { environment } from '../../../../environments/environment';
+import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { DialogExerciseData } from '../exercise-list/exercise-list.component.js';
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { catchError } from 'rxjs/operators';
+import { SnackbarService } from '../../../core/services/snackbar.service';
 import { throwError } from 'rxjs';
-import { environment } from '../../../../environments/environment';
-import { trimValidator } from '../../../core/Functions/trim-validator';
-import { SnackbarService } from '../../../services/snackbar.service';
+import { trimValidator } from '../../../core/functions/trim-validator';
 
 @Component({
   selector: 'app-exercise-dialog',
@@ -39,8 +39,8 @@ import { SnackbarService } from '../../../services/snackbar.service';
   styleUrl: './exercise-dialog.component.css',
 })
 export class ExerciseDialogComponent {
-  title: string = '';
-  action: string = '';
+  title = '';
+  action = '';
   readonly dialogRef = inject(MatDialogRef<DialogExerciseData>);
   readonly data = inject<DialogExerciseData>(MAT_DIALOG_DATA);
 

@@ -1,8 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
-import { MembershipDialogComponent } from './membership-dialog.component';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { HttpClientModule } from '@angular/common/http';
+import { MembershipDialogComponent } from './membership-dialog.component';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 describe('MembershipDialogComponent', () => {

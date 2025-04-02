@@ -5,7 +5,6 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { HttpClient } from '@angular/common/http';
 import {
   MAT_DIALOG_DATA,
   MatDialogActions,
@@ -13,13 +12,14 @@ import {
   MatDialogRef,
   MatDialogTitle,
 } from '@angular/material/dialog';
+import { environment } from '../../../../environments/environment';
+import { HttpClient } from '@angular/common/http';
+import { IMembershipType } from '../../../core/interfaces/membership-type.interface';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { IMembershipType } from '../../../core/interfaces/membership-type.interface';
-import { environment } from '../../../../environments/environment';
-import { SnackbarService } from '../../../services/snackbar.service';
-import { trimValidator } from '../../../core/Functions/trim-validator';
+import { SnackbarService } from '../../../core/services/snackbar.service';
+import { trimValidator } from '../../../core/functions/trim-validator';
 
 interface DialogData {
   title: string;
@@ -79,7 +79,7 @@ export class MembershipTypeDialogComponent {
 
   onSubmit(): void {
     const form = this.form.controls;
-    let data: Record<string, any> = {
+    const data: Record<string, any> = {
       name: form.name.value,
       description: form.description.value?.trim(),
       price: Number(form.price.value),

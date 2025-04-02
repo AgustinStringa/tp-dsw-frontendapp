@@ -1,17 +1,19 @@
 import { Component, Inject } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { MatButtonModule } from '@angular/material/button';
 import {
   MAT_DIALOG_DATA,
   MatDialogRef,
   MatDialogTitle,
 } from '@angular/material/dialog';
-import { MatDialogContent, MatDialogActions } from '@angular/material/dialog';
+import { MatDialogActions, MatDialogContent } from '@angular/material/dialog';
+import { HttpErrorResponse } from '@angular/common/http';
+import { ICrudService } from '../../core/interfaces/crud-service.interface';
+import { MatButtonModule } from '@angular/material/button';
+import { SnackbarService } from '../../core/services/snackbar.service';
 
 interface DialogData {
   id: string;
   title: string;
-  url: string;
+  service: ICrudService<unknown, unknown>;
 }
 
 @Component({
@@ -27,25 +29,35 @@ interface DialogData {
   styleUrl: './delete-dialog.component.css',
 })
 export class DeleteDialogComponent {
-  url: string = '';
-  title: string = '';
+  id: string;
+  title: string;
+  service: ICrudService<unknown, unknown>;
 
   constructor(
     public dialogRef: MatDialogRef<DeleteDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: DialogData,
-    private http: HttpClient
+    private snackbarService: SnackbarService
   ) {
-    this.url = data.url + '/' + data.id;
+    if (!data || !data.id || !data.title || !data.service) {
+      this.snackbarService.showError('Faltan datos requeridos para el dialog.');
+      throw new Error('Faltan datos requeridos para el dialog.');
+    }
+
+    this.id = data.id;
     this.title = data.title;
+    this.service = data.service;
   }
 
   onSubmit(): void {
-    this.http.delete<any>(this.url).subscribe({
+    console.log(this.id);
+    this.service.delete(this.id).subscribe({
       next: () => {
         this.dialogRef.close('deleted');
       },
-      error: (error) => {
-        console.error('Error en la petición:', error);
+      error: (err: HttpErrorResponse) => {
+        if (err.error.isUserFriendly)
+          this.snackbarService.showError(err.error.message);
+        else this.snackbarService.showError('Error al eliminar la entidad.');
       },
     });
   }

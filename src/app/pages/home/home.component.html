@@ -13,6 +13,7 @@
             <h4 class="my-3 text-muted">{{ this.userSignal()?.firstName }}</h4>
           </div>
         </div>
+
         @if(this.userSignal()?.isClient){
         <div class="card mb-4 mb-lg-0">
           <div class="card-body p-0">
@@ -21,30 +22,32 @@
                 class="list-group-item d-flex justify-content-between align-items-center p-3"
               >
                 {{ this.goals.length }}
-                <p class="mb-0">metas</p>
+                <p class="mb-0">Metas</p>
               </li>
               <li
                 class="list-group-item d-flex justify-content-between align-items-center p-3"
               >
                 {{ this.progresses.length }}
-                <p class="mb-0">progresos</p>
+                <p class="mb-0">Progresos</p>
               </li>
               <li
                 class="list-group-item d-flex justify-content-between align-items-center p-3"
               >
                 {{ this.classes.length }}
-                <p class="mb-0">clases</p>
+                <p class="mb-0">Clases</p>
               </li>
               <li
-                class="list-group-item d-flex justify-content-between align-items-center p-3"
+                class="list-group-item d-flex justify-content-center align-items-center p-3"
               >
-                {{ this.membership?.type?.name }}
-                hasta @if(this.membershipDateTo!=null){
-                {{ this.membershipDateTo.getDay() + 1 }}/{{
-                  this.membershipDateTo.getMonth() + 1
-                }}/{{ this.membershipDateTo.getFullYear() }}
+                @if (this.membership !== null) {
+                {{ this.membership.type.name }}
+                hasta {{ this.formatedDateTo }}
+                <p class="mb-0 text-end">Membresía actual</p>
+                } @else {
+                <button class ="btn btn-primary"(click)="openPayMembershipModal()">
+                  Comprar una Membresía
+                </button>
                 }
-                <p class="mb-0 text-end">membresía actual</p>
               </li>
             </ul>
           </div>

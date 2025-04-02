@@ -1,8 +1,8 @@
 import { Component, EventEmitter, Output } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
-import { IUser } from '../../core/interfaces/user.interface';
 import { FormsModule } from '@angular/forms';
+import { HttpClient } from '@angular/common/http';
+import { IUser } from '../../core/interfaces/user.interface';
 
 @Component({
   selector: 'app-users-filter',
@@ -15,15 +15,15 @@ import { FormsModule } from '@angular/forms';
   ],
 })
 export class UsersFilterComponent {
-  @Output() filteredUsersEvent: EventEmitter<{
+  @Output() filteredUsersEvent = new EventEmitter<{
     users: IUser[];
     usersExist: boolean;
-  } | null> = new EventEmitter();
+  } | null>();
 
   users: IUser[] | null = null;
   filteredUsers: IUser[] | null = null;
 
-  nameFilter: string = '';
+  nameFilter = '';
 
   constructor(private http: HttpClient) {
     this.getUsers();

@@ -2,17 +2,21 @@ import {
   Component,
   EventEmitter,
   Input,
+  OnChanges,
   Output,
   SimpleChanges,
 } from '@angular/core';
+import {
+  ExerciseRoutineService,
+  IExerciseRoutineUpdate,
+} from '../../../core/services/exercise-routine.service';
 import { FormsModule } from '@angular/forms';
-import { IExerciseRoutine } from '../../../core/interfaces/exercise-routine.inteface.js';
-import { HttpClient } from '@angular/common/http';
-import { environment } from '../../../../environments/environment';
+import { HttpErrorResponse } from '@angular/common/http';
+import { IExerciseRoutine } from '../../../core/interfaces/exercise-routine.inteface';
+import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { MatButtonModule } from '@angular/material/button';
-import { SnackbarService } from '../../../services/snackbar.service';
+import { SnackbarService } from '../../../core/services/snackbar.service';
 
 @Component({
   selector: 'app-dialog-add-weight',
@@ -21,16 +25,17 @@ import { SnackbarService } from '../../../services/snackbar.service';
   templateUrl: './add-weight-dialog.component.html',
   styleUrl: './add-weight-dialog.component.css',
 })
-export class AddWeightDialogComponent {
-  @Input() exerciseRoutine: IExerciseRoutine | null = null;
+export class AddWeightDialogComponent implements OnChanges {
+  @Input({ required: true }) exerciseRoutine!: IExerciseRoutine;
+
   @Output() closeModal = new EventEmitter<void>();
   @Output() saveWeight = new EventEmitter<number>();
 
-  withoutWeight: boolean = false;
+  withoutWeight = false;
   selectedWeight: number | null = null;
 
   constructor(
-    private http: HttpClient,
+    private exerciseRoutineService: ExerciseRoutineService,
     private snackbarService: SnackbarService
   ) {}
 
@@ -57,23 +62,22 @@ export class AddWeightDialogComponent {
       );
     }
 
-    const weight = this.withoutWeight ? 0 : this.selectedWeight;
+    const data: IExerciseRoutineUpdate = {
+      weight: this.withoutWeight ? 0 : this.selectedWeight!,
+    };
 
-    this.http
-      .patch(
-        `${environment.routinesUrl}/exerciseroutines/${this.exerciseRoutine?.id}`,
-        {
-          weight,
-        }
-      )
+    this.exerciseRoutineService
+      .markAsDone(this.exerciseRoutine.id!, data)
       .subscribe({
         next: () => {
           this.snackbarService.showSuccess('Peso registrado exitosamente');
-          this.saveWeight.emit(weight as number);
+          this.saveWeight.emit(data.weight as number);
           this.onClose();
         },
-        error: () => {
-          this.snackbarService.showError('No se pudo registrar el peso');
+        error: (err: HttpErrorResponse) => {
+          if (err.error.isUserFriendly)
+            this.snackbarService.showError(err.error.message);
+          else this.snackbarService.showError('Error al registrar el peso.');
         },
       });
   }

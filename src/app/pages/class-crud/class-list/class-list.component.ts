@@ -1,16 +1,19 @@
 import { Component, inject } from '@angular/core';
-import { ComponentType } from '@angular/cdk/portal';
-import { HttpClient } from '@angular/common/http';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
-import { MatIconModule } from '@angular/material/icon';
-import { NgFor } from '@angular/common';
 import { ClassDialogComponent } from '../class-dialog/class-dialog.component';
+import { ClassService } from '../../../core/services/class.service';
+import { ClassTypeService } from '../../../core/services/class-type.service';
+import { ComponentType } from '@angular/cdk/portal';
 import { DeleteDialogComponent } from '../../../shared/delete-dialog/delete-dialog.component';
-import { environment } from '../../../../environments/environment';
+import { FormsModule } from '@angular/forms';
+import { HttpErrorResponse } from '@angular/common/http';
 import { IClass } from '../../../core/interfaces/class.interface';
 import { IClassType } from '../../../core/interfaces/class-type.interface';
 import { IUser } from '../../../core/interfaces/user.interface';
-import { FormsModule } from '@angular/forms';
+import { MatIconModule } from '@angular/material/icon';
+import { NgFor } from '@angular/common';
+import { SnackbarService } from '../../../core/services/snackbar.service';
+import { TrainerService } from '../../../core/services/trainer.service';
 
 @Component({
   selector: 'app-class-list',
@@ -28,41 +31,61 @@ export class ClassListComponent {
   classTypes: IClassType[] | null = null;
   classes: IClass[] | null = null;
   filteredClasses: IClass[] | null = null;
-  dayFilter: string = '';
-  classTypeFilter: string = '';
-  trainerFilter: string = '';
+  dayFilter = '';
+  classTypeFilter = '';
+  trainerFilter = '';
 
-  constructor(private http: HttpClient) {
+  constructor(
+    private classService: ClassService,
+    private classTypeService: ClassTypeService,
+    private trainerService: TrainerService,
+    private snackbarService: SnackbarService
+  ) {
     this.getClasses();
     this.getTrainers();
     this.getClassTypes();
   }
 
   getClasses() {
-    try {
-      this.http.get<any>(environment.classesUrl).subscribe((res) => {
+    this.classService.getAll().subscribe({
+      next: (res) => {
         this.classes = res.data;
         this.applyFilter();
-      });
-    } catch (error: any) {
-      this.classes = null;
-    }
+      },
+      error: () => {
+        this.classes = null;
+      },
+    });
   }
 
   getClassTypes() {
-    try {
-      this.http.get<any>(environment.classTypesUrl).subscribe((res) => {
+    this.classTypeService.getAll().subscribe({
+      next: (res) => {
         this.classTypes = res.data;
-      });
-    } catch (error: any) {}
+      },
+      error: (err: HttpErrorResponse) => {
+        if (err.error.isUserFriendly)
+          this.snackbarService.showError(err.error.message);
+        else
+          this.snackbarService.showError(
+            'Error al obtener los tipos de clases.'
+          );
+      },
+    });
   }
 
   getTrainers() {
-    try {
-      this.http.get<any>(environment.trainersUrl).subscribe((res) => {
+    this.trainerService.getAll().subscribe({
+      next: (res) => {
         this.trainers = res.data;
-      });
-    } catch (error: any) {}
+      },
+      error: (err: HttpErrorResponse) => {
+        if (err.error.isUserFriendly)
+          this.snackbarService.showError(err.error.message);
+        else
+          this.snackbarService.showError('Error al obtener los entrenadores.');
+      },
+    });
   }
 
   addClass(): void {
@@ -87,8 +110,8 @@ export class ClassListComponent {
   deleteClass(id: string) {
     this.openDialog(DeleteDialogComponent, {
       id: id,
-      url: environment.classesUrl,
       title: 'Eliminar Clase',
+      service: this.classService,
     });
   }
 
@@ -119,6 +142,7 @@ export class ClassListComponent {
     this.trainerFilter = '';
     this.applyFilter();
   }
+
   applyFilter() {
     this.filteredClasses = this.classes ? [...this.classes] : [];
 

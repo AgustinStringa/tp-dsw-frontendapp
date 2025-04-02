@@ -1,11 +1,11 @@
-import { NgClass } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { AuthService } from '../../core/services/auth.service';
 import { FormsModule } from '@angular/forms';
-import { Router } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { AuthService } from '../../services/auth.service';
-import { SnackbarService } from '../../services/snackbar.service';
+import { NgClass } from '@angular/common';
+import { Router } from '@angular/router';
+import { SnackbarService } from '../../core/services/snackbar.service';
 
 @Component({
   selector: 'app-login',
@@ -14,17 +14,17 @@ import { SnackbarService } from '../../services/snackbar.service';
   templateUrl: './login.component.html',
   styleUrl: './login.component.css',
 })
-export class LoginComponent {
-  email: string = '';
-  password: string = '';
-  firstName: string = '';
-  lastName: string = '';
-  dni: string = '';
-  user: string = '';
-  aqua: string = '#a7ebf3';
+export class LoginComponent implements OnInit {
+  email = '';
+  password = '';
+  firstName = '';
+  lastName = '';
+  dni = '';
+  user = '';
+  aqua = '#a7ebf3';
 
-  isLoginVisible: boolean = true;
-  isSpinnerVisible: boolean = false;
+  isLoginVisible = true;
+  isSpinnerVisible = false;
   public userSignal = this.authService.userSignal;
 
   constructor(
@@ -68,7 +68,9 @@ export class LoginComponent {
               //email o usuario incorrecto
               //poner los controles en rojo?
 
-              if (httperror.error.message == 'Wrong email or password') {
+              if (
+                httperror.error.message == 'Email y/o contraseña incorrectos.'
+              ) {
                 document
                   .getElementById('loginEmail')
                   ?.classList.add(
