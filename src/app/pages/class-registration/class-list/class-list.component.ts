@@ -1,15 +1,15 @@
-import { AuthService } from '../../../core/services/auth.service.js';
+import { AuthService } from '../../../core/services/auth.service';
 import { Component, inject } from '@angular/core';
-import { DialogConfirmRegistrationComponent } from '../dialog-confirm-registration/dialog-confirm-registration.component.js';
-import { environment } from '../../../../environments/environment.js';
+import { environment } from '../../../../environments/environment';
 import { HttpClient } from '@angular/common/http';
-import { IClass } from '../../../core/interfaces/class.interface.js';
-import { IClassType } from '../../../core/interfaces/class-type.interface.js';
-import { IRegistration } from '../../../core/interfaces/registration.interface.js';
+import { IClass } from '../../../core/interfaces/class.interface';
+import { IClassType } from '../../../core/interfaces/class-type.interface';
+import { IRegistration } from '../../../core/interfaces/registration.interface';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatDialog } from '@angular/material/dialog';
 import { NgIf } from '@angular/common';
-import { SnackbarService } from '../../../core/services/snackbar.service.js';
+import { SnackbarService } from '../../../core/services/snackbar.service';
+import { ConfirmRegistrationDialogComponent } from '../confirm-registration-dialog/confirm-registration-dialog.component';
 
 @Component({
   selector: 'app-class-list',
@@ -96,7 +96,7 @@ export class ClassListComponent {
   selectClass(classItem: IClass) {
     this.selectedClass = classItem;
 
-    const dialogRef = this.dialog.open(DialogConfirmRegistrationComponent, {
+    const dialogRef = this.dialog.open(ConfirmRegistrationDialogComponent, {
       data: {
         className: classItem.classType.name, //TODO enviar nombre de la clase
         trainer: classItem.trainer.firstName + ' ' + classItem.trainer.lastName,

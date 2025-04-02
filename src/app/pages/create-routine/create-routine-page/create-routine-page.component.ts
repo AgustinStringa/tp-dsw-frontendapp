@@ -17,24 +17,22 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { AuthService } from '../../../core/services/auth.service.js';
-import { catchError } from 'rxjs/operators';
+import { AuthService } from '../../../core/services/auth.service';
 import { CdkAccordionModule } from '@angular/cdk/accordion';
-import Client from '../../../core/classes/client.js';
-import { ClientsMembershipListComponent } from '../clients-membership-list/clients-membership-list.component.js';
-import { DialogNewExerciseRoutineComponent } from '../dialog-new-exercise-routine/dialog-new-exercise-routine.component.js';
-import { environment } from '../../../../environments/environment.js';
-import { ExerciseRoutineCardComponent } from '../exercise-routine-card/exercise-routine-card.component.js';
-import { IExercise } from '../../../core/interfaces/exercise.interface.js';
-import { IExerciseRoutine } from '../../../core/interfaces/exercise-routine.inteface.js';
+import Client from '../../../core/classes/client';
+import { ClientsMembershipListComponent } from '../clients-membership-list/clients-membership-list.component';
+import { environment } from '../../../../environments/environment';
+import { ExerciseRoutineCardComponent } from '../exercise-routine-card/exercise-routine-card.component';
+import { HttpClient } from '@angular/common/http';
+import { IExercise } from '../../../core/interfaces/exercise.interface';
+import { IExerciseRoutine } from '../../../core/interfaces/exercise-routine.inteface';
 import { MatDialog } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
+import { NewExerciseRoutineDialogComponent } from '../new-exercise-routine-dialog/new-exercise-routine-dialog.component';
 import { NgClass } from '@angular/common';
 import { Router } from '@angular/router';
-import { SnackbarService } from '../../../core/services/snackbar.service.js';
-import { throwError } from 'rxjs';
+import { SnackbarService } from '../../../core/services/snackbar.service';
 
 interface Day {
   exercisesRoutine?: IExerciseRoutine[];
@@ -165,7 +163,10 @@ export class CreateRoutinePageComponent implements AfterViewChecked {
       });
       this.routineForm.patchValue({
         dateTo: startOfDay(
-          addDays(addWeeks(this.routineForm.value.dateFrom, weeksToAdd), 1)
+          addWeeks(
+            startOfDay(addHours(this.routineForm.value.dateFrom, 3)),
+            weeksToAdd
+          )
         ),
       });
     }
@@ -205,7 +206,7 @@ export class CreateRoutinePageComponent implements AfterViewChecked {
   }
 
   addExercise(day: Day) {
-    const dialogRef = this.dialog.open(DialogNewExerciseRoutineComponent, {
+    const dialogRef = this.dialog.open(NewExerciseRoutineDialogComponent, {
       data: {
         exercises: this.exercises,
         exerciseSelected: null,

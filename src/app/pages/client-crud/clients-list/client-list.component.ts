@@ -6,15 +6,15 @@ import {
 } from '@angular/material/paginator';
 import { ClientService } from '../../../core/services/client.service';
 import { ComponentType } from '@angular/cdk/portal';
-import { CustomPaginatorIntl } from '../../../core/classes/CustomPaginatorIntl';
-import { DeleteDialogComponent } from '../../../delete-dialog/delete-dialog.component';
+import { CustomPaginatorIntl } from '../../../core/classes/custom-paginator-intl';
+import { DeleteDialogComponent } from '../../../shared/delete-dialog/delete-dialog.component';
 import { environment } from '../../../../environments/environment';
 import { FormsModule } from '@angular/forms';
 import { IUser } from '../../../core/interfaces/user.interface';
 import { MatDialog } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
-import { UserDialogComponent } from '../../../user-dialog/user-dialog.component';
-import { UsersFilterComponent } from '../../../users-filter/users-filter.component';
+import { UserDialogComponent } from '../../../shared/user-dialog/user-dialog.component';
+import { UsersFilterComponent } from '../../../shared/users-filter/users-filter.component';
 
 @Component({
   selector: 'app-clients-list',

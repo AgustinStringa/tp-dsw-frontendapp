@@ -1,16 +1,16 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { ComponentType } from '@angular/cdk/portal';
-import { DeleteDialogComponent } from '../../../delete-dialog/delete-dialog.component.js';
-import { IMembership } from '../../../core/interfaces/membership.interface.js';
-import { IMembershipType } from '../../../core/interfaces/membership-type.interface.js';
-import { IUser } from '../../../core/interfaces/user.interface.js';
+import { DeleteDialogComponent } from '../../../shared/delete-dialog/delete-dialog.component';
+import { IMembership } from '../../../core/interfaces/membership.interface';
+import { IMembershipType } from '../../../core/interfaces/membership-type.interface';
+import { IUser } from '../../../core/interfaces/user.interface';
 import { MatDialog } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
-import { MembershipDialogComponent } from '../membership-dialog/membership-dialog.component.js';
-import { MembershipService } from '../../../core/services/membership.service.js';
-import { PaymentDialogComponent } from '../payment-dialog/payment-dialog.component.js';
-import { PaymentListComponent } from '../payment-list/payment-list.component.js';
+import { MembershipDialogComponent } from '../membership-dialog/membership-dialog.component';
+import { MembershipService } from '../../../core/services/membership.service';
+import { PaymentDialogComponent } from '../payment-dialog/payment-dialog.component';
+import { PaymentListComponent } from '../payment-list/payment-list.component';
 
 @Component({
   selector: 'app-membership-list',

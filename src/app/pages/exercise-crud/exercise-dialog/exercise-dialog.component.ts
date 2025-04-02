@@ -5,7 +5,7 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { MatButtonModule } from '@angular/material/button';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import {
   MAT_DIALOG_DATA,
   MatDialogActions,
@@ -13,15 +13,15 @@ import {
   MatDialogRef,
   MatDialogTitle,
 } from '@angular/material/dialog';
+import { catchError } from 'rxjs/operators';
+import { DialogExerciseData } from '../exercise-list/exercise-list.component.js';
+import { environment } from '../../../../environments/environment';
+import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { DialogExerciseData } from '../exercise-list/exercise-list.component.js';
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { catchError } from 'rxjs/operators';
+import { SnackbarService } from '../../../core/services/snackbar.service';
 import { throwError } from 'rxjs';
-import { environment } from '../../../../environments/environment.js';
-import { trimValidator } from '../../../core/functions/trim-validator.js';
-import { SnackbarService } from '../../../core/services/snackbar.service.js';
+import { trimValidator } from '../../../core/functions/trim-validator';
 
 @Component({
   selector: 'app-exercise-dialog',

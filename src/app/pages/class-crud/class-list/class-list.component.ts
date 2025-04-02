@@ -4,7 +4,7 @@ import { ClassDialogComponent } from '../class-dialog/class-dialog.component';
 import { ClassService } from '../../../core/services/class.service';
 import { ClassTypeService } from '../../../core/services/class-type.service';
 import { ComponentType } from '@angular/cdk/portal';
-import { DeleteDialogComponent } from '../../../delete-dialog/delete-dialog.component';
+import { DeleteDialogComponent } from '../../../shared/delete-dialog/delete-dialog.component';
 import { FormsModule } from '@angular/forms';
 import { HttpErrorResponse } from '@angular/common/http';
 import { IClass } from '../../../core/interfaces/class.interface';

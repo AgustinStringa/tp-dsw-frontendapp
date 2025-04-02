@@ -8,7 +8,7 @@ import {
 import {
   IPaymentCreate,
   PaymentService,
-} from '../../../core/services/payment.service.js';
+} from '../../../core/services/payment.service';
 import {
   MAT_DIALOG_DATA,
   MatDialogActions,
@@ -16,15 +16,15 @@ import {
   MatDialogModule,
   MatDialogRef,
 } from '@angular/material/dialog';
-import { IMembership } from '../../../core/interfaces/membership.interface.js';
-import { IPayment } from '../../../core/interfaces/payment.interface.js';
+import { IMembership } from '../../../core/interfaces/membership.interface';
+import { IPayment } from '../../../core/interfaces/payment.interface';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
-import { PaymentMethodEnum } from '../../../core/enums/payment-method.enum.js';
-import { SnackbarService } from '../../../core/services/snackbar.service.js';
+import { PaymentMethodEnum } from '../../../core/enums/payment-method.enum';
+import { SnackbarService } from '../../../core/services/snackbar.service';
 
 interface DialogData {
   title: string;

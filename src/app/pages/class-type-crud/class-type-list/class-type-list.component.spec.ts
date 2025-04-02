@@ -1,16 +1,17 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { ExercisesListComponent } from '../../exercise-crud/exercise-list/exercise-list.component';
+import { ClassTypeListComponent } from './class-type-list.component';
+import { HttpClientModule } from '@angular/common/http';
 
-describe('ExercisesListComponent', () => {
-  let component: ExercisesListComponent;
-  let fixture: ComponentFixture<ExercisesListComponent>;
+describe('ClassTypeListComponent', () => {
+  let component: ClassTypeListComponent;
+  let fixture: ComponentFixture<ClassTypeListComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [ExercisesListComponent],
+      imports: [ClassTypeListComponent, HttpClientModule],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(ExercisesListComponent);
+    fixture = TestBed.createComponent(ClassTypeListComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

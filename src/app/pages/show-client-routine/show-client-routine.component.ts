@@ -3,13 +3,13 @@ import {
   MatExpansionModule,
   MatExpansionPanel,
 } from '@angular/material/expansion';
-import { AuthService } from '../../core/services/auth.service.js';
+import { AuthService } from '../../core/services/auth.service';
 import { Component } from '@angular/core';
 import { differenceInWeeks } from 'date-fns';
-import { environment } from '../../../environments/environment.js';
+import { environment } from '../../../environments/environment';
 import { formatDate } from '@angular/common';
-import { IExerciseRoutine } from '../../core/interfaces/exercise-routine.inteface.js';
-import { IRoutine } from '../../core/interfaces/routine.interface.js';
+import { IExerciseRoutine } from '../../core/interfaces/exercise-routine.inteface';
+import { IRoutine } from '../../core/interfaces/routine.interface';
 
 @Component({
   selector: 'app-show-client-routine',

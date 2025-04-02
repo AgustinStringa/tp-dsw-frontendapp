@@ -1,12 +1,12 @@
 import { Component } from '@angular/core';
 import { ComponentType } from '@angular/cdk/overlay/index.js';
-import { DeleteDialogComponent } from '../../../delete-dialog/delete-dialog.component';
+import { DeleteDialogComponent } from '../../../shared/delete-dialog/delete-dialog.component';
 import { environment } from '../../../../environments/environment';
 import { IUser } from '../../../core/interfaces/user.interface';
 import { MatDialog } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { TrainerService } from '../../../core/services/trainer.service';
-import { UserDialogComponent } from '../../../user-dialog/user-dialog.component';
+import { UserDialogComponent } from '../../../shared/user-dialog/user-dialog.component';
 
 @Component({
   selector: 'app-trainers-list',

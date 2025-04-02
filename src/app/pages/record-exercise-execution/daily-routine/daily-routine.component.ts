@@ -1,18 +1,18 @@
-import { AuthService } from '../../../core/services/auth.service.js';
+import { AddWeightDialogComponent } from '../add-weight-dialog/add-weight-dialog.component';
+import { AuthService } from '../../../core/services/auth.service';
 import { Component } from '@angular/core';
-import { DialogAddWeightComponent } from '../dialog-add-weight/dialog-add-weight.component.js';
 import { differenceInWeeks } from 'date-fns';
-import { environment } from '../../../../environments/environment.js';
+import { environment } from '../../../../environments/environment';
 import { formatDate } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
-import { IExerciseRoutine } from '../../../core/interfaces/exercise-routine.inteface.js';
-import { IRoutine } from '../../../core/interfaces/routine.interface.js';
-import { SnackbarService } from '../../../core/services/snackbar.service.js';
+import { IExerciseRoutine } from '../../../core/interfaces/exercise-routine.inteface';
+import { IRoutine } from '../../../core/interfaces/routine.interface';
+import { SnackbarService } from '../../../core/services/snackbar.service';
 
 @Component({
   selector: 'app-daily-routine',
   standalone: true,
-  imports: [DialogAddWeightComponent],
+  imports: [AddWeightDialogComponent],
   templateUrl: './daily-routine.component.html',
   styleUrl: './daily-routine.component.css',
 })

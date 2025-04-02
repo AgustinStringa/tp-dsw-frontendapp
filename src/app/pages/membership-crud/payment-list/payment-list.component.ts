@@ -1,8 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ComponentType } from '@angular/cdk/portal';
-import { DeleteDialogComponent } from '../../../delete-dialog/delete-dialog.component';
-import { environment } from '../../../../environments/environment';
+import { DeleteDialogComponent } from '../../../shared/delete-dialog/delete-dialog.component';
 import { IMembership } from '../../../core/interfaces/membership.interface';
 import { IPayment } from '../../../core/interfaces/payment.interface';
 import { MatDialog } from '@angular/material/dialog';

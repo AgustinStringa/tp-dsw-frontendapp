@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
 import { ComponentType } from '@angular/cdk/portal';
-import { DeleteDialogComponent } from '../../../delete-dialog/delete-dialog.component.js';
+import { DeleteDialogComponent } from '../../../shared/delete-dialog/delete-dialog.component';
 import { IMembershipType } from '../../../core/interfaces/membership-type.interface';
 import { MatDialog } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
-import { MembershipTypeDialogComponent } from '../membership-type-dialog/membership-type-dialog.component.js';
-import { MembershipTypeService } from '../../../core/services/membership-type.service.js';
+import { MembershipTypeDialogComponent } from '../membership-type-dialog/membership-type-dialog.component';
+import { MembershipTypeService } from '../../../core/services/membership-type.service';
 
 @Component({
   selector: 'app-membership-types-list',

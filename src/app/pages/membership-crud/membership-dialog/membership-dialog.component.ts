@@ -8,7 +8,7 @@ import {
 import {
   IMembershipCreate,
   MembershipService,
-} from '../../../core/services/membership.service.js';
+} from '../../../core/services/membership.service';
 import {
   MAT_DIALOG_DATA,
   MatDialogActions,
@@ -16,17 +16,17 @@ import {
   MatDialogModule,
   MatDialogRef,
 } from '@angular/material/dialog';
-import { environment } from '../../../../environments/environment.js';
+import { environment } from '../../../../environments/environment';
 import { HttpClient } from '@angular/common/http';
-import { IMembership } from '../../../core/interfaces/membership.interface.js';
-import { IMembershipType } from '../../../core/interfaces/membership-type.interface.js';
-import { IUser } from '../../../core/interfaces/user.interface.js';
+import { IMembership } from '../../../core/interfaces/membership.interface';
+import { IMembershipType } from '../../../core/interfaces/membership-type.interface';
+import { IUser } from '../../../core/interfaces/user.interface';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
-import { SnackbarService } from '../../../core/services/snackbar.service.js';
+import { SnackbarService } from '../../../core/services/snackbar.service';
 
 interface DialogData {
   title: string;

@@ -2,7 +2,7 @@ import { Component, inject } from '@angular/core';
 import { ClassTypeDialogComponent } from '../class-type-dialog/class-type-dialog.component';
 import { ClassTypeService } from '../../../core/services/class-type.service';
 import { ComponentType } from '@angular/cdk/portal';
-import { DeleteDialogComponent } from '../../../delete-dialog/delete-dialog.component';
+import { DeleteDialogComponent } from '../../../shared/delete-dialog/delete-dialog.component';
 import { IClassType } from '../../../core/interfaces/class-type.interface';
 import { MatDialog } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
