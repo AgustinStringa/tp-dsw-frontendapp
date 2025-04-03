@@ -1,7 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
-import { ShowClientRoutineComponent } from './show-client-routine.component';
 import { HttpClientModule } from '@angular/common/http';
+import { ShowClientRoutineComponent } from './show-client-routine.component';
 
 describe('ShowClientRoutineComponent', () => {
   let component: ShowClientRoutineComponent;

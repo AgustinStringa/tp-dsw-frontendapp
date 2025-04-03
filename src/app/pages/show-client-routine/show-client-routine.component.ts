@@ -1,15 +1,15 @@
-import { Component } from '@angular/core';
-import { differenceInWeeks } from 'date-fns';
-import { formatDate } from '@angular/common';
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import {
   MatExpansionModule,
   MatExpansionPanel,
 } from '@angular/material/expansion';
-import { environment } from '../../../environments/environment';
-import IRoutine from '../../core/interfaces/IRoutine.interface';
-import { AuthService } from '../../services/auth.service';
+import { AuthService } from '../../core/services/auth.service';
+import { Component } from '@angular/core';
+import { differenceInWeeks } from 'date-fns';
+import { formatDate } from '@angular/common';
+import { HttpErrorResponse } from '@angular/common/http';
 import { IExerciseRoutine } from '../../core/interfaces/exercise-routine.inteface';
+import { IRoutine } from '../../core/interfaces/routine.interface';
+import { RoutineService } from '../../core/services/routine.service';
 
 @Component({
   selector: 'app-show-client-routine',
@@ -19,16 +19,16 @@ import { IExerciseRoutine } from '../../core/interfaces/exercise-routine.intefac
   styleUrl: './show-client-routine.component.css',
 })
 export class ShowClientRoutineComponent {
-  currentDayName: string = '';
-  currentDayNumber: number = 0;
-  userId: string = '';
+  currentDayName = '';
+  currentDayNumber = 0;
+  userId = '';
   routine: IRoutine | null = null;
   exercisesRoutine: IExerciseRoutine[] = [];
-  startDate: string = '';
-  endDate: string = '';
-  currentWeek: number = 0;
+  startDate = '';
+  endDate = '';
+  currentWeek = 0;
   totalWeeks: number[] = [];
-  errorCode: number = -1;
+  errorCode = -1;
 
   private daysOfWeek: string[] = [
     'Domingo',
@@ -57,7 +57,10 @@ export class ShowClientRoutineComponent {
   currentDate = new Date();
   currentMonthName = this.months[this.currentDate.getMonth()];
 
-  constructor(private http: HttpClient, private authService: AuthService) {
+  constructor(
+    private authService: AuthService,
+    private routineService: RoutineService
+  ) {
     const user = this.authService.getUser();
     if (user) {
       this.userId = user.id;
@@ -72,10 +75,7 @@ export class ShowClientRoutineComponent {
     this.currentDayName = this.getDayName(today.getDay());
     this.currentDayNumber = today.getDate();
 
-    this.http
-      .get<{ message: string; data: IRoutine }>(
-        `${environment.routinesUrl}/${this.userId}/current`
-      )
+    this.routineService.getCurrentByClient(this.userId)
       .subscribe({
         next: (res) => {
           this.routine = res.data;
@@ -126,7 +126,7 @@ export class ShowClientRoutineComponent {
     return Array.from({ length: totalWeeks }, (_, index) => index + 1);
   }
 
-  activePanels: { [key: number]: boolean } = {};
+  activePanels: Record<number, boolean> = {};
 
   togglePanel(week: number): void {
     this.activePanels[week] = !this.activePanels[week];

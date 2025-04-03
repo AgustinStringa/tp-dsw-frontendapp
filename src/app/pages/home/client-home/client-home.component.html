@@ -1,0 +1,36 @@
+<div class="card mb-4 mb-lg-0">
+  <div class="card-body p-0">
+    <ul class="list-group list-group-flush rounded-3">
+      <li
+        class="list-group-item d-flex justify-content-between align-items-center p-3"
+      >
+        {{ this.clientInformation?.goalsCount }}
+        <p class="mb-0">Metas</p>
+      </li>
+      <li
+        class="list-group-item d-flex justify-content-between align-items-center p-3"
+      >
+        {{ this.clientInformation?.progressesCount }}
+        <p class="mb-0">Progresos</p>
+      </li>
+      <li
+        class="list-group-item d-flex justify-content-between align-items-center p-3"
+      >
+        {{ this.clientInformation?.registrationsCount }}
+        <p class="mb-0">Clases</p>
+      </li>
+      <li
+        class="list-group-item d-flex justify-content-center align-items-center p-3"
+      >
+        @if (this.clientInformation?.currentMembership !== null) {
+        {{ this.membershipName }} hasta {{ this.formatedDateTo }}
+        <p class="mb-0 text-end">Membresía actual</p>
+        } @else {
+        <button class="btn btn-primary" (click)="openPayMembershipModal()">
+          Comprar una Membresía
+        </button>
+        }
+      </li>
+    </ul>
+  </div>
+</div>

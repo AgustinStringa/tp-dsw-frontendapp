@@ -5,4 +5,5 @@ export interface IUser {
   dni: string;
   email: string;
   entity?: 'client' | 'trainer';
+  password?: string;
 }

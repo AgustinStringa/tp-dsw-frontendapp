@@ -1,5 +1,5 @@
-import { Routes } from '@angular/router';
 import { authGuard } from './guards/auth.guard.js';
+import { ChatComponent } from './pages/chat/chat.component.js';
 import { ClassListComponent } from './pages/class-crud/class-list/class-list.component.js';
 import { ClassListComponent as ClassListComponentForClient } from './pages/class-registration/class-list/class-list.component.js';
 import { ClassTypeListComponent } from './pages/class-type-crud/class-type-list/class-type-list.component.js';
@@ -8,14 +8,14 @@ import { ClientListComponent } from './pages/client-crud/clients-list/client-lis
 import { CreateRoutinePageComponent } from './pages/create-routine/create-routine-page/create-routine-page.component.js';
 import { DailyRoutineComponent } from './pages/record-exercise-execution/daily-routine/daily-routine.component.js';
 import { ExerciseListComponent } from './pages/exercise-crud/exercise-list/exercise-list.component.js';
-import { HomePageComponent } from './pages/home-page/home-page.component.js';
-import { LoginComponent } from './login/login.component.js';
+import { HomeComponent } from './pages/home/home/home.component.js';
+import { LoginComponent } from './pages/login/login.component';
 import { MembershipListComponent } from './pages/membership-crud/membership-list/membership-list.component.js';
 import { MembershipTypeListComponent } from './pages/membership-type-crud/membership-type-list/membership-type-list.component.js';
+import { Routes } from '@angular/router';
+import { ShowClientRoutineComponent } from './pages/show-client-routine/show-client-routine.component.js';
 import { trainerGuard } from './guards/trainer.guard.js';
 import { TrainerListComponent } from './pages/trainer-crud/trainer-list/trainer-list.component.js';
-import { ShowClientRoutineComponent } from './pages/show-client-routine/show-client-routine.component.js';
-import { ChatComponent } from './pages/chat/chat.component.js';
 
 export const routes: Routes = [
   { path: '', component: LoginComponent },
@@ -49,7 +49,7 @@ export const routes: Routes = [
     component: ExerciseListComponent,
     canActivate: [trainerGuard],
   },
-  { path: 'home', component: HomePageComponent, canActivate: [authGuard] },
+  { path: 'home', component: HomeComponent, canActivate: [authGuard] },
   {
     path: 'memberships',
     component: MembershipListComponent,

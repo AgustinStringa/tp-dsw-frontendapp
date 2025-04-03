@@ -1,34 +1,34 @@
+import { AddWeightDialogComponent } from '../add-weight-dialog/add-weight-dialog.component';
+import { AuthService } from '../../../core/services/auth.service';
 import { Component } from '@angular/core';
-import { IExerciseRoutine } from '../../../core/interfaces/exercise-routine.inteface';
-import { environment } from '../../../../environments/environment';
-import { formatDate } from '@angular/common';
-import { HttpClient } from '@angular/common/http';
-import IRoutine from '../../../core/interfaces/IRoutine.interface';
-import { DialogAddWeightComponent } from '../dialog-add-weight/dialog-add-weight.component';
-import { AuthService } from '../../../services/auth.service';
-import { SnackbarService } from '../../../services/snackbar.service';
 import { differenceInWeeks } from 'date-fns';
+import { formatDate } from '@angular/common';
+import { HttpErrorResponse } from '@angular/common/http';
+import { IExerciseRoutine } from '../../../core/interfaces/exercise-routine.inteface';
+import { IRoutine } from '../../../core/interfaces/routine.interface';
+import { RoutineService } from '../../../core/services/routine.service';
+import { SnackbarService } from '../../../core/services/snackbar.service';
 
 @Component({
   selector: 'app-daily-routine',
   standalone: true,
-  imports: [DialogAddWeightComponent],
+  imports: [AddWeightDialogComponent],
   templateUrl: './daily-routine.component.html',
   styleUrl: './daily-routine.component.css',
 })
 export class DailyRoutineComponent {
   routine: IRoutine | null = null;
   exercisesRoutine: IExerciseRoutine[] = [];
-  startDate: string = '';
-  endDate: string = '';
-  currentWeek: number = 0;
-  currentDayName: string = '';
-  currentDayNumber: number = 0;
-  showModal: boolean = false;
+  startDate = '';
+  endDate = '';
+  currentWeek = 0;
+  currentDayName = '';
+  currentDayNumber = 0;
+  showModal = false;
   selectedExerciseRoutine: IExerciseRoutine | null = null;
   selectedWeight: number | null = null;
   dayToday: number = new Date().getDay();
-  userId: string = '';
+  userId = '';
 
   private daysOfWeek: string[] = [
     'Domingo',
@@ -59,8 +59,8 @@ export class DailyRoutineComponent {
   currentNameOfTheMonth = this.months[this.currentDate.getMonth()];
 
   constructor(
-    private http: HttpClient,
     private authService: AuthService,
+    private routineService: RoutineService,
     private snackbarService: SnackbarService
   ) {
     const user = this.authService.getUser();
@@ -68,6 +68,7 @@ export class DailyRoutineComponent {
       this.userId = user.id;
       this.loadRoutine();
     } else {
+      //TODO quitar
       console.error('No user found in session. Redirecting or handling error.');
     }
   }
@@ -77,37 +78,37 @@ export class DailyRoutineComponent {
     this.currentDayName = this.getDayName(today.getDay());
     this.currentDayNumber = today.getDate();
 
-    this.http
-      .get<{ message: string; data: IRoutine }>(
-        `${environment.routinesUrl}/${this.userId}/current`
-      )
-      .subscribe({
-        next: (res) => {
-          this.routine = res.data;
-          if (this.routine) {
-            this.startDate =
-              formatDate(this.routine.start, 'yyyy-MM-dd', 'en-US') || '';
-            this.endDate =
-              formatDate(this.routine.end, 'yyyy-MM-dd', 'en-US') || '';
-            this.exercisesRoutine = this.routine.exercisesRoutine.map(
-              (exerciseRoutine) => ({
-                id: exerciseRoutine.id,
-                exercise: exerciseRoutine.exercise,
-                series: exerciseRoutine.series || 0,
-                repetitions: exerciseRoutine.repetitions || 0,
-                day: exerciseRoutine.day,
-                week: exerciseRoutine.week,
-                weight: exerciseRoutine.weight,
-              })
-            );
+    this.routineService.getCurrentByClient(this.userId).subscribe({
+      next: (res) => {
+        this.routine = res.data;
+        if (this.routine) {
+          this.startDate =
+            formatDate(this.routine.start, 'yyyy-MM-dd', 'en-US') || '';
+          this.endDate =
+            formatDate(this.routine.end, 'yyyy-MM-dd', 'en-US') || '';
 
-            this.currentWeek = this.getCurrentWeek(
-              new Date(this.routine.start)
-            );
-          }
-        },
-        error: () => {},
-      });
+          this.exercisesRoutine = this.routine.exercisesRoutine.map(
+            (exerciseRoutine) => ({
+              id: exerciseRoutine.id,
+              exercise: exerciseRoutine.exercise,
+              series: exerciseRoutine.series || 0,
+              repetitions: exerciseRoutine.repetitions || 0,
+              day: exerciseRoutine.day,
+              week: exerciseRoutine.week,
+              weight: exerciseRoutine.weight,
+            })
+          );
+
+          this.currentWeek = this.getCurrentWeek(new Date(this.routine.start));
+        }
+      },
+      error: (err: HttpErrorResponse) => {
+        if (err.error.isUserFriendly)
+          this.snackbarService.showError(err.error.message);
+        else
+          this.snackbarService.showError('Error al obtener su rutina actual.');
+      },
+    });
   }
 
   private getDayName(dayIndex: number): string {

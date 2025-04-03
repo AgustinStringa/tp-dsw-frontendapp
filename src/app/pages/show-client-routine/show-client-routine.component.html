@@ -50,14 +50,12 @@
           <div class="exercise-card">
             <p>
               <strong>Ejercicio:</strong>
-              {{ exerciseRoutine.exercise?.name || "No Disponible" }}
+              {{ exerciseRoutine.exercise.name }}
             </p>
-            <p>
-              <strong>Series:</strong> {{ exerciseRoutine.series || "N/A" }}
-            </p>
+            <p><strong>Series:</strong> {{ exerciseRoutine.series }}</p>
             <p>
               <strong>Repeticiones:</strong>
-              {{ exerciseRoutine.repetitions || "N/A" }}
+              {{ exerciseRoutine.repetitions }}
             </p>
             <p>
               <strong>Estado:</strong>

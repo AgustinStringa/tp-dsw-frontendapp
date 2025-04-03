@@ -1,22 +1,21 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { ComponentType } from '@angular/cdk/portal';
-import { HttpClient } from '@angular/common/http';
-import { MatDialog } from '@angular/material/dialog';
-import { MatIconModule } from '@angular/material/icon';
-import { MembershipDialogComponent } from '../membership-dialog/membership-dialog.component';
-import { NgFor, NgIf } from '@angular/common';
-import { DeleteDialogComponent } from '../../../delete-dialog/delete-dialog.component';
-import { environment } from '../../../../environments/environment';
+import { DeleteDialogComponent } from '../../../shared/delete-dialog/delete-dialog.component';
 import { IMembership } from '../../../core/interfaces/membership.interface';
 import { IMembershipType } from '../../../core/interfaces/membership-type.interface';
 import { IUser } from '../../../core/interfaces/user.interface';
-import { SnackbarService } from '../../../services/snackbar.service';
+import { MatDialog } from '@angular/material/dialog';
+import { MatIconModule } from '@angular/material/icon';
+import { MembershipDialogComponent } from '../membership-dialog/membership-dialog.component';
+import { MembershipService } from '../../../core/services/membership.service';
+import { PaymentDialogComponent } from '../payment-dialog/payment-dialog.component';
+import { PaymentListComponent } from '../payment-list/payment-list.component';
 
 @Component({
   selector: 'app-membership-list',
   standalone: true,
-  imports: [CommonModule, NgFor, NgIf, MatIconModule],
+  imports: [CommonModule, MatIconModule, PaymentListComponent],
   templateUrl: './membership-list.component.html',
   styleUrl: './membership-list.component.css',
 })
@@ -24,19 +23,19 @@ export class MembershipListComponent {
   memberships: IMembership[] | null = null;
   clients: IUser[] = [];
   types: IMembershipType[] = [];
-  activeMemberships: { [clientId: string]: IMembership | null } = {};
+  activeMemberships: Record<string, IMembership | null> = {};
+  showPayments = false;
+  selectedMembership: IMembership | null = null;
 
   constructor(
-    private http: HttpClient,
     private dialog: MatDialog,
-    private snackbarService: SnackbarService
+    private membershipService: MembershipService
   ) {
     this.getActiveMemberships();
   }
 
   getActiveMemberships() {
-    this.http.get<any>(environment.membershipsActive).subscribe({
-      //TODO revisar si trae las activas.
+    this.membershipService.getActive().subscribe({
       next: (res) => {
         this.memberships = res.data;
       },
@@ -55,6 +54,21 @@ export class MembershipListComponent {
     });
   }
 
+  addPayment(membership: IMembership) {
+    this.openDialog(PaymentDialogComponent, {
+      data: {
+        title: 'Nuevo Pago',
+        action: 'post',
+        membership,
+      },
+    });
+  }
+
+  listPayments(membership: IMembership) {
+    this.selectedMembership = membership;
+    this.showPayments = true;
+  }
+
   updateMembership(membership: IMembership) {
     this.openDialog(MembershipDialogComponent, {
       data: {
@@ -70,7 +84,7 @@ export class MembershipListComponent {
       data: {
         id: id,
         title: 'Eliminar Membresía',
-        url: environment.membershipsUrl,
+        service: this.membershipService,
       },
     });
   }

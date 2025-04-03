@@ -13,41 +13,43 @@
   </div>
 
   @if (membershipTypes !== null && membershipTypes.length > 0) {
-  <table>
-    <thead>
-      <tr>
-        <th>Nombre</th>
-        <th>Descripción</th>
-        <th>Precio</th>
-        <th>Acciones</th>
-      </tr>
-    </thead>
+  <div class="table-container">
+    <table>
+      <thead>
+        <tr>
+          <th>Nombre</th>
+          <th>Descripción</th>
+          <th>Precio</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
 
-    <tbody>
-      @for (mt of membershipTypes; track mt) {
-      <tr>
-        <td>{{ mt.name }}</td>
-        <td>{{ mt.description }}</td>
-        <td>${{ mt.price }}</td>
-        <td class="td-actions">
-          <button
-            (click)="deleteMembershipType(mt.id)"
-            aria-label="Example icon button with a delete icon"
-          >
-            <mat-icon>delete</mat-icon>
-          </button>
-          <button
-            (click)="updateMembershipType(mt)"
-            aria-label="Example icon button with a delete icon"
-          >
-            <mat-icon>edit</mat-icon>
-          </button>
-        </td>
-      </tr>
-      }
-    </tbody>
-  </table>
-  } @else if (membershipTypes !== null && membershipTypes.length == 0){
+      <tbody>
+        @for (mt of membershipTypes; track mt) {
+        <tr>
+          <td>{{ mt.name }}</td>
+          <td>{{ mt.description }}</td>
+          <td>${{ mt.price }}</td>
+          <td class="td-actions">
+            <button
+              (click)="deleteMembershipType(mt.id)"
+              aria-label="Example icon button with a delete icon"
+            >
+              <mat-icon>delete</mat-icon>
+            </button>
+            <button
+              (click)="updateMembershipType(mt)"
+              aria-label="Example icon button with a delete icon"
+            >
+              <mat-icon>edit</mat-icon>
+            </button>
+          </td>
+        </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+  } @else if (membershipTypes !== null && membershipTypes.length === 0){
   <div class="alert alert-warning fs-6" role="alert">
     No hay tipos de membresía cargados. Crea uno para comenzar.
   </div>

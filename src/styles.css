@@ -1,7 +1,7 @@
 /* You can add global styles to this file, and also import other style files */
 
-@import "@fortawesome/fontawesome-free/css/all.css";
-@import "mdb-angular-ui-kit/assets/scss/mdb.scss";
+@import '@fortawesome/fontawesome-free/css/all.css';
+@import 'mdb-angular-ui-kit/assets/scss/mdb.scss';
 
 html,
 body {
@@ -20,7 +20,7 @@ app-root {
 }
 
 body {
-  font-family: Roboto, "Helvetica Neue", sans-serif;
+  font-family: Roboto, 'Helvetica Neue', sans-serif;
 }
 
 .w-85 {
@@ -46,8 +46,12 @@ body {
   justify-content: space-between;
 }
 
+.table-container {
+  overflow-x: auto;
+}
+
 .list-container table {
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   grid-row: auto;
   width: 100%;
 }
@@ -145,4 +149,15 @@ mat-dialog-actions.common-dialog button.btn-secondary:hover {
 .snackbar_success *,
 .snackbar_error * {
   font-size: 1.1rem !important;
+}
+
+/* Dialogs */
+.dialog-container {
+  width: 400px;
+}
+
+@media (width < 500px) {
+  .dialog-container {
+    width: 100%;
+  }
 }

@@ -27,7 +27,7 @@
         <!-- Segundo Expansion Panel para las clases dentro del ClassType -->
         @if (classType.classes && classType.classes.length > 0) {
         <mat-accordion>
-          @for (i of classType.classes; track i.id) { @if (i.active == true) {
+          @for (i of classType.classes; track i.id) { @if (i.active === true) {
           <mat-expansion-panel
             class="class-panel"
             [expanded]="selectedClass === i"

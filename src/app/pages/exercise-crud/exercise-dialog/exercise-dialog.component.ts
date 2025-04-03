@@ -1,11 +1,14 @@
 import { Component, inject } from '@angular/core';
 import {
-  Validators,
+  ExerciseService,
+  IExerciseCreate,
+} from '../../../core/services/exercise.service.js';
+import {
   FormControl,
   FormGroup,
   ReactiveFormsModule,
+  Validators,
 } from '@angular/forms';
-import { MatButtonModule } from '@angular/material/button';
 import {
   MAT_DIALOG_DATA,
   MatDialogActions,
@@ -13,15 +16,13 @@ import {
   MatDialogRef,
   MatDialogTitle,
 } from '@angular/material/dialog';
+import { ExerciseDialogData } from '../exercise-list/exercise-list.component.js';
+import { HttpErrorResponse } from '@angular/common/http';
+import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { DialogExerciseData } from '../exercise-list/exercise-list.component.js';
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { catchError } from 'rxjs/operators';
-import { throwError } from 'rxjs';
-import { environment } from '../../../../environments/environment';
-import { trimValidator } from '../../../core/Functions/trim-validator';
-import { SnackbarService } from '../../../services/snackbar.service';
+import { SnackbarService } from '../../../core/services/snackbar.service';
+import { trimValidator } from '../../../core/functions/trim-validator';
 
 @Component({
   selector: 'app-exercise-dialog',
@@ -39,10 +40,10 @@ import { SnackbarService } from '../../../services/snackbar.service';
   styleUrl: './exercise-dialog.component.css',
 })
 export class ExerciseDialogComponent {
-  title: string = '';
-  action: string = '';
-  readonly dialogRef = inject(MatDialogRef<DialogExerciseData>);
-  readonly data = inject<DialogExerciseData>(MAT_DIALOG_DATA);
+  title = '';
+  action = '';
+  readonly dialogRef = inject(MatDialogRef<ExerciseDialogData>);
+  readonly data = inject<ExerciseDialogData>(MAT_DIALOG_DATA);
 
   exerciseForm = new FormGroup({
     name: new FormControl<string>('', [Validators.required, trimValidator()]),
@@ -51,11 +52,11 @@ export class ExerciseDialogComponent {
   });
 
   constructor(
-    private http: HttpClient,
+    private exerciseService: ExerciseService,
     private snackbarService: SnackbarService
   ) {
     this.title = this.data.title;
-    if (this.data.action == 'put') {
+    if (this.data.action === 'put') {
       this.exerciseForm.patchValue({
         name: this.data.exercise.name.trim(),
         description: this.data.exercise.description.trim(),
@@ -69,52 +70,44 @@ export class ExerciseDialogComponent {
   }
 
   onSubmit(): void {
-    const name = this.exerciseForm.value.name;
-    const description = this.exerciseForm.value.description;
-    const urlVideo = this.exerciseForm.value.urlVideo;
-    //TODO: ver más validaciones aquí
+    const formValues = this.exerciseForm.value;
+
+    const exerciseCreate: IExerciseCreate = {
+      name: formValues.name!,
+      description: formValues.description!,
+      urlVideo: formValues.urlVideo!,
+    };
 
     if (this.data.action == 'post') {
-      this.http
-        .post<any>(environment.exercisesUrl, {
-          name,
-          description,
-          urlVideo,
-        })
-        .pipe(
-          catchError((error: HttpErrorResponse) => {
-            this.snackbarService.showError('Error al crear el ejercicio');
-
-            return throwError(
-              () => new Error(error.message || 'Error desconocido')
-            );
-          })
-        )
-        .subscribe((res: any) => {
-          this.snackbarService.showSuccess('Ejercicio creado correctamente');
+      this.exerciseService.create(exerciseCreate).subscribe({
+        next: () => {
+          this.snackbarService.showSuccess('Ejercicio creado correctamente.');
           this.dialogRef.close('created');
-        });
+        },
+        error: (err: HttpErrorResponse) => {
+          if (err.error.isUserFriendly)
+            this.snackbarService.showError(err.error.message);
+          else this.snackbarService.showError('Error al crear el ejercicio.');
+        },
+      });
     } else if (this.data.action == 'put') {
-      this.http
-        .put<any>(environment.exercisesUrl + '/' + this.data.exercise.id, {
-          name,
-          description,
-          urlVideo,
-        })
-        .pipe(
-          catchError((error: HttpErrorResponse) => {
-            this.snackbarService.showError('Error al actualizar el ejercicio');
-
-            return throwError(
-              () => new Error(error.message || 'Error desconocido')
+      this.exerciseService
+        .update(this.data.exercise.id, exerciseCreate)
+        .subscribe({
+          next: () => {
+            this.snackbarService.showSuccess(
+              'Ejercicio actualizado correctamente.'
             );
-          })
-        )
-        .subscribe(() => {
-          this.snackbarService.showSuccess(
-            'Ejercicio actualizado correctamente'
-          );
-          this.dialogRef.close('updated');
+            this.dialogRef.close('updated');
+          },
+          error: (err: HttpErrorResponse) => {
+            if (err.error.isUserFriendly)
+              this.snackbarService.showError(err.error.message);
+            else
+              this.snackbarService.showError(
+                'Error al actualizar el ejercicio.'
+              );
+          },
         });
     }
   }

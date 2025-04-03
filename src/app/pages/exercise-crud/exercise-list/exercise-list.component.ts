@@ -1,20 +1,17 @@
 import { Component } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { MatIconModule } from '@angular/material/icon';
-import { MatDialog } from '@angular/material/dialog';
 import { ComponentType } from '@angular/cdk/portal';
-import { DeleteDialogComponent } from '../../../delete-dialog/delete-dialog.component';
-import { environment } from '../../../../environments/environment';
+import { DeleteDialogComponent } from '../../../shared/delete-dialog/delete-dialog.component';
 import { ExerciseDialogComponent } from '../exercise-dialog/exercise-dialog.component';
+import { ExerciseService } from '../../../core/services/exercise.service';
 import { IExercise } from '../../../core/interfaces/exercise.interface';
-import { SnackbarService } from '../../../services/snackbar.service';
+import { MatDialog } from '@angular/material/dialog';
+import { MatIconModule } from '@angular/material/icon';
+import { SnackbarService } from '../../../core/services/snackbar.service';
 
-export interface DialogExerciseData {
+export interface ExerciseDialogData {
   exercise: IExercise;
   action: string;
   title: string;
-  httpClient: HttpClient;
-  url: string;
 }
 
 @Component({
@@ -28,8 +25,8 @@ export class ExerciseListComponent {
   exercises: IExercise[] | null = null;
 
   constructor(
-    private http: HttpClient,
     private dialog: MatDialog,
+    private exerciseService: ExerciseService,
     public snackbarService: SnackbarService
   ) {
     this.getExercises();
@@ -46,14 +43,14 @@ export class ExerciseListComponent {
   }
 
   getExercises() {
-    try {
-      this.http.get<any>(environment.exercisesUrl).subscribe((res) => {
+    this.exerciseService.getAll().subscribe({
+      next: (res) => {
         this.exercises = res.data;
-      });
-    } catch (error: any) {
-      this.exercises = null;
-      console.log(error);
-    }
+      },
+      error: () => {
+        this.exercises = null;
+      },
+    });
   }
 
   updateExercise(e: IExercise): void {
@@ -75,12 +72,12 @@ export class ExerciseListComponent {
     });
   }
 
-  deleteExercise(id: string | undefined): void {
+  deleteExercise(id: string): void {
     this.openDialog(DeleteDialogComponent, {
       data: {
         id: id,
         title: 'Eliminar Ejercicio',
-        url: environment.exercisesUrl,
+        service: this.exerciseService,
       },
     });
   }

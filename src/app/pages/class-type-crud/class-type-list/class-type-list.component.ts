@@ -1,11 +1,10 @@
 import { Component, inject } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { MatDialog } from '@angular/material/dialog';
 import { ClassTypeDialogComponent } from '../class-type-dialog/class-type-dialog.component';
-import { DeleteDialogComponent } from '../../../delete-dialog/delete-dialog.component';
-import { environment } from '../../../../environments/environment';
-import { IClassType } from '../../../core/interfaces/class-type.interface';
+import { ClassTypeService } from '../../../core/services/class-type.service';
 import { ComponentType } from '@angular/cdk/portal';
+import { DeleteDialogComponent } from '../../../shared/delete-dialog/delete-dialog.component';
+import { IClassType } from '../../../core/interfaces/class-type.interface';
+import { MatDialog } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 
 @Component({
@@ -19,18 +18,19 @@ export class ClassTypeListComponent {
   readonly dialog = inject(MatDialog);
   classTypes: IClassType[] | null = null;
 
-  constructor(private http: HttpClient) {
+  constructor(private classTypeService: ClassTypeService) {
     this.getClassTypes();
   }
 
   getClassTypes() {
-    try {
-      this.http.get<any>(environment.classesUrl + '/types').subscribe((res) => {
+    this.classTypeService.getAll().subscribe({
+      next: (res) => {
         this.classTypes = res.data;
-      });
-    } catch (error: any) {
-      this.classTypes = null;
-    }
+      },
+      error: () => {
+        this.classTypes = null;
+      },
+    });
   }
 
   addClassType(): void {
@@ -51,8 +51,8 @@ export class ClassTypeListComponent {
   deleteClassType(id: string) {
     this.openDialog(DeleteDialogComponent, {
       id: id,
-      url: environment.classTypesUrl,
       title: 'Eliminar Tipo de Clase',
+      service: this.classTypeService,
     });
   }
 

@@ -1,0 +1,50 @@
+<div class="membership-container">
+  <div class="header">
+    <h2>Comprar una Membresía</h2>
+    <button class="close-btn" (click)="closeDialog('none')">×</button>
+  </div>
+
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <div class="content">
+      <div class="membership-list">
+        <h3 class="header-3">Selecciona tu membresía</h3>
+
+        <div class="options-container">
+          @for (t of membershipTypes; track t.id) {
+          <div class="option" [class.selected]="selectedMembershipType?.id === t.id" (click)="onItemSelected(t)">
+            <input type="radio" formControlName="membershipType" [value]="t.id"
+              [checked]="selectedMembershipType?.id === t.id">
+            <div class="info">
+              <div class="name-price">
+                <span class="name">{{ t.name }}</span>
+                <span class="price">${{ t.price }}</span>
+              </div>
+              <p class="description">{{ t.description }}</p>
+            </div>
+          </div>
+          }
+        </div>
+      </div>
+
+      <div class="summary">
+        <h3>Resumen</h3>
+        @if (selectedMembershipType) {
+        <div class="selected-info">
+          <h4>{{ selectedMembershipType.name }}</h4>
+          <p class="price">${{ selectedMembershipType.price }}</p>
+          <p class="description">{{ selectedMembershipType.description }}</p>
+        </div>
+        } @else {
+        <div class="empty">
+          <p>Selecciona una membresía</p>
+        </div>
+        }
+      </div>
+    </div>
+
+    <div class="actions">
+      <button type="button" class="cancel" (click)="closeDialog('none')">Cancelar</button>
+      <button type="submit" class="confirm" [disabled]="!form.valid">Completar Compra</button>
+    </div>
+  </form>
+</div>
