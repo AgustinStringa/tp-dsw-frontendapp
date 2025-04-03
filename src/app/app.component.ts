@@ -1,3 +1,4 @@
+import { ChatWindowComponent } from './pages/chat/chat-window/chat-window.component.js';
 import { Component } from '@angular/core';
 import { FooterComponent } from './layout/footer/footer.component';
 import { MatButtonModule } from '@angular/material/button';
@@ -18,6 +19,7 @@ import { RouterOutlet } from '@angular/router';
     MatButtonModule,
     MatToolbarModule,
     NavbarComponent,
+    ChatWindowComponent,
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
