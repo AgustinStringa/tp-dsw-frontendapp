@@ -7,6 +7,7 @@ import { IPayment } from '../../../core/interfaces/payment.interface';
 import { MatDialog } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { PaymentDialogComponent } from '../payment-dialog/payment-dialog.component';
+import { PaymentMethodEnum } from '../../../core/enums/payment-method.enum';
 import { PaymentService } from '../../../core/services/payment.service';
 
 @Component({
@@ -19,6 +20,7 @@ import { PaymentService } from '../../../core/services/payment.service';
 export class PaymentListComponent implements OnInit {
   @Input({ required: true }) membership!: IMembership;
   @Output() componentVisible = new EventEmitter<boolean>();
+
   payments: IPayment[] | null = null;
 
   constructor(
@@ -84,5 +86,9 @@ export class PaymentListComponent implements OnInit {
   closeComponent() {
     this.payments = null;
     this.componentVisible.emit(false);
+  }
+
+  isPaymentEditable(p: IPayment) {
+    return !Object.values(PaymentMethodEnum).includes(p.paymentMethod);
   }
 }

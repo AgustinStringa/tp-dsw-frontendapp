@@ -1,8 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
-import { MembershipListComponent } from './membership-list.component';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { HttpClientModule } from '@angular/common/http';
+import { MembershipListComponent } from './membership-list.component';
 
 describe('MembershipListComponent', () => {
   let component: MembershipListComponent;
