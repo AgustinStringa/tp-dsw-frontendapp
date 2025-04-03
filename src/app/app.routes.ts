@@ -7,7 +7,7 @@ import { ClientListComponent } from './pages/client-crud/clients-list/client-lis
 import { CreateRoutinePageComponent } from './pages/create-routine/create-routine-page/create-routine-page.component.js';
 import { DailyRoutineComponent } from './pages/record-exercise-execution/daily-routine/daily-routine.component.js';
 import { ExerciseListComponent } from './pages/exercise-crud/exercise-list/exercise-list.component.js';
-import { HomeComponent } from './pages/home/home.component.js';
+import { HomeComponent } from './pages/home/home/home.component.js';
 import { LoginComponent } from './pages/login/login.component';
 import { MembershipListComponent } from './pages/membership-crud/membership-list/membership-list.component.js';
 import { MembershipTypeListComponent } from './pages/membership-type-crud/membership-type-list/membership-type-list.component.js';
