@@ -1,5 +1,4 @@
 import { authGuard } from './guards/auth.guard.js';
-import { ChatComponent } from './pages/chat/chat.component.js';
 import { ClassListComponent } from './pages/class-crud/class-list/class-list.component.js';
 import { ClassListComponent as ClassListComponentForClient } from './pages/class-registration/class-list/class-list.component.js';
 import { ClassTypeListComponent } from './pages/class-type-crud/class-type-list/class-type-list.component.js';
@@ -23,11 +22,6 @@ export const routes: Routes = [
     path: 'class-types',
     canActivate: [trainerGuard],
     component: ClassTypeListComponent,
-  },
-  {
-    path: 'chat',
-    canActivate: [authGuard],
-    component: ChatComponent,
   },
   {
     path: 'classes',
