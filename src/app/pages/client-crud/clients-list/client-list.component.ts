@@ -37,10 +37,7 @@ export class ClientListComponent {
   clientsPage: IUser[] | null = null;
   pageSize = 50;
 
-  constructor(
-    private dialog: MatDialog,
-    private clientService: ClientService
-  ) {}
+  constructor(private dialog: MatDialog, public clientService: ClientService) {}
 
   addUser(): void {
     this.openDialog(UserDialogComponent, {

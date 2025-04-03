@@ -18,7 +18,7 @@
         <mat-select formControlName="client" id="client">
           @for (c of clients; track c){
           <mat-option value="{{ c.id }}">
-            {{ c.lastName + " " + c.firstName }}
+            {{ c.lastName + ' ' + c.firstName }}
           </mat-option>
           }
         </mat-select>
@@ -34,10 +34,6 @@
           }
         </mat-select>
       </mat-form-field>
-
-      <!--<mat-checkbox formControlName="isPaid" id="isPaid"
-      >Membresía pagada</mat-checkbox
-    >-->
     </mat-dialog-content>
 
     <mat-dialog-actions class="common-dialog">

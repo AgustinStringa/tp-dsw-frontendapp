@@ -11,7 +11,7 @@ export interface IUserCreate {
   firstName: string;
   dni: string;
   email: string;
-  password: string;
+  password?: string;
 }
 
 @Injectable({

@@ -11,6 +11,7 @@
 
   <app-users-filter
     (filteredUsersEvent)="receiveClients($event)"
+    [crudService]="this.clientService"
   ></app-users-filter>
 
   @if (clients && clientsPage && clientsPage.length > 0) {

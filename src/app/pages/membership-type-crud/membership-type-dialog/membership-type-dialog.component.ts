@@ -6,14 +6,17 @@ import {
   Validators,
 } from '@angular/forms';
 import {
+  IMembershipTypeCreate,
+  MembershipTypeService,
+} from '../../../core/services/membership-type.service';
+import {
   MAT_DIALOG_DATA,
   MatDialogActions,
   MatDialogContent,
   MatDialogRef,
   MatDialogTitle,
 } from '@angular/material/dialog';
-import { environment } from '../../../../environments/environment';
-import { HttpClient } from '@angular/common/http';
+import { HttpErrorResponse } from '@angular/common/http';
 import { IMembershipType } from '../../../core/interfaces/membership-type.interface';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -61,7 +64,7 @@ export class MembershipTypeDialogComponent {
     @Inject(MAT_DIALOG_DATA)
     public data: DialogData,
     public dialogRef: MatDialogRef<MembershipTypeDialogComponent>,
-    private http: HttpClient,
+    private membershipTypeService: MembershipTypeService,
     private snackbarService: SnackbarService
   ) {
     this.title = data.title;
@@ -79,35 +82,40 @@ export class MembershipTypeDialogComponent {
 
   onSubmit(): void {
     const form = this.form.controls;
-    const data: Record<string, any> = {
-      name: form.name.value,
-      description: form.description.value?.trim(),
+    const data: IMembershipTypeCreate = {
+      name: form.name.value!,
+      description: form.description.value!.trim()!,
       price: Number(form.price.value),
     };
 
     if (this.action === 'post') {
-      this.http.post<any>(environment.membershipTypesUrl, data).subscribe({
+      this.membershipTypeService.create(data).subscribe({
         next: () => {
           this.closeDialog('created');
         },
-        error: () => {
-          this.snackbarService.showError('Error al crear el tipo de membresía');
+        error: (err: HttpErrorResponse) => {
+          if (err.error.isUserFriendly)
+            this.snackbarService.showError(err.error.message);
+          else
+            this.snackbarService.showError(
+              'Error al crear el tipo de membresía.'
+            );
         },
       });
     } else if (this.action === 'put') {
-      this.http
-        .put<any>(
-          environment.membershipTypesUrl + '/' + this.membershipTypeId,
-          data
-        )
+      this.membershipTypeService
+        .update(this.membershipTypeId!, data)
         .subscribe({
           next: () => {
             this.closeDialog('updated');
           },
-          error: () => {
-            this.snackbarService.showError(
-              'Error al modificar el tipo de membresía'
-            );
+          error: (err: HttpErrorResponse) => {
+            if (err.error.isUserFriendly)
+              this.snackbarService.showError(err.error.message);
+            else
+              this.snackbarService.showError(
+                'Error al modificar el tipo de membresía.'
+              );
           },
         });
     }

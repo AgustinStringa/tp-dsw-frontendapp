@@ -1,15 +1,19 @@
-import { AuthService } from '../../../core/services/auth.service';
 import { Component, inject } from '@angular/core';
-import { environment } from '../../../../environments/environment';
-import { HttpClient } from '@angular/common/http';
+import {
+  IRegistrationCreate,
+  RegistrationService,
+} from '../../../core/services/registration.service';
+import { AuthService } from '../../../core/services/auth.service';
+import { ClassTypeService } from '../../../core/services/class-type.service';
+import { ConfirmRegistrationDialogComponent } from '../confirm-registration-dialog/confirm-registration-dialog.component';
+import { HttpErrorResponse } from '@angular/common/http';
 import { IClass } from '../../../core/interfaces/class.interface';
 import { IClassType } from '../../../core/interfaces/class-type.interface';
 import { IRegistration } from '../../../core/interfaces/registration.interface';
-import { MatExpansionModule } from '@angular/material/expansion';
 import { MatDialog } from '@angular/material/dialog';
+import { MatExpansionModule } from '@angular/material/expansion';
 import { NgIf } from '@angular/common';
 import { SnackbarService } from '../../../core/services/snackbar.service';
-import { ConfirmRegistrationDialogComponent } from '../confirm-registration-dialog/confirm-registration-dialog.component';
 
 @Component({
   selector: 'app-class-list',
@@ -30,47 +34,53 @@ export class ClassListComponent {
   private userId = '';
 
   constructor(
-    private http: HttpClient,
     private authService: AuthService,
+    private classTypeService: ClassTypeService,
+    private registrationService: RegistrationService,
     private snackbarService: SnackbarService
   ) {
     const user = this.authService.getUser();
     if (user) {
-      console.log(user);
       this.userId = user.id;
       this.getRegistrations();
       this.getClassTypes();
     } else {
+      //TODO cambiar
       console.error('No user found in session. Redirecting or handling error.');
     }
   }
 
   getClassTypes() {
-    try {
-      this.http
-        .get<any>(`${environment.classTypesUrl}`)
-
-        .subscribe((res) => {
-          this.classtypes = res.data;
-          this.filterClases();
-        });
-    } catch (error: any) {
-      console.log(error);
-    }
+    this.classTypeService.getAll().subscribe({
+      next: (res) => {
+        this.classtypes = res.data;
+        this.filterClases();
+      },
+      error: (err: HttpErrorResponse) => {
+        if (err.error.isUserFriendly)
+          this.snackbarService.showError(err.error.message);
+        else
+          this.snackbarService.showError(
+            'Error al obtener los tipos de clases.'
+          );
+      },
+    });
   }
 
   getRegistrations() {
-    try {
-      this.http
-        .get<any>(`${environment.registrationUrl}/client/${this.userId}`)
-        .subscribe((res) => {
-          this.registeredClassIds = res.data.map(
-            (registration: any) => registration.classId
-          );
-        });
-    } catch (error: any) {
-      console.log(error);
-    }
+    this.registrationService.getByClient(this.userId).subscribe({
+      next: (res) => {
+        this.registeredClassIds = res.data.map(
+          (registration: IRegistration) => registration.classId
+        );
+      },
+      error: (err: HttpErrorResponse) => {
+        if (err.error.isUserFriendly)
+          this.snackbarService.showError(err.error.message);
+        else
+          this.snackbarService.showError('Error al obtener las inscripciones.');
+      },
+    });
   }
 
   filterClases() {
@@ -85,8 +95,6 @@ export class ClassListComponent {
         return { ...classType, classes: filteredClasses };
       })
       .filter((classType) => classType.classes.length > 0);
-
-    console.log('Clases disponibles:', this.availableClasses);
   }
 
   selectClassType(classType: IClassType) {
@@ -106,30 +114,32 @@ export class ClassListComponent {
     });
 
     dialogRef.afterClosed().subscribe((result) => {
-      if (result && this.selectedClass) {
-        const registration: any = {
-          clientId: this.userId,
-          classId: this.selectedClass.id,
-        };
-
-        this.http
-          .post<IRegistration>(environment.registrationUrl, registration)
-          .subscribe({
-            next: () => {
-              this.snackbarService.showSuccess('Inscripción realizada');
-              this.getRegistrations();
-              this.getClassTypes();
-            },
-            error: (err) => {
-              console.log(err);
-              this.snackbarService.showError(
-                'Error al inscribirse en la clase'
-              );
-            },
-          });
+      if (result === true && this.selectedClass) {
+        this.registerToClass();
       } else {
-        this.snackbarService.showError('Inscripción cancelada');
+        this.snackbarService.showError('Inscripción cancelada.');
       }
+    });
+  }
+
+  registerToClass() {
+    const registration: IRegistrationCreate = {
+      clientId: this.userId,
+      classId: this.selectedClass!.id,
+    };
+
+    this.registrationService.create(registration).subscribe({
+      next: () => {
+        this.snackbarService.showSuccess('Inscripción realizada.');
+        this.getRegistrations();
+        this.getClassTypes();
+      },
+      error: (err) => {
+        if (err.error.isUserFriendly)
+          this.snackbarService.showError(err.error.message);
+        else
+          this.snackbarService.showError('Error al inscribirse en la clase.');
+      },
     });
   }
 

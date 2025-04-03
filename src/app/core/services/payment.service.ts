@@ -13,6 +13,11 @@ export interface IPaymentCreate {
   paymentMethod: PaymentMethodEnum;
 }
 
+export interface IUserPaymentCreate {
+  clientId: string;
+  membershipTypeId: string;
+}
+
 @Injectable({
   providedIn: 'root',
 })
@@ -33,6 +38,10 @@ export class PaymentService implements ICrudService<IPayment, IPaymentCreate> {
 
   getById(id: string): Observable<ApiResponse<IPayment>> {
     return this.http.get<ApiResponse<IPayment>>(`${this.url}/${id}`);
+  }
+
+  startUserPayment(userPayment: IUserPaymentCreate): Observable<string> {
+    return this.http.post<string>(environment.userPaymentUrl, userPayment);
   }
 
   create(payment: IPaymentCreate): Observable<ApiResponse<IPayment>> {

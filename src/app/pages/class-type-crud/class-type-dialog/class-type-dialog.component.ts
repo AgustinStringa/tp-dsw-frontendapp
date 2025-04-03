@@ -1,15 +1,15 @@
-import { Component, Inject } from '@angular/core';
-import { environment } from '../../../../environments/environment';
 import {
-  FormControl,
+  ClassTypeService,
+  IClassTypeCreate,
+} from '../../../core/services/class-type.service';
+import { Component, Inject } from '@angular/core';
+import {
+FormControl,
   FormGroup,
   FormsModule,
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { HttpClient } from '@angular/common/http';
-import { IClassType } from '../../../core/interfaces/class-type.interface';
-import { MatButtonModule } from '@angular/material/button';
 import {
   MAT_DIALOG_DATA,
   MatDialogActions,
@@ -17,6 +17,9 @@ import {
   MatDialogRef,
   MatDialogTitle,
 } from '@angular/material/dialog';
+import { HttpErrorResponse } from '@angular/common/http';
+import { IClassType } from '../../../core/interfaces/class-type.interface';
+import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
@@ -61,8 +64,8 @@ export class ClassTypeDialogComponent {
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: DialogData,
     public dialogRef: MatDialogRef<ClassTypeDialogComponent>,
-    private snackbarService: SnackbarService,
-    private http: HttpClient
+    private classTypeService: ClassTypeService,
+    private snackbarService: SnackbarService
   ) {
     this.action = data.action;
     this.title = data.title;
@@ -77,33 +80,38 @@ export class ClassTypeDialogComponent {
   }
 
   onSubmit(): void {
-    const data: Record<string, any> = {
-      name: this.form.get('name')?.value,
-      description: this.form.get('description')?.value,
+    const form = this.form.controls;
+    const data: IClassTypeCreate = {
+      name: form.name.value!,
+      description: form.description.value!,
     };
 
     if (this.action === 'post') {
-      this.http.post<any>(environment.classTypesUrl, data).subscribe({
+      this.classTypeService.create(data).subscribe({
         next: () => {
           this.closeDialog('created');
         },
-        error: () => {
-          this.snackbarService.showError('Error al crear el tipo de clase');
+        error: (err: HttpErrorResponse) => {
+          if (err.error.isUserFriendly)
+            this.snackbarService.showError(err.error.message);
+          else
+            this.snackbarService.showError('Error al crear el tipo de clase.');
         },
       });
     } else if (this.action === 'put') {
-      this.http
-        .put<any>(environment.classTypesUrl + '/' + this.classTypeId, data)
-        .subscribe({
-          next: () => {
-            this.closeDialog('updated');
-          },
-          error: () => {
+      this.classTypeService.update(this.classTypeId!, data).subscribe({
+        next: () => {
+          this.closeDialog('updated');
+        },
+        error: (err: HttpErrorResponse) => {
+          if (err.error.isUserFriendly)
+            this.snackbarService.showError(err.error.message);
+          else
             this.snackbarService.showError(
-              'Error al modificar el tipo de clase'
+              'Error al modificar el tipo de clase.'
             );
-          },
-        });
+        },
+      });
     }
   }
 
