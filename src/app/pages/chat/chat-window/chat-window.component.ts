@@ -1,4 +1,3 @@
-import { CommonModule } from '@angular/common';
 import {
   AfterViewChecked,
   Component,
@@ -7,14 +6,16 @@ import {
   OnInit,
   ViewChild,
 } from '@angular/core';
-import { FormsModule } from '@angular/forms';
-import { IUser } from '../../../core/interfaces/user.interface.js';
-import IMessage from '../../../core/interfaces/IMessage.interface.js';
-import { SocketService } from '../../../services/socket.service.js';
-import { MessageService } from '../../../services/message.service.js';
-import { AuthService } from '../../../services/auth.service.js';
+import { ApiResponse } from '../../../core/interfaces/api-response.interface.js';
+import { AuthService } from '../../../core/services/auth.service.js';
+import { CommonModule } from '@angular/common';
 import { environment } from '../../../../environments/environment.js';
+import { FormsModule } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
+import IMessage from '../../../core/interfaces/IMessage.interface.js';
+import { IUser } from '../../../core/interfaces/user.interface.js';
+import { MessageService } from '../../../core/services/message.service.js';
+import { SocketService } from '../../../core/services/socket.service.js';
 import { SoundUtils } from '../../../core/functions/playSound.js';
 
 @Component({
@@ -38,7 +39,7 @@ export class ChatWindowComponent
   messages: IMessage[] = [];
   userId: string;
   isClient: boolean;
-  unreadMessages: { [userId: string]: number } = {};
+  unreadMessages: Record<string, number> = {};
   users: IUser[] = [];
   search = '';
   filteredUsers: IUser[] = [];
@@ -64,7 +65,7 @@ export class ChatWindowComponent
   }
 
   private setupSocketListeners() {
-    this.socketService.onMessage('respuesta').subscribe((data: any) => {
+    this.socketService.onMessage('respuesta').subscribe((data: IMessage) => {
       const isMessageForCurrentUser = data.receiver === this.userId;
       const isFromSelectedChat = data.sender === this.selectedUser?.id;
       const isMessageSentByMe = data.sender === this.userId;
@@ -143,17 +144,20 @@ export class ChatWindowComponent
     this.showSettingsMenu = false;
   }
   async getClients() {
-    this.http.get<any>(environment.clientsUrl).subscribe({
+    this.http.get<ApiResponse<IUser[]>>(environment.clientsUrl).subscribe({
       next: (res) => {
         const filteredClients = res.data.filter(
           (user: IUser) => user.id !== this.userId
         );
         this.users = [
           ...this.users,
-          ...filteredClients.map((user: IUser) => ({
-            ...user,
-            entity: 'client',
-          })),
+          ...filteredClients.map(
+            (user: IUser) =>
+              ({
+                ...user,
+                entity: 'client',
+              } as IUser)
+          ),
         ];
         this.filterUsers();
       },
@@ -164,17 +168,20 @@ export class ChatWindowComponent
   }
 
   async getTrainers() {
-    this.http.get<any>(environment.trainersUrl).subscribe({
+    this.http.get<ApiResponse<IUser[]>>(environment.trainersUrl).subscribe({
       next: (res) => {
         const filteredTrainers = res.data.filter(
-          (user: IUser) => user.id !== this.userId
+          (user: IUser) => user.id.toString() !== this.userId.toString()
         );
         this.users = [
           ...this.users,
-          ...filteredTrainers.map((user: IUser) => ({
-            ...user,
-            entity: 'trainer',
-          })),
+          ...filteredTrainers.map(
+            (user: IUser) =>
+              ({
+                ...user,
+                entity: 'trainer',
+              } as IUser)
+          ),
         ];
         this.filterUsers();
       },
@@ -217,7 +224,9 @@ export class ChatWindowComponent
     this.unreadMessages[user.id] = 0;
 
     this.messageService.markMessagesAsRead(this.userId, user.id).subscribe({
-      next: () => {},
+      next: () => {
+        // Successfully marked messages as read
+      },
       error: (error) => {
         console.error('Error marcando mensajes como leídos:', error);
       },
@@ -246,7 +255,7 @@ export class ChatWindowComponent
         readAt: undefined,
         entity: this.isClient ? 'client' : 'trainer',
       };
-      this.socketService.sendMessage('message', JSON.stringify(messageData));
+      this.socketService.sendMessage('message', messageData);
       this.message = '';
     }
     this.scrollToBottom();

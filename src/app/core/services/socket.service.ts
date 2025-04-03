@@ -1,6 +1,7 @@
+import { io, Socket } from 'socket.io-client';
+import IMessage from '../interfaces/IMessage.interface.js';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { io, Socket } from 'socket.io-client';
 
 @Injectable({
   providedIn: 'root',
@@ -23,13 +24,13 @@ export class SocketService {
     });
   }
 
-  sendMessage(event: string, message: any) {
+  sendMessage(event: string, message: IMessage) {
     this.socket?.emit(event, message);
   }
 
-  onMessage(event: string): Observable<string> {
+  onMessage(event: string): Observable<IMessage> {
     return new Observable((observer) => {
-      this.socket?.on(event, (data: any) => {
+      this.socket?.on(event, (data: IMessage) => {
         observer.next(data);
       });
     });

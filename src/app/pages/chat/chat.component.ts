@@ -1,27 +1,28 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { FormsModule } from '@angular/forms';
-import { SocketService } from '../../services/socket.service.js';
-import { IUser } from '../../core/interfaces/user.interface.js';
-import { MessageService } from '../../services/message.service.js';
-import { AuthService } from '../../services/auth.service.js';
-import { UserSelectionComponent } from './user-selection/user-selection.component.js';
-import IMessage from '../../core/interfaces/IMessage.interface.js';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { AuthService } from '../../core/services/auth.service.js';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import IMessage from '../../core/interfaces/IMessage.interface.js';
+import { IUser } from '../../core/interfaces/user.interface.js';
+import { MessageService } from '../../core/services/message.service.js';
+import { SocketService } from '../../core/services/socket.service.js';
+import { UserSelectionComponent } from './user-selection/user-selection.component.js';
+import { ApiResponse } from '../../core/interfaces/api-response.interface.js';
 
 @Component({
   selector: 'app-chat',
   standalone: true,
-  imports: [FormsModule, UserSelectionComponent, CommonModule],
+  imports: [UserSelectionComponent, FormsModule, CommonModule],
   templateUrl: './chat.component.html',
   styleUrl: './chat.component.css',
 })
 export class ChatComponent implements OnInit, OnDestroy {
-  message: string = '';
+  message = '';
   messages: IMessage[] = [];
   selectedUser: IUser | null = null;
   userId: string;
   isClient: boolean;
-  unreadMessages: { [userId: string]: number } = {};
+  unreadMessages: Record<string, number> = {};
 
   constructor(
     private socketService: SocketService,
@@ -72,7 +73,9 @@ export class ChatComponent implements OnInit, OnDestroy {
     this.unreadMessages[user.id] = 0;
 
     this.messageService.markMessagesAsRead(this.userId, user.id).subscribe({
-      next: () => {},
+      next: () => {
+        // Successfully marked messages as read
+      },
       error: (error) => {
         console.error('Error marcando mensajes como leídos:', error);
       },
@@ -92,7 +95,9 @@ export class ChatComponent implements OnInit, OnDestroy {
 
   markMessagesAsRead(senderId: string) {
     this.messageService.markMessagesAsRead(senderId, this.userId).subscribe({
-      next: () => {},
+      next: () => {
+        // Successfully marked messages as read
+      },
       error: (error) => {
         console.error('Error marcando mensajes como leídos:', error);
       },
@@ -108,7 +113,7 @@ export class ChatComponent implements OnInit, OnDestroy {
         readAt: undefined,
         entity: this.isClient ? 'client' : 'trainer',
       };
-      this.socketService.sendMessage('message', JSON.stringify(messageData));
+      this.socketService.sendMessage('message', messageData);
       this.message = '';
     }
   }

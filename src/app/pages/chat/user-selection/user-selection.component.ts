@@ -1,8 +1,8 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { AuthService } from '../../../core/services/auth.service.js';
 import { environment } from '../../../../environments/environment.js';
 import { HttpClient } from '@angular/common/http';
 import { IUser } from '../../../core/interfaces/user.interface.js';
-import { AuthService } from '../../../services/auth.service.js';
 @Component({
   selector: 'app-user-selection',
   standalone: true,
@@ -12,10 +12,10 @@ import { AuthService } from '../../../services/auth.service.js';
 })
 export class UserSelectionComponent {
   @Output() userSelected = new EventEmitter<IUser>();
-  @Input() unreadMessages: { [userId: string]: number } = {};
+  @Input() unreadMessages: Record<string, number> = {};
   users: IUser[] = [];
   selectedUser: IUser | null = null;
-  entity: string = '';
+  entity = '';
 
   constructor(private http: HttpClient, private auth: AuthService) {
     if (this.auth.getUser()?.isClient) {
@@ -25,7 +25,7 @@ export class UserSelectionComponent {
     }
   }
   getClients() {
-    this.http.get<any>(environment.clientsUrl).subscribe({
+    this.http.get<{ data: IUser[] }>(environment.clientsUrl).subscribe({
       next: (res) => {
         this.users = res.data;
       },
@@ -36,7 +36,7 @@ export class UserSelectionComponent {
     this.entity = 'Clientes';
   }
   getTrainers() {
-    this.http.get<any>(environment.trainersUrl).subscribe({
+    this.http.get<{ data: IUser[] }>(environment.trainersUrl).subscribe({
       next: (res) => {
         this.users = res.data;
       },
