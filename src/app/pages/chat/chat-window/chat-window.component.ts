@@ -98,11 +98,13 @@ export class ChatWindowComponent
   }
 
   scrollToBottom(): void {
-    try {
-      const container = this.messagesContainer.nativeElement;
-      container.scrollTop = container.scrollHeight;
-    } catch (err) {
-      console.error('Error al desplazar el scroll:', err);
+    if (this.isChatOpen && this.isChatConnected && this.selectedUser) {
+      try {
+        const container = this.messagesContainer.nativeElement;
+        container.scrollTop = container.scrollHeight;
+      } catch (err) {
+        console.error('Error al desplazar el scroll:', err);
+      }
     }
   }
 
