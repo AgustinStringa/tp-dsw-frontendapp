@@ -8,6 +8,7 @@ import { IUser } from '../../../core/interfaces/user.interface';
 import { MatDialog } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { MembershipDialogComponent } from '../membership-dialog/membership-dialog.component';
+import { MembershipFilterComponent } from '../membership-filter/membership-filter.component';
 import { MembershipService } from '../../../core/services/membership.service';
 import { PaymentDialogComponent } from '../payment-dialog/payment-dialog.component';
 import { PaymentListComponent } from '../payment-list/payment-list.component';
@@ -15,12 +16,18 @@ import { PaymentListComponent } from '../payment-list/payment-list.component';
 @Component({
   selector: 'app-membership-list',
   standalone: true,
-  imports: [CommonModule, MatIconModule, PaymentListComponent],
+  imports: [
+    CommonModule,
+    MatIconModule,
+    PaymentListComponent,
+    MembershipFilterComponent,
+  ],
   templateUrl: './membership-list.component.html',
   styleUrl: './membership-list.component.css',
 })
 export class MembershipListComponent {
   memberships: IMembership[] | null = null;
+  filteredMemberships: IMembership[] | null = null;
   clients: IUser[] = [];
   types: IMembershipType[] = [];
   activeMemberships: Record<string, IMembership | null> = {};
@@ -38,9 +45,11 @@ export class MembershipListComponent {
     this.membershipService.getActive().subscribe({
       next: (res) => {
         this.memberships = res.data;
+        this.filteredMemberships = res.data;
       },
       error: () => {
         this.memberships = null;
+        this.filteredMemberships = null;
       },
     });
   }
@@ -95,5 +104,9 @@ export class MembershipListComponent {
     dialogRef.afterClosed().subscribe(() => {
       this.getActiveMemberships();
     });
+  }
+
+  onFilteredMemberships(filteredMemberships: IMembership[]) {
+    this.filteredMemberships = filteredMemberships;
   }
 }
