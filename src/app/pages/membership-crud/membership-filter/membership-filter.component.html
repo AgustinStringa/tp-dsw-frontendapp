@@ -1,5 +1,5 @@
 <div class="filter-container">
-  <div>
+  <div class="flex-column flex-md-row">
     <label for="name-filter">Filtrar por nombre y apellido:</label>
     <input
       [(ngModel)]="searchValue"
@@ -11,7 +11,7 @@
     <button class="btn" (click)="clearFilters()">Limpiar filtros</button>
   </div>
   <div>
-    <p class="user-select-none">
+    <p class="user-select-none my-3">
       <mat-slide-toggle
         [(ngModel)]="showPayPending"
         (ngModelChange)="applyFilters()"

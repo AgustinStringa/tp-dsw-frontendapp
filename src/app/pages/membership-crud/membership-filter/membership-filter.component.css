@@ -22,6 +22,16 @@
     color: #333;
 }
 
+@media (max-width:766px) {
+    .filter-container>div {
+        align-items: start;
+    }
+
+    .filter-container input {
+        width: 100%;
+    }
+}
+
 .filter-container select,
 .filter-container input {
     padding: 0.5rem;
