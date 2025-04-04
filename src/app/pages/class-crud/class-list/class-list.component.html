@@ -56,54 +56,56 @@
   </div>
 
   } @if (filteredClasses && filteredClasses.length > 0) {
-  <table>
-    <thead>
-      <tr>
-        <th>Tipo de clase</th>
-        <th>Día</th>
-        <th>Hora inicio</th>
-        <th>Hora fin</th>
-        <th>
-          Capacidad<br />
-          personas
-        </th>
-        <th>Ubicación</th>
-        <th>Entrenador</th>
-        <th>Activa</th>
-        <th>Acciones</th>
-      </tr>
-    </thead>
+  <div class="table-container">
+    <table>
+      <thead>
+        <tr>
+          <th>Tipo de clase</th>
+          <th>Día</th>
+          <th>Hora inicio</th>
+          <th>Hora fin</th>
+          <th>
+            Capacidad<br />
+            personas
+          </th>
+          <th>Ubicación</th>
+          <th>Entrenador</th>
+          <th>Activa</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
 
-    <tbody>
-      @for (c of filteredClasses; track c) {
-      <tr>
-        <td>{{ c.classType.name }}</td>
-        <td>{{ getDayName(c.day) }}</td>
-        <td>{{ c.startTime }}</td>
-        <td>{{ c.endTime }}</td>
-        <td>{{ c.maxCapacity }}</td>
-        <td>{{ c.location }}</td>
-        <td>{{ c.trainer.firstName + " " + c.trainer.lastName }}</td>
-        <td>{{ c.active ? "Sí" : "No" }}</td>
+      <tbody>
+        @for (c of filteredClasses; track c) {
+        <tr>
+          <td>{{ c.classType.name }}</td>
+          <td>{{ getDayName(c.day) }}</td>
+          <td>{{ c.startTime }}</td>
+          <td>{{ c.endTime }}</td>
+          <td>{{ c.maxCapacity }}</td>
+          <td>{{ c.location }}</td>
+          <td>{{ c.trainer.firstName + " " + c.trainer.lastName }}</td>
+          <td>{{ c.active ? "Sí" : "No" }}</td>
 
-        <td class="td-actions">
-          <button
-            (click)="deleteClass(c.id)"
-            aria-label="Example icon button with a delete icon"
-          >
-            <mat-icon>delete</mat-icon>
-          </button>
-          <button
-            (click)="updateClass(c)"
-            aria-label="Example icon button with an edit icon"
-          >
-            <mat-icon>edit</mat-icon>
-          </button>
-        </td>
-      </tr>
-      }
-    </tbody>
-  </table>
+          <td class="td-actions">
+            <button
+              (click)="deleteClass(c.id)"
+              aria-label="Example icon button with a delete icon"
+            >
+              <mat-icon>delete</mat-icon>
+            </button>
+            <button
+              (click)="updateClass(c)"
+              aria-label="Example icon button with an edit icon"
+            >
+              <mat-icon>edit</mat-icon>
+            </button>
+          </td>
+        </tr>
+        }
+      </tbody>
+    </table>
+  </div>
 
   } @else if (classes === null) {
   <div class="alert alert-danger fs-6" role="alert">

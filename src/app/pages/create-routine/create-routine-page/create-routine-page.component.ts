@@ -1,40 +1,43 @@
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { throwError } from 'rxjs';
-import { catchError } from 'rxjs/operators';
 import {
-  startOfWeek,
   addDays,
-  lightFormat,
+  addHours,
   addWeeks,
+  format,
+  lightFormat,
+  parse,
   parseISO,
   startOfDay,
-  addHours,
-  format,
-  parse,
+  startOfWeek,
 } from 'date-fns';
-import { Component, inject, AfterViewChecked } from '@angular/core';
+import { AfterViewChecked, Component, inject } from '@angular/core';
 import {
-  FormsModule,
   FormControl,
   FormGroup,
+  FormsModule,
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
+import {
+  IRoutineCreate,
+  RoutineService,
+} from '../../../core/services/routine.service';
+import { AuthService } from '../../../core/services/auth.service';
 import { CdkAccordionModule } from '@angular/cdk/accordion';
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import Client from '../../../core/classes/client';
+import { ClientsMembershipListComponent } from '../clients-membership-list/clients-membership-list.component';
+import { ExerciseRoutineCardComponent } from '../exercise-routine-card/exercise-routine-card.component';
+import { ExerciseService } from '../../../core/services/exercise.service';
+import { HttpErrorResponse } from '@angular/common/http';
+import { IExercise } from '../../../core/interfaces/exercise.interface';
+import { IExerciseRoutine } from '../../../core/interfaces/exercise-routine.inteface';
+import { IMembership } from '../../../core/interfaces/membership.interface';
 import { MatDialog } from '@angular/material/dialog';
+import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
+import { MembershipService } from '../../../core/services/membership.service';
+import { NewExerciseRoutineDialogComponent } from '../new-exercise-routine-dialog/new-exercise-routine-dialog.component';
 import { NgClass } from '@angular/common';
-import { Router } from '@angular/router';
-import Client from '../../../core/classes/client.js';
-import { ClientsMembershipListComponent } from '../clients-membership-list/clients-membership-list.component.js';
-import { DialogNewExerciseRoutineComponent } from '../dialog-new-exercise-routine/dialog-new-exercise-routine.component.js';
-import { environment } from '../../../../environments/environment.js';
-import { ExerciseRoutineCardComponent } from '../exercise-routine-card/exercise-routine-card.component.js';
-import { IExercise } from '../../../core/interfaces/exercise.interface.js';
-import { IExerciseRoutine } from '../../../core/interfaces/exercise-routine.inteface.js';
-import { SnackbarService } from '../../../services/snackbar.service.js';
-import { AuthService } from '../../../services/auth.service.js';
+import { SnackbarService } from '../../../core/services/snackbar.service';
 
 interface Day {
   exercisesRoutine?: IExerciseRoutine[];
@@ -84,22 +87,23 @@ export class CreateRoutinePageComponent implements AfterViewChecked {
 
   weeks: Week[] = [];
   expandedIndex = 0;
-  clientsWithmembership: Client[] = [];
-  exercises: Object[] = [];
+  clients: Client[] = [];
+  exercises: object[] = [];
   today: Date = new Date();
   trainerId: string | undefined = '';
-  isClientSelected: boolean = false;
+  isClientSelected = false;
   firstMonday = lightFormat(addDays(startOfWeek(new Date()), 1), 'yyyy-MM-dd');
 
   readonly dialog = inject(MatDialog);
 
   constructor(
-    private http: HttpClient,
-    private router: Router,
-    private snackbarService: SnackbarService,
-    private authService: AuthService
+    private authService: AuthService,
+    private routineService: RoutineService,
+    private exerciseService: ExerciseService,
+    private membershipService: MembershipService,
+    private snackbarService: SnackbarService
   ) {
-    this.getClientsWithMembership();
+    this.getClientsWithActiveMembership();
     this.getExercises();
   }
 
@@ -109,45 +113,53 @@ export class CreateRoutinePageComponent implements AfterViewChecked {
     }
   }
 
-  getClientsWithMembership() {
-    try {
-      this.http
-        .get<any>(environment.membershipsActive)
-        .subscribe((res: any) => {
-          this.clientsWithmembership = [];
-          Array.from(res.data).forEach((m: any) => {
-            this.clientsWithmembership = [
-              ...this.clientsWithmembership,
-              new Client(
-                m.client.id,
-                m.client.lastName,
-                m.client.firstName,
-                m.client.dni,
-                m.client.email,
-                {
-                  id: m.id,
-                  dateFrom: m.dateFrom,
-                  dateTo: m.dateTo,
-                  type: m.type,
-                  client: m.client,
-                }
-              ),
-            ];
-          });
+  getClientsWithActiveMembership() {
+    this.membershipService.getActive().subscribe({
+      next: (res) => {
+        this.clients = [];
+
+        Array.from(res.data).forEach((m: IMembership) => {
+          this.clients = [
+            ...this.clients,
+            new Client(
+              m.client.id,
+              m.client.lastName,
+              m.client.firstName,
+              m.client.dni,
+              m.client.email,
+              {
+                id: m.id,
+                dateFrom: m.dateFrom,
+                dateTo: m.dateTo,
+                type: m.type,
+                client: m.client,
+              }
+            ),
+          ];
         });
-    } catch (error: any) {
-      console.log(error);
-    }
+      },
+      error: (err) => {
+        if (err.error.isUserFriendly)
+          this.snackbarService.showError(err.error.message);
+        else
+          this.snackbarService.showError(
+            'Error al obtener los clientes con membresías vigentes.'
+          );
+      },
+    });
   }
 
   getExercises() {
-    try {
-      this.http.get<any>(environment.exercisesUrl).subscribe((res: any) => {
+    this.exerciseService.getAll().subscribe({
+      next: (res) => {
         this.exercises = res.data;
-      });
-    } catch (error: any) {
-      console.log(error);
-    }
+      },
+      error: (err: HttpErrorResponse) => {
+        if (err.error.isUserFriendly)
+          this.snackbarService.showError(err.error.message);
+        else this.snackbarService.showError('Error al obtener los ejercicios.');
+      },
+    });
   }
 
   setDateTo() {
@@ -165,7 +177,10 @@ export class CreateRoutinePageComponent implements AfterViewChecked {
       });
       this.routineForm.patchValue({
         dateTo: startOfDay(
-          addWeeks(this.routineForm.value.dateFrom, weeksToAdd)
+          addWeeks(
+            startOfDay(addHours(this.routineForm.value.dateFrom, 3)),
+            weeksToAdd
+          )
         ),
       });
     }
@@ -205,7 +220,7 @@ export class CreateRoutinePageComponent implements AfterViewChecked {
   }
 
   addExercise(day: Day) {
-    const dialogRef = this.dialog.open(DialogNewExerciseRoutineComponent, {
+    const dialogRef = this.dialog.open(NewExerciseRoutineDialogComponent, {
       data: {
         exercises: this.exercises,
         exerciseSelected: null,
@@ -271,64 +286,42 @@ export class CreateRoutinePageComponent implements AfterViewChecked {
   }
 
   onSubmit() {
-    //validaciones variadas
-    /**
-     * fecha desde mayor o igual a hoy
-     * superposicion de rutinas? o bloquear rango si superpone?
-     * verificar que exista al menos una semana con un dia con un ejercicio -> si no, rutina vacia
-     */
-    //post
-    //mensaje de exito XOR error
-    const newRoutine = {
-      trainer: this.authService.getUser()?.id,
-      client: this.routineForm.value.client?.id,
-      start: parseISO(this.routineForm.value.dateFrom || ''),
-      end: this.routineForm.value.dateTo,
-      exercisesRoutine: this.routineForm.value.exercisesRoutine?.map((ex) => ({
+    const form = this.routineForm.value;
+    const newRoutine: IRoutineCreate = {
+      clientId: form.client!.id,
+      start: parseISO(form.dateFrom || ''),
+      end: form.dateTo!,
+      exercisesRoutine: this.routineForm.value.exercisesRoutine!.map((ex) => ({
         week: ex.week,
         day: ex.day,
         series: ex.series,
         repetitions: ex.repetitions,
-        exercise: ex.exercise?.id,
+        exercise: ex.exercise.id,
       })),
     };
 
-    try {
-      this.http
-        .post<any>(environment.routinesUrl, newRoutine)
-        .pipe(
-          catchError((error: HttpErrorResponse) => {
-            console.log(error);
-            if (
-              error.status === 400 &&
-              error.error.message == 'There is overlap between routines'
-            ) {
-              this.snackbarService.showError(
-                'Hay solapamiento entre fechas de rutinas'
-              );
-            } else {
-              this.snackbarService.showError('Error al crear la rutina');
-            }
-
-            return throwError(
-              () => new Error(error.message || 'Error desconocido')
-            );
-          })
-        )
-        .subscribe((res: any) => {
-          this.snackbarService
-            .showSuccess('Rutina creada correctamente')
-            .afterDismissed()
-            .subscribe(() => {
-              this.resetForm();
-              window.scroll({
-                top: 0,
-                left: 0,
-                behavior: 'smooth',
-              });
+    this.routineService.create(newRoutine).subscribe({
+      next: () => {
+        this.snackbarService
+          .showSuccess('Rutina creada correctamente.')
+          .afterDismissed()
+          .subscribe(() => {
+            this.resetForm();
+            window.scroll({
+              top: 0,
+              left: 0,
+              behavior: 'smooth',
             });
-        });
-    } catch (error: any) {}
+          });
+      },
+      error: (err: HttpErrorResponse) => {
+        if (err.error.isUserFriendly) {
+          this.snackbarService.showError(err.error.message);
+        } else {
+          this.snackbarService.showError('Error al crear la rutina.');
+        }
+      },
+    });
   }
 
   handleInputDateFrom() {
@@ -352,17 +345,14 @@ export class CreateRoutinePageComponent implements AfterViewChecked {
   }
 
   resetForm(): void {
-    try {
-      this.routineForm.patchValue({
-        client: null,
-        dateFrom: '',
-        dateTo: null,
-        exercisesRoutine: [],
-      });
-      this.weeks = [];
-      this.getClientsWithMembership();
-    } catch (error) {
-      console.log(error);
-    }
+    this.routineForm.patchValue({
+      client: null,
+      dateFrom: '',
+      dateTo: null,
+      exercisesRoutine: [],
+    });
+    this.weeks = [];
+    this.getClientsWithActiveMembership();
+    this.getExercises();
   }
 }

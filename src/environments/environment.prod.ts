@@ -2,10 +2,10 @@ const apiUrl = 'https://api.gimnasio.com';
 
 export const environment = {
   production: true,
+  activeMembershipsUrl: apiUrl + '/memberships/active',
   apiUrl: apiUrl,
   authUrl: apiUrl + '/auth',
   clientsUrl: apiUrl + '/clients',
-  clientsWithMembershipUrl: apiUrl + '/clients/membership-active',
   classTypesUrl: apiUrl + '/classes/types',
   classesUrl: apiUrl + '/classes',
   createRoutineUrl: apiUrl + '/routines/routines',
@@ -14,9 +14,11 @@ export const environment = {
   goalsUrl: apiUrl + '/clients/goals',
   membershipsUrl: apiUrl + '/memberships',
   membershipTypesUrl: apiUrl + '/memberships/types',
+  outstandingMembershipsUrl: apiUrl + '/memberships/outstanding',
   paymentsUrl: apiUrl + '/memberships/payments',
   progressesUrl: apiUrl + '/clients/progresses',
+  registrationUrl: apiUrl + '/classes/registration',
   routinesUrl: apiUrl + '/routines',
   trainersUrl: apiUrl + '/trainers',
-  registrationUrl: apiUrl + '/classes/registration',
+  userPaymentUrl: apiUrl + '/user-payment/',
 };

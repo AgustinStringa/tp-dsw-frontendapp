@@ -5,25 +5,28 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { HttpClient } from '@angular/common/http';
+import {
+  IMembershipCreate,
+  MembershipService,
+} from '../../../core/services/membership.service';
 import {
   MAT_DIALOG_DATA,
-  MatDialogRef,
-  MatDialogModule,
-  MatDialogContent,
   MatDialogActions,
+  MatDialogContent,
+  MatDialogModule,
+  MatDialogRef,
 } from '@angular/material/dialog';
+import { ClientService } from '../../../core/services/client.service';
+import { IMembership } from '../../../core/interfaces/membership.interface';
+import { IMembershipType } from '../../../core/interfaces/membership-type.interface';
+import { IUser } from '../../../core/interfaces/user.interface';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
-import { NgForOf } from '@angular/common';
-import { environment } from '../../../../environments/environment.js';
-import { IMembership } from '../../../core/interfaces/membership.interface.js';
-import { IMembershipType } from '../../../core/interfaces/membership-type.interface.js';
-import { IUser } from '../../../core/interfaces/user.interface.js';
-import { SnackbarService } from '../../../services/snackbar.service.js';
+import { MembershipTypeService } from '../../../core/services/membership-type.service';
+import { SnackbarService } from '../../../core/services/snackbar.service';
 
 interface DialogData {
   title: string;
@@ -58,14 +61,15 @@ export class MembershipDialogComponent {
   form = new FormGroup({
     type: new FormControl('', [Validators.required]),
     client: new FormControl('', [Validators.required]),
-    //isPaid: new FormControl(),
   });
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: DialogData,
     public dialogRef: MatDialogRef<MembershipDialogComponent>,
-    private snackbarService: SnackbarService,
-    private http: HttpClient
+    private membershipService: MembershipService,
+    private clientService: ClientService,
+    private membershipTypeService: MembershipTypeService,
+    private snackbarService: SnackbarService
   ) {
     this.title = data.title;
     this.action = data.action;
@@ -85,54 +89,57 @@ export class MembershipDialogComponent {
   onSubmit(): void {
     const form = this.form.controls;
 
-    let data: Record<string, any> = {
-      type: form.type.value,
-      client: form.client.value,
+    const data: IMembershipCreate = {
+      typeId: form.type.value!,
+      clientId: form.client.value!,
     };
 
     if (this.action === 'post') {
-      this.http.post<any>(environment.membershipsUrl, data).subscribe({
+      this.membershipService.create(data).subscribe({
         next: () => {
           this.closeDialog('created');
         },
-        error: (error) => {
-          this.snackbarService.showError('Error al crear la membresía');
+        error: (err) => {
+          this.snackbarService.showError(err.error.message);
         },
       });
     } else if (this.action == 'put') {
-      this.http
-        .put<any>(environment.membershipsUrl + '/' + this.membershipId, data)
-        .subscribe({
-          next: () => {
-            this.closeDialog('updated');
-          },
-          error: () => {
-            this.snackbarService.showError('Error al modificar la membresía');
-          },
-        });
+      this.membershipService.update(this.membershipId!, data).subscribe({
+        next: () => {
+          this.closeDialog('updated');
+        },
+        error: (err) => {
+          this.snackbarService.showError(err.error.message);
+        },
+      });
     }
   }
 
   getClients() {
-    this.http.get<any>(environment.clientsUrl).subscribe({
+    this.clientService.getAll().subscribe({
       next: (res) => {
         this.clients = res.data;
       },
-      error: () => {
-        this.snackbarService.showError('Error al obtener los clientes');
+      error: (err) => {
+        if (err.error.isUserFriendly)
+          this.snackbarService.showError(err.error.message);
+        else this.snackbarService.showError('Error al obtener los clientes.');
       },
     });
   }
 
   getMembershipTypes() {
-    this.http.get<any>(environment.membershipTypesUrl).subscribe({
+    this.membershipTypeService.getAll().subscribe({
       next: (res) => {
         this.membershipTypes = res.data;
       },
-      error: () => {
-        this.snackbarService.showError(
-          'Error al obtener los tipos de membresías'
-        );
+      error: (err) => {
+        if (err.error.isUserFriendly)
+          this.snackbarService.showError(err.error.message);
+        else
+          this.snackbarService.showError(
+            'Error al obtener los tipos de membresías.'
+          );
       },
     });
   }

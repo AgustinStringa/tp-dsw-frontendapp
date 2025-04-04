@@ -1,4 +1,4 @@
-import { IUser } from './user.interface.js';
+import { IUser } from './user.interface';
 
 export interface IProgress {
   id: string;

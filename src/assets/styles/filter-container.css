@@ -8,6 +8,7 @@
   background-color: #f5f5f5;
   border: 1px solid #ddd;
   border-radius: 4px;
+  overflow-x: auto;
 }
 
 .filter-container label {

@@ -1,13 +1,13 @@
-import { Injectable } from '@angular/core';
+import { catchError, Observable } from 'rxjs';
 import {
+  HttpErrorResponse,
+  HttpEvent,
+  HttpHandler,
   HttpInterceptor,
   HttpRequest,
-  HttpHandler,
-  HttpEvent,
-  HttpErrorResponse,
 } from '@angular/common/http';
-import { catchError, Observable } from 'rxjs';
-import { AuthService } from '../services/auth.service.js';
+import { AuthService } from '../core/services/auth.service';
+import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 
 @Injectable()

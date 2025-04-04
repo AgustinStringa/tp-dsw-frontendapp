@@ -1,7 +1,8 @@
 <div class="table-container">
-  @if (clientForRoutineList.length > 0) {
+  @if (clientForRoutineList.length > 0) { @if(!this.selectedClient()) {
+
   <div class="mx-auto w-75 my-5">
-    <p class="fw-bold text-start">
+    <p class="fw-bold fs-4 text-start">
       Seleccione un cliente para asignar la rutina
     </p>
   </div>
@@ -18,7 +19,7 @@
       @for (c of clientForRoutineList; track c) {
       <tr
         (click)="toggleSelected(c)"
-        [ngClass]="c.selected ? 'selected' : null"
+        [class.selected]="selectedClient()?.id === c.id"
       >
         <td>
           <div class="d-flex align-items-center">
@@ -29,26 +30,54 @@
               class="rounded-circle"
             />
             <div class="ms-3">
-              <p class="fw-bold mb-1">{{ c.firstName + " " + c.lastName }}</p>
+              <p class="fw-bold mb-1">{{ c.firstName + ' ' + c.lastName }}</p>
               <p class="text-muted mb-0">{{ c.email }}</p>
             </div>
           </div>
         </td>
         <td>
-          <p class="fw-normal mb-1">{{ c.dni || "there is no dni yet" }}</p>
+          <p class="fw-normal mb-1">{{ c.dni || 'there is no dni yet' }}</p>
         </td>
         <td>{{ formatDate(c.currentMembership.dateFrom) }}</td>
         <td>
-          <span class="badge badge-success rounded-pill d-inline">{{
-            c.currentMembership.type.name
-          }}</span>
+          <span class="badge badge-success rounded-pill d-inline">
+            {{ c.currentMembership.type.name }}
+          </span>
         </td>
       </tr>
-
       }
     </tbody>
   </table>
   } @else {
+
+  <div
+    class="selected-client-view"
+    tabindex="0"
+    (click)="toggleSelected(selectedClient()!)"
+    (keydown.enter)="toggleSelected(selectedClient()!)"
+  >
+    <div class="d-flex align-items-center cursor-pointer">
+      <img
+        src="https://mdbootstrap.com/img/new/avatars/8.jpg"
+        alt=""
+        style="width: 45px; height: 45px"
+        class="rounded-circle"
+      />
+      <div class="ms-3">
+        <p class="fw-bold mb-1">
+          {{ selectedClient()!.firstName + ' ' + selectedClient()!.lastName }}
+        </p>
+        <p class="text-muted mb-0">{{ selectedClient()!.email }}</p>
+      </div>
+      <button
+        class="btn btn-sm btn-outline-secondary ms-auto"
+        (click)="toggleSelected(selectedClient()!); $event.stopPropagation()"
+      >
+        Ver todos
+      </button>
+    </div>
+  </div>
+  } } @else {
   <div class="alert alert-warning" role="alert">
     No hay clientes con membresía activa para asignar una rutina
   </div>
