@@ -34,22 +34,24 @@
 
       @if (routineForm.value.dateFrom !== '' &&
       routineForm.controls.dateFrom.invalid) {
-      <div class="alert-error">Selecciona una fecha válida</div>
+      <div class="alert alert-danger">Selecciona una fecha válida</div>
       } @if (getDateToWithFormat() === '') {
       <div class="alert-container">
-        <div class="alert-warning">
+        <div class="alert alert-warning">
           Selecciona una fecha desde para calcular la fecha hasta
         </div>
       </div>
       }
     </div>
 
-    <div class="weeks-section">
-      <h3 class="weeks-title">Semanas</h3>
+    <div class="weeks-section mt-4">
+      <h3 class="weeks-title mb-4">Semanas</h3>
 
       @if (weeks.length === 0) {
       <div class="alert-container">
-        <div class="alert-warning">Agrega una semana para comenzar</div>
+        <div class="alert alert-warning mb-4">
+          Agrega una semana para comenzar
+        </div>
       </div>
       }
 
@@ -65,15 +67,18 @@
             [attr.aria-expanded]="accordionItem.expanded"
             [attr.aria-controls]="'accordion-body-' + index"
           >
-            <div class="week-header-container">
+            <div
+              class="week-header-container bg-dark text-white p-3 rounded-top"
+            >
               <div
-                class="example-accordion-item-header flex-grow"
+                class="example-accordion-item-header flex-grow d-flex align-items-center"
                 (click)="accordionItem.toggle()"
                 (keydown.enter)="accordionItem.toggle()"
                 tabindex="0"
               >
-                {{ item.text }}
-                <span class="example-accordion-item-description">
+                <i class="fas fa-calendar-week me-2"></i>
+                <strong>{{ item.text }}</strong>
+                <span class="example-accordion-item-description ms-2">
                   Click para {{ accordionItem.expanded ? 'cerrar' : 'abrir' }}
                 </span>
               </div>
@@ -83,6 +88,7 @@
                   type="button"
                   mat-fab
                   aria-label="Example icon button with a delete icon"
+                  class="bg-light"
                 >
                   <mat-icon (click)="removeWeek(item)">delete</mat-icon>
                 </button>
@@ -91,14 +97,14 @@
             </div>
 
             <div
-              class="example-accordion-item-body"
+              class="example-accordion-item-body bg-light p-3 rounded-bottom mb-4"
               role="region"
               [style.display]="accordionItem.expanded ? '' : 'none'"
               [attr.id]="'accordion-body-' + index"
               [attr.aria-labelledby]="'accordion-header-' + index"
             >
               @for (day of item.days; track day; let ind = $index) {
-              <cdk-accordion class="example-accordion accordion-day">
+              <cdk-accordion class="example-accordion accordion-day mb-3">
                 <cdk-accordion-item
                   #accordionItem="cdkAccordionItem"
                   class="example-accordion-item"
@@ -108,15 +114,18 @@
                   [attr.aria-expanded]="accordionItem.expanded"
                   [attr.aria-controls]="'accordion-body-' + ind"
                 >
-                  <div class="day-header-container">
+                  <div
+                    class="day-header-container bg-primary text-white p-2 rounded-top"
+                  >
                     <div
-                      class="example-accordion-item-header"
+                      class="example-accordion-item-header d-flex align-items-center"
                       (click)="accordionItem.toggle()"
                       (keydown.enter)="accordionItem.toggle()"
                       tabindex="0"
                     >
-                      {{ 'Día ' + day.number }}
-                      <span class="example-accordion-item-description">
+                      <i class="fas fa-map-pin me-2"></i>
+                      <strong>{{ 'Día ' + day.number }}</strong>
+                      <span class="example-accordion-item-description ms-2">
                         Click para
                         {{ accordionItem.expanded ? 'cerrar' : 'abrir' }}
                       </span>
@@ -127,6 +136,7 @@
                         type="button"
                         mat-fab
                         aria-label="Example icon button with a delete icon"
+                        class="bg-light"
                       >
                         <mat-icon (click)="removeDay(day)">delete</mat-icon>
                       </button>
@@ -136,7 +146,7 @@
 
                   <div>
                     <div
-                      class="example-accordion-item-body"
+                      class="example-accordion-item-body bg-white p-3 rounded-bottom shadow-sm"
                       role="region"
                       [style.display]="accordionItem.expanded ? '' : 'none'"
                       [attr.id]="'accordion-body-' + ind"
@@ -145,15 +155,18 @@
                       <div class="exercises-container">
                         @for (ex of day.exercisesRoutine; track ex; let ind =
                         $index) {
-                        <!-- EJERCICIO START -->
-                        <app-exercise-routine-card
-                          class="exercise-routine-card"
-                          [exerciseRoutine]="ex"
-                        ></app-exercise-routine-card>
-                        <!-- EJERCICIO END -->
+
+                        <div
+                          class="exercise-routine-card mb-3 p-3 border rounded"
+                        >
+                          <app-exercise-routine-card
+                            [exerciseRoutine]="ex"
+                          ></app-exercise-routine-card>
+                        </div>
                         }@empty {
-                        <p class="no-exercises">
-                          Agrega un ejercicio para comenzar!
+                        <p class="no-exercises text-muted mb-4">
+                          <i class="fas fa-info-circle me-2"></i>Agrega un
+                          ejercicio para comenzar!
                         </p>
                         }
                       </div>
@@ -161,10 +174,10 @@
                         <button
                           type="button"
                           (click)="addExercise(day)"
-                          class="btn btn-primary my-5"
+                          class="btn btn-outline-primary my-3"
                           data-mdb-ripple-init
                         >
-                          Agregar Ejercicio
+                          <i class="fas fa-plus me-2"></i>Agregar Ejercicio
                         </button>
                       </div>
                     </div>
@@ -177,11 +190,11 @@
                 <button
                   type="button"
                   (click)="addDay(item)"
-                  class="btn btn-primary my-5"
+                  class="btn btn-secondary my-3"
                   data-mdb-ripple-init
-                  [ngClass]="item.days.length <= 6 ? '' : 'disabled'"
+                  [disabled]="item.days.length > 6"
                 >
-                  Agregar Día
+                  <i class="fas fa-plus me-2"></i>Agregar Día
                 </button>
               </div>
             </div>
@@ -191,7 +204,7 @@
       </div>
     </div>
 
-    <div class="action-buttons">
+    <div class="action-buttons mt-4">
       <div class="d-grid gap-2 col-6 mx-auto my-3">
         <button
           class="btn btn-primary"
@@ -199,16 +212,18 @@
           mdbRipple
           (click)="addweek()"
         >
-          Agregar Semana
+          <i class="fas fa-plus me-2"></i>Agregar Semana
         </button>
       </div>
       <div class="save-routine text-end my-5">
         <button
           type="submit"
           [disabled]="!routineForm.valid"
-          class="btn btn-success btn-lg"
+          class="btn btn-lg text-white"
+          [class.btn-success]="routineForm.valid"
+          [class.btn-secondary]="!routineForm.valid"
         >
-          Guardar Rutina
+          <i class="fas fa-save me-2"></i>Guardar Rutina
         </button>
       </div>
     </div>
