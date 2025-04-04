@@ -36,8 +36,10 @@
       routineForm.controls.dateFrom.invalid) {
       <div class="alert-error">Selecciona una fecha válida</div>
       } @if (getDateToWithFormat() === '') {
-      <div class="alert-warning">
-        Selecciona una fecha desde para calcular la fecha hasta
+      <div class="alert-container">
+        <div class="alert-warning">
+          Selecciona una fecha desde para calcular la fecha hasta
+        </div>
       </div>
       }
     </div>
@@ -46,7 +48,9 @@
       <h3 class="weeks-title">Semanas</h3>
 
       @if (weeks.length === 0) {
-      <div class="alert-warning">Agrega una semana para comenzar</div>
+      <div class="alert-container">
+        <div class="alert-warning">Agrega una semana para comenzar</div>
+      </div>
       }
 
       <div class="week-row">
