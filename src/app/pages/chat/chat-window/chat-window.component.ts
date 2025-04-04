@@ -6,17 +6,17 @@ import {
   OnInit,
   ViewChild,
 } from '@angular/core';
-import { ApiResponse } from '../../../core/interfaces/api-response.interface.js';
-import { AuthService } from '../../../core/services/auth.service.js';
+import { ApiResponse } from '../../../core/interfaces/api-response.interface';
+import { AuthService } from '../../../core/services/auth.service';
 import { CommonModule } from '@angular/common';
-import { environment } from '../../../../environments/environment.js';
+import { environment } from '../../../../environments/environment';
 import { FormsModule } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
-import IMessage from '../../../core/interfaces/IMessage.interface.js';
-import { IUser } from '../../../core/interfaces/user.interface.js';
-import { MessageService } from '../../../core/services/message.service.js';
-import { SocketService } from '../../../core/services/socket.service.js';
-import { SoundUtils } from '../../../core/functions/playSound.js';
+import IMessage from '../../../core/interfaces/IMessage.interface';
+import { IUser } from '../../../core/interfaces/user.interface';
+import { MessageService } from '../../../core/services/message.service';
+import { SocketService } from '../../../core/services/socket.service';
+import { SoundUtils } from '../../../core/functions/playSound';
 
 @Component({
   selector: 'app-chat-window',
