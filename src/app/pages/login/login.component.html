@@ -1,72 +1,102 @@
 <section class="text-center text-lg-start">
   <div class="container py-4">
-    <div class="row g-0 align-items-center">
+    <div class="row g-0 align-items-center justify-content-center">
       <!--Imagen izquierda-->
       <div
         [ngClass]="
-          isLoginVisible ? 'col-0' : 'd-none d-lg-block col-lg-6 mb-5 mb-lg-0'
+          isLoginVisible ? 'col-0' : 'd-none d-lg-block col-lg-4 mb-3 mb-lg-0'
         "
         style="position: relative; overflow: hidden"
       >
-        <img
-          src="https://mdbootstrap.com/img/new/ecommerce/vertical/004.jpg"
-          class="w-100 rounded-4 shadow-4"
-          alt=""
-          [ngClass]="isLoginVisible ? 'active' : ''"
-          id="leftImage"
-        />
+        <div
+          class="d-flex justify-content-center align-items-center"
+          style="height: 100%"
+        >
+          <img
+            src="assets/register-image.jpg"
+            class="w-100 rounded-4 shadow-4"
+            alt="Mujer entrenando sus brazos."
+            [ngClass]="isLoginVisible ? 'active' : ''"
+            id="leftImage"
+          />
+        </div>
       </div>
 
       <div class="col-lg-6 mb-5 mb-lg-0">
-        <div
-          class="card cascading-right bg-body-tertiary"
-          style="backdrop-filter: blur(30px)"
-        >
+        <div class="card bg-body-tertiary" style="backdrop-filter: blur(30px)">
           <!--Formulario login-->
           <div
             id="login"
             [ngClass]="{ 'col-0': !isLoginVisible, active: isLoginVisible }"
+            [style.padding]="isLoginVisible ? '' : '0 !important'"
             class="card-body p-5 shadow-5 text-center"
           >
             <h2 class="fw-bold mb-5">Ingresar</h2>
 
-            <form action="" method="post">
+            <form [formGroup]="loginForm" (ngSubmit)="login()">
               <div data-mdb-input-init class="form-outline mb-4">
                 <input
+                  formControlName="email"
                   type="email"
                   id="loginEmail"
                   class="form-control"
-                  [(ngModel)]="email"
                   name="email"
-                  required
                 />
                 <label
                   class="form-label"
                   for="loginEmail"
-                  [style.opacity]="isFieldEmpty('email') ? '1' : '0'"
+                  [style.opacity]="showLabel(loginEmail)"
                   >Correo electrónico</label
                 >
+
+                @if (loginEmail?.invalid && loginEmail?.touched) {
+                <div class="error-container">
+                  @if (loginEmail?.errors?.['required']){
+                  <div class="error-message">
+                    Ingrese su correo electrónico.
+                  </div>
+
+                  } @else if (loginEmail?.errors?.['email']){
+                  <div class="error-message">
+                    El correo electrónico no tiene un formato válido.
+                  </div>
+                  }
+                </div>
+                }
               </div>
 
               <div data-mdb-input-init class="form-outline mb-4">
                 <input
+                  formControlName="password"
                   type="password"
                   id="loginPassword"
                   class="form-control"
-                  [(ngModel)]="password"
                   name="password"
-                  required
                 />
                 <label
                   class="form-label"
                   for="loginPassword"
-                  [style.opacity]="isFieldEmpty('password') ? '1' : '0'"
+                  [style.opacity]="showLabel(loginPassword)"
                   >Contraseña</label
                 >
+                @if (loginPassword?.invalid && loginPassword?.touched) {
+
+                <div class="error-container">
+                  @if (loginPassword?.errors?.['required']){
+                  <div class="error-message">Ingrese su contraseña.</div>
+
+                  } @else if (loginPassword?.errors?.['minlength']){
+                  <div class="error-message">
+                    Su contraseña debe tener al menos 4 caracteres.
+                  </div>
+
+                  }
+                </div>
+                }
               </div>
 
               <button
-                (click)="onSubmit()"
+                [disabled]="!loginForm.valid"
                 type="submit"
                 data-mdb-button-init
                 data-mdb-ripple-init
@@ -82,7 +112,8 @@
                 ></mat-progress-spinner>
               </button>
             </form>
-            <a (click)="isLoginVisible = !isLoginVisible" href="#"
+
+            <a (click)="toggleView()" href="#"
               ><p>Todavía no eres un miembro? Regístrate ahora!</p></a
             >
           </div>
@@ -95,137 +126,186 @@
           >
             <h2 class="fw-bold mb-5">Regístrate ahora!</h2>
 
-            <form>
+            <form [formGroup]="registerForm" (ngSubmit)="register()">
               <div class="row">
                 <div class="col-md-6 mb-4">
                   <div data-mdb-input-init class="form-outline">
                     <input
+                      formControlName="firstName"
                       type="text"
                       id="signupName"
                       class="form-control"
-                      [(ngModel)]="firstName"
                       name="firstName"
-                      required
                     />
                     <label
                       class="form-label"
                       for="signupFirstName"
-                      [style.opacity]="isFieldEmpty('firstName') ? '1' : '0'"
+                      [style.opacity]="showLabel(registerFirstName)"
                       >Nombre</label
                     >
+
+                    @if (registerFirstName?.invalid &&
+                    registerFirstName?.touched) {
+                    <div class="error-container">
+                      @if (registerFirstName?.errors?.['required']){
+                      <div class="error-message">Ingrese su nombre.</div>
+
+                      } @else if (registerFirstName?.errors?.['trimError']){
+                      <div class="error-message">Ingrese su nombre.</div>
+                      }
+                    </div>
+                    }
                   </div>
                 </div>
 
                 <div class="col-md-6 mb-4">
                   <div data-mdb-input-init class="form-outline">
                     <input
+                      formControlName="lastName"
                       type="text"
                       id="signupLastName"
                       class="form-control"
-                      [(ngModel)]="lastName"
                       name="lastName"
-                      required
                     />
                     <label
                       class="form-label"
                       for="signupLastName"
-                      [style.opacity]="isFieldEmpty('lastName') ? '1' : '0'"
+                      [style.opacity]="showLabel(registerLastName)"
                       >Apellido</label
                     >
+                    @if (registerLastName?.invalid && registerLastName?.touched)
+                    {
+
+                    <div class="error-container">
+                      @if (registerLastName?.errors?.['required']){
+                      <div class="error-message">Ingrese su apellido.</div>
+
+                      } @else if (registerLastName?.errors?.['trimError']){
+                      <div class="error-message">Ingrese su apellido.</div>
+                      }
+                    </div>
+
+                    }
                   </div>
                 </div>
               </div>
 
               <div data-mdb-input-init class="form-outline mb-4">
                 <input
+                  formControlName="email"
                   type="email"
                   id="signupEmail"
                   class="form-control"
-                  [(ngModel)]="email"
                   name="email"
-                  required
                 />
                 <label
                   class="form-label"
                   for="signupEmail"
-                  [style.opacity]="isFieldEmpty('email') ? '1' : '0'"
+                  [style.opacity]="showLabel(registerEmail)"
                   >Correo electrónico</label
                 >
+                @if (registerEmail?.invalid && registerEmail?.touched) {
+                <div class="error-container">
+                  @if (registerEmail?.errors?.['required']){
+                  <div class="error-message">
+                    Ingrese su correo electrónico.
+                  </div>
+                  } @else if (registerEmail?.errors?.['email']){
+                  <div class="error-message">
+                    El correo electrónico no tiene un formato válido.
+                  </div>
+                  }
+                </div>
+                }
               </div>
 
               <div class="row">
                 <div class="col-md-6 mb-4">
                   <div data-mdb-input-init class="form-outline">
                     <input
-                      type="text"
-                      id="signupUser"
+                      formControlName="dni"
+                      type="number"
+                      id="signupdni"
                       class="form-control"
-                      [(ngModel)]="dni"
                       name="dni"
-                      required
+                      [ngClass]="{
+                        'is-invalid':
+                          registerForm.get('dni')?.invalid &&
+                          registerForm.get('dni')?.touched
+                      }"
                     />
                     <label
                       class="form-label"
-                      for="signupUser"
-                      [style.opacity]="isFieldEmpty('user') ? '1' : '0'"
-                      >Dni</label
+                      for="signupdni"
+                      [style.opacity]="showLabel(registerDni)"
+                      >DNI</label
                     >
+
+                    @if (registerDni?.invalid && registerDni?.touched) {
+                    <div class="error-container">
+                      @if (registerDni?.errors?.['required']){
+                      <div class="error-message">Ingrese su DNI.</div>
+                      } @else if (registerDni?.errors?.['pattern']){
+                      <div class="error-message">
+                        Su DNI debe tener 7 u 8 números.
+                      </div>
+                      }
+                    </div>
+                    }
                   </div>
                 </div>
 
                 <div class="col-md-6 mb-4">
                   <div data-mdb-input-init class="form-outline">
                     <input
+                      formControlName="password"
                       type="password"
                       id="signupPassword"
                       class="form-control"
-                      [(ngModel)]="password"
                       name="password"
                       required
                     />
                     <label
                       class="form-label"
                       for="signupPassword"
-                      [style.opacity]="isFieldEmpty('password') ? '1' : '0'"
+                      [style.opacity]="showLabel(registerPassword)"
                       >Contraseña</label
                     >
+
+                    @if (registerPassword?.invalid && registerPassword?.touched)
+                    {
+                    <div class="error-container">
+                      @if (registerPassword?.errors?.['required']){
+                      <div class="error-message">Ingrese su contraseña.</div>
+
+                      } @else if (registerPassword?.errors?.['trimError']){
+                      <div class="error-message">
+                        Ingrese una contraseña válida.
+                      </div>
+
+                      } @else if (registerPassword?.errors?.['minlength']){
+                      <div class="error-message">
+                        Su contraseña debe tener al menos 4 caracteres.
+                      </div>
+                      }
+                    </div>
+                    }
                   </div>
                 </div>
               </div>
 
               <button
+                [disabled]="!registerForm.valid"
                 type="submit"
                 data-mdb-button-init
                 data-mdb-ripple-init
                 class="btn btn-primary btn-block mb-4"
-                (click)="onSubmit()"
               >
                 Registrarme
               </button>
-
-              <!-- Register buttons -->
-              <div class="text-center">
-                <p>o registrarme con:</p>
-                <button
-                  type="button"
-                  data-mdb-button-init
-                  data-mdb-ripple-init
-                  class="btn btn-link btn-floating mx-1"
-                >
-                  <i class="fab fa-facebook-f"></i>
-                </button>
-
-                <button
-                  type="button"
-                  data-mdb-button-init
-                  data-mdb-ripple-init
-                  class="btn btn-link btn-floating mx-1"
-                >
-                  <i class="fab fa-google"></i>
-                </button>
-              </div>
             </form>
-            <a (click)="isLoginVisible = !isLoginVisible" href="#"
+
+            <a (click)="toggleView()" href="#"
               ><p>Posees una cuenta? Ingresa aquí!</p></a
             >
           </div>
@@ -236,18 +316,23 @@
       <!--Imagen derecha-->
       <div
         [ngClass]="
-          isLoginVisible ? 'd-none d-lg-block col-lg-6 mb-5 mb-lg-0' : 'col-0'
+          isLoginVisible ? 'd-none d-lg-block col-lg-4 mb-3 mb-lg-0' : 'col-0'
         "
         style="position: relative; overflow: hidden"
       >
-        <!--Los estilos se pueden sacar. Ver que queda mejor-->
-        <img
-          src="https://mdbootstrap.com/img/new/ecommerce/vertical/004.jpg"
-          class="w-100 rounded-4 shadow-4"
-          alt=""
-          [ngClass]="isLoginVisible ? 'active' : ''"
-          id="rightImage"
-        />
+        <div
+          class="d-flex justify-content-center align-items-center"
+          style="height: 100%"
+        >
+          <img
+            style="min-height: 500px; max-height: 80vh; width: auto !important"
+            src="assets/login-image.jpg"
+            class="w-100 rounded-4 shadow-4"
+            alt="Hombre entrenando sus brazos."
+            [ngClass]="isLoginVisible ? 'active' : ''"
+            id="rightImage"
+          />
+        </div>
       </div>
     </div>
   </div>

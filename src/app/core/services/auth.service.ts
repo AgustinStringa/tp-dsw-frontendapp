@@ -1,8 +1,10 @@
 import { firstValueFrom, Observable, tap } from 'rxjs';
 import { Injectable, signal } from '@angular/core';
+import { ApiResponse } from '../interfaces/api-response.interface';
 import { environment } from '../../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { SnackbarService } from './snackbar.service';
+import { IUserCreate } from './trainer.service';
 
 interface IUserSession {
   id: string;
@@ -11,6 +13,11 @@ interface IUserSession {
   dni: string;
   email: string;
   isClient: boolean;
+}
+
+export interface ILogin {
+  email: string;
+  password: string;
 }
 
 @Injectable({
@@ -24,47 +31,41 @@ export class AuthService {
     private snackbarService: SnackbarService
   ) {}
 
-  register(user: {
-    email: string;
-    password: string;
-    firstName: string;
-    lastName: string;
-    dni: number;
-  }): Observable<any> {
+  register(user: IUserCreate): Observable<ApiResponse<IUserSession>> {
     return this.httpClient
-      .post(`${environment.clientsUrl}`, {
-        ...user,
-      })
+      .post<ApiResponse<IUserSession>>(environment.clientsUrl, user)
       .pipe(
-        tap((response: any) => {
+        tap((response: ApiResponse<IUserSession>) => {
           sessionStorage.setItem(
             'user',
             JSON.stringify({
-              ...response.data.user,
+              ...response.data,
             })
           );
           this.userSignal.set({
-            ...response.data.user,
+            ...response.data,
           });
         })
       );
   }
 
-  login(user: { email: string; password: string }): Observable<any> {
-    return this.httpClient.post(environment.authUrl, user).pipe(
-      tap((response: any) => {
-        sessionStorage.setItem(
-          'user',
-          JSON.stringify({
-            ...response.data.user,
-          })
-        );
+  login(user: ILogin): Observable<ApiResponse<IUserSession>> {
+    return this.httpClient
+      .post<ApiResponse<IUserSession>>(environment.authUrl, user)
+      .pipe(
+        tap((response: ApiResponse<IUserSession>) => {
+          sessionStorage.setItem(
+            'user',
+            JSON.stringify({
+              ...response.data,
+            })
+          );
 
-        this.userSignal.set({
-          ...response.data.user,
-        });
-      })
-    );
+          this.userSignal.set({
+            ...response.data,
+          });
+        })
+      );
   }
 
   getUser(): IUserSession | null {
