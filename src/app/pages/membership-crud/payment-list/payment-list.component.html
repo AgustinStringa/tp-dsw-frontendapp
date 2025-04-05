@@ -3,6 +3,8 @@
     <div class="list-container payment-list-container">
       <div class="title-div">
         <h2 class="crud-page-title">Pagos de la Membresía</h2>
+
+        @if (membership.debt !== 0) {
         <div class="my-4 text-end">
           <button
             type="button"
@@ -12,6 +14,7 @@
             Nuevo pago
           </button>
         </div>
+        }
       </div>
 
       <table>
@@ -27,12 +30,13 @@
         <tbody>
           @for (p of payments; track p) {
           <tr>
-            <td>{{ p.dateTime | date : "dd/MM/yyyy hh:mm" }}</td>
+            <td>{{ p.dateTime | date : 'dd/MM/yyyy hh:mm' }}</td>
             <td>{{ p.paymentMethod }}</td>
             <td>{{ p.amount }}</td>
 
             <td class="td-actions">
               <button
+                [disabled]="isPaymentEditable(p)"
                 (click)="deletePayment(p.id)"
                 aria-label="Example icon button with a delete icon"
               >
@@ -40,6 +44,7 @@
               </button>
 
               <button
+                [disabled]="isPaymentEditable(p)"
                 (click)="updatePayment(p)"
                 aria-label="Example icon button with an edit icon"
               >

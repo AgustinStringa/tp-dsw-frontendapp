@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { ComponentType } from '@angular/cdk/overlay/index.js';
 import { DeleteDialogComponent } from '../../../shared/delete-dialog/delete-dialog.component';
-import { environment } from '../../../../environments/environment';
 import { IUser } from '../../../core/interfaces/user.interface';
 import { MatDialog } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
@@ -41,7 +40,7 @@ export class TrainerListComponent {
       data: {
         title: 'Nuevo Entrenador',
         action: 'post',
-        url: environment.trainersUrl,
+        crudService: this.trainerService,
       },
     });
   }
@@ -52,7 +51,7 @@ export class TrainerListComponent {
         title: 'Modificar Entrenador',
         action: 'put',
         user: trainer,
-        url: environment.trainersUrl,
+        crudService: this.trainerService,
       },
     });
   }

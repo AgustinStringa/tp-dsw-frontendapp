@@ -33,7 +33,7 @@ export class ClientHomeComponent implements OnInit {
 
   getInformation() {
     if (this.clientId !== undefined)
-      this.homeService.getInformationForClient(this.clientId).subscribe({
+      this.homeService.getInformationForClient().subscribe({
         next: (res) => {
           console.log(res);
           this.clientInformation = res.data;
