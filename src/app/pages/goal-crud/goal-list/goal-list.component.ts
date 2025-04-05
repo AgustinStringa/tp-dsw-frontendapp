@@ -1,21 +1,23 @@
+import { GoalService, IGoalCreate } from '../../../core/services/goal.service';
 import { AuthService } from '../../../core/services/auth.service';
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { ComponentType } from '@angular/cdk/portal';
 import { DeleteDialogComponent } from '../../../shared/delete-dialog/delete-dialog.component';
-import { environment } from '../../../../environments/environment';
 import { FormsModule } from '@angular/forms';
 import { GoalDialogComponent } from '../goal-dialog/goal-dialog.component';
-import { HttpClient } from '@angular/common/http';
+import { GoalsSummaryComponent } from '../goals-summary/goals-summary.component';
+import { HttpErrorResponse } from '@angular/common/http';
 import { IGoal } from '../../../core/interfaces/goal.interface';
 import { IUser } from '../../../core/interfaces/user.interface';
 import { MatDialog } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
+import { SnackbarService } from '../../../core/services/snackbar.service';
 
 @Component({
   selector: 'app-goal-list',
   standalone: true,
-  imports: [CommonModule, MatIconModule, FormsModule],
+  imports: [CommonModule, MatIconModule, FormsModule, GoalsSummaryComponent],
   templateUrl: './goal-list.component.html',
   styleUrl: './goal-list.component.css',
 })
@@ -24,39 +26,43 @@ export class GoalListComponent {
   goals: IGoal[] = [];
   userId: string = '';
   client: IUser | undefined | null;
+  achievedGoalsCount = 0;
 
   constructor(
-    private http: HttpClient,
     private dialog: MatDialog,
-    private authService: AuthService
+    private authService: AuthService,
+    private goalService: GoalService,
+    private snackbarService: SnackbarService
   ) {
     const user = this.authService.getUser();
     if (user?.isClient) {
       this.client = user;
       this.getClientGoals();
-    } else {
-      console.error('No user found in session.');
     }
   }
 
   getClientGoals() {
     const userId = this.userSignal()?.id;
-    if (!userId) {
-      console.error('ID de usuario no encontrado');
-      return;
-    }
+    if (!userId) return;
 
-    this.http
-      .get<any>(`${environment.goalsUrl}/client/${this.userSignal()?.id}`)
-      .subscribe({
-        next: (res) => {
-          this.goals = res.data;
-        },
-        error: (err) => {
-          console.error('Error al obtener metas: ', err);
-          this.goals = [];
-        },
-      });
+    this.goalService.getByClientId(userId).subscribe({
+      next: (res) => {
+        this.goals = res.data;
+        this.goals.forEach((g) => {
+          if (g.done) {
+            this.achievedGoalsCount += 1;
+          }
+        });
+      },
+      error: (err: HttpErrorResponse) => {
+        this.goals = [];
+        if (err.error.isUserFriendly) {
+          this.snackbarService.showError(err.error.message);
+        } else {
+          this.snackbarService.showError('Error al obtener las metas.');
+        }
+      },
+    });
   }
 
   addGoal(): void {
@@ -70,7 +76,7 @@ export class GoalListComponent {
   deleteGoal(id: string): void {
     this.openDialog(DeleteDialogComponent, {
       id: id,
-      url: environment.goalsUrl,
+      service: this.goalService,
       title: 'Eliminar Meta',
     });
   }
@@ -85,12 +91,22 @@ export class GoalListComponent {
   }
 
   toggleGoalDone(g: IGoal): void {
-    this.http
-      .put(environment.goalsUrl + '/' + g.id, { done: g.done })
-      .subscribe({
-        next: () => console.log('Estado de meta actualizado'),
-        error: (err) => console.error('Error al actualizar meta: ', err),
-      });
+    if (!this.client?.id) return;
+    const data: IGoalCreate = {
+      done: g.done,
+      bodyMeasurements: g.bodyMeasurements,
+      fatPercentage: g.fatPercentage,
+      clientId: this.client?.id!,
+    };
+    this.goalService.update(g.id, data).subscribe({
+      error: (err: HttpErrorResponse) => {
+        if (err.error.isUserFriendly) {
+          this.snackbarService.showError(err.error.message);
+        } else {
+          this.snackbarService.showError('Error al actualizar la meta');
+        }
+      },
+    });
   }
 
   openDialog(dialog: ComponentType<unknown>, data: object): void {

@@ -1,0 +1,18 @@
+@if( this.achievedGoalsParams && this.goalsParams){
+<div class="my-5">
+  <div class="number-container proposed-goal-color">
+    <ngx-animated-counter [params]="goalsParams"></ngx-animated-counter>
+    <p class="summary-title">
+      {{ this.proposedGoals === 1 ? 'Meta' : 'Metas' }}
+      {{ this.proposedGoals === 1 ? 'establecida' : 'establecidas' }}
+    </p>
+  </div>
+  <div class="number-container achieved-goal-color">
+    <ngx-animated-counter [params]="achievedGoalsParams"></ngx-animated-counter>
+    <p class="summary-title">
+      {{ this.achievedGoals === 1 ? 'Meta' : 'Metas' }}
+      {{ this.achievedGoals === 1 ? 'conseguida' : 'conseguidas' }}
+    </p>
+  </div>
+</div>
+}

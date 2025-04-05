@@ -6,16 +6,18 @@ import {
   Validators,
 } from '@angular/forms';
 import {
+  GoalService,
+  IGoalCreate,
+} from '../../../core/services/goal.service.js';
+import {
   MAT_DIALOG_DATA,
   MatDialogActions,
   MatDialogModule,
   MatDialogRef,
   MatDialogTitle,
 } from '@angular/material/dialog';
-import { AuthService } from '../../../core/services/auth.service';
 import { CommonModule } from '@angular/common';
-import { environment } from '../../../../environments/environment';
-import { HttpClient } from '@angular/common/http';
+import { HttpErrorResponse } from '@angular/common/http';
 import { IGoal } from '../../../core/interfaces/goal.interface';
 import { IUser } from '../../../core/interfaces/user.interface';
 import { MatButtonModule } from '@angular/material/button';
@@ -61,8 +63,7 @@ export class GoalDialogComponent {
     @Inject(MAT_DIALOG_DATA) public data: DialogData,
     public dialogRef: MatDialogRef<GoalDialogComponent>,
     private snackbarService: SnackbarService,
-    private http: HttpClient,
-    private authService: AuthService
+    private goalService: GoalService
   ) {
     this.title = data.title;
     this.action = data.action;
@@ -95,34 +96,39 @@ export class GoalDialogComponent {
   onSubmit(): void {
     if (!this.form.valid) return;
 
-    let data: Record<string, any> = {
+    const data: IGoalCreate = {
+      done: this.data.goal?.done || false,
       fatPercentage: Number(this.form.get('fatPercentage')?.value),
       bodyMeasurements: this.form.get('bodyMeasurements')?.value?.trim(),
-      client: this.client.id,
+      clientId: this.client.id,
     };
 
     if (this.action === 'post') {
-      this.http.post<any>(environment.goalsUrl, data).subscribe({
+      this.goalService.create(data).subscribe({
         next: () => {
           this.closeDialog('created');
         },
-        error: (error) => {
-          console.error('Error en la petición: ', error);
-          this.snackbarService.showError('Error al crear la meta');
+        error: (err: HttpErrorResponse) => {
+          if (err.error.isUserFriendly) {
+            this.snackbarService.showError(err.error.message);
+          } else {
+            this.snackbarService.showError('Error al crear la meta');
+          }
         },
       });
     } else if (this.action === 'put') {
-      this.http
-        .put<any>(`${environment.goalsUrl}/${this.goalId}`, data)
-        .subscribe({
-          next: () => {
-            this.closeDialog('updated');
-          },
-          error: (error) => {
-            console.error('Error en la petición: ', error);
-            this.snackbarService.showError('Error al modificar la meta');
-          },
-        });
+      this.goalService.update(this.goalId!, data).subscribe({
+        next: () => {
+          this.closeDialog('updated');
+        },
+        error: (err: HttpErrorResponse) => {
+          if (err.error.isUserFriendly) {
+            this.snackbarService.showError(err.error.message);
+          } else {
+            this.snackbarService.showError('Error al actualizar la meta');
+          }
+        },
+      });
     }
   }
 

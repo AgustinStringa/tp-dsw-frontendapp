@@ -1,0 +1,20 @@
+.number-container {
+    font: initial;
+    font-family: roboto, sans-serif;
+    font-size: 20em;
+    font-weight: bold;
+    text-align: center;
+    display: block;
+}
+
+.summary-title {
+    font-size: 2rem;
+}
+
+.proposed-goal-color {
+    color: #0a54a3;
+}
+
+.achieved-goal-color {
+    color: #55b651;
+}
