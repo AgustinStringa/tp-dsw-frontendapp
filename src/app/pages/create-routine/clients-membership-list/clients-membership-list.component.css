@@ -28,3 +28,36 @@ p {
   justify-content: center;
   align-items: center;
 }
+
+.table-container {
+  width: 90%;
+}
+
+.selected-client-view {
+  padding: 1.5rem;
+  border: 1px solid #dee2e6;
+  border-radius: 0.5rem;
+  background-color: #f8f9fa;
+  transition: all 0.3s ease;
+}
+
+.selected-client-view:hover {
+  background-color: #e9ecef;
+  cursor: pointer;
+}
+
+.cursor-pointer {
+  cursor: pointer;
+}
+
+.selected {
+  background-color: rgba(76, 100, 166, 0.187);
+}
+
+.table tbody tr {
+  transition: background-color 0.2s ease;
+}
+
+.table tbody tr:hover {
+  background-color: rgba(0, 0, 0, 0.05);
+}
