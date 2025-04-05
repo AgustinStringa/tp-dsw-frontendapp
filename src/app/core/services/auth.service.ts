@@ -4,6 +4,7 @@ import { ApiResponse } from '../interfaces/api-response.interface';
 import { environment } from '../../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { SnackbarService } from './snackbar.service';
+import { IUserCreate } from './trainer.service';
 
 interface IUserSession {
   id: string;
@@ -14,12 +15,9 @@ interface IUserSession {
   isClient: boolean;
 }
 
-interface IUserCreate {
+export interface ILogin {
   email: string;
   password: string;
-  firstName: string;
-  lastName: string;
-  dni: number;
 }
 
 @Injectable({
@@ -51,10 +49,7 @@ export class AuthService {
       );
   }
 
-  login(user: {
-    email: string;
-    password: string;
-  }): Observable<ApiResponse<IUserSession>> {
+  login(user: ILogin): Observable<ApiResponse<IUserSession>> {
     return this.httpClient
       .post<ApiResponse<IUserSession>>(environment.authUrl, user)
       .pipe(

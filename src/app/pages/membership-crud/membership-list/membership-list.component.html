@@ -15,7 +15,7 @@
   @if (showPayments) {
   <app-payment-list
     [membership]="selectedMembership!"
-    (componentVisible)="showPayments = $event"
+    (componentVisible)="hidePaymentList($event)"
   ></app-payment-list>
   } @if (memberships !== null && memberships.length > 0) {
   <div class="table-container">

@@ -33,7 +33,6 @@ export class PaymentListComponent implements OnInit {
   }
 
   getMembershipPayments() {
-    console.log(this.membership);
     this.paymentService.getByMembership(this.membership.id).subscribe({
       next: (res) => {
         this.payments = res.data;
