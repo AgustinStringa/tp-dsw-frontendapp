@@ -107,8 +107,17 @@ export class ChatWindowComponent
   }
 
   async loadUsers() {
-    await this.getTrainers();
-    await this.getClients();
+    this.messageService.getRecipients().subscribe({
+      next: (response) => {
+        this.users = response.data.filter(
+          (user: IUser) => user.id !== this.userId
+        );
+        this.filterUsers();
+      },
+      error: (error) => {
+        console.error('Error al cargar los usuarios:', error);
+      },
+    });
   }
 
   async filterUsers() {
@@ -223,7 +232,7 @@ export class ChatWindowComponent
     this.selectedUser = user;
     this.unreadMessages[user.id] = 0;
 
-    this.messageService.markMessagesAsRead(this.userId, user.id).subscribe({
+    this.messageService.markMessagesAsRead(user.id).subscribe({
       next: () => {
         // Successfully marked messages as read
       },
@@ -232,16 +241,14 @@ export class ChatWindowComponent
       },
     });
 
-    this.messageService
-      .getMessagesFrom(this.userId, this.selectedUser.id)
-      .subscribe({
-        next: (response) => {
-          this.messages = response.data;
-        },
-        error: (error) => {
-          console.error('Error obteniendo mensajes:', error);
-        },
-      });
+    this.messageService.getMessagesFrom(this.selectedUser.id).subscribe({
+      next: (response) => {
+        this.messages = response.data;
+      },
+      error: (error) => {
+        console.error('Error obteniendo mensajes:', error);
+      },
+    });
     this.calculateTotalUnread();
   }
 
