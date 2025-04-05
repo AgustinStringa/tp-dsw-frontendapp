@@ -30,8 +30,12 @@ export class MembershipFilterComponent {
     if (this.memberships) {
       this.filteredMemberships = this.memberships.filter(
         (m) =>
-          m.client.firstName.includes(this.searchValue) ||
-          m.client.lastName.includes(this.searchValue)
+          m.client.firstName
+            .toLowerCase()
+            .includes(this.searchValue.toLowerCase()) ||
+          m.client.lastName
+            .toLowerCase()
+            .includes(this.searchValue.toLowerCase())
       );
     }
   }
