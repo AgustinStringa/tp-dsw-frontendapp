@@ -21,26 +21,26 @@ export class MessageService {
     );
   }
 
-  getMessagesFrom(user: string): Observable<ApiResponse<IMessage[]>> {
+  getMessagesFrom(userId: string): Observable<ApiResponse<IMessage[]>> {
     return this.http.get<ApiResponse<IMessage[]>>(
-      `${environment.messagesUrl}/user/${user}`,
+      `${environment.messagesUrl}/user/${userId}`,
       {
         withCredentials: true,
       }
     );
   }
 
-  getUnreadMessages(user: string): Observable<ApiResponse<IMessage[]>> {
+  getUnreadMessages(): Observable<ApiResponse<IMessage[]>> {
     return this.http.post<ApiResponse<IMessage[]>>(
-      `${environment.messagesUrl}/user/${user}/unread`,
+      `${environment.messagesUrl}/user/unread`,
       {
         withCredentials: true,
       }
     );
   }
 
-  markMessagesAsRead(sender: string): Observable<ApiResponse<IMessage[]>> {
-    const url = `${environment.messagesUrl}/user/${sender}/mark-as-read`;
-    return this.http.post<ApiResponse<IMessage[]>>(url, {});
+  markMessagesAsRead(userId: string): Observable<ApiResponse<IMessage[]>> {
+    const url = `${environment.messagesUrl}/user/${userId}/mark-as-read`;
+    return this.http.patch<ApiResponse<IMessage[]>>(url, {});
   }
 }
