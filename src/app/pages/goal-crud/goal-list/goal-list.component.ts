@@ -1,16 +1,16 @@
-import { Component } from '@angular/core';
-import { IGoal } from '../../../core/interfaces/goal.interface.js';
-import { HttpClient } from '@angular/common/http';
-import { environment } from '../../../../environments/environment.js';
-import { MatIconModule } from '@angular/material/icon';
-import { GoalDialogComponent } from '../goal-dialog/goal-dialog.component.js';
-import { ComponentType } from '@angular/cdk/portal';
-import { MatDialog } from '@angular/material/dialog';
-import { AuthService } from '../../../services/auth.service.js';
-import { IUser } from '../../../core/interfaces/user.interface.js';
-import { DeleteDialogComponent } from '../../../delete-dialog/delete-dialog.component.js';
-import { FormsModule } from '@angular/forms';
+import { AuthService } from '../../../core/services/auth.service';
 import { CommonModule } from '@angular/common';
+import { Component } from '@angular/core';
+import { ComponentType } from '@angular/cdk/portal';
+import { DeleteDialogComponent } from '../../../shared/delete-dialog/delete-dialog.component';
+import { environment } from '../../../../environments/environment';
+import { FormsModule } from '@angular/forms';
+import { GoalDialogComponent } from '../goal-dialog/goal-dialog.component';
+import { HttpClient } from '@angular/common/http';
+import { IGoal } from '../../../core/interfaces/goal.interface';
+import { IUser } from '../../../core/interfaces/user.interface';
+import { MatDialog } from '@angular/material/dialog';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'app-goal-list',

@@ -1,6 +1,4 @@
 import { Component, Inject } from '@angular/core';
-import { IUser } from '../../../core/interfaces/user.interface.js';
-import { IProgress } from '../../../core/interfaces/progress.interface.js';
 import {
   FormControl,
   FormGroup,
@@ -8,24 +6,29 @@ import {
   Validators,
 } from '@angular/forms';
 import {
+  IProgressCreate,
+  ProgressService,
+} from '../../../core/services/progress.service';
+import {
   MAT_DIALOG_DATA,
   MatDialogActions,
   MatDialogModule,
   MatDialogRef,
   MatDialogTitle,
 } from '@angular/material/dialog';
-import { SnackbarService } from '../../../services/snackbar.service.js';
-import { HttpClient } from '@angular/common/http';
-import { environment } from '../../../../environments/environment.js';
-import { CommonModule } from '@angular/common';
-import { MatInputModule } from '@angular/material/input';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatButtonModule } from '@angular/material/button';
-import { MatDatepickerModule } from '@angular/material/datepicker';
 import {
   MatNativeDateModule,
   provideNativeDateAdapter,
 } from '@angular/material/core';
+import { CommonModule } from '@angular/common';
+import { HttpErrorResponse } from '@angular/common/http';
+import { IProgress } from '../../../core/interfaces/progress.interface';
+import { IUser } from '../../../core/interfaces/user.interface';
+import { MatButtonModule } from '@angular/material/button';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { SnackbarService } from '../../../core/services/snackbar.service';
 
 interface DialogData {
   title: string;
@@ -63,8 +66,8 @@ export class ProgressDialogComponent {
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: DialogData,
     public dialogRef: MatDialogRef<ProgressDialogComponent>,
-    private snackbarService: SnackbarService,
-    private http: HttpClient
+    private progressService: ProgressService,
+    private snackbarService: SnackbarService
   ) {
     this.title = data.title;
     this.action = data.action;
@@ -104,36 +107,41 @@ export class ProgressDialogComponent {
   onSubmit(): void {
     if (!this.form.valid) return;
 
-    let data: Record<string, any> = {
-      date: new Date(this.form.get('date')?.value).toISOString().split('T')[0],
+    const data: IProgressCreate = {
+      date: new Date(this.form.get('date')?.value),
       weight: Number(this.form.get('weight')?.value),
       fatPercentage: Number(this.form.get('fatPercentage')?.value),
       bodyMeasurements: this.form.get('bodyMeasurements')?.value,
-      client: this.client.id,
+      clientId: this.client.id,
     };
 
     if (this.action === 'post') {
-      this.http.post<any>(environment.progressesUrl, data).subscribe({
+      this.progressService.create(data).subscribe({
         next: () => {
           this.closeDialog('created');
         },
-        error: (error) => {
-          console.error('Error en la peticion: ', error);
-          this.snackbarService.showError('Error al crear la meta');
+        error: (err: HttpErrorResponse) => {
+          console.error('Error en la peticion: ', err);
+          if (err.error.isUserFriendly) {
+            this.snackbarService.showError(err.error.message);
+          } else {
+            this.snackbarService.showError('Error al crear la meta');
+          }
         },
       });
     } else if (this.action === 'put') {
-      this.http
-        .put<any>(environment.progressesUrl + '/' + this.progressId, data)
-        .subscribe({
-          next: () => {
-            this.closeDialog('updated');
-          },
-          error: (error) => {
-            console.error('Error en la peticion: ', error);
-            this.snackbarService.showError('Error al actualizar el progreso');
-          },
-        });
+      this.progressService.update(this.progressId!, data).subscribe({
+        next: () => {
+          this.closeDialog('updated');
+        },
+        error: (err: HttpErrorResponse) => {
+          if (err.error.isUserFriendly) {
+            this.snackbarService.showError(err.error.message);
+          } else {
+            this.snackbarService.showError('Error al actualizar la meta');
+          }
+        },
+      });
     }
   }
 

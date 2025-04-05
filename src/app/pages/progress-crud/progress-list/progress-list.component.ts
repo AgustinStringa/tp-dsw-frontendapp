@@ -1,20 +1,22 @@
-import { Component } from '@angular/core';
-import { IProgress } from '../../../core/interfaces/progress.interface.js';
-import { IUser } from '../../../core/interfaces/user.interface.js';
-import { HttpClient } from '@angular/common/http';
-import { MatDialog } from '@angular/material/dialog';
-import { AuthService } from '../../../services/auth.service.js';
-import { environment } from '../../../../environments/environment.js';
-import { ComponentType } from '@angular/cdk/portal';
-import { ProgressDialogComponent } from '../progress-dialog/progress-dialog.component.js';
-import { DeleteDialogComponent } from '../../../delete-dialog/delete-dialog.component.js';
-import { MatIconModule } from '@angular/material/icon';
+import { AuthService } from '../../../core/services/auth.service';
 import { CommonModule } from '@angular/common';
+import { Component } from '@angular/core';
+import { ComponentType } from '@angular/cdk/portal';
+import { DeleteDialogComponent } from '../../../shared/delete-dialog/delete-dialog.component';
+import { HttpErrorResponse } from '@angular/common/http';
+import { IProgress } from '../../../core/interfaces/progress.interface';
+import { IUser } from '../../../core/interfaces/user.interface';
+import { MatDialog } from '@angular/material/dialog';
+import { MatIconModule } from '@angular/material/icon';
+import { ProgressChartComponent } from '../progress-chart/progress-chart.component';
+import { ProgressDialogComponent } from '../progress-dialog/progress-dialog.component';
+import { ProgressService } from '../../../core/services/progress.service';
+import { SnackbarService } from '../../../core/services/snackbar.service.js';
 
 @Component({
   selector: 'app-progress-list',
   standalone: true,
-  imports: [MatIconModule, CommonModule],
+  imports: [MatIconModule, CommonModule, ProgressChartComponent],
   templateUrl: './progress-list.component.html',
   styleUrl: './progress-list.component.css',
 })
@@ -25,9 +27,10 @@ export class ProgressListComponent {
   client: IUser | undefined | null;
 
   constructor(
-    private http: HttpClient,
     private dialog: MatDialog,
-    private authService: AuthService
+    private authService: AuthService,
+    private progressService: ProgressService,
+    private snackbarService: SnackbarService
   ) {
     const user = this.authService.getUser();
     if (user?.isClient) {
@@ -40,21 +43,18 @@ export class ProgressListComponent {
 
   getClientProgresses() {
     const userId = this.client?.id;
-    if (!userId) {
-      console.error('ID de usuario no encontrado.');
-    }
+    if (!userId) return;
 
-    this.http
-      .get<any>(environment.progressesUrl + '/client/' + this.userSignal()?.id)
-      .subscribe({
-        next: (res) => {
-          this.progresses = res.data;
-        },
-        error: (err) => {
-          console.error('Error al obtener progresos: ', err);
-          this.progresses = [];
-        },
-      });
+    this.progressService.getByClientId(userId).subscribe({
+      next: (res) => {
+        this.progresses = res.data;
+      },
+      error: (err: HttpErrorResponse) => {
+        if (err.error.isUserFriendly)
+          this.snackbarService.showError(err.error.message);
+        else this.snackbarService.showError('Error al obtener los progresos.');
+      },
+    });
   }
 
   addProgress(): void {
@@ -73,10 +73,11 @@ export class ProgressListComponent {
       progress: p,
     });
   }
+
   deleteProgress(id: string): void {
     this.openDialog(DeleteDialogComponent, {
       id: id,
-      url: environment.progressesUrl,
+      service: this.progressService,
       title: 'Eliminar progreso',
     });
   }

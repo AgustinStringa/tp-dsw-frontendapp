@@ -1,5 +1,4 @@
 import { Component, Inject } from '@angular/core';
-import { IGoal } from '../../../core/interfaces/goal.interface.js';
 import {
   FormControl,
   FormGroup,
@@ -13,17 +12,18 @@ import {
   MatDialogRef,
   MatDialogTitle,
 } from '@angular/material/dialog';
-import { SnackbarService } from '../../../services/snackbar.service.js';
+import { AuthService } from '../../../core/services/auth.service';
+import { CommonModule } from '@angular/common';
+import { environment } from '../../../../environments/environment';
 import { HttpClient } from '@angular/common/http';
-import { IUser } from '../../../core/interfaces/user.interface.js';
-import { AuthService } from '../../../services/auth.service.js';
-import { environment } from '../../../../environments/environment.js';
+import { IGoal } from '../../../core/interfaces/goal.interface';
+import { IUser } from '../../../core/interfaces/user.interface';
+import { MatButtonModule } from '@angular/material/button';
+import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { MatButtonModule } from '@angular/material/button';
 import { MatNativeDateModule } from '@angular/material/core';
-import { MatDatepickerModule } from '@angular/material/datepicker';
-import { CommonModule } from '@angular/common';
+import { SnackbarService } from '../../../core/services/snackbar.service';
 
 interface DialogData {
   title: string;
