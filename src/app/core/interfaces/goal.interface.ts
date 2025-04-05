@@ -1,9 +1,10 @@
 import { IUser } from './user.interface';
 
 export interface IGoal {
+  id: string;
   createdAt: Date;
-  fatPercentage: number;
-  bodyMeasurements: string;
   done: boolean;
+  bodyMeasurements: string;
+  fatPercentage: number;
   client: IUser;
 }

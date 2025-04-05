@@ -1,4 +1,6 @@
+import { IGoal } from '../interfaces/goal.interface.js';
 import { IMembership } from '../interfaces/membership.interface';
+import { IProgress } from '../interfaces/progress.interface.js';
 import { IUser } from '../interfaces/user.interface';
 
 export default class Client implements IUser {
@@ -8,6 +10,8 @@ export default class Client implements IUser {
   dni: string;
   email: string;
   currentMembership: IMembership;
+  goals: IGoal[];
+  progresses: IProgress[];
 
   constructor(
     id: string,
@@ -15,7 +19,9 @@ export default class Client implements IUser {
     firstName: string,
     dni: string,
     email: string,
-    currentMembership: IMembership
+    currentMembership: IMembership,
+    goals: IGoal[] = [],
+    progresses: IProgress[] = []
   ) {
     this.id = id;
     this.lastName = lastName;
@@ -23,5 +29,7 @@ export default class Client implements IUser {
     this.dni = dni;
     this.email = email;
     this.currentMembership = currentMembership;
+    this.goals = goals;
+    this.progresses = progresses;
   }
 }
