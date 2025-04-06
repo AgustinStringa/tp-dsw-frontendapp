@@ -1,13 +1,3 @@
-.cascading-right {
-  margin-right: -50px;
-}
-
-@media (max-width: 991.98px) {
-  .cascading-right {
-    margin-right: 0;
-  }
-}
-
 #rightImage,
 #signup {
   transform: translateX(-100%);
@@ -36,6 +26,13 @@
   transform: translateX(100%);
 }
 
+#rightImage,
+#leftImage {
+  min-height: 500px;
+  max-height: 80vh;
+  width: auto !important;
+}
+
 .col-0 {
   width: 0;
   height: 0;
@@ -56,8 +53,8 @@ h3.home-section-header {
   text-align: center;
 }
 
-.areas-section>div,
-.estructura-section>div {
+.areas-section > div,
+.estructura-section > div {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
@@ -85,7 +82,7 @@ h3.home-section-header {
 
 .hero {
   position: relative;
-  background-image: url("../../../assets/pexels-leonardho-1552242.jpg");
+  background-image: url('../../../assets/pexels-leonardho-1552242.jpg');
   background-repeat: no-repeat;
   background-attachment: fixed;
   background-position: center;
@@ -112,7 +109,7 @@ h1 {
 }
 
 .registrar-rutina {
-  background-image: url("../../../assets/pexels-pavel-danilyuk-6339722.jpg");
+  background-image: url('../../../assets/pexels-pavel-danilyuk-6339722.jpg');
   background-repeat: no-repeat;
   background-position: 100% 90%;
   background-size: cover;
@@ -127,7 +124,7 @@ h1 {
 }
 
 .inscripcion-clase {
-  background-image: url("../../../assets/pexels-olly-868483.jpg");
+  background-image: url('../../../assets/pexels-olly-868483.jpg');
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
@@ -154,11 +151,11 @@ h1 {
 
 .primary-button {
   border: none;
-  transition: all .3s ease-in-out;
+  transition: all 0.3s ease-in-out;
   background-color: #f7bc27;
   color: white;
   border-radius: 1rem;
-  padding: .5rem 1rem;
+  padding: 0.5rem 1rem;
   font-size: 1.1rem;
   -webkit-box-shadow: 21px 18px 9px -11px rgba(0, 0, 0, 0.75);
   -moz-box-shadow: 21px 18px 9px -11px rgba(0, 0, 0, 0.75);
@@ -167,4 +164,19 @@ h1 {
 
 .primary-button:hover {
   background-color: #e1a40b;
+}
+
+.error-container {
+  height: 30px;
+  font-size: 0.875rem;
+}
+
+.error-message {
+  color: #dc3545;
+  font-weight: 500;
+  padding: 5px 0;
+}
+
+.form-control {
+  background-color: #eaeaea;
 }

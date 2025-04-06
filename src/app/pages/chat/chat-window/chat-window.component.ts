@@ -6,17 +6,15 @@ import {
   OnInit,
   ViewChild,
 } from '@angular/core';
-import { ApiResponse } from '../../../core/interfaces/api-response.interface';
-import { AuthService } from '../../../core/services/auth.service';
+import { AuthService } from '../../../core/services/auth.service.js';
 import { CommonModule } from '@angular/common';
-import { environment } from '../../../../environments/environment';
 import { FormsModule } from '@angular/forms';
-import { HttpClient } from '@angular/common/http';
-import IMessage from '../../../core/interfaces/IMessage.interface';
-import { IUser } from '../../../core/interfaces/user.interface';
-import { MessageService } from '../../../core/services/message.service';
-import { SocketService } from '../../../core/services/socket.service';
-import { SoundUtils } from '../../../core/functions/playSound';
+import IMessage from '../../../core/interfaces/IMessage.interface.js';
+import { IUser } from '../../../core/interfaces/user.interface.js';
+import { MessageService } from '../../../core/services/message.service.js';
+import { SnackbarService } from '../../../core/services/snackbar.service.js';
+import { SocketService } from '../../../core/services/socket.service.js';
+import { SoundUtils } from '../../../core/functions/play-sound.js';
 
 @Component({
   selector: 'app-chat-window',
@@ -29,6 +27,7 @@ export class ChatWindowComponent
   implements OnInit, OnDestroy, AfterViewChecked
 {
   @ViewChild('messagesContainer') private messagesContainer!: ElementRef;
+  maxMessageLength = 150;
   soundsEnabled = true;
   isChatOpen = false;
   isChatConnected = true;
@@ -47,7 +46,7 @@ export class ChatWindowComponent
     private socketService: SocketService,
     private messageService: MessageService,
     private authService: AuthService,
-    private http: HttpClient
+    private snackbarService: SnackbarService
   ) {
     const user = this.authService.getUser();
     this.userId = user ? user.id : '';
@@ -98,17 +97,28 @@ export class ChatWindowComponent
   }
 
   scrollToBottom(): void {
-    try {
-      const container = this.messagesContainer.nativeElement;
-      container.scrollTop = container.scrollHeight;
-    } catch (err) {
-      console.error('Error al desplazar el scroll:', err);
+    if (this.isChatOpen && this.isChatConnected && this.selectedUser) {
+      try {
+        const container = this.messagesContainer.nativeElement;
+        container.scrollTop = container.scrollHeight;
+      } catch (err) {
+        console.error('Error al desplazar el scroll:', err);
+      }
     }
   }
 
   async loadUsers() {
-    await this.getTrainers();
-    await this.getClients();
+    this.messageService.getRecipients().subscribe({
+      next: (response) => {
+        this.users = response.data.filter(
+          (user: IUser) => user.id !== this.userId
+        );
+        this.filterUsers();
+      },
+      error: (error) => {
+        console.error('Error al cargar los usuarios:', error);
+      },
+    });
   }
 
   async filterUsers() {
@@ -143,56 +153,9 @@ export class ChatWindowComponent
 
     this.showSettingsMenu = false;
   }
-  async getClients() {
-    this.http.get<ApiResponse<IUser[]>>(environment.clientsUrl).subscribe({
-      next: (res) => {
-        const filteredClients = res.data.filter(
-          (user: IUser) => user.id !== this.userId
-        );
-        this.users = [
-          ...this.users,
-          ...filteredClients.map(
-            (user: IUser) =>
-              ({
-                ...user,
-                entity: 'client',
-              } as IUser)
-          ),
-        ];
-        this.filterUsers();
-      },
-      error: () => {
-        console.error('Error al obtener los clientes');
-      },
-    });
-  }
-
-  async getTrainers() {
-    this.http.get<ApiResponse<IUser[]>>(environment.trainersUrl).subscribe({
-      next: (res) => {
-        const filteredTrainers = res.data.filter(
-          (user: IUser) => user.id.toString() !== this.userId.toString()
-        );
-        this.users = [
-          ...this.users,
-          ...filteredTrainers.map(
-            (user: IUser) =>
-              ({
-                ...user,
-                entity: 'trainer',
-              } as IUser)
-          ),
-        ];
-        this.filterUsers();
-      },
-      error: () => {
-        console.error('Error al obtener los entrenadores');
-      },
-    });
-  }
 
   async loadUnreadMessages() {
-    this.messageService.getUnreadMessages(this.userId).subscribe({
+    this.messageService.getUnreadMessages().subscribe({
       next: (response) => {
         if (response && Array.isArray(response.data)) {
           response.data.forEach((msg: IMessage) => {
@@ -223,29 +186,36 @@ export class ChatWindowComponent
     this.selectedUser = user;
     this.unreadMessages[user.id] = 0;
 
-    this.messageService.markMessagesAsRead(this.userId, user.id).subscribe({
+    this.messageService.markMessagesAsRead(user.id).subscribe({
       next: () => {
-        // Successfully marked messages as read
+        //
       },
       error: (error) => {
         console.error('Error marcando mensajes como leídos:', error);
       },
     });
 
-    this.messageService
-      .getMessagesFrom(this.userId, this.selectedUser.id)
-      .subscribe({
-        next: (response) => {
-          this.messages = response.data;
-        },
-        error: (error) => {
-          console.error('Error obteniendo mensajes:', error);
-        },
-      });
+    this.messageService.getMessagesFrom(this.selectedUser.id).subscribe({
+      next: (response) => {
+        this.messages = response.data;
+      },
+      error: (error) => {
+        console.error('Error obteniendo mensajes:', error);
+      },
+    });
     this.calculateTotalUnread();
   }
 
   sendMessage() {
+    if (!this.message.trim() || !this.selectedUser) return;
+
+    if (this.message.length > this.maxMessageLength) {
+      this.snackbarService.showError(
+        `El mensaje excede el límite de ${this.maxMessageLength} caracteres permitidos`
+      );
+      return;
+    }
+
     if (this.message.trim() && this.selectedUser) {
       const messageData: IMessage = {
         content: this.message,
@@ -267,6 +237,9 @@ export class ChatWindowComponent
 
   toggleChat() {
     this.isChatOpen = !this.isChatOpen;
+    if (!this.isChatOpen) {
+      this.selectedUser = null;
+    }
   }
 
   ngOnDestroy() {

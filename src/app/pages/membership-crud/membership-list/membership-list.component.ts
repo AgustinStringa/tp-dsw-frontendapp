@@ -109,4 +109,9 @@ export class MembershipListComponent {
   onFilteredMemberships(filteredMemberships: IMembership[]) {
     this.filteredMemberships = filteredMemberships;
   }
+
+  hidePaymentList(event: boolean) {
+    this.showPayments = event;
+    this.getActiveMemberships();
+  }
 }

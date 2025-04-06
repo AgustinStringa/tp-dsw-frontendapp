@@ -21,4 +21,5 @@ export const environment = {
   routinesUrl: apiUrl + '/routines',
   trainersUrl: apiUrl + '/trainers',
   userPaymentUrl: apiUrl + '/user-payment/',
+  messagesUrl: apiUrl + '/messages',
 };

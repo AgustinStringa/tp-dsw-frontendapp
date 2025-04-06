@@ -3,6 +3,7 @@ import { environment } from '../../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import IMessage from '../interfaces/IMessage.interface';
 import { Injectable } from '@angular/core';
+import { IUser } from '../interfaces/user.interface.js';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -11,32 +12,35 @@ import { Observable } from 'rxjs';
 export class MessageService {
   constructor(private http: HttpClient) {}
 
-  getMessagesFrom(
-    receiver: string,
-    sender: string
-  ): Observable<ApiResponse<IMessage[]>> {
+  getRecipients(): Observable<ApiResponse<IUser[]>> {
+    return this.http.get<ApiResponse<IUser[]>>(
+      `${environment.messagesUrl}/recipients`,
+      {
+        withCredentials: true,
+      }
+    );
+  }
+
+  getMessagesFrom(userId: string): Observable<ApiResponse<IMessage[]>> {
     return this.http.get<ApiResponse<IMessage[]>>(
-      `${environment.apiUrl}/messages/${receiver}/${sender}`,
+      `${environment.messagesUrl}/user/${userId}`,
       {
         withCredentials: true,
       }
     );
   }
 
-  getUnreadMessages(receiver: string): Observable<ApiResponse<IMessage[]>> {
+  getUnreadMessages(): Observable<ApiResponse<IMessage[]>> {
     return this.http.post<ApiResponse<IMessage[]>>(
-      `${environment.apiUrl}/messages/unread/${receiver}`,
+      `${environment.messagesUrl}/user/unread`,
       {
         withCredentials: true,
       }
     );
   }
 
-  markMessagesAsRead(
-    sender: string,
-    receiver: string
-  ): Observable<ApiResponse<IMessage[]>> {
-    const url = `${environment.apiUrl}/messages/mark-as-read/${sender}/${receiver}`;
-    return this.http.post<ApiResponse<IMessage[]>>(url, {});
+  markMessagesAsRead(userId: string): Observable<ApiResponse<IMessage[]>> {
+    const url = `${environment.messagesUrl}/user/${userId}/mark-as-read`;
+    return this.http.patch<ApiResponse<IMessage[]>>(url, {});
   }
 }

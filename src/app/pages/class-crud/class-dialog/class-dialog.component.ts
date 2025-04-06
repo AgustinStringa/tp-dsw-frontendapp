@@ -67,7 +67,10 @@ export class ClassDialogComponent {
     day: new FormControl<string>('', [Validators.required]),
     startTime: new FormControl<string>('', [Validators.required]),
     endTime: new FormControl<string>('', [Validators.required]),
-    maxCapacity: new FormControl<number | null>(null, [Validators.required]),
+    maxCapacity: new FormControl<number | null>(null, [
+      Validators.required,
+      Validators.min(1),
+    ]),
     location: new FormControl<string>('', [
       Validators.required,
       trimValidator(),
@@ -143,5 +146,10 @@ export class ClassDialogComponent {
 
   closeDialog(result: string): void {
     this.dialogRef.close(result);
+  }
+
+  // Getters para FormControls
+  get maxCapacity() {
+    return this.form.get('maxCapacity');
   }
 }

@@ -20,7 +20,7 @@
   @if (showPayments) {
   <app-payment-list
     [membership]="selectedMembership!"
-    (componentVisible)="showPayments = $event"
+    (componentVisible)="hidePaymentList($event)"
   ></app-payment-list>
   } @if (memberships !== null && memberships.length > 0) {
   <div class="table-container">
@@ -47,6 +47,7 @@
 
           <td class="td-actions">
             <button
+              [disabled]="m.debt === 0"
               (click)="addPayment(m)"
               aria-label="Example icon button with a new payment icon"
             >

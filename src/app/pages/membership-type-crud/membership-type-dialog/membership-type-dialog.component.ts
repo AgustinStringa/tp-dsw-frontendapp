@@ -52,12 +52,12 @@ export class MembershipTypeDialogComponent {
 
   form = new FormGroup({
     name: new FormControl('', [Validators.required]),
-    description: new FormControl('', [
+    description: new FormControl('', [Validators.required, trimValidator()]),
+    price: new FormControl('', [
       Validators.required,
-      trimValidator(),
-      Validators.minLength(1),
+      Validators.min(0.01),
+      Validators.pattern(/^\d+(\.\d{1,2})?$/),
     ]),
-    price: new FormControl('', [Validators.required, Validators.min(0)]),
   });
 
   constructor(
@@ -123,5 +123,10 @@ export class MembershipTypeDialogComponent {
 
   closeDialog(result: string) {
     this.dialogRef.close(result);
+  }
+
+  // Getters para FormControls
+  get price() {
+    return this.form.get('price');
   }
 }

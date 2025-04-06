@@ -1,28 +1,66 @@
+import {
+  AbstractControl,
+  FormControl,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
+import { AuthService, ILogin } from '../../core/services/auth.service';
 import { Component, OnInit } from '@angular/core';
-import { AuthService } from '../../core/services/auth.service';
-import { FormsModule } from '@angular/forms';
 import { HttpErrorResponse } from '@angular/common/http';
+import { IUserCreate } from '../../core/services/trainer.service';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { NgClass } from '@angular/common';
+import { passwordMatchValidator } from '../../core/functions/password-match.validator';
 import { Router } from '@angular/router';
 import { SnackbarService } from '../../core/services/snackbar.service';
+import { trimValidator } from '../../core/functions/trim-validator';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [FormsModule, NgClass, MatProgressSpinnerModule],
+  imports: [NgClass, MatProgressSpinnerModule, ReactiveFormsModule],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css',
 })
 export class LoginComponent implements OnInit {
-  email = '';
-  password = '';
-  firstName = '';
-  lastName = '';
-  dni = '';
-  user = '';
-  aqua = '#a7ebf3';
+  public errorCode = 0;
 
+  loginForm = new FormGroup({
+    email: new FormControl('', [Validators.required, Validators.email]),
+    password: new FormControl('', [
+      Validators.required,
+      Validators.minLength(4),
+    ]),
+  });
+
+  registerForm = new FormGroup(
+    {
+      email: new FormControl('', [Validators.required, Validators.email]),
+      password: new FormControl<string>('', [
+        Validators.required,
+        trimValidator(),
+        Validators.minLength(4),
+      ]),
+      confirmPassword: new FormControl('', [
+        Validators.required,
+        trimValidator(),
+        Validators.minLength(4),
+      ]),
+      firstName: new FormControl<string>('', [
+        Validators.required,
+        trimValidator(),
+      ]),
+      lastName: new FormControl('', [Validators.required, trimValidator()]),
+      dni: new FormControl('', [
+        Validators.required,
+        Validators.pattern(/^\d{7,8}$/),
+      ]),
+    },
+    { validators: passwordMatchValidator }
+  );
+
+  aqua = '#a7ebf3';
   isLoginVisible = true;
   isSpinnerVisible = false;
   public userSignal = this.authService.userSignal;
@@ -42,89 +80,68 @@ export class LoginComponent implements OnInit {
     }
   }
 
-  isFieldEmpty(fieldName: string): boolean {
-    return (this as any)[fieldName].length === 0;
+  showLabel(
+    control: AbstractControl<string | null, string | null> | null
+  ): 1 | 0 {
+    if (control?.value === null || control?.value.length === 0) return 1;
+    return 0;
   }
 
-  onSubmit(): void {
-    this.isSpinnerVisible = true;
-    if (this.isLoginVisible) {
-      if (this.email.trim() == '' || this.password.trim() == '') {
-        this.isSpinnerVisible = false;
-        return;
-      }
-      this.authService
-        .login({ email: this.email, password: this.password })
-        .subscribe({
-          next: () => {
-            this.isSpinnerVisible = false;
-            this.router.navigate(['/home']);
-          },
-          error: (error: any) => {
-            this.isSpinnerVisible = false;
+  login() {
+    const form = this.loginForm.value;
 
-            const httperror = error as HttpErrorResponse;
-            if (httperror.status == 401) {
-              //email o usuario incorrecto
-              //poner los controles en rojo?
+    const data: ILogin = { email: form.email!, password: form.password! };
 
-              if (
-                httperror.error.message == 'Email y/o contraseña incorrectos.'
-              ) {
-                document
-                  .getElementById('loginEmail')
-                  ?.classList.add(
-                    'is-invalid',
-                    'text-danger',
-                    'border-danger',
-                    'border'
-                  );
-                document
-                  .getElementById('loginPassword')
-                  ?.classList.add(
-                    'is-invalid',
-                    'text-danger',
-                    'border-danger',
-                    'border'
-                  );
-                this.snackbarService.showError(
-                  'Correo electrónico o contraseña incorrectos'
-                );
-              }
-            } else {
-              this.snackbarService.showError('Error al iniciar sesión');
-            }
-          },
-        });
-    } else {
-      if (
-        this.email.trim() == '' ||
-        this.password.trim() == '' ||
-        this.firstName.trim() == '' ||
-        this.lastName.trim() == '' ||
-        this.dni.trim() == ''
-      ) {
+    this.authService.login(data).subscribe({
+      next: () => {
         this.isSpinnerVisible = false;
-        return;
-      }
-      this.authService
-        .register({
-          email: this.email,
-          password: this.password,
-          firstName: this.firstName,
-          lastName: this.lastName,
-          dni: Number.parseInt(this.dni),
-        })
-        .subscribe({
-          next: () => {
-            this.router.navigate(['/home']);
-          },
-          error: (error: any) => {
-            //TODO mostrar si el error se debe a que ya se usó el correo
-            this.snackbarService.showError('Error al crear usuario');
-          },
-        });
-    }
+        this.router.navigate(['/home']);
+      },
+      error: (err: HttpErrorResponse) => {
+        this.isSpinnerVisible = false;
+
+        if (err.status === 401) {
+          //email y/o contraseña incorrectos
+          this.errorCode = 401;
+
+          this.snackbarService.showError(
+            'Correo electrónico y/o contraseña incorrectos.'
+          );
+        } else {
+          this.snackbarService.showError('Error al iniciar sesión.');
+        }
+      },
+    });
+  }
+
+  register() {
+    const form = this.registerForm.value;
+
+    const data: IUserCreate = {
+      email: form.email!,
+      password: form.password!,
+      firstName: form.firstName!,
+      lastName: form.lastName!,
+      dni: form.dni!,
+    };
+
+    this.authService.register(data).subscribe({
+      next: () => {
+        this.router.navigate(['/home']);
+      },
+      error: (err: HttpErrorResponse) => {
+        if (err.error.isUserFriendly)
+          this.snackbarService.showError(err.error.message);
+        else this.snackbarService.showError('Error al registrarse.');
+      },
+    });
+  }
+
+  toggleView() {
+    if (this.isLoginVisible) this.loginForm.reset();
+    else this.registerForm.reset();
+
+    this.isLoginVisible = !this.isLoginVisible;
   }
 
   scrollTop() {
@@ -133,5 +150,38 @@ export class LoginComponent implements OnInit {
       left: 0,
       behavior: 'smooth',
     });
+  }
+
+  // Getters para FormControls
+  get loginEmail() {
+    return this.loginForm.get('email');
+  }
+
+  get loginPassword() {
+    return this.loginForm.get('password');
+  }
+
+  get registerFirstName() {
+    return this.registerForm.get('firstName');
+  }
+
+  get registerLastName() {
+    return this.registerForm.get('lastName');
+  }
+
+  get registerDni() {
+    return this.registerForm.get('dni');
+  }
+
+  get registerEmail() {
+    return this.registerForm.get('email');
+  }
+
+  get registerPassword() {
+    return this.registerForm.get('password');
+  }
+
+  get registerConfirmPassword() {
+    return this.registerForm.get('confirmPassword');
   }
 }
