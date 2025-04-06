@@ -249,6 +249,7 @@
   flex-direction: column;
   gap: 10px;
   max-height: 80%;
+  word-wrap: break-word;
 }
 
 .contact-list {
