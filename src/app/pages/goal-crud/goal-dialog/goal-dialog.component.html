@@ -1,9 +1,9 @@
-<div class="container">
+<div class="dialog-container">
   <div class="dialog-title">
     <h2 mat-dialog-title>
       {{ title }}
     </h2>
-    <button 
+    <button
       type="button"
       class="btn-close"
       title="Cerrar ventana"
@@ -13,10 +13,14 @@
 
   <form [formGroup]="form" (ngSubmit)="onSubmit()">
     <mat-dialog-content class="common-dialog">
-
       <mat-form-field>
         <mat-label for="fatPercentage">Porcentaje graso</mat-label>
-        <input matInput type="number" formControlName="fatPercentage" id="fatPercentage"/>
+        <input
+          matInput
+          type="number"
+          formControlName="fatPercentage"
+          id="fatPercentage"
+        />
         <mat-error *ngIf="form.get('fatPercentage')?.invalid">
           Debe ser un número entre 0 y 100.
         </mat-error>
@@ -24,22 +28,35 @@
 
       <mat-form-field>
         <mat-label for="bodyMeasurements">Medidas corporales</mat-label>
-        <input matInput type="text" formControlName="bodyMeasurements" id="bodyMeasurements"/>
+        <textarea
+          matInput
+          formControlName="bodyMeasurements"
+          id="bodyMeasurements"
+          name=""
+        ></textarea>
         <mat-error *ngIf="form.get('bodyMeasurements')?.invalid">
-          Medidas son requeridas.
+          Las medidas son requeridas.
         </mat-error>
       </mat-form-field>
 
-      
-      <input type="hidden" formControlName="client"/>
-
+      <input type="hidden" formControlName="client" />
     </mat-dialog-content>
 
     <mat-dialog-actions class="common-dialog">
-      <button mat-button type="submit" class="btn btn-primary btn-success" [disabled]="!form.valid">
+      <button
+        mat-button
+        type="submit"
+        class="btn btn-primary btn-success"
+        [disabled]="!form.valid"
+      >
         Guardar
       </button>
-      <button mat-button type="button" class="btn-secondary" (click)="closeDialog('none')">
+      <button
+        mat-button
+        type="button"
+        class="btn-secondary"
+        (click)="closeDialog('none')"
+      >
         Cancelar
       </button>
     </mat-dialog-actions>

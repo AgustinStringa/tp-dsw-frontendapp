@@ -62,6 +62,7 @@ export class ProgressDialogComponent {
   client: IUser;
   progressId: string | undefined;
   public form: FormGroup;
+  public today: Date = new Date();
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: DialogData,

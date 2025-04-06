@@ -14,43 +14,44 @@
 
   @if (progresses !== null && progresses.length > 0) {
   <h3>Administra tus progresos</h3>
-  <table>
-    <thead>
-      <tr>
-        <th>Fecha</th>
-        <th>Peso</th>
-        <th>Porcentaje graso</th>
-        <th>Medidas corporales</th>
-        <th>Acciones</th>
-      </tr>
-    </thead>
+  <div class="table-container">
+    <table>
+      <thead>
+        <tr>
+          <th>Fecha</th>
+          <th>Peso</th>
+          <th>Porcentaje graso</th>
+          <th>Medidas corporales</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
 
-    <tbody>
-      @for (p of progresses; track p) {
-      <tr>
-        <td>{{ p.date | date : 'dd/MM/yyyy' }}</td>
-        <td>{{ p.weight }} kg</td>
-        <td>{{ p.fatPercentage }}%</td>
-        <td>{{ p.bodyMeasurements }}</td>
-        <td class="td-actions">
-          <button
-            (click)="deleteProgress(p.id)"
-            aria-label="Example icon button with a delete icon"
-          >
-            <mat-icon>delete</mat-icon>
-          </button>
-          <button
-            (click)="updateProgress(p)"
-            aria-label="Example icon button with a delete icon"
-          >
-            <mat-icon>edit</mat-icon>
-          </button>
-        </td>
-      </tr>
-      }
-    </tbody>
-  </table>
-
+      <tbody>
+        @for (p of progresses; track p) {
+        <tr>
+          <td>{{ p.date | date : 'dd/MM/yyyy' }}</td>
+          <td>{{ p.weight }} kg</td>
+          <td>{{ p.fatPercentage }}%</td>
+          <td>{{ p.bodyMeasurements }}</td>
+          <td class="td-actions">
+            <button
+              (click)="deleteProgress(p.id)"
+              aria-label="Example icon button with a delete icon"
+            >
+              <mat-icon>delete</mat-icon>
+            </button>
+            <button
+              (click)="updateProgress(p)"
+              aria-label="Example icon button with a delete icon"
+            >
+              <mat-icon>edit</mat-icon>
+            </button>
+          </td>
+        </tr>
+        }
+      </tbody>
+    </table>
+  </div>
   <app-progress-chart [progresses]="this.progresses"></app-progress-chart>
   } @else if (progresses !== null && progresses.length === 0) {
   <div class="alert alert-warning fs-6" role="alert">
