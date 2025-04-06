@@ -7,21 +7,136 @@
   background-color: rgba(0, 0, 0, 0.8);
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: flex-start;
   z-index: 1000;
+  padding: 20px;
+  box-sizing: border-box;
+  overflow-y: auto;
 }
 
 .popup-content {
-  min-height: 40%; /*TODO acomodar a mobile*/
-  width: 60%;
+  width: 100%;
+  max-width: 420px;
   background-color: white;
-  padding: 20px;
+  padding: 15px;
   border-radius: 8px;
   text-align: center;
+  margin: 20px 0;
 }
 
-#close-btn {
-  margin-top: 20px;
-  padding: 10px 20px;
+.title-div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.crud-page-title {
+  font-size: 1.5rem;
+  margin-bottom: 15px;
+}
+
+.add-payment-btn {
+  margin-bottom: 15px;
+  width: 100%;
+}
+
+.add-payment-btn .btn {
+  width: 100%;
+  padding: 10px;
+  font-size: 1rem;
+}
+
+.table-container {
+  width: 100%;
+  overflow-x: auto;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th {
+  display: none;
+}
+
+td {
+  display: block;
+  text-align: right;
+  padding: 10px;
+  border-bottom: 1px solid #ddd;
+  position: relative;
+}
+
+td:before {
+  content: attr(data-label);
+  position: absolute;
+  left: 10px;
+  font-weight: bold;
+  text-align: left;
+}
+
+.td-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.action-btn {
+  background: none;
+  border: none;
+  padding: 5px;
   cursor: pointer;
+}
+
+.action-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+
+@media (min-width: 768px) {
+  .popup-content {
+    width: 80%;
+    max-width: 800px;
+    padding: 20px;
+  }
+
+  th {
+    display: table-cell;
+    text-align: left;
+    padding: 10px;
+    background-color: #f8f9fa;
+  }
+
+  td {
+    display: table-cell;
+    text-align: left;
+  }
+
+  td:before {
+    display: none;
+  }
+
+  .title-div {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .add-payment-btn {
+    width: auto;
+    margin-bottom: 0;
+  }
+
+  .add-payment-btn .btn {
+    width: auto;
+  }
+
+  .td-actions {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    }
 }

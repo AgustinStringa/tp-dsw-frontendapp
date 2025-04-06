@@ -29,7 +29,7 @@
         <tr>
           <td>{{ mt.name }}</td>
           <td>{{ mt.description }}</td>
-          <td>${{ mt.price }}</td>
+          <td>${{ mt.price.toLocaleString("es-ES") }}</td>
           <td class="td-actions">
             <button
               (click)="deleteMembershipType(mt.id)"

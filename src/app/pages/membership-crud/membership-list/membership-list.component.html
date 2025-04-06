@@ -38,7 +38,7 @@
           <td>{{ m.dateTo | date : 'dd/MM/yyyy' }}</td>
           <td>{{ m.type.name }}</td>
           <td>{{ m.client.firstName + ' ' + m.client.lastName }}</td>
-          <td>{{ m.debt }}</td>
+          <td>{{ m.debt?.toLocaleString("es-ES") }}</td>
 
           <td class="td-actions">
             <button
