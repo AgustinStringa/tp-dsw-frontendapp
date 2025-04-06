@@ -4,7 +4,7 @@ import {
   withInterceptorsFromDi,
 } from '@angular/common/http';
 import { ApplicationConfig } from '@angular/core';
-import { AuthInterceptor } from './interceptors/auth.interceptor.js';
+import { AuthInterceptor } from './core/interceptors/auth.interceptor';
 import { provideAnimations } from '@angular/platform-browser/animations';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { provideRouter } from '@angular/router';

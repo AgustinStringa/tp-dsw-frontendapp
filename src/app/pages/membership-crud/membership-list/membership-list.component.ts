@@ -96,4 +96,9 @@ export class MembershipListComponent {
       this.getActiveMemberships();
     });
   }
+
+  hidePaymentList(event: boolean) {
+    this.showPayments = event;
+    this.getActiveMemberships();
+  }
 }

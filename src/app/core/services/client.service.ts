@@ -7,6 +7,11 @@ import { IUser } from '../interfaces/user.interface';
 import { IUserCreate } from './trainer.service';
 import { Observable } from 'rxjs';
 
+export interface IClientSelfUpdate {
+  email: string;
+  password?: string;
+}
+
 @Injectable({
   providedIn: 'root',
 })
@@ -29,6 +34,16 @@ export class ClientService implements ICrudService<IUser, IUserCreate> {
 
   update(id: string, client: IUserCreate): Observable<ApiResponse<IUser>> {
     return this.http.put<ApiResponse<IUser>>(`${this.url}/${id}`, client);
+  }
+
+  selfUpdate(
+    id: string,
+    client: IClientSelfUpdate
+  ): Observable<ApiResponse<IUser>> {
+    return this.http.patch<ApiResponse<IUser>>(
+      `${this.url}/self-update/${id}`,
+      client
+    );
   }
 
   delete(id: string): Observable<ApiResponse<IUser>> {

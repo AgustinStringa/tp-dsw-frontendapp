@@ -18,10 +18,8 @@ export interface IClientHomeInformation {
 export class HomeService {
   constructor(private http: HttpClient) {}
 
-  getInformationForClient(
-    id: string
-  ): Observable<ApiResponse<IClientHomeInformation>> {
-    const url = `${environment.clientsUrl}/${id}/home`;
-    return this.http.get<ApiResponse<IClientHomeInformation>>(`${url}/${id}`);
+  getInformationForClient(): Observable<ApiResponse<IClientHomeInformation>> {
+    const url = `${environment.clientsUrl}/home`;
+    return this.http.get<ApiResponse<IClientHomeInformation>>(`${url}`);
   }
 }

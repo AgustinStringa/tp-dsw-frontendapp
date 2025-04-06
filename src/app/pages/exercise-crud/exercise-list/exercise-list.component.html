@@ -31,14 +31,10 @@
           <td>{{ e.name }}</td>
           <td>{{ e.description }}</td>
           <td>
-            @if (e.urlVideo !== null && e.urlVideo !== ""){
+            @if (e.urlVideo !== ""){
             <a href="{{ e.urlVideo }}" target="_blank">Enlace al video</a>
             } @else {
-            <a
-              class="no-video"
-              (click)="this.snackbarService.showError('No existe ningún video')"
-              >Sin video</a
-            >
+            <p class="no-video">Sin video</p>
             }
           </td>
           <td class="td-actions">

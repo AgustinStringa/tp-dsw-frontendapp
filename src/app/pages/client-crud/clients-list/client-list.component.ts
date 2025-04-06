@@ -8,7 +8,6 @@ import { ClientService } from '../../../core/services/client.service';
 import { ComponentType } from '@angular/cdk/portal';
 import { CustomPaginatorIntl } from '../../../core/classes/custom-paginator-intl';
 import { DeleteDialogComponent } from '../../../shared/delete-dialog/delete-dialog.component';
-import { environment } from '../../../../environments/environment';
 import { FormsModule } from '@angular/forms';
 import { IUser } from '../../../core/interfaces/user.interface';
 import { MatDialog } from '@angular/material/dialog';
@@ -44,7 +43,7 @@ export class ClientListComponent {
       data: {
         title: 'Nuevo Cliente',
         action: 'post',
-        url: environment.clientsUrl,
+        crudService: this.clientService,
       },
     });
   }
@@ -55,7 +54,7 @@ export class ClientListComponent {
         title: 'Modificar Cliente',
         action: 'put',
         user: client,
-        url: environment.clientsUrl,
+        crudService: this.clientService,
       },
     });
   }
