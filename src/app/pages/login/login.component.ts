@@ -11,6 +11,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { IUserCreate } from '../../core/services/trainer.service';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { NgClass } from '@angular/common';
+import { passwordMatchValidator } from '../../core/functions/password-match.validator';
 import { Router } from '@angular/router';
 import { SnackbarService } from '../../core/services/snackbar.service';
 import { trimValidator } from '../../core/functions/trim-validator';
@@ -23,6 +24,8 @@ import { trimValidator } from '../../core/functions/trim-validator';
   styleUrl: './login.component.css',
 })
 export class LoginComponent implements OnInit {
+  public errorCode = 0;
+
   loginForm = new FormGroup({
     email: new FormControl('', [Validators.required, Validators.email]),
     password: new FormControl('', [
@@ -31,24 +34,31 @@ export class LoginComponent implements OnInit {
     ]),
   });
 
-  registerForm = new FormGroup({
-    email: new FormControl('', [Validators.required, Validators.email]),
-    password: new FormControl<string>('', [
-      Validators.required,
-      trimValidator(),
-      Validators.minLength(4),
-    ]),
-    //TODO 2 veces password
-    firstName: new FormControl<string>('', [
-      Validators.required,
-      trimValidator(),
-    ]),
-    lastName: new FormControl('', [Validators.required, trimValidator()]),
-    dni: new FormControl('', [
-      Validators.required,
-      Validators.pattern(/^\d{7,8}$/),
-    ]),
-  });
+  registerForm = new FormGroup(
+    {
+      email: new FormControl('', [Validators.required, Validators.email]),
+      password: new FormControl<string>('', [
+        Validators.required,
+        trimValidator(),
+        Validators.minLength(4),
+      ]),
+      confirmPassword: new FormControl('', [
+        Validators.required,
+        trimValidator(),
+        Validators.minLength(4),
+      ]),
+      firstName: new FormControl<string>('', [
+        Validators.required,
+        trimValidator(),
+      ]),
+      lastName: new FormControl('', [Validators.required, trimValidator()]),
+      dni: new FormControl('', [
+        Validators.required,
+        Validators.pattern(/^\d{7,8}$/),
+      ]),
+    },
+    { validators: passwordMatchValidator }
+  );
 
   aqua = '#a7ebf3';
   isLoginVisible = true;
@@ -87,37 +97,18 @@ export class LoginComponent implements OnInit {
         this.isSpinnerVisible = false;
         this.router.navigate(['/home']);
       },
-      error: (error: HttpErrorResponse) => {
+      error: (err: HttpErrorResponse) => {
         this.isSpinnerVisible = false;
 
-        const httperror = error as HttpErrorResponse;
-        if (httperror.status == 401) {
-          //email o usuario incorrecto
-          //poner los controles en rojo?
+        if (err.status === 401) {
+          //email y/o contraseña incorrectos
+          this.errorCode = 401;
 
-          if (httperror.error.message == 'Email y/o contraseña incorrectos.') {
-            document
-              .getElementById('loginEmail')
-              ?.classList.add(
-                'is-invalid',
-                'text-danger',
-                'border-danger',
-                'border'
-              );
-            document
-              .getElementById('loginPassword')
-              ?.classList.add(
-                'is-invalid',
-                'text-danger',
-                'border-danger',
-                'border'
-              );
-            this.snackbarService.showError(
-              'Correo electrónico o contraseña incorrectos'
-            );
-          }
+          this.snackbarService.showError(
+            'Correo electrónico y/o contraseña incorrectos.'
+          );
         } else {
-          this.snackbarService.showError('Error al iniciar sesión');
+          this.snackbarService.showError('Error al iniciar sesión.');
         }
       },
     });
@@ -188,5 +179,9 @@ export class LoginComponent implements OnInit {
 
   get registerPassword() {
     return this.registerForm.get('password');
+  }
+
+  get registerConfirmPassword() {
+    return this.registerForm.get('confirmPassword');
   }
 }

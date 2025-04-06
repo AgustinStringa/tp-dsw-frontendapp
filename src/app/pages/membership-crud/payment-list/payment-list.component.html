@@ -17,46 +17,48 @@
         }
       </div>
 
-      <table>
-        <thead>
-          <tr>
-            <th>Fecha y hora</th>
-            <th>Método de pago</th>
-            <th>Monto</th>
-            <th>Acciones</th>
-          </tr>
-        </thead>
+      <div class="table-container">
+        <table>
+          <thead>
+            <tr>
+              <th>Fecha y hora</th>
+              <th>Método de pago</th>
+              <th>Monto</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
 
-        <tbody>
-          @for (p of payments; track p) {
-          <tr>
-            <td>{{ p.dateTime | date : 'dd/MM/yyyy hh:mm' }}</td>
-            <td>{{ p.paymentMethod }}</td>
-            <td>{{ p.amount }}</td>
+          <tbody>
+            @for (p of payments; track p) {
+            <tr>
+              <td>{{ p.dateTime | date : 'dd/MM/yyyy hh:mm' }}</td>
+              <td>{{ p.paymentMethod }}</td>
+              <td>{{ p.amount }}</td>
 
-            <td class="td-actions">
-              <button
-                [disabled]="isPaymentEditable(p)"
-                (click)="deletePayment(p.id)"
-                aria-label="Example icon button with a delete icon"
-              >
-                <mat-icon>delete</mat-icon>
-              </button>
+              <td class="td-actions">
+                <button
+                  [disabled]="isPaymentEditable(p)"
+                  (click)="deletePayment(p.id)"
+                  aria-label="Example icon button with a delete icon"
+                >
+                  <mat-icon>delete</mat-icon>
+                </button>
 
-              <button
-                [disabled]="isPaymentEditable(p)"
-                (click)="updatePayment(p)"
-                aria-label="Example icon button with an edit icon"
-              >
-                <mat-icon>edit</mat-icon>
-              </button>
-            </td>
-          </tr>
-          }
-        </tbody>
-      </table>
+                <button
+                  [disabled]="isPaymentEditable(p)"
+                  (click)="updatePayment(p)"
+                  aria-label="Example icon button with an edit icon"
+                >
+                  <mat-icon>edit</mat-icon>
+                </button>
+              </td>
+            </tr>
+            }
+          </tbody>
+        </table>
+      </div>
 
-      <button (click)="closeComponent()">Volver</button>
+      <button id="close-btn" (click)="closeComponent()">Volver</button>
     </div>
   </div>
 </div>

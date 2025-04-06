@@ -49,7 +49,6 @@ export class DeleteDialogComponent {
   }
 
   onSubmit(): void {
-    console.log(this.id);
     this.service.delete(this.id).subscribe({
       next: () => {
         this.dialogRef.close('deleted');
