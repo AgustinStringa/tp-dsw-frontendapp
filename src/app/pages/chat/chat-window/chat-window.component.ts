@@ -16,7 +16,7 @@ import IMessage from '../../../core/interfaces/IMessage.interface.js';
 import { IUser } from '../../../core/interfaces/user.interface.js';
 import { MessageService } from '../../../core/services/message.service.js';
 import { SocketService } from '../../../core/services/socket.service.js';
-import { SoundUtils } from '../../../core/functions/playSound.js';
+import { SoundUtils } from '../../../core/functions/play-sound.js';
 
 @Component({
   selector: 'app-chat-window',
