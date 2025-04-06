@@ -41,6 +41,11 @@
                   id="loginEmail"
                   class="form-control"
                   name="email"
+                  [ngClass]="
+                    errorCode === 401
+                      ? 'is-invalid text-danger border-danger border'
+                      : ''
+                  "
                 />
                 <label
                   class="form-label"
@@ -72,6 +77,11 @@
                   id="loginPassword"
                   class="form-control"
                   name="password"
+                  [ngClass]="
+                    errorCode === 401
+                      ? 'is-invalid text-danger border-danger border'
+                      : ''
+                  "
                 />
                 <label
                   class="form-label"
@@ -122,6 +132,7 @@
           <div
             id="signup"
             [ngClass]="{ 'col-0': isLoginVisible, active: !isLoginVisible }"
+            [style.padding]="!isLoginVisible ? '' : '0 !important'"
             class="card-body p-5 shadow-5 text-center"
           >
             <h2 class="fw-bold mb-5">Regístrate ahora!</h2>
@@ -190,36 +201,38 @@
                 </div>
               </div>
 
-              <div data-mdb-input-init class="form-outline mb-4">
-                <input
-                  formControlName="email"
-                  type="email"
-                  id="signupEmail"
-                  class="form-control"
-                  name="email"
-                />
-                <label
-                  class="form-label"
-                  for="signupEmail"
-                  [style.opacity]="showLabel(registerEmail)"
-                  >Correo electrónico</label
-                >
-                @if (registerEmail?.invalid && registerEmail?.touched) {
-                <div class="error-container">
-                  @if (registerEmail?.errors?.['required']){
-                  <div class="error-message">
-                    Ingrese su correo electrónico.
-                  </div>
-                  } @else if (registerEmail?.errors?.['email']){
-                  <div class="error-message">
-                    El correo electrónico no tiene un formato válido.
-                  </div>
-                  }
-                </div>
-                }
-              </div>
-
               <div class="row">
+                <div class="col-md-6 mb-4">
+                  <div data-mdb-input-init class="form-outline">
+                    <input
+                      formControlName="email"
+                      type="email"
+                      id="signupEmail"
+                      class="form-control"
+                      name="email"
+                    />
+                    <label
+                      class="form-label"
+                      for="signupEmail"
+                      [style.opacity]="showLabel(registerEmail)"
+                      >Correo electrónico</label
+                    >
+                    @if (registerEmail?.invalid && registerEmail?.touched) {
+                    <div class="error-container">
+                      @if (registerEmail?.errors?.['required']){
+                      <div class="error-message">
+                        Ingrese su correo electrónico.
+                      </div>
+                      } @else if (registerEmail?.errors?.['email']){
+                      <div class="error-message">
+                        El correo electrónico no tiene un formato válido.
+                      </div>
+                      }
+                    </div>
+                    }
+                  </div>
+                </div>
+
                 <div class="col-md-6 mb-4">
                   <div data-mdb-input-init class="form-outline">
                     <input
@@ -254,7 +267,9 @@
                     }
                   </div>
                 </div>
+              </div>
 
+              <div class="row">
                 <div class="col-md-6 mb-4">
                   <div data-mdb-input-init class="form-outline">
                     <input
@@ -275,17 +290,69 @@
                     @if (registerPassword?.invalid && registerPassword?.touched)
                     {
                     <div class="error-container">
-                      @if (registerPassword?.errors?.['required']){
+                      @if (registerPassword?.hasError('required')){
                       <div class="error-message">Ingrese su contraseña.</div>
 
-                      } @else if (registerPassword?.errors?.['trimError']){
+                      } @else if (registerPassword?.hasError('trimError')){
                       <div class="error-message">
                         Ingrese una contraseña válida.
                       </div>
 
-                      } @else if (registerPassword?.errors?.['minlength']){
+                      } @else if (registerPassword?.hasError('minlength')){
                       <div class="error-message">
                         Su contraseña debe tener al menos 4 caracteres.
+                      </div>
+
+                      } @else if
+                      (registerPassword?.hasError('passwordsDoNotMatch')) {
+                      <div class="error-message">
+                        Las contraseñas no coinciden.
+                      </div>
+                      }
+                    </div>
+                    }
+                  </div>
+                </div>
+                <div class="col-md-6 mb-4">
+                  <div data-mdb-input-init class="form-outline">
+                    <input
+                      formControlName="confirmPassword"
+                      type="password"
+                      id="signupConfirmPassword"
+                      class="form-control"
+                      name="confirm-password"
+                      required
+                    />
+                    <label
+                      class="form-label"
+                      for="signupConfirmPassword"
+                      [style.opacity]="showLabel(registerConfirmPassword)"
+                      >Contraseña</label
+                    >
+
+                    @if (registerConfirmPassword?.invalid &&
+                    registerConfirmPassword?.touched) {
+                    <div class="error-container">
+                      @if (registerConfirmPassword?.hasError('required')){
+                      <div class="error-message">Repita su contraseña.</div>
+
+                      } @else if
+                      (registerConfirmPassword?.hasError('trimError')){
+                      <div class="error-message">
+                        Ingrese una contraseña válida.
+                      </div>
+
+                      } @else if
+                      (registerConfirmPassword?.hasError('minlength')){
+                      <div class="error-message">
+                        Su contraseña debe tener al menos 4 caracteres.
+                      </div>
+
+                      } @else if
+                      (registerConfirmPassword?.hasError('passwordsDoNotMatch'))
+                      {
+                      <div class="error-message">
+                        Las contraseñas no coinciden.
                       </div>
                       }
                     </div>

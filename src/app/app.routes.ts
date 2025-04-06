@@ -1,8 +1,8 @@
-import { authGuard } from './guards/auth.guard.js';
+import { authGuard } from './core/guards/auth.guard.js';
 import { ClassListComponent } from './pages/class-crud/class-list/class-list.component.js';
 import { ClassListComponent as ClassListComponentForClient } from './pages/class-registration/class-list/class-list.component.js';
 import { ClassTypeListComponent } from './pages/class-type-crud/class-type-list/class-type-list.component.js';
-import { clientGuard } from './guards/client.guard.js';
+import { clientGuard } from './core/guards/client.guard.js';
 import { ClientListComponent } from './pages/client-crud/clients-list/client-list.component.js';
 import { CreateRoutinePageComponent } from './pages/create-routine/create-routine-page/create-routine-page.component.js';
 import { DailyRoutineComponent } from './pages/record-exercise-execution/daily-routine/daily-routine.component.js';
@@ -13,7 +13,7 @@ import { MembershipListComponent } from './pages/membership-crud/membership-list
 import { MembershipTypeListComponent } from './pages/membership-type-crud/membership-type-list/membership-type-list.component.js';
 import { Routes } from '@angular/router';
 import { ShowClientRoutineComponent } from './pages/show-client-routine/show-client-routine.component.js';
-import { trainerGuard } from './guards/trainer.guard.js';
+import { trainerGuard } from './core/guards/trainer.guard.js';
 import { TrainerListComponent } from './pages/trainer-crud/trainer-list/trainer-list.component.js';
 
 export const routes: Routes = [

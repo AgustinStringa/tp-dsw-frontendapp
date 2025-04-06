@@ -31,6 +31,10 @@
       <mat-form-field>
         <mat-label for="dni">DNI</mat-label>
         <input type="number" formControlName="dni" id="dni" matInput />
+
+        @if (dni?.hasError('pattern')) {
+        <mat-error>El DNI debe tener 7 u 8 dígitos.</mat-error>
+        }
       </mat-form-field>
 
       <mat-form-field>
@@ -47,6 +51,31 @@
           matInput
           [placeholder]="userId ? 'Sin modificar' : ''"
         />
+
+        @if (password?.hasError('minlength')) {
+        <mat-error>La contraseña debe tener al menos 4 caracteres.</mat-error>
+
+        } @else if (formControl.hasError('passwordsDoNotMatch')) {
+        <mat-error>Las contraseñas no coinciden.</mat-error>
+        }
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label for="confirm-password">Repetir contraseña</mat-label>
+        <input
+          type="password"
+          formControlName="confirmPassword"
+          id="confirm-password"
+          matInput
+          [placeholder]="userId ? 'Sin modificar' : ''"
+        />
+
+        @if (confirmPassword?.hasError('minlength')) {
+        <mat-error>La contraseña debe tener al menos 4 caracteres.</mat-error>
+
+        } @else if (formControl.hasError('passwordsDoNotMatch')) {
+        <mat-error>Las contraseñas no coinciden.</mat-error>
+        }
       </mat-form-field>
     </mat-dialog-content>
 

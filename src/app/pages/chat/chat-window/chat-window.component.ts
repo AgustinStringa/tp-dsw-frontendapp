@@ -14,7 +14,7 @@ import { IUser } from '../../../core/interfaces/user.interface.js';
 import { MessageService } from '../../../core/services/message.service.js';
 import { SnackbarService } from '../../../core/services/snackbar.service.js';
 import { SocketService } from '../../../core/services/socket.service.js';
-import { SoundUtils } from '../../../core/functions/playSound.js';
+import { SoundUtils } from '../../../core/functions/play-sound.js';
 
 @Component({
   selector: 'app-chat-window',

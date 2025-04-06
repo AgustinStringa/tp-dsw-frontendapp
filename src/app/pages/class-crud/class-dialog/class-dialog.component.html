@@ -51,6 +51,10 @@
           formControlName="maxCapacity"
           id="maxCapacity"
         />
+
+        @if (maxCapacity?.hasError('min')) {
+        <mat-error>Debe ser mayor o igual a 1.</mat-error>
+        }
       </mat-form-field>
 
       <mat-form-field>
@@ -73,7 +77,7 @@
       <mat-select formControlName="trainer" id="trainer">
         @for (t of trainers; track t) {
         <mat-option value="{{ t.id }}">{{
-          t.firstName + " " + t.lastName
+          t.firstName + ' ' + t.lastName
         }}</mat-option>
         }
       </mat-select>

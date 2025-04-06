@@ -59,7 +59,11 @@ export class PaymentDialogComponent {
   paymentMethods = Object.values(PaymentMethodEnum);
 
   form = new FormGroup({
-    amount: new FormControl('', [Validators.required]),
+    amount: new FormControl('', [
+      Validators.required,
+      Validators.min(0.01),
+      Validators.pattern(/^\d+(\.\d{1,2})?$/),
+    ]),
     paymentMethod: new FormControl('', [Validators.required]),
   });
 
@@ -97,7 +101,9 @@ export class PaymentDialogComponent {
           this.closeDialog('created');
         },
         error: (err) => {
-          this.snackbarService.showError(err.error.message);
+          if (err.error.isUserFriendly)
+            this.snackbarService.showError(err.error.message);
+          else this.snackbarService.showError('Error al registrar el pago.');
         },
       });
     } else if (this.action === 'put') {
@@ -106,7 +112,9 @@ export class PaymentDialogComponent {
           this.closeDialog('updated');
         },
         error: (err) => {
-          this.snackbarService.showError(err.error.message);
+          if (err.error.isUserFriendly)
+            this.snackbarService.showError(err.error.message);
+          else this.snackbarService.showError('Error al actualizar el pago.');
         },
       });
     }
@@ -114,5 +122,10 @@ export class PaymentDialogComponent {
 
   closeDialog(result: string) {
     this.dialogRef.close(result);
+  }
+
+  // Getters para FormControls
+  get amount() {
+    return this.form.get('amount');
   }
 }

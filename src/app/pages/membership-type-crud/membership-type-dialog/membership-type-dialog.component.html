@@ -24,11 +24,15 @@
           type="number"
           formControlName="price"
           id="price"
-          min="0.01"
           step="0.01"
-          pattern="^\d+(\.\d{1,2})?$"
           matInput
         />
+
+        @if (price?.hasError('min')) {
+        <mat-error>El valor mínimo es 0,01</mat-error>
+        } @else if (price?.hasError('pattern')) {
+        <mat-error>Solo se permiten 2 decimales.</mat-error>
+        }
       </mat-form-field>
 
       <mat-form-field>
