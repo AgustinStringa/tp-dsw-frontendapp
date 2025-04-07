@@ -1,8 +1,7 @@
-export default interface IMessage {
+export interface IMessage {
   content: string;
   sender: string;
   receiver: string;
-  createdAt: Date;
-  entity?: 'client' | 'trainer';
-  readAt?: Date | undefined;
+  createdAt?: Date;
+  readAt?: Date;
 }

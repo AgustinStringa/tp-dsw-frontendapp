@@ -1,7 +1,7 @@
 import { ApiResponse } from '../interfaces/api-response.interface.js';
 import { environment } from '../../../environments/environment.js';
 import { HttpClient } from '@angular/common/http';
-import IMessage from '../interfaces/IMessage.interface.js';
+import { IMessage } from '../interfaces/IMessage.interface.js';
 import { Injectable } from '@angular/core';
 import { IUser } from '../interfaces/user.interface.js';
 import { Observable } from 'rxjs';
