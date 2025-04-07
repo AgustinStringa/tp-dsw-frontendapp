@@ -27,6 +27,7 @@ export class GoalListComponent {
   userId: string = '';
   client: IUser | undefined | null;
   achievedGoalsCount = 0;
+  proposedGoalsCount = 0;
 
   constructor(
     private dialog: MatDialog,
@@ -44,7 +45,8 @@ export class GoalListComponent {
   getClientGoals() {
     const userId = this.userSignal()?.id;
     if (!userId) return;
-
+    this.achievedGoalsCount = 0;
+    this.proposedGoalsCount = 0;
     this.goalService.getByClientId(userId).subscribe({
       next: (res) => {
         this.goals = res.data;
@@ -53,6 +55,7 @@ export class GoalListComponent {
             this.achievedGoalsCount += 1;
           }
         });
+        this.proposedGoalsCount = this.goals.length;
       },
       error: (err: HttpErrorResponse) => {
         this.goals = [];
@@ -99,6 +102,9 @@ export class GoalListComponent {
       clientId: this.client?.id!,
     };
     this.goalService.update(g.id, data).subscribe({
+      next: () => {
+        this.getClientGoals();
+      },
       error: (err: HttpErrorResponse) => {
         if (err.error.isUserFriendly) {
           this.snackbarService.showError(err.error.message);

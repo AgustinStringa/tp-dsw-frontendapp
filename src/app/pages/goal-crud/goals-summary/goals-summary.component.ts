@@ -1,4 +1,10 @@
-import { AfterViewInit, Component, Input } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  Input,
+  OnChanges,
+  SimpleChanges,
+} from '@angular/core';
 import {
   NgxAnimatedCounterModule,
   NgxAnimatedCounterParams,
@@ -11,8 +17,28 @@ import {
   templateUrl: './goals-summary.component.html',
   styleUrl: './goals-summary.component.css',
 })
-export class GoalsSummaryComponent implements AfterViewInit {
+export class GoalsSummaryComponent implements AfterViewInit, OnChanges {
   ngAfterViewInit(): void {
+    this.generateRenderingParams();
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    const { achievedGoals, proposedGoals } = changes;
+    const achievedGoalsChanged =
+      achievedGoals && achievedGoals.currentValue != achievedGoals;
+    const proposedGoalChanged =
+      proposedGoals && proposedGoals.currentValue != proposedGoals;
+    if (!achievedGoalsChanged && !proposedGoalChanged) return;
+    if (achievedGoalsChanged) {
+      this.achievedGoals = achievedGoals.currentValue;
+    }
+    if (proposedGoalChanged) {
+      this.proposedGoals = proposedGoals.currentValue;
+    }
+    this.generateRenderingParams();
+  }
+
+  generateRenderingParams() {
     this.achievedGoalsParams = {
       start: 0,
       end: this.achievedGoals,
@@ -26,6 +52,7 @@ export class GoalsSummaryComponent implements AfterViewInit {
       increment: 1,
     };
   }
+
   @Input() proposedGoals = 0;
   @Input() achievedGoals = 0;
 
