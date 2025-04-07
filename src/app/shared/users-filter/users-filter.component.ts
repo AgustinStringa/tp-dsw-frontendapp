@@ -27,8 +27,7 @@ export class UsersFilterComponent implements OnInit {
   filteredUsers: IUser[] | null = null;
 
   nameFilter = '';
-
-  constructor() {}
+  dniFilter = '';
 
   ngOnInit() {
     this.getUsers();
@@ -65,15 +64,23 @@ export class UsersFilterComponent implements OnInit {
         ) {
           return true;
         }
-
         return false;
       });
     }
+
+    if (this.dniFilter) {
+      const dniSearchTerm = this.dniFilter.toLowerCase();
+      this.filteredUsers = this.filteredUsers.filter((user) => {
+        return user.dni?.toLowerCase().includes(dniSearchTerm);
+      });
+    }
+
     this.sendFilteredUsers();
   }
 
   clearFilters() {
     this.nameFilter = '';
+    this.dniFilter = '';
     this.applyFilter();
   }
 

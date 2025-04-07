@@ -12,6 +12,8 @@
     </div>
   </div>
 
+  <app-users-filter (filteredUsersEvent)="receiveTrainers($event)" [crudService]="trainerService"></app-users-filter>
+
   @if (trainers !== null && trainers.length > 0) {
   <div class="table-container">
     <table>
@@ -51,6 +53,9 @@
       }
     </table>
   </div>
+  <mat-paginator [length]="trainers.length || 0" [pageSize]="pageSize" [pageSizeOptions]="[20, 50, 100]"
+    aria-label="Seleccionar página" (page)="handlePageEvent($event)">
+  </mat-paginator>
   } @else if (trainers !== null && trainers.length === 0){
   <div class="alert alert-warning fs-6" role="alert">
     No hay entrenadores cargados. Crea uno para comenzar.
