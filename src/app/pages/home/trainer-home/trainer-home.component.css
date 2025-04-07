@@ -1,0 +1,28 @@
+.summary-container {
+  margin: 1rem;
+  padding: 1rem;
+  font: initial;
+  font-family: roboto, sans-serif;
+  font-size: 2rem;
+  font-weight: bold;
+  text-align: center;
+  text-shadow: 2px 2px 2px rgba(0, 0, 0, 0.77);
+  gap: 3rem;
+  color: rgb(255, 255, 255);
+  border-radius: 0.5rem;
+  background: rgb(14, 43, 8);
+  background: linear-gradient(
+    90deg,
+    rgba(14, 43, 8, 1) 7%,
+    rgba(56, 121, 9, 1) 48%,
+    rgba(23, 205, 31, 1) 100%
+  );
+}
+
+.summary-title {
+  font-size: 1.5rem;
+}
+
+div {
+  margin: 0;
+}
