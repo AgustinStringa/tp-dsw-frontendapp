@@ -1,4 +1,4 @@
-import { SnackbarService } from '../core/services/snackbar.service';
+import { SnackbarService } from '../services/snackbar.service';
 import { TestBed } from '@angular/core/testing';
 
 describe('SnackbarService', () => {

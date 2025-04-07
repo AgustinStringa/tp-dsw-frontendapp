@@ -12,6 +12,11 @@
     </div>
   </div>
 
+  <app-membership-filter
+    [memberships]="this.memberships"
+    (filterMemberships)="onFilteredMemberships($event)"
+  ></app-membership-filter>
+
   @if (showPayments) {
   <app-payment-list
     [membership]="selectedMembership!"
@@ -32,7 +37,7 @@
       </thead>
 
       <tbody>
-        @for (m of memberships; track m) {
+        @for (m of filteredMemberships; track m) {
         <tr>
           <td>{{ m.dateFrom | date : 'dd/MM/yyyy' }}</td>
           <td>{{ m.dateTo | date : 'dd/MM/yyyy' }}</td>
