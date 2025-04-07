@@ -1,0 +1,12 @@
+.error-message {
+  position: static;
+  margin-top: -20px;
+  margin-bottom: 10px;
+  color: var(--mat-form-field-error-text-color);
+  -webkit-font-smoothing: antialiased;
+  font-family: var(--mat-form-field-subscript-text-font);
+  line-height: var(--mat-form-field-subscript-text-line-height);
+  font-size: var(--mat-form-field-subscript-text-size);
+  letter-spacing: var(--mat-form-field-subscript-text-tracking);
+  font-weight: var(--mat-form-field-subscript-text-weight);
+}
