@@ -119,15 +119,20 @@ export class ChatWindowComponent
   }
 
   async filterUsers() {
-    if (!this.search) {
-      this.filteredUsers = this.users ? [...this.users] : [];
-      return;
+    let usersToFilter = this.users ? [...this.users] : [];
+
+    if (this.search) {
+      usersToFilter = usersToFilter.filter((user) => {
+        const fullName = `${user.firstName} ${user.lastName}`.toLowerCase();
+        const searchTerm = this.search.toLowerCase();
+        return fullName.includes(searchTerm);
+      });
     }
 
-    this.filteredUsers = this.users.filter((user) => {
-      const fullName = `${user.firstName} ${user.lastName}`.toLowerCase();
-      const searchTerm = this.search.toLowerCase();
-      return fullName.includes(searchTerm);
+    this.filteredUsers = usersToFilter.sort((a, b) => {
+      const unreadA = this.unreadMessages[a.id] || 0;
+      const unreadB = this.unreadMessages[b.id] || 0;
+      return unreadB - unreadA;
     });
   }
 
