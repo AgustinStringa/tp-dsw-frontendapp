@@ -7,6 +7,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
 export interface IGoalCreate {
+  done: boolean;
   fatPercentage: number;
   bodyMeasurements: string;
   clientId: string;

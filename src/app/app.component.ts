@@ -1,4 +1,4 @@
-import { ChatWindowComponent } from './pages/chat/chat-window/chat-window.component.js';
+import { ChatWindowComponent } from './pages/chat/chat-window/chat-window.component';
 import { Component } from '@angular/core';
 import { FooterComponent } from './layout/footer/footer.component';
 import { MatButtonModule } from '@angular/material/button';
