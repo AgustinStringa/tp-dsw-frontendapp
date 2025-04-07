@@ -1,0 +1,93 @@
+<div class="dialog-container">
+  <div class="dialog-title">
+    <h2 mat-dialog-title>
+      {{ title }}
+    </h2>
+    <button
+      type="button"
+      class="btn-close"
+      title="Cerrar ventana"
+      (click)="closeDialog('none')"
+    ></button>
+  </div>
+
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <mat-dialog-content class="common-dialog">
+      <mat-form-field>
+        <mat-label for="date">Fecha</mat-label>
+        <input
+          matInput
+          [matDatepicker]="picker"
+          [max]="today"
+          placeholder="Elija una fecha"
+          formControlName="date"
+          id="date"
+        />
+        <mat-datepicker-toggle
+          matIconSuffix
+          [for]="picker"
+        ></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+        <mat-error *ngIf="form.get('date')?.invalid">
+          Fecha no debe ser posterior a hoy.
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label for="weight">Peso</mat-label>
+        <input matInput type="number" formControlName="weight" id="weight" />
+        <mat-error *ngIf="form.get('weight')?.invalid">
+          Peso es requerido.
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label for="fatPercentage">Porcentaje graso</mat-label>
+        <input
+          matInput
+          type="number"
+          formControlName="fatPercentage"
+          id="fatPercentage"
+        />
+        <mat-error *ngIf="form.get('fatPercentage')?.invalid">
+          Debe ser un número entre 0 y 100.
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label for="bodyMeasurements">Medidas corporales</mat-label>
+        <textarea
+          matInput
+          name=""
+          id=""
+          formControlName="bodyMeasurements"
+          id="bodyMeasurements"
+        ></textarea>
+        <mat-error *ngIf="form.get('bodyMeasurements')?.invalid">
+          Medidas son requeridas.
+        </mat-error>
+      </mat-form-field>
+
+      <input type="hidden" formControlName="client" />
+    </mat-dialog-content>
+
+    <mat-dialog-actions class="common-dialog">
+      <button
+        mat-button
+        type="submit"
+        class="btn btn-success"
+        [disabled]="!form.valid"
+      >
+        Guardar
+      </button>
+      <button
+        mat-button
+        type="button"
+        class="btn-secondary"
+        (click)="closeDialog('none')"
+      >
+        Cancelar
+      </button>
+    </mat-dialog-actions>
+  </form>
+</div>
