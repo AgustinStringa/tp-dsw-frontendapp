@@ -12,6 +12,18 @@
       </button>
     </div>
   </div>
+  <div class="filter-container">
+    <label for="nameFilter">Filtrar por nombre:</label>
+    <input type="text" id="nameFilter" [(ngModel)]="nameFilter" (ngModelChange)="applyFilter()"
+      placeholder="Buscar ejercicio...">
+  
+    <label for="descriptionFilter">Filtrar por descripción:</label>
+    <input type="text" id="descriptionFilter" [(ngModel)]="descriptionFilter" (ngModelChange)="applyFilter()"
+      placeholder="Buscar en descripción...">
+
+  
+    <button class="btn" (click)="clearFilters()">Limpiar filtros</button>
+  </div>
 
   @if (exercises !== null && exercises.length > 0) {
   <div class="table-container">
@@ -26,7 +38,7 @@
       </thead>
 
       <tbody>
-        @for (e of exercises; track e) {
+        @for (e of filteredExercises; track e) {
         <tr>
           <td>{{ e.name }}</td>
           <td>{{ e.description }}</td>

@@ -3,6 +3,7 @@ import { ComponentType } from '@angular/cdk/portal';
 import { DeleteDialogComponent } from '../../../shared/delete-dialog/delete-dialog.component';
 import { ExerciseDialogComponent } from '../exercise-dialog/exercise-dialog.component';
 import { ExerciseService } from '../../../core/services/exercise.service';
+import { FormsModule } from '@angular/forms';
 import { IExercise } from '../../../core/interfaces/exercise.interface';
 import { MatDialog } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
@@ -17,12 +18,18 @@ export interface ExerciseDialogData {
 @Component({
   selector: 'app-exercises-list',
   standalone: true,
-  imports: [MatIconModule],
+  imports: [MatIconModule, FormsModule],
   templateUrl: './exercise-list.component.html',
-  styleUrl: './exercise-list.component.css',
+  styleUrls: [
+    './exercise-list.component.css',
+    '../../../../assets/styles/filter-container.css',
+  ],
 })
 export class ExerciseListComponent {
   exercises: IExercise[] | null = null;
+  filteredExercises: IExercise[] | null = null;
+  nameFilter = '';
+  descriptionFilter = '';
 
   constructor(
     private dialog: MatDialog,
@@ -46,11 +53,41 @@ export class ExerciseListComponent {
     this.exerciseService.getAll().subscribe({
       next: (res) => {
         this.exercises = res.data;
+        this.filteredExercises = [...res.data];
       },
       error: () => {
         this.exercises = null;
       },
     });
+  }
+
+  clearFilters() {
+    this.nameFilter = '';
+    this.descriptionFilter = '';
+    this.applyFilter();
+  }
+
+  applyFilter() {
+    if (!this.exercises) {
+      this.filteredExercises = null;
+      return;
+    }
+
+    this.filteredExercises = [...this.exercises];
+
+    if (this.nameFilter) {
+      const searchTerm = this.nameFilter.toLowerCase();
+      this.filteredExercises = this.filteredExercises.filter((e) =>
+        e.name.toLowerCase().includes(searchTerm)
+      );
+    }
+
+    if (this.descriptionFilter) {
+      const searchTerm = this.descriptionFilter.toLowerCase();
+      this.filteredExercises = this.filteredExercises.filter((e) =>
+        e.description?.toLowerCase().includes(searchTerm)
+      );
+    }
   }
 
   updateExercise(e: IExercise): void {
