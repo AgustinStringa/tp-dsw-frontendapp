@@ -45,7 +45,7 @@ export class MembershipService
 
   getActiveByClient(clientId: string): Observable<ApiResponse<IMembership>> {
     return this.http.get<ApiResponse<IMembership>>(
-      `${environment.activeMembershipsUrl}/${clientId}`
+      `${environment.activeMembershipsUrl}/clients/${clientId}`
     );
   }
 
