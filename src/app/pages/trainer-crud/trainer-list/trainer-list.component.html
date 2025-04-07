@@ -2,19 +2,16 @@
   <div class="title-div">
     <h2 class="crud-page-title">Entrenadores</h2>
     <div class="my-4 text-end">
-      <button
-        type="button"
-        class="btn btn-primary btn-lg"
-        (click)="addTrainer()"
-      >
+      <button type="button" class="btn btn-primary btn-lg" (click)="addTrainer()">
         Nuevo Entrenador
       </button>
     </div>
   </div>
 
+
   <app-users-filter (filteredUsersEvent)="receiveTrainers($event)" [crudService]="trainerService"></app-users-filter>
 
-  @if (trainers !== null && trainers.length > 0) {
+  @if (trainers !== null && trainersPage && trainersPage.length > 0) {
   <div class="table-container">
     <table>
       <thead>
@@ -27,42 +24,42 @@
         </tr>
       </thead>
 
-      @for (trainer of trainers; track trainer.dni) {
-      <tr>
-        <td>{{ trainer.lastName }}</td>
-        <td>{{ trainer.firstName }}</td>
-        <td>{{ trainer.dni }}</td>
-        <td>
-          {{ trainer.email }}
-        </td>
-        <td class="td-actions">
-          <button
-            (click)="deleteTrainer(trainer.id)"
-            aria-label="Example icon button with a delete icon"
-          >
-            <mat-icon>delete</mat-icon>
-          </button>
-          <button
-            (click)="updateTrainer(trainer)"
-            aria-label="Example icon button with a delete icon"
-          >
-            <mat-icon>edit</mat-icon>
-          </button>
-        </td>
-      </tr>
-      }
+      <tbody>
+        @for (trainer of trainersPage; track trainer.dni) {
+        <tr>
+          <td>{{ trainer.lastName }}</td>
+          <td>{{ trainer.firstName }}</td>
+          <td>{{ trainer.dni }}</td>
+          <td>{{ trainer.email }}</td>
+          <td class="td-actions">
+            <button (click)="deleteTrainer(trainer.id)" aria-label="Eliminar entrenador">
+              <mat-icon>delete</mat-icon>
+            </button>
+            <button (click)="updateTrainer(trainer)" aria-label="Editar entrenador">
+              <mat-icon>edit</mat-icon>
+            </button>
+          </td>
+        </tr>
+        }
+      </tbody>
     </table>
   </div>
+
   <mat-paginator [length]="trainers.length || 0" [pageSize]="pageSize" [pageSizeOptions]="[20, 50, 100]"
     aria-label="Seleccionar página" (page)="handlePageEvent($event)">
   </mat-paginator>
-  } @else if (trainers !== null && trainers.length === 0){
+
+  } @else if (trainers === null) {
+  <div class="alert alert-danger fs-6" role="alert">
+    No se pudieron cargar los entrenadores.
+  </div>
+  } @else if (trainersExist === false) {
   <div class="alert alert-warning fs-6" role="alert">
     No hay entrenadores cargados. Crea uno para comenzar.
   </div>
   } @else {
-  <div class="alert alert-danger fs-6" role="alert">
-    No se pudieron cargar los entrenadores.
+  <div class="alert alert-warning fs-6" role="alert">
+    Ningún entrenador cumple con los criterios del filtro.
   </div>
   }
 </div>

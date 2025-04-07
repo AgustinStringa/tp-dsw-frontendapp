@@ -2,17 +2,24 @@
   <div class="title-div">
     <h2 class="crud-page-title">Tipos de membresías</h2>
     <div class="my-4 text-end">
-      <button
-        type="button"
-        class="btn btn-primary btn-lg"
-        (click)="addMembershipType()"
-      >
+      <button type="button" class="btn btn-primary btn-lg" (click)="addMembershipType()">
         Nuevo tipo de membresía
       </button>
     </div>
   </div>
 
   @if (membershipTypes !== null && membershipTypes.length > 0) {
+  <div class="filter-container">
+    <label for="nameFilter">Filtrar por nombre:</label>
+    <input type="text" id="nameFilter" [(ngModel)]="nameFilter" (ngModelChange)="applyFilter()"
+      placeholder="Buscar por nombre...">
+
+
+    <button class="btn" (click)="clearFilters()">Limpiar filtros</button>
+  </div>
+  }
+
+  @if (membershipTypes !== null && filteredMembershipTypes && filteredMembershipTypes.length > 0) {
   <div class="table-container">
     <table>
       <thead>
@@ -25,22 +32,16 @@
       </thead>
 
       <tbody>
-        @for (mt of membershipTypes; track mt) {
+        @for (mt of filteredMembershipTypes; track mt) {
         <tr>
           <td>{{ mt.name }}</td>
           <td>{{ mt.description }}</td>
           <td>${{ mt.price.toLocaleString("es-ES") }}</td>
           <td class="td-actions">
-            <button
-              (click)="deleteMembershipType(mt.id)"
-              aria-label="Example icon button with a delete icon"
-            >
+            <button (click)="deleteMembershipType(mt.id)" aria-label="Eliminar tipo de membresía">
               <mat-icon>delete</mat-icon>
             </button>
-            <button
-              (click)="updateMembershipType(mt)"
-              aria-label="Example icon button with a delete icon"
-            >
+            <button (click)="updateMembershipType(mt)" aria-label="Editar tipo de membresía">
               <mat-icon>edit</mat-icon>
             </button>
           </td>
@@ -49,9 +50,13 @@
       </tbody>
     </table>
   </div>
-  } @else if (membershipTypes !== null && membershipTypes.length === 0){
+  } @else if (membershipTypes !== null && membershipTypes.length === 0) {
   <div class="alert alert-warning fs-6" role="alert">
     No hay tipos de membresía cargados. Crea uno para comenzar.
+  </div>
+  } @else if (membershipTypes !== null && filteredMembershipTypes?.length === 0) {
+  <div class="alert alert-warning fs-6" role="alert">
+    Ningún tipo de membresía coincide con los filtros.
   </div>
   } @else {
   <div class="alert alert-danger fs-6" role="alert">

@@ -12,6 +12,7 @@
       </button>
     </div>
   </div>
+  @if(exercises !== null && exercises.length > 0) {
   <div class="filter-container">
     <label for="nameFilter">Filtrar por nombre:</label>
     <input type="text" id="nameFilter" [(ngModel)]="nameFilter" (ngModelChange)="applyFilter()"
@@ -24,8 +25,8 @@
   
     <button class="btn" (click)="clearFilters()">Limpiar filtros</button>
   </div>
-
-  @if (exercises !== null && exercises.length > 0) {
+  }
+  @if (exercises !== null && filteredExercises && filteredExercises.length > 0) {
   <div class="table-container">
     <table>
       <thead>
@@ -72,7 +73,12 @@
   <div class="alert alert-warning fs-6" role="alert">
     No hay ejercicios cargados. Crea uno para comenzar.
   </div>
-  } @else {
+  } @else if (exercises !== null && filteredExercises?.length === 0) {
+      <div class="alert alert-warning fs-6" role="alert">
+      Ningún ejercicio coincide con los filtros.
+      </div>
+  }
+  @else {
   <div class="alert alert-danger fs-6" role="alert">
     No se pudieron cargar los ejercicios.
   </div>

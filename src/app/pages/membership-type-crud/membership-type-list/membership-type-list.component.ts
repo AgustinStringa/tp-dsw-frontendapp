@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { ComponentType } from '@angular/cdk/portal';
 import { DeleteDialogComponent } from '../../../shared/delete-dialog/delete-dialog.component';
+import { FormsModule } from '@angular/forms';
 import { IMembershipType } from '../../../core/interfaces/membership-type.interface';
 import { MatDialog } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
@@ -10,12 +11,17 @@ import { MembershipTypeService } from '../../../core/services/membership-type.se
 @Component({
   selector: 'app-membership-types-list',
   standalone: true,
-  imports: [MatIconModule],
+  imports: [MatIconModule, FormsModule],
   templateUrl: './membership-type-list.component.html',
-  styleUrl: './membership-type-list.component.css',
+  styleUrls: [
+    './membership-type-list.component.css',
+    '../../../../assets/styles/filter-container.css',
+  ],
 })
 export class MembershipTypeListComponent {
   membershipTypes: IMembershipType[] | null = null;
+  filteredMembershipTypes: IMembershipType[] | null = null;
+  nameFilter = '';
 
   constructor(
     private membershipTypeService: MembershipTypeService,
@@ -28,11 +34,34 @@ export class MembershipTypeListComponent {
     this.membershipTypeService.getAll().subscribe({
       next: (res) => {
         this.membershipTypes = res.data;
+        this.filteredMembershipTypes = [...res.data];
       },
       error: () => {
         this.membershipTypes = null;
+        this.filteredMembershipTypes = null;
       },
     });
+  }
+
+  applyFilter() {
+    if (!this.membershipTypes) {
+      this.filteredMembershipTypes = null;
+      return;
+    }
+
+    this.filteredMembershipTypes = [...this.membershipTypes];
+
+    if (this.nameFilter) {
+      const searchTerm = this.nameFilter.toLowerCase();
+      this.filteredMembershipTypes = this.filteredMembershipTypes.filter((mt) =>
+        mt.name.toLowerCase().includes(searchTerm)
+      );
+    }
+  }
+
+  clearFilters() {
+    this.nameFilter = '';
+    this.applyFilter();
   }
 
   addMembershipType(): void {

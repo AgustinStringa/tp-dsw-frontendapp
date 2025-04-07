@@ -3,17 +3,24 @@
     <h2 class="crud-page-title">Tipos de clases</h2>
 
     <div class="my-4 text-end">
-      <button
-        type="button"
-        class="btn btn-primary btn-lg"
-        (click)="addClassType()"
-      >
+      <button type="button" class="btn btn-primary btn-lg" (click)="addClassType()">
         Nuevo tipo
       </button>
     </div>
   </div>
 
   @if (classTypes !== null && classTypes.length > 0) {
+  <div class="filter-container">
+    <label for="nameFilter">Filtrar por nombre:</label>
+    <input type="text" id="nameFilter" [(ngModel)]="nameFilter" (ngModelChange)="applyFilter()"
+      placeholder="Buscar tipo...">
+
+
+    <button class="btn" (click)="clearFilters()">Limpiar filtros</button>
+  </div>
+  }
+
+  @if (classTypes !== null && filteredClassTypes && filteredClassTypes.length > 0) {
   <div class="table-container">
     <table>
       <thead>
@@ -25,21 +32,15 @@
       </thead>
 
       <tbody>
-        @for (type of classTypes; track type) {
+        @for (type of filteredClassTypes; track type) {
         <tr>
           <td>{{ type.name }}</td>
           <td>{{ type.description }}</td>
           <td class="td-actions">
-            <button
-              (click)="deleteClassType(type.id)"
-              aria-label="Example icon button with a delete icon"
-            >
+            <button (click)="deleteClassType(type.id)" aria-label="Eliminar tipo de clase">
               <mat-icon>delete</mat-icon>
             </button>
-            <button
-              (click)="updateClassType(type)"
-              aria-label="Example icon button with an edit icon"
-            >
+            <button (click)="updateClassType(type)" aria-label="Editar tipo de clase">
               <mat-icon>edit</mat-icon>
             </button>
           </td>
@@ -51,6 +52,10 @@
   } @else if (classTypes !== null && classTypes.length === 0) {
   <div class="alert alert-warning fs-6" role="alert">
     No hay tipos de clases cargados. Crea uno para comenzar.
+  </div>
+  } @else if (classTypes !== null && filteredClassTypes?.length === 0) {
+  <div class="alert alert-warning fs-6" role="alert">
+    Ningún tipo de clase coincide con los filtros.
   </div>
   } @else {
   <div class="alert alert-danger fs-6" role="alert">
