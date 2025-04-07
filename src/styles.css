@@ -1,8 +1,7 @@
-/* You can add global styles to this file, and also import other style files */
-
 @import '@fortawesome/fontawesome-free/css/all.css';
 @import 'mdb-angular-ui-kit/assets/scss/mdb.scss';
 
+/* Estructura base */
 html,
 body {
   height: 100%;
@@ -23,16 +22,24 @@ body {
   font-family: Roboto, 'Helvetica Neue', sans-serif;
 }
 
+/* Utilidades */
 .w-85 {
   width: 85%;
 }
 
-/*TABLAS PARA CRUDS*/
+/* Componentes CRUD */
+.title-div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
 .crud-page-title,
 .page-title {
   font-size: 2.5rem !important;
   font-weight: bold !important;
-  margin: 2rem 0 !important;
+  margin: 1rem 0 !important;
 }
 
 .list-container {
@@ -40,14 +47,17 @@ body {
   margin: 0 auto 20px;
 }
 
-.list-container .title-div {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
+/* Estilos de tabla */
+.table-container {
+  width: 100%;
+  overflow-x: auto;
+  margin-bottom: 1rem;
 }
 
-.table-container {
-  overflow-x: auto;
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 0.5rem;
 }
 
 .list-container table {
@@ -60,11 +70,43 @@ body {
   background-color: rgba(181, 255, 160, 0.689);
 }
 
+/* Celdas y filas */
+th {
+  display: none;
+}
+
+td {
+  display: block;
+  text-align: right;
+  padding: 10px;
+  border-bottom: 1px solid #ddd;
+  position: relative;
+}
+
+td:before {
+  content: attr(data-label);
+  position: absolute;
+  left: 10px;
+  font-weight: bold;
+  text-align: left;
+}
+
 .list-container td,
 .list-container th {
   border: 1px solid #ddd;
   padding: 10px;
-  text-align: center;
+  text-align: right;
+}
+
+.list-container tbody tr {
+  border: 1.2px solid #464545;
+}
+
+/* Acciones */
+.td-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
 }
 
 .list-container table button {
@@ -87,15 +129,53 @@ body {
   background-color: green;
 }
 
-.td-actions {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  gap: 1.5rem;
+/* Paginador */
+mat-paginator {
+  margin: 0.5rem;
 }
 
-/* MatDialog */
+/* Media queries */
+@media (min-width: 768px) {
+  .title-div {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+  }
 
+  th {
+    display: table-cell;
+    text-align: left;
+  }
+
+  td {
+    display: table-cell;
+    text-align: left;
+  }
+
+  td:before {
+    display: none;
+  }
+
+  .td-actions {
+    display: flex;
+    flex-direction: row;
+    justify-content: center !important;
+    gap: 1.5rem;
+  }
+
+  .list-container td,
+  .list-container th {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: center !important;
+  }
+
+  .list-container tbody tr {
+    border: none !important;
+  }
+}
+
+/* Componentes de Material */
 .dialog-title {
   position: relative;
   align-items: center;
@@ -134,12 +214,12 @@ mat-dialog-actions.common-dialog button {
 mat-dialog-actions.common-dialog button.btn-secondary {
   box-shadow: 0 4px 9px -4px gray;
 }
+
 mat-dialog-actions.common-dialog button.btn-secondary:hover {
   background-color: gray;
 }
 
 /* MatSnackBar */
-
 .snackbar_success .mdc-button__label,
 .snackbar_error .mdc-button__label {
   color: white;

@@ -16,68 +16,55 @@
 
   @if (clients && clientsPage && clientsPage.length > 0) {
   <div class="table-container">
-    <table>
-      <thead>
-        <tr>
-          <th>Apellido</th>
-          <th>Nombre</th>
-          <th>DNI</th>
-          <th>Correo electrónico</th>
-          <th>Acciones</th>
-        </tr>
-      </thead>
-
-      <tbody>
-        @for (c of clientsPage; track c) {
-        <tr>
-          <td>{{ c.lastName }}</td>
-          <td>{{ c.firstName }}</td>
-          <td>{{ c.dni }}</td>
-          <td>
-            {{ c.email }}
-          </td>
-          <td class="td-actions">
-            <button
-              (click)="deleteUser(c.id)"
-              aria-label="Example icon button with a delete icon"
-            >
-              <mat-icon>delete</mat-icon>
-            </button>
-            <button
-              (click)="updateUser(c)"
-              aria-label="Example icon button with an edit icon"
-            >
-              <mat-icon>edit</mat-icon>
-            </button>
-          </td>
-        </tr>
-        }
-      </tbody>
-    </table>
+    <div class="table-responsive">
+      <table>
+        <thead>
+          <tr>
+            <th>Apellido</th>
+            <th>Nombre</th>
+            <th>DNI</th>
+            <th>Correo electrónico</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+  
+        <tbody>
+          @for (c of clientsPage; track c) {
+          <tr>
+            <td data-label="Apellido">{{ c.lastName }}</td>
+            <td data-label="Nombre">{{ c.firstName }}</td>
+            <td data-label="DNI">{{ c.dni }}</td>
+            <td data-label="Correo">{{ c.email }}</td>
+            <td class="td-actions" data-label="Acciones">
+              <button (click)="deleteUser(c.id)" aria-label="Eliminar cliente" class="action-btn">
+                <mat-icon>delete</mat-icon>
+              </button>
+              <button (click)="updateUser(c)" aria-label="Editar cliente" class="action-btn">
+                <mat-icon>edit</mat-icon>
+              </button>
+            </td>
+          </tr>
+          }
+        </tbody>
+      </table>
+    </div>
   </div>
-
-  <mat-paginator
-    [length]="clients.length"
-    [pageSize]="pageSize"
-    [pageSizeOptions]="[20, 50, 100]"
-    aria-label="Seleccionar página"
-    (page)="handlePageEvent($event)"
-  >
-  </mat-paginator>
-
+  
+  <mat-paginator [length]="clients.length" [pageSize]="pageSize" [pageSizeOptions]="[20, 50, 100]"
+    aria-label="Seleccionar página" (page)="handlePageEvent($event)"></mat-paginator>
+  
   } @else if (clients === null){
   <div class="alert alert-danger fs-6" role="alert">
     No se pudieron cargar los clientes.
   </div>
-
+  
   } @else if (clientsExist === false){
   <div class="alert alert-warning fs-6" role="alert">
     No hay clientes cargados. Crea uno para comenzar.
   </div>
-
+  
   } @else {
   <div class="alert alert-warning fs-6" role="alert">
     Ningún cliente cumple con los criterios del filtro.
   </div>
   }
-</div>

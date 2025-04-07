@@ -19,8 +19,9 @@
   </div>
   }
 
-  @if (membershipTypes !== null && filteredMembershipTypes && filteredMembershipTypes.length > 0) {
-  <div class="table-container">
+@if (membershipTypes !== null && filteredMembershipTypes && filteredMembershipTypes.length > 0) {
+<div class="table-container">
+  <div class="table-responsive">
     <table>
       <thead>
         <tr>
@@ -34,14 +35,14 @@
       <tbody>
         @for (mt of filteredMembershipTypes; track mt) {
         <tr>
-          <td>{{ mt.name }}</td>
-          <td>{{ mt.description }}</td>
-          <td>${{ mt.price.toLocaleString("es-ES") }}</td>
-          <td class="td-actions">
-            <button (click)="deleteMembershipType(mt.id)" aria-label="Eliminar tipo de membresía">
+          <td data-label="Nombre">{{ mt.name }}</td>
+          <td data-label="Descripción">{{ mt.description }}</td>
+          <td data-label="Precio">${{ mt.price.toLocaleString("es-ES") }}</td>
+          <td class="td-actions" data-label="Acciones">
+            <button (click)="deleteMembershipType(mt.id)" aria-label="Eliminar tipo de membresía" class="action-btn">
               <mat-icon>delete</mat-icon>
             </button>
-            <button (click)="updateMembershipType(mt)" aria-label="Editar tipo de membresía">
+            <button (click)="updateMembershipType(mt)" aria-label="Editar tipo de membresía" class="action-btn">
               <mat-icon>edit</mat-icon>
             </button>
           </td>
@@ -50,17 +51,17 @@
       </tbody>
     </table>
   </div>
-  } @else if (membershipTypes !== null && membershipTypes.length === 0) {
-  <div class="alert alert-warning fs-6" role="alert">
-    No hay tipos de membresía cargados. Crea uno para comenzar.
-  </div>
-  } @else if (membershipTypes !== null && filteredMembershipTypes?.length === 0) {
-  <div class="alert alert-warning fs-6" role="alert">
-    Ningún tipo de membresía coincide con los filtros.
-  </div>
-  } @else {
-  <div class="alert alert-danger fs-6" role="alert">
-    No se pudieron cargar los tipos de membresía.
-  </div>
-  }
 </div>
+} @else if (membershipTypes !== null && membershipTypes.length === 0) {
+<div class="alert alert-warning fs-6" role="alert">
+  No hay tipos de membresía cargados. Crea uno para comenzar.
+</div>
+} @else if (membershipTypes !== null && filteredMembershipTypes?.length === 0) {
+<div class="alert alert-warning fs-6" role="alert">
+  Ningún tipo de membresía coincide con los filtros.
+</div>
+} @else {
+<div class="alert alert-danger fs-6" role="alert">
+  No se pudieron cargar los tipos de membresía.
+</div>
+}
