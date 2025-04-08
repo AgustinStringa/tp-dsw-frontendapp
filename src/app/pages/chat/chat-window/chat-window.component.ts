@@ -9,7 +9,7 @@ import {
 import { AuthService } from '../../../core/services/auth.service.js';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import IMessage from '../../../core/interfaces/IMessage.interface.js';
+import { IMessage } from '../../../core/interfaces/message.interface.js';
 import { IUser } from '../../../core/interfaces/user.interface.js';
 import { MessageService } from '../../../core/services/message.service.js';
 import { SnackbarService } from '../../../core/services/snackbar.service.js';

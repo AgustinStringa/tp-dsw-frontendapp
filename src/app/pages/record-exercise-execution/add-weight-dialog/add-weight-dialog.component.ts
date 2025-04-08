@@ -10,7 +10,13 @@ import {
   ExerciseRoutineService,
   IExerciseRoutineUpdate,
 } from '../../../core/services/exercise-routine.service';
-import { FormsModule } from '@angular/forms';
+import {
+  FormControl,
+  FormGroup,
+  FormsModule,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 import { HttpErrorResponse } from '@angular/common/http';
 import { IExerciseRoutine } from '../../../core/interfaces/exercise-routine.inteface';
 import { MatButtonModule } from '@angular/material/button';
@@ -21,7 +27,13 @@ import { SnackbarService } from '../../../core/services/snackbar.service';
 @Component({
   selector: 'app-dialog-add-weight',
   standalone: true,
-  imports: [FormsModule, MatFormFieldModule, MatInputModule, MatButtonModule],
+  imports: [
+    FormsModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatButtonModule,
+    ReactiveFormsModule,
+  ],
   templateUrl: './add-weight-dialog.component.html',
   styleUrl: './add-weight-dialog.component.css',
 })
@@ -31,8 +43,13 @@ export class AddWeightDialogComponent implements OnChanges {
   @Output() closeModal = new EventEmitter<void>();
   @Output() saveWeight = new EventEmitter<number>();
 
-  withoutWeight = false;
-  selectedWeight: number | null = null;
+  form = new FormGroup({
+    weight: new FormControl<number | null>(null, [
+      Validators.required,
+      Validators.min(0.01),
+    ]),
+    withoutWeight: new FormControl<boolean>(false, [Validators.required]),
+  });
 
   constructor(
     private exerciseRoutineService: ExerciseRoutineService,
@@ -41,10 +58,25 @@ export class AddWeightDialogComponent implements OnChanges {
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['exerciseRoutine']) {
-      if (this.exerciseRoutine?.weight) {
-        if (this.exerciseRoutine.weight === 0) this.withoutWeight = true;
-        else this.selectedWeight = this.exerciseRoutine.weight;
+      if (this.exerciseRoutine.weight) {
+        if (this.exerciseRoutine.weight === 0) {
+          this.form.controls.withoutWeight.setValue(true);
+          this.form.controls.weight.removeValidators(Validators.required);
+        } else {
+          this.form.controls.weight.setValue(this.exerciseRoutine.weight);
+        }
       }
+    }
+  }
+
+  selectWithoutWeight() {
+    if (!this.form.value.withoutWeight) {
+      this.form.controls.weight.removeValidators(Validators.required);
+      this.form.controls.weight.setValue(null);
+      this.form.controls.weight.disable();
+    } else {
+      this.form.controls.weight.enable();
+      this.form.controls.weight.addValidators(Validators.required);
     }
   }
 
@@ -54,8 +86,9 @@ export class AddWeightDialogComponent implements OnChanges {
 
   onSave(): void {
     if (
-      this.withoutWeight === false &&
-      (this.selectedWeight === null || this.selectedWeight <= 0)
+      this.form.value.withoutWeight === false &&
+      (this.form.value.weight === null ||
+        (this.form.value.weight && this.form.value.weight <= 0))
     ) {
       return this.snackbarService.showError(
         'Ingrese un peso válido (debe ser mayor a cero) o marque la opción "Sin peso".'
@@ -63,14 +96,14 @@ export class AddWeightDialogComponent implements OnChanges {
     }
 
     const data: IExerciseRoutineUpdate = {
-      weight: this.withoutWeight ? 0 : this.selectedWeight!,
+      weight: this.form.value.withoutWeight ? 0 : this.form.value.weight!,
     };
 
     this.exerciseRoutineService
       .markAsDone(this.exerciseRoutine.id!, data)
       .subscribe({
         next: () => {
-          this.snackbarService.showSuccess('Peso registrado exitosamente');
+          this.snackbarService.showSuccess('Peso registrado exitosamente.');
           this.saveWeight.emit(data.weight as number);
           this.onClose();
         },

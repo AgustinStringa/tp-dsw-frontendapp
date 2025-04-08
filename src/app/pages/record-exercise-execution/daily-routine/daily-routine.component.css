@@ -1,0 +1,14 @@
+.full-width-button {
+  width: 100%;
+  height: 100%;
+  font-size: 1.5rem;
+  padding: 10px;
+  border: none;
+  background-color: #fbab7e;
+  color: white;
+  cursor: pointer;
+}
+
+.full-width-button:hover {
+  background-color: #f7ce68;
+}

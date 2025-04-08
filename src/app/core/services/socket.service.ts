@@ -1,5 +1,5 @@
 import { io, Socket } from 'socket.io-client';
-import IMessage from '../interfaces/IMessage.interface.js';
+import { IMessage } from '../interfaces/message.interface';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 

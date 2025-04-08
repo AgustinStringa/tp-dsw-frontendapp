@@ -8,20 +8,20 @@
         <tr>
           <td><strong>Fecha Desde:</strong> {{ startDate }}</td>
           <td><strong>Fecha Hasta:</strong> {{ endDate }}</td>
-          <td><strong>Semana Actual:</strong> {{ currentWeek }}</td>
           <td>
-            <!--TODO cambiar encabezado por uno más apropiado al negocio-->
-            <strong>Día Actual:</strong> {{ currentDayName }}
-            {{ currentDayNumber }} de {{ currentNameOfTheMonth }} -
-            {{ currentDate.getFullYear() }}
+            <button class="full-width-button" (click)="previousDay()">←</button>
           </td>
+          <td><strong>Semana:</strong> {{ selectedWeek }}</td>
+          <td><strong>Día:</strong> {{ selectedDay }}</td>
+          <td>
+            <button class="full-width-button" (click)="nextDay()">→</button>
+          </td>
+          <div></div>
         </tr>
       </table>
     </div>
-    }
 
     <div>
-      @if (this.exercisesRoutine && this.exercisesRoutine.length > 0) {
       <table class="exercises-table">
         <thead>
           <tr>
@@ -34,9 +34,8 @@
         </thead>
         <tbody>
           @for (exerciseRoutine of exercisesRoutine; track
-          exerciseRoutine.exercise?.id) { @if (exerciseRoutine.day &&
-          exerciseRoutine.day === dayToday && exerciseRoutine.week &&
-          exerciseRoutine.week === currentWeek) {
+          exerciseRoutine.exercise?.id) { @if ( exerciseRoutine.day ===
+          selectedDay && exerciseRoutine.week === selectedWeek) {
 
           <tr>
             <td>{{ exerciseRoutine.exercise.name }}</td>
@@ -69,7 +68,12 @@
               </button>
               }
 
-              <button class="btn btn-primary">
+              <button
+                class="btn btn-primary"
+                [ngStyle]="{
+                  opacity: exerciseRoutine.exercise.urlVideo ? 1 : 0
+                }"
+              >
                 <a
                   target="_blank"
                   class="text-white"
@@ -80,16 +84,16 @@
               </button>
             </td>
           </tr>
-          } }
+          }}
         </tbody>
       </table>
-
-      } @else {
-      <p class="alert">
-        No tienes una rutina. Comunícate con uno de nuestros entrenadores.
-      </p>
-      }
     </div>
+
+    }@else {
+    <p class="alert">
+      No tienes una rutina. Comunícate con uno de nuestros entrenadores.
+    </p>
+    }
 
     <!-- Modal para cargar peso -->
     @if (this.showModal && selectedExerciseRoutine) {
