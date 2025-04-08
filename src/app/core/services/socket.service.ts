@@ -14,14 +14,6 @@ export class SocketService {
       withCredentials: true,
       transports: ['websocket', 'polling'],
     });
-
-    this.socket.on('connect', () => {
-      console.log('Conectado al servidor Socket.io');
-    });
-
-    this.socket.on('disconnect', () => {
-      console.log('Desconectado del servidor');
-    });
   }
 
   sendMessage(event: string, message: IMessage) {
@@ -35,6 +27,7 @@ export class SocketService {
       });
     });
   }
+
   connect() {
     if (this.socket) {
       this.socket.disconnect();

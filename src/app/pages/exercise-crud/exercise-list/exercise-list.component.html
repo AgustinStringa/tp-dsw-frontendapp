@@ -12,9 +12,23 @@
       </button>
     </div>
   </div>
+  @if(exercises !== null && exercises.length > 0) {
+  <div class="filter-container">
+    <label for="nameFilter">Filtrar por nombre:</label>
+    <input type="text" id="nameFilter" [(ngModel)]="nameFilter" (ngModelChange)="applyFilter()"
+      placeholder="Buscar ejercicio...">
+  
+    <label for="descriptionFilter">Filtrar por descripción:</label>
+    <input type="text" id="descriptionFilter" [(ngModel)]="descriptionFilter" (ngModelChange)="applyFilter()"
+      placeholder="Buscar en descripción...">
 
-  @if (exercises !== null && exercises.length > 0) {
-  <div class="table-container">
+  
+    <button class="btn" (click)="clearFilters()">Limpiar filtros</button>
+  </div>
+  }
+  @if (exercises !== null && filteredExercises && filteredExercises.length > 0) {
+<div class="table-container">
+  <div class="table-responsive"> 
     <table>
       <thead>
         <tr>
@@ -26,28 +40,22 @@
       </thead>
 
       <tbody>
-        @for (e of exercises; track e) {
+        @for (e of filteredExercises; track e) {
         <tr>
-          <td>{{ e.name }}</td>
-          <td>{{ e.description }}</td>
-          <td>
+          <td data-label="Nombre">{{ e.name }}</td> 
+          <td data-label="Descripción">{{ e.description }}</td>
+          <td data-label="Video">
             @if (e.urlVideo !== ""){
             <a href="{{ e.urlVideo }}" target="_blank">Enlace al video</a>
             } @else {
             <p class="no-video">Sin video</p>
             }
           </td>
-          <td class="td-actions">
-            <button
-              (click)="deleteExercise(e.id)"
-              aria-label="Example icon button with a delete icon"
-            >
+          <td class="td-actions" data-label="Acciones"> <!-- Añadido data-label -->
+            <button (click)="deleteExercise(e.id)" aria-label="Eliminar ejercicio" class="action-btn">
               <mat-icon>delete</mat-icon>
             </button>
-            <button
-              (click)="updateExercise(e)"
-              aria-label="Example icon button with a delete icon"
-            >
+            <button (click)="updateExercise(e)" aria-label="Editar ejercicio" class="action-btn">
               <mat-icon>edit</mat-icon>
             </button>
           </td>
@@ -56,13 +64,19 @@
       </tbody>
     </table>
   </div>
-  } @else if (exercises !== null && exercises.length === 0){
-  <div class="alert alert-warning fs-6" role="alert">
-    No hay ejercicios cargados. Crea uno para comenzar.
-  </div>
-  } @else {
-  <div class="alert alert-danger fs-6" role="alert">
-    No se pudieron cargar los ejercicios.
-  </div>
-  }
+</div>
+} @else if (exercises !== null && exercises.length === 0){
+<div class="alert alert-warning fs-6" role="alert">
+  No hay ejercicios cargados. Crea uno para comenzar.
+</div>
+} @else if (exercises !== null && filteredExercises?.length === 0) {
+<div class="alert alert-warning fs-6" role="alert">
+  Ningún ejercicio coincide con los filtros.
+</div>
+}
+@else {
+<div class="alert alert-danger fs-6" role="alert">
+  No se pudieron cargar los ejercicios.
+</div>
+}
 </div>
