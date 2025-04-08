@@ -1,7 +1,7 @@
 import { ApiResponse } from '../interfaces/api-response.interface';
 import { environment } from '../../../environments/environment';
 import { HttpClient } from '@angular/common/http';
-import IMessage from '../interfaces/IMessage.interface';
+import { IMessage } from '../interfaces/IMessage.interface.js';
 import { Injectable } from '@angular/core';
 import { IUser } from '../interfaces/user.interface.js';
 import { Observable } from 'rxjs';
@@ -14,28 +14,19 @@ export class MessageService {
 
   getRecipients(): Observable<ApiResponse<IUser[]>> {
     return this.http.get<ApiResponse<IUser[]>>(
-      `${environment.messagesUrl}/recipients`,
-      {
-        withCredentials: true,
-      }
+      `${environment.messagesUrl}/recipients`
     );
   }
 
   getMessagesFrom(userId: string): Observable<ApiResponse<IMessage[]>> {
     return this.http.get<ApiResponse<IMessage[]>>(
-      `${environment.messagesUrl}/user/${userId}`,
-      {
-        withCredentials: true,
-      }
+      `${environment.messagesUrl}/user/${userId}`
     );
   }
 
   getUnreadMessages(): Observable<ApiResponse<IMessage[]>> {
-    return this.http.post<ApiResponse<IMessage[]>>(
-      `${environment.messagesUrl}/user/unread`,
-      {
-        withCredentials: true,
-      }
+    return this.http.get<ApiResponse<IMessage[]>>(
+      `${environment.messagesUrl}/unread`
     );
   }
 

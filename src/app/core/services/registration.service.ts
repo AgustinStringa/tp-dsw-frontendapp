@@ -40,7 +40,7 @@ export class RegistrationService {
 
   cancel(id: string): Observable<ApiResponse<IRegistration>> {
     return this.http.patch<ApiResponse<IRegistration>>(
-      `${this.url}/cancel/${id}`,
+      `${this.url}/${id}/cancel`,
       {}
     );
   }

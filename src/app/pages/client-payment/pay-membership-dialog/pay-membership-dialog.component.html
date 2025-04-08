@@ -17,7 +17,7 @@
             <div class="info">
               <div class="name-price">
                 <span class="name">{{ t.name }}</span>
-                <span class="price">${{ t.price }}</span>
+                <span class="price">${{ t.price.toLocaleString("es-ES") }}</span>
               </div>
               <p class="description">{{ t.description }}</p>
             </div>
@@ -31,7 +31,7 @@
         @if (selectedMembershipType) {
         <div class="selected-info">
           <h4>{{ selectedMembershipType.name }}</h4>
-          <p class="price">${{ selectedMembershipType.price }}</p>
+          <p class="price">${{ selectedMembershipType.price.toLocaleString("es-ES") }}</p>
           <p class="description">{{ selectedMembershipType.description }}</p>
         </div>
         } @else {
