@@ -1,6 +1,6 @@
 import { Component, effect } from '@angular/core';
 import { AuthService } from './core/services/auth.service.js';
-import { ChatWindowComponent } from './pages/chat/chat-window/chat-window.component.js';
+import { ChatWindowComponent } from './pages/chat/chat-window/chat-window.component';
 import { FooterComponent } from './layout/footer/footer.component';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';

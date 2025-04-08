@@ -1,0 +1,22 @@
+<div class="filter-container">
+  <div class="flex-column flex-md-row">
+    <label for="name-filter">Filtrar por nombre y apellido:</label>
+    <input
+      [(ngModel)]="searchValue"
+      (ngModelChange)="applyFilters()"
+      type="text"
+      name="name-filter"
+      id="name-filter"
+    />
+    <button class="btn" (click)="clearFilters()">Limpiar filtros</button>
+  </div>
+  <div>
+    <p class="user-select-none my-3">
+      <mat-slide-toggle
+        [(ngModel)]="showPayPending"
+        (ngModelChange)="applyFilters()"
+        >Visualizar pendientes de pago</mat-slide-toggle
+      >
+    </p>
+  </div>
+</div>

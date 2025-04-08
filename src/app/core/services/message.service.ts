@@ -1,5 +1,5 @@
-import { ApiResponse } from '../interfaces/api-response.interface.js';
-import { environment } from '../../../environments/environment.js';
+import { ApiResponse } from '../interfaces/api-response.interface';
+import { environment } from '../../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { IMessage } from '../interfaces/IMessage.interface.js';
 import { Injectable } from '@angular/core';

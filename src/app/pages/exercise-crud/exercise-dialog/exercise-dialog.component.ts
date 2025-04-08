@@ -2,7 +2,7 @@ import { Component, inject } from '@angular/core';
 import {
   ExerciseService,
   IExerciseCreate,
-} from '../../../core/services/exercise.service.js';
+} from '../../../core/services/exercise.service';
 import {
   FormControl,
   FormGroup,
