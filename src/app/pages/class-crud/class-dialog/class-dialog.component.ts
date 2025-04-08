@@ -18,6 +18,7 @@ import {
   MatDialogTitle,
 } from '@angular/material/dialog';
 import { ClassTypeDialogComponent } from '../../class-type-crud/class-type-dialog/class-type-dialog.component';
+import { endAfterStartValidator } from '../../../core/functions/class-times.validator';
 import { HttpErrorResponse } from '@angular/common/http';
 import { IClass } from '../../../core/interfaces/class.interface';
 import { IClassType } from '../../../core/interfaces/class-type.interface';
@@ -63,22 +64,25 @@ export class ClassDialogComponent {
   readonly classTypes: IClassType[];
   classId: string | undefined;
 
-  form = new FormGroup({
-    day: new FormControl<string>('', [Validators.required]),
-    startTime: new FormControl<string>('', [Validators.required]),
-    endTime: new FormControl<string>('', [Validators.required]),
-    maxCapacity: new FormControl<number | null>(null, [
-      Validators.required,
-      Validators.min(1),
-    ]),
-    location: new FormControl<string>('', [
-      Validators.required,
-      trimValidator(),
-    ]),
-    classType: new FormControl<string>('', [Validators.required]),
-    trainer: new FormControl<string>('', [Validators.required]),
-    active: new FormControl<boolean>(true, [Validators.required]),
-  });
+  form = new FormGroup(
+    {
+      day: new FormControl<string>('', [Validators.required]),
+      startTime: new FormControl<string>('', [Validators.required]),
+      endTime: new FormControl<string>('', [Validators.required]),
+      maxCapacity: new FormControl<number | null>(null, [
+        Validators.required,
+        Validators.min(1),
+      ]),
+      location: new FormControl<string>('', [
+        Validators.required,
+        trimValidator(),
+      ]),
+      classType: new FormControl<string>('', [Validators.required]),
+      trainer: new FormControl<string>('', [Validators.required]),
+      active: new FormControl<boolean>(true, [Validators.required]),
+    },
+    { validators: endAfterStartValidator }
+  );
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: DialogData,
@@ -149,6 +153,14 @@ export class ClassDialogComponent {
   }
 
   // Getters para FormControls
+  get startTime() {
+    return this.form.get('startTime');
+  }
+
+  get endTime() {
+    return this.form.get('endTime');
+  }
+
   get maxCapacity() {
     return this.form.get('maxCapacity');
   }

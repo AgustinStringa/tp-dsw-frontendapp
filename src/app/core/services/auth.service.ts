@@ -3,8 +3,8 @@ import { Injectable, signal } from '@angular/core';
 import { ApiResponse } from '../interfaces/api-response.interface';
 import { environment } from '../../../environments/environment';
 import { HttpClient } from '@angular/common/http';
-import { SnackbarService } from './snackbar.service';
 import { IUserCreate } from './trainer.service';
+import { SnackbarService } from './snackbar.service';
 
 interface IUserSession {
   id: string;

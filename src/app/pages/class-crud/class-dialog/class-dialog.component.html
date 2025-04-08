@@ -40,6 +40,10 @@
         <mat-label for="endTime">Hora fin</mat-label>
         <input matInput type="time" formControlName="endTime" id="endTime" />
       </mat-form-field>
+
+      @if (form.hasError('endBeforeStart')) {
+      <div class="error-message">La hora de fin debe ser posterior a la de inicio.</div>
+      }
     </div>
 
     <div>

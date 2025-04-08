@@ -6,29 +6,32 @@ import {
 import { AuthService } from '../../../core/services/auth.service';
 import { ClassTypeService } from '../../../core/services/class-type.service';
 import { ConfirmRegistrationDialogComponent } from '../confirm-registration-dialog/confirm-registration-dialog.component';
+import { DeleteDialogComponent } from '../../../shared/delete-dialog/delete-dialog.component';
+import { forkJoin } from 'rxjs';
 import { HttpErrorResponse } from '@angular/common/http';
 import { IClass } from '../../../core/interfaces/class.interface';
 import { IClassType } from '../../../core/interfaces/class-type.interface';
 import { IRegistration } from '../../../core/interfaces/registration.interface';
 import { MatDialog } from '@angular/material/dialog';
 import { MatExpansionModule } from '@angular/material/expansion';
-import { NgIf } from '@angular/common';
+import { MembershipService } from '../../../core/services/membership.service';
 import { SnackbarService } from '../../../core/services/snackbar.service';
 
 @Component({
   selector: 'app-class-list',
   standalone: true,
-  imports: [MatExpansionModule, NgIf],
+  imports: [MatExpansionModule],
   templateUrl: './class-list.component.html',
   styleUrl: './class-list.component.css',
 })
 export class ClassListComponent {
-  urlClass = '';
-  classtypes: IClassType[] = [];
+  hasActiveMembership = false;
+  classTypes: IClassType[] = [];
+  availableClasses: IClassType[] = [];
+  clientRegistrations: IRegistration[] = [];
+
   selectedClass: IClass | null = null;
   selectedClassType: IClassType | null = null;
-  availableClasses: IClassType[] = [];
-  registeredClassIds: string[] = [];
 
   private dialog = inject(MatDialog);
   private userId = '';
@@ -36,63 +39,59 @@ export class ClassListComponent {
   constructor(
     private authService: AuthService,
     private classTypeService: ClassTypeService,
+    private membershipService: MembershipService,
     private registrationService: RegistrationService,
     private snackbarService: SnackbarService
   ) {
     const user = this.authService.getUser();
     if (user) {
       this.userId = user.id;
-      this.getRegistrations();
-      this.getClassTypes();
-    } else {
-      //TODO cambiar
-      console.error('No user found in session. Redirecting or handling error.');
+      this.getActiveMembership();
     }
   }
 
-  getClassTypes() {
-    this.classTypeService.getAll().subscribe({
+  getActiveMembership() {
+    this.membershipService.getActiveByClient(this.userId).subscribe({
+      next: () => {
+        this.hasActiveMembership = true;
+        this.getClassTypesAndRegistrations();
+      },
+      error: (err) => {
+        if (err.status === 404) this.hasActiveMembership = false;
+      },
+    });
+  }
+
+  getClassTypesAndRegistrations() {
+    forkJoin({
+      classTypes: this.classTypeService.getAll(),
+      registrations: this.registrationService.getByClient(this.userId),
+    }).subscribe({
       next: (res) => {
-        this.classtypes = res.data;
-        this.filterClases();
+        this.classTypes = res.classTypes.data;
+        this.clientRegistrations = res.registrations.data;
+        this.filterClasses();
       },
       error: (err: HttpErrorResponse) => {
         if (err.error.isUserFriendly)
           this.snackbarService.showError(err.error.message);
         else
           this.snackbarService.showError(
-            'Error al obtener los tipos de clases.'
+            'Error al obtener las clases e inscripciones.'
           );
       },
     });
   }
 
-  getRegistrations() {
-    this.registrationService.getByClient(this.userId).subscribe({
-      next: (res) => {
-        this.registeredClassIds = res.data.map(
-          (registration: IRegistration) => registration.classId
-        );
-      },
-      error: (err: HttpErrorResponse) => {
-        if (err.error.isUserFriendly)
-          this.snackbarService.showError(err.error.message);
-        else
-          this.snackbarService.showError('Error al obtener las inscripciones.');
-      },
-    });
-  }
-
-  filterClases() {
-    this.availableClasses = this.classtypes ? [...this.classtypes] : [];
-
-    const registeredClassIdsSet = new Set(this.registeredClassIds);
-    this.availableClasses = this.availableClasses
+  filterClasses() {
+    this.availableClasses = this.classTypes
       .map((classType) => {
-        const filteredClasses = classType.classes.filter(
-          (cls) => cls.active === true && !registeredClassIdsSet.has(cls.id)
-        );
-        return { ...classType, classes: filteredClasses };
+        classType.classes = classType.classes.filter((classItem) => {
+          return !this.clientRegistrations.some(
+            (reg) => reg.class.id === classItem.id
+          );
+        });
+        return classType;
       })
       .filter((classType) => classType.classes.length > 0);
   }
@@ -131,8 +130,7 @@ export class ClassListComponent {
     this.registrationService.create(registration).subscribe({
       next: () => {
         this.snackbarService.showSuccess('Inscripción realizada.');
-        this.getRegistrations();
-        this.getClassTypes();
+        this.getClassTypesAndRegistrations();
       },
       error: (err) => {
         if (err.error.isUserFriendly)
@@ -140,6 +138,24 @@ export class ClassListComponent {
         else
           this.snackbarService.showError('Error al inscribirse en la clase.');
       },
+    });
+  }
+
+  cancelRegistration(registration: IRegistration) {
+    const dialogRef = this.dialog.open(DeleteDialogComponent, {
+      data: {
+        id: registration.id,
+        title: 'Eliminar Inscripción',
+        service: this.registrationService,
+      },
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result === 'deleted') {
+        this.getClassTypesAndRegistrations();
+      } else {
+        this.snackbarService.showError('No se eliminó la inscripción.');
+      }
     });
   }
 

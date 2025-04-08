@@ -4,13 +4,14 @@ import { ClientService } from '../../../core/services/client.service';
 import { Component } from '@angular/core';
 import { IClientHomeInformation } from '../../../core/services/home.service';
 import { MatDialog } from '@angular/material/dialog';
+import { TrainerHomeComponent } from '../trainer-home/trainer-home.component';
 import { TrainerService } from '../../../core/services/trainer.service';
 import { UserDialogComponent } from '../../../shared/user-dialog/user-dialog.component';
 
 @Component({
   selector: 'app-home-page',
   standalone: true,
-  imports: [ClientHomeComponent],
+  imports: [ClientHomeComponent, TrainerHomeComponent],
   templateUrl: './home.component.html',
 })
 export class HomeComponent {

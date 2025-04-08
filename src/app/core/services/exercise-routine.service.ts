@@ -31,7 +31,7 @@ export class ExerciseRoutineService {
   ): Observable<ApiResponse<IExerciseRoutine>> {
     return this.http.patch<ApiResponse<IExerciseRoutine>>(
       `${this.url}/${id}/record-execution`,
-      { data }
+      data
     );
   }
 }

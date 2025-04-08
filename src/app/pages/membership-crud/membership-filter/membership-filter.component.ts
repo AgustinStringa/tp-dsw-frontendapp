@@ -8,11 +8,15 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
   standalone: true,
   imports: [MatSlideToggleModule, FormsModule],
   templateUrl: './membership-filter.component.html',
-  styleUrls: ['./membership-filter.component.css'],
+  styleUrls: [
+    '../../../../assets/styles/filter-container.css',
+    './membership-filter.component.css',
+  ],
 })
 export class MembershipFilterComponent {
   @Output() filterMemberships = new EventEmitter<IMembership[]>();
   @Input() memberships: IMembership[] | null = [];
+
   private filteredMemberships: IMembership[] = [];
   public showPayPending = false;
   public searchValue = '';

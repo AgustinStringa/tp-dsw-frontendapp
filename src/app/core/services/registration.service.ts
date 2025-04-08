@@ -38,7 +38,7 @@ export class RegistrationService {
     return this.http.post<ApiResponse<IRegistration>>(this.url, registration);
   }
 
-  cancel(id: string): Observable<ApiResponse<IRegistration>> {
+  delete(id: string): Observable<ApiResponse<IRegistration>> {
     return this.http.patch<ApiResponse<IRegistration>>(
       `${this.url}/${id}/cancel`,
       {}
