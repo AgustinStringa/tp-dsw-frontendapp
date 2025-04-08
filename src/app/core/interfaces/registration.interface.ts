@@ -1,4 +1,8 @@
+import { IClass } from './class.interface';
+import { IUser } from './user.interface';
+
 export interface IRegistration {
-  classId: string;
-  clientId: string;
+  id: string;
+  class: IClass;
+  client: IUser;
 }

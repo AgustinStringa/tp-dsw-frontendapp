@@ -14,7 +14,7 @@ import { SnackbarService } from '../../../core/services/snackbar.service';
   standalone: true,
   imports: [AddWeightDialogComponent],
   templateUrl: './daily-routine.component.html',
-  styleUrl: './daily-routine.component.css',
+  styleUrl: '../../../../assets/styles/client-pages.css',
 })
 export class DailyRoutineComponent {
   routine: IRoutine | null = null;
@@ -103,10 +103,14 @@ export class DailyRoutineComponent {
         }
       },
       error: (err: HttpErrorResponse) => {
-        if (err.error.isUserFriendly)
-          this.snackbarService.showError(err.error.message);
-        else
-          this.snackbarService.showError('Error al obtener su rutina actual.');
+        if (err.status !== 404) {
+          if (err.error.isUserFriendly)
+            this.snackbarService.showError(err.error.message);
+          else
+            this.snackbarService.showError(
+              'Error al obtener su rutina actual.'
+            );
+        }
       },
     });
   }

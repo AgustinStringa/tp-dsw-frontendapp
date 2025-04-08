@@ -36,7 +36,6 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MembershipService } from '../../../core/services/membership.service';
 import { NewExerciseRoutineDialogComponent } from '../new-exercise-routine-dialog/new-exercise-routine-dialog.component';
-import { NgClass } from '@angular/common';
 import { SnackbarService } from '../../../core/services/snackbar.service';
 
 interface Day {
@@ -68,7 +67,6 @@ export interface DialogData {
     CdkAccordionModule,
     ClientsMembershipListComponent,
     MatIconModule,
-    NgClass,
     ExerciseRoutineCardComponent,
   ],
   templateUrl: './create-routine-page.component.html',

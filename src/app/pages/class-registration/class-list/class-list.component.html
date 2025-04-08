@@ -1,7 +1,59 @@
-<div class="page-container">
-  <h2 class="crud-page-title">Inscribirse a una Clase</h2>
+<div class="mx-auto w-85 py-3">
+  <h2 class="page-title">Inscribirse a una Clase</h2>
+
+  @if (this.clientRegistrations.length > 0){
+  <div class="enrolled-classes">
+    <h3>Clases a las que estás inscrito:</h3>
+    <table class="class-type-table">
+      <thead>
+        <tr>
+          <th>Clase</th>
+          <th>Entrenador</th>
+          <th>Hora</th>
+          <th>Ubicación</th>
+          <th>Acción</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (registration of clientRegistrations; track registration) {
+        <tr>
+          <td>{{ registration.class.classType.name }}</td>
+          <td>
+            {{ registration.class.trainer.firstName }}
+            {{ registration.class.trainer.lastName }}
+          </td>
+          <td>
+            {{ registration.class.startTime }} -
+            {{ registration.class.endTime }}
+          </td>
+          <td>{{ registration.class.location }}</td>
+          <td>
+            <button
+              class="btn btn-danger"
+              (click)="cancelRegistration(registration)"
+            >
+              Eliminar Inscripción
+            </button>
+          </td>
+        </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+  } @else {
+  <div class="no-enrollments-message">
+    <p>No estás inscrito en ninguna clase.</p>
+  </div>
+  }
+
   <div class="class-type-list-container">
-    @if (this.availableClasses.length > 0) {
+    @if (this.hasActiveMembership === false){
+    <p class="alert">
+      No tienes una membresía. Adquiere una en nuestro sitio o con uno de
+      nuestros entrenadores.
+    </p>
+
+    } @else if (this.availableClasses.length > 0) {
     <mat-accordion>
       @for (classType of availableClasses; track classType.name) {
       <!-- Expansion panel para cada ClassType -->
@@ -62,13 +114,6 @@
           } }
         </mat-accordion>
         }
-        <!-- Mensaje si no hay clases disponibles -->
-        <p
-          class="alert"
-          *ngIf="!classType.classes || classType.classes.length === 0"
-        >
-          No hay clases disponibles.
-        </p>
       </mat-expansion-panel>
       }
     </mat-accordion>

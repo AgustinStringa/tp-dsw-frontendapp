@@ -1,5 +1,5 @@
 <div class="mx-auto w-85 py-3">
-  <h2 class="page-title">Registrar entrenamiento</h2>
+  <h2 class="page-title">Registrar Entrenamiento</h2>
   <div class="daily-routine-container">
     <!-- Información de la rutina -->
     @if (this.routine) {
@@ -86,10 +86,11 @@
 
       } @else {
       <p class="alert">
-        No tiene ninguna rutina registrada para el día de la fecha
+        No tienes una rutina. Comunícate con uno de nuestros entrenadores.
       </p>
       }
     </div>
+
     <!-- Modal para cargar peso -->
     @if (this.showModal && selectedExerciseRoutine) {
     <app-dialog-add-weight

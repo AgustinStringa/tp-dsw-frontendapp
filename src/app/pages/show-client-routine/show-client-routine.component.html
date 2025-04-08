@@ -1,16 +1,16 @@
 <div class="mx-auto w-85 py-3">
-  <h2 class="page-title">Mi rutina actual</h2>
-
-  @if (errorCode === 404){
-  <p class="alert">
-    No tienes una rutina. Comúnicate con uno de nuestros entrenadores.
-  </p>
-
-  } @else if (errorCode !== -1) {
-  <p class="alert">Se produjo un error. Por favor, intente nuevamente.</p>
-
-  } @else {
+  <h2 class="page-title">Mi Rutina</h2>
   <div class="daily-routine-container">
+    @if (errorCode === 404){
+    <p class="alert">
+      No tienes una rutina. Comunícate con uno de nuestros entrenadores.
+    </p>
+
+    } @else if (errorCode !== -1) {
+    <p class="alert">Se produjo un error. Por favor, intente nuevamente.</p>
+
+    } @else {
+
     <div class="routine-info">
       <table class="routine-table">
         <tr>
@@ -68,6 +68,7 @@
       </mat-expansion-panel>
       } }
     </mat-accordion>
+
+    }
   </div>
-  }
 </div>

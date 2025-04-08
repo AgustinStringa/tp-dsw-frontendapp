@@ -14,7 +14,7 @@ import { SnackbarService } from '../../../core/services/snackbar.service';
   styleUrl: './trainer-home.component.css',
 })
 export class TrainerHomeComponent {
-  trainerInformation!: ITrainerHomeInformation;
+  trainerInformation?: ITrainerHomeInformation;
 
   constructor(
     private homeService: HomeService,

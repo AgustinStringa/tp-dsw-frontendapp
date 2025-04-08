@@ -16,7 +16,10 @@ import { RoutineService } from '../../core/services/routine.service';
   standalone: true,
   imports: [MatExpansionPanel, MatExpansionModule],
   templateUrl: './show-client-routine.component.html',
-  styleUrl: './show-client-routine.component.css',
+  styleUrls: [
+    './show-client-routine.component.css',
+    '../../../assets/styles/client-pages.css',
+  ],
 })
 export class ShowClientRoutineComponent {
   currentDayName = '';
@@ -65,8 +68,6 @@ export class ShowClientRoutineComponent {
     if (user) {
       this.userId = user.id;
       this.loadRoutine();
-    } else {
-      console.error('No user found in session. Redirecting or handling error.');
     }
   }
 
