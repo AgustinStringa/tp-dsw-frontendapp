@@ -9,12 +9,26 @@
           <td><strong>Fecha Desde:</strong> {{ startDate }}</td>
           <td><strong>Fecha Hasta:</strong> {{ endDate }}</td>
           <td>
-            <button class="full-width-button" (click)="previousDay()">←</button>
+            <button
+              class="full-width-button"
+              (click)="previousDay()"
+              [disabled]="selectedDay === 1 && selectedWeek === 1"
+            >
+              ←
+            </button>
           </td>
           <td><strong>Semana:</strong> {{ selectedWeek }}</td>
           <td><strong>Día:</strong> {{ selectedDay }}</td>
           <td>
-            <button class="full-width-button" (click)="nextDay()">→</button>
+            <button
+              class="full-width-button"
+              (click)="nextDay()"
+              [disabled]="
+                selectedWeek === maxWeek && selectedDay === maxWeekDaysCount
+              "
+            >
+              →
+            </button>
           </td>
           <div></div>
         </tr>
@@ -41,7 +55,16 @@
             <td>{{ exerciseRoutine.exercise.name }}</td>
             <td>{{ exerciseRoutine.series }}</td>
             <td>{{ exerciseRoutine.repetitions }}</td>
-            <td>{{ getExerciseStatus(exerciseRoutine) }}</td>
+            <td
+              [ngStyle]="{
+                border:
+                  getExerciseStatus(exerciseRoutine) === 'No realizado'
+                    ? '2px solid'
+                    : 'none'
+              }"
+            >
+              {{ getExerciseStatus(exerciseRoutine) }}
+            </td>
 
             <td
               style="
@@ -69,14 +92,14 @@
               }
 
               <button
-                class="btn btn-primary"
+                class="btn btn-secondary"
                 [ngStyle]="{
                   opacity: exerciseRoutine.exercise.urlVideo ? 1 : 0
                 }"
               >
                 <a
                   target="_blank"
-                  class="text-white"
+                  style="color: #285192"
                   href="{{ exerciseRoutine.exercise.urlVideo }}"
                 >
                   Ver Video</a
