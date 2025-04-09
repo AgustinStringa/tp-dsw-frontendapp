@@ -1,12 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { NavigationEnd, Router, RouterLink } from '@angular/router';
 import { AuthService } from '../../core/services/auth.service';
 import { filter } from 'rxjs';
 import { MatButtonModule } from '@angular/material/button';
 import { MatMenuModule } from '@angular/material/menu';
+import { MdbCollapseDirective } from 'mdb-angular-ui-kit/collapse';
 import { MdbCollapseModule } from 'mdb-angular-ui-kit/collapse';
 import { NgClass } from '@angular/common';
-
 @Component({
   selector: 'app-navbar',
   standalone: true,
@@ -23,7 +23,8 @@ import { NgClass } from '@angular/common';
 export class NavbarComponent implements OnInit {
   private currentRoute = '';
   public userSignal = this.authService.userSignal;
-  isDropdownOpen = false;
+
+  @ViewChild('togglerFirstExample') togglerFirstExample!: MdbCollapseDirective;
 
   constructor(private router: Router, public authService: AuthService) {
     this.authService.getUser();
@@ -48,11 +49,17 @@ export class NavbarComponent implements OnInit {
     return this.currentRoute === route;
   }
 
-  toggleDropdown() {
-    this.isDropdownOpen = !this.isDropdownOpen;
+  closeNavbar() {
+    if (
+      this.togglerFirstExample &&
+      this.togglerFirstExample.collapsed === false
+    ) {
+      this.togglerFirstExample.toggle();
+    }
   }
 
   async logout() {
+    this.closeNavbar();
     if (await this.authService.logout()) this.router.navigate(['/']);
   }
 }

@@ -16,7 +16,7 @@
       mdbCollapse
       #togglerFirstExample="mdbCollapse"
     >
-      <a class="navbar-brand" routerLink="/">Iron Haven</a>
+      <a class="navbar-brand" routerLink="/" (click)="closeNavbar()">Iron Haven</a>
       <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
         @if(this.userSignal() === null){
         <li class="nav-item">
@@ -25,6 +25,7 @@
             [ngClass]="{ active: isActive('/') }"
             aria-current="page"
             routerLink="/"
+            (click)="closeNavbar()"
             >Login</a
           >
         </li>
@@ -35,6 +36,7 @@
             class="nav-link"
             [ngClass]="{ active: isActive('/home') }"
             routerLink="home"
+            (click)="closeNavbar()"
             >Home</a
           >
         </li>
@@ -46,6 +48,7 @@
             class="nav-link"
             [ngClass]="{ active: isActive('/classes') }"
             routerLink="classes"
+            (click)="closeNavbar()"
             >Clases</a
           >
         </li>
@@ -54,6 +57,7 @@
             class="nav-link"
             [ngClass]="{ active: isActive('/clients') }"
             routerLink="clients"
+            (click)="closeNavbar()"
             >Clientes</a
           >
         </li>
@@ -62,6 +66,7 @@
             class="nav-link"
             [ngClass]="{ active: isActive('/create-routine') }"
             routerLink="/create-routine"
+            (click)="closeNavbar()"
             >Crear Rutina</a
           >
         </li>
@@ -70,6 +75,7 @@
             class="nav-link"
             [ngClass]="{ active: isActive('/exercises') }"
             routerLink="/exercises"
+            (click)="closeNavbar()"
             >Ejercicios</a
           >
         </li>
@@ -78,6 +84,7 @@
             class="nav-link"
             [ngClass]="{ active: isActive('/trainers') }"
             routerLink="trainers"
+            (click)="closeNavbar()"
             >Entrenadores</a
           >
         </li>
@@ -86,6 +93,7 @@
             class="nav-link"
             [ngClass]="{ active: isActive('/memberships') }"
             routerLink="memberships"
+            (click)="closeNavbar()"
             >Membresías</a
           >
         </li>
@@ -94,6 +102,7 @@
             class="nav-link"
             [ngClass]="{ active: isActive('/class-types') }"
             routerLink="class-types"
+            (click)="closeNavbar()"
             >Tipos de Clases</a
           >
         </li>
@@ -102,6 +111,7 @@
             class="nav-link"
             [ngClass]="{ active: isActive('/membership-types') }"
             routerLink="membership-types"
+            (click)="closeNavbar()"
             >Tipos de Membresías</a
           >
         </li>
@@ -112,6 +122,7 @@
             class="nav-link"
             [ngClass]="{ active: isActive('/registration') }"
             routerLink="/registration"
+            (click)="closeNavbar()"
             >Inscribirse a una Clase</a
           >
         </li>
@@ -121,6 +132,7 @@
             class="nav-link"
             [ngClass]="{ active: isActive('/showClientRoutine') }"
             routerLink="/showClientRoutine"
+            (click)="closeNavbar()"
             >Mi Rutina</a
           >
         </li>
@@ -130,6 +142,7 @@
             class="nav-link"
             [ngClass]="{ active: isActive('/record-exercise-execution') }"
             routerLink="/record-exercise-execution"
+            (click)="closeNavbar()"
             >Registrar Entrenamiento</a
           >
         </li>
@@ -139,6 +152,7 @@
             class="nav-link"
             [ngClass]="{ active: isActive('/goals') }"
             routerLink="goals"
+            (click)="closeNavbar()"
             >Metas</a
           >
         </li>
@@ -148,6 +162,7 @@
             class="nav-link"
             [ngClass]="{ active: isActive('/progresses') }"
             routerLink="progresses"
+            (click)="closeNavbar()"
             >Progresos</a
           >
         </li>
@@ -160,7 +175,7 @@
       </button>
       <mat-menu #menu="matMenu">
         <button mat-menu-item>
-          <a class="nav-link" routerLink="/home">Mi Perfil</a>
+          <a class="nav-link" routerLink="/home" (click)="closeNavbar()">Mi Perfil</a>
         </button>
         <button mat-menu-item (click)="logout()">Cerrar Sesión</button>
       </mat-menu>
