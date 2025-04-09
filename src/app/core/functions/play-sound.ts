@@ -1,6 +1,6 @@
 export const SoundUtils = {
   notification: () => {
-    const audio = new Audio('../../../assets/notification.mp3');
+    const audio = new Audio('../../../assets/sounds/notification.mp3');
     audio.preload = 'auto';
     audio.volume = 0.3;
     audio.play().catch((error) => {
@@ -9,7 +9,7 @@ export const SoundUtils = {
   },
 
   sendMessage: () => {
-    const audio = new Audio('../../../assets/sendMessage.mp3');
+    const audio = new Audio('../../../assets/sounds/send-message.mp3');
     audio.preload = 'auto';
     audio.volume = 0.3;
     audio.play().catch((error) => {

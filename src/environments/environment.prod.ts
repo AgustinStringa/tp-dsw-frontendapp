@@ -19,6 +19,7 @@ export const environment = {
   progressesUrl: apiUrl + '/clients/progresses',
   registrationUrl: apiUrl + '/classes/registration',
   routinesUrl: apiUrl + '/routines',
+  socketUrl: 'https://api.gimnasio.com',
   trainersUrl: apiUrl + '/trainers',
   userPaymentUrl: apiUrl + '/user-payment/',
 };
