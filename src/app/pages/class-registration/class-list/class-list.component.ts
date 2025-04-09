@@ -22,7 +22,10 @@ import { SnackbarService } from '../../../core/services/snackbar.service';
   standalone: true,
   imports: [MatExpansionModule],
   templateUrl: './class-list.component.html',
-  styleUrl: './class-list.component.css',
+  styleUrls: [
+    './class-list.component.css',
+    '../../../../assets/styles/client-pages.css',
+  ],
 })
 export class ClassListComponent {
   hasActiveMembership = false;

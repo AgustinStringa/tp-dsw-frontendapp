@@ -1,17 +1,18 @@
 <div class="mx-auto w-85 py-3">
-  <h2 class="page-title">Inscribirse a una Clase</h2>
+  <h2 class="page-title">Tus Inscripciones</h2>
 
-  @if (this.clientRegistrations.length > 0){
-  <div class="enrolled-classes">
-    <h3>Clases a las que estás inscrito:</h3>
-    <table class="class-type-table">
+  <div class="client-container">
+    @if (this.clientRegistrations.length === 0){
+    <p class="alert">No estás inscrito en ninguna clase.</p>
+    } @else {
+    <table class="registrations-table">
       <thead>
         <tr>
           <th>Clase</th>
           <th>Entrenador</th>
-          <th>Hora</th>
+          <th>Horario</th>
           <th>Ubicación</th>
-          <th>Acción</th>
+          <th style="text-align: center">Acción</th>
         </tr>
       </thead>
       <tbody>
@@ -23,11 +24,11 @@
             {{ registration.class.trainer.lastName }}
           </td>
           <td>
-            {{ registration.class.startTime }} -
+            {{ registration.class.startTime }} a
             {{ registration.class.endTime }}
           </td>
           <td>{{ registration.class.location }}</td>
-          <td>
+          <td style="text-align: center">
             <button
               class="btn btn-danger"
               (click)="cancelRegistration(registration)"
@@ -39,14 +40,11 @@
         }
       </tbody>
     </table>
+    }
   </div>
-  } @else {
-  <div class="no-enrollments-message">
-    <p>No estás inscrito en ninguna clase.</p>
-  </div>
-  }
 
-  <div class="class-type-list-container">
+  <h2 class="page-title" id="inscribirse-title">Inscribirse a una Clase</h2>
+  <div class="client-container">
     @if (this.hasActiveMembership === false){
     <p class="alert">
       No tienes una membresía. Adquiere una en nuestro sitio o con uno de
@@ -95,7 +93,7 @@
             </mat-expansion-panel-header>
 
             <div class="class-details">
-              <p><strong>Cupos:</strong> {{ i.maxCapacity }}</p>
+              <p><strong>Capacidad máxima:</strong> {{ i.maxCapacity }}</p>
               <p><strong>Ubicación:</strong> {{ i.location }}</p>
               <p>
                 <strong>Entrenador:</strong> {{ i.trainer.firstName }}
