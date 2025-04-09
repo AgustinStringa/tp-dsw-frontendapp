@@ -5,10 +5,7 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import {
-  GoalService,
-  IGoalCreate,
-} from '../../../core/services/goal.service.js';
+import { GoalService, IGoalCreate } from '../../../core/services/goal.service';
 import {
   MAT_DIALOG_DATA,
   MatDialogActions,

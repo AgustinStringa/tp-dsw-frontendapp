@@ -1,5 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
+import { HttpClientModule } from '@angular/common/http';
 import { TrainerHomeComponent } from './trainer-home.component';
 
 describe('TrainerHomeComponent', () => {
@@ -8,10 +9,9 @@ describe('TrainerHomeComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [TrainerHomeComponent]
-    })
-    .compileComponents();
-    
+      imports: [TrainerHomeComponent, HttpClientModule],
+    }).compileComponents();
+
     fixture = TestBed.createComponent(TrainerHomeComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

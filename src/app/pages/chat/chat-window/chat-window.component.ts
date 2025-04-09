@@ -6,15 +6,15 @@ import {
   OnInit,
   ViewChild,
 } from '@angular/core';
-import { AuthService } from '../../../core/services/auth.service.js';
+import { AuthService } from '../../../core/services/auth.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { IMessage } from '../../../core/interfaces/message.interface.js';
-import { IUser } from '../../../core/interfaces/user.interface.js';
-import { MessageService } from '../../../core/services/message.service.js';
-import { SnackbarService } from '../../../core/services/snackbar.service.js';
-import { SocketService } from '../../../core/services/socket.service.js';
-import { SoundUtils } from '../../../core/functions/play-sound.js';
+import { IMessage } from '../../../core/interfaces/message.interface';
+import { IUser } from '../../../core/interfaces/user.interface';
+import { MessageService } from '../../../core/services/message.service';
+import { SnackbarService } from '../../../core/services/snackbar.service';
+import { SocketService } from '../../../core/services/socket.service';
+import { SoundUtils } from '../../../core/functions/play-sound';
 
 @Component({
   selector: 'app-chat-window',

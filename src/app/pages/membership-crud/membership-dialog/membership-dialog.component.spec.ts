@@ -24,7 +24,7 @@ describe('MembershipDialogComponent', () => {
           provide: MAT_DIALOG_DATA,
           useValue: {
             title: 'string',
-            action: 'string',
+            action: 'put',
             membership: undefined,
           },
         },
