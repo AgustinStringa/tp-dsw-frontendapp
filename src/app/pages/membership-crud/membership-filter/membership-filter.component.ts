@@ -1,4 +1,11 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnChanges,
+  Output,
+  SimpleChanges,
+} from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { IMembership } from '../../../core/interfaces/membership.interface.js';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
@@ -13,53 +20,64 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
     './membership-filter.component.css',
   ],
 })
-export class MembershipFilterComponent {
+export class MembershipFilterComponent implements OnChanges {
   @Output() filterMemberships = new EventEmitter<IMembership[]>();
   @Input() memberships: IMembership[] | null = [];
-
+  @Input() outstandingMemberships: IMembership[] | null = [];
   private filteredMemberships: IMembership[] = [];
-  public showPayPending = false;
+  public showOnlyPayPending = false;
   public searchValue = '';
+
+  ngOnChanges(changes: SimpleChanges): void {
+    this.applyFilters();
+  }
 
   clearFilters() {
     if (this.memberships) {
       this.searchValue = '';
-      this.showPayPending = false;
+      this.showOnlyPayPending = false;
       const defaultMemberships = [...this.memberships];
       this.filterMemberships.emit(defaultMemberships);
     }
   }
 
   applySearchFilter() {
-    if (this.memberships) {
-      this.filteredMemberships = this.memberships.filter(
-        (m) =>
-          m.client.firstName
-            .toLowerCase()
-            .includes(this.searchValue.toLowerCase()) ||
-          m.client.lastName
-            .toLowerCase()
-            .includes(this.searchValue.toLowerCase())
-      );
-    }
+    if (
+      !this.memberships ||
+      !this.outstandingMemberships ||
+      !this.filterMemberships
+    )
+      return;
+
+    this.filteredMemberships = this.filteredMemberships.filter(
+      (m) =>
+        this.deleteDiacritic(m.client.firstName.toLowerCase())
+          .concat(' ')
+          .concat(this.deleteDiacritic(m.client.lastName.toLowerCase()))
+          .match(this.deleteDiacritic(this.searchValue).toLowerCase()) ||
+        this.deleteDiacritic(m.client.lastName.toLowerCase())
+          .concat(' ')
+          .concat(this.deleteDiacritic(m.client.firstName.toLowerCase()))
+          .match(this.deleteDiacritic(this.searchValue).toLowerCase())
+    );
   }
 
   applyToggleFilter() {
-    if (!this.memberships) return;
-    if (this.showPayPending) {
-      this.filteredMemberships = this.filteredMemberships.filter(
-        (m) => m.debt && m.debt > 0
-      );
+    if (!this.memberships || !this.outstandingMemberships) return;
+    if (this.showOnlyPayPending) {
+      this.filteredMemberships = this.outstandingMemberships;
     } else {
-      this.filteredMemberships = this.filteredMemberships.filter(
-        (m) => !m.debt || m.debt == 0
-      );
+      this.filteredMemberships = this.memberships;
     }
   }
 
+  deleteDiacritic(text: string) {
+    return text.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+  }
+
   applyFilters() {
-    this.applySearchFilter();
     this.applyToggleFilter();
+    this.applySearchFilter();
     this.filterMemberships.emit(this.filteredMemberships);
   }
 }

@@ -27,6 +27,7 @@ import { PaymentListComponent } from '../payment-list/payment-list.component';
 })
 export class MembershipListComponent {
   memberships: IMembership[] | null = null;
+  outstandingMemberships: IMembership[] | null = null;
   filteredMemberships: IMembership[] | null = null;
   clients: IUser[] = [];
   types: IMembershipType[] = [];
@@ -39,6 +40,7 @@ export class MembershipListComponent {
     private membershipService: MembershipService
   ) {
     this.getActiveMemberships();
+    this.getOutstandingMemberships();
   }
 
   getActiveMemberships() {
@@ -50,6 +52,17 @@ export class MembershipListComponent {
       error: () => {
         this.memberships = null;
         this.filteredMemberships = null;
+      },
+    });
+  }
+
+  getOutstandingMemberships() {
+    this.membershipService.getOutstanding().subscribe({
+      next: (res) => {
+        this.outstandingMemberships = res.data;
+      },
+      error: () => {
+        this.outstandingMemberships = null;
       },
     });
   }
@@ -103,6 +116,7 @@ export class MembershipListComponent {
 
     dialogRef.afterClosed().subscribe(() => {
       this.getActiveMemberships();
+      this.getOutstandingMemberships();
     });
   }
 
@@ -113,5 +127,6 @@ export class MembershipListComponent {
   hidePaymentList(event: boolean) {
     this.showPayments = event;
     this.getActiveMemberships();
+    this.getOutstandingMemberships();
   }
 }
