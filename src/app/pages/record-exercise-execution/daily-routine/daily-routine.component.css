@@ -12,3 +12,8 @@
 .full-width-button:hover {
   background-color: #f7ce68;
 }
+
+.full-width-button:disabled {
+  background-color: #d3d3d3;
+  cursor: default;
+}
