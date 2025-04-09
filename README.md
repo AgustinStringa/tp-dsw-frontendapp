@@ -21,7 +21,7 @@ A continuación se detallan los pasos para instalar y ejecutar el proyecto de ma
 
 - **Node.js**: Asegúrate de tener instalada la versión 20.19.0 (LTS) de Node.js. Puedes descargarla desde [nodejs.org](https://nodejs.org/).
 - **npm**: npm se instala automáticamente con Node.js, pero si necesitas actualizarlo, puedes hacerlo ejecutando el siguiente comando:
-  ```bash
+  ```
   npm install -g npm
   ```
 
@@ -39,7 +39,7 @@ git clone https://github.com/AgustinStringa/tp-dsw-backendapp.git
 cd tp-dsw-backendapp
 ```
 
-2. Instala las dependencias:
+3. Instala las dependencias:
 
 ```
 npm install
@@ -73,6 +73,15 @@ ng test
 
 ### Ejecutar tests end-to-end
 
+Antes de ejecutar las pruebas E2E, asegúrate de que la aplicación Angular esté en ejecución.
+
 ```
-ng e2e
+npm run e2e
 ```
+
+## Autores
+
+- **Colaborador 1** - _Aarón De Bernardo_ - [aarondebernardo@gmail.com]
+- **Colaborador 2** - _Agustín Stringa_ - [stringaagustin1@gmail.com]
+- **Colaborador 3** - _Elías Danteo_ - [elias.danteo.tomas@hotmail.com]
+- **Colaborador 4** - _Francisca Gramaglia_ - [franciscagramaglia714@gmail.com]

@@ -14,6 +14,7 @@ export const environment = {
   goalsUrl: apiUrl + '/clients/goals',
   membershipsUrl: apiUrl + '/memberships',
   membershipTypesUrl: apiUrl + '/memberships/types',
+  messagesUrl: apiUrl + '/messages',
   outstandingMembershipsUrl: apiUrl + '/memberships/outstanding',
   paymentsUrl: apiUrl + '/memberships/payments',
   progressesUrl: apiUrl + '/clients/progresses',
@@ -22,5 +23,4 @@ export const environment = {
   socketUrl: 'http://localhost:3000',
   trainersUrl: apiUrl + '/trainers',
   userPaymentUrl: apiUrl + '/user-payment/',
-  messagesUrl: apiUrl + '/messages',
 };
