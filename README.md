@@ -39,7 +39,7 @@ git clone https://github.com/AgustinStringa/tp-dsw-backendapp.git
 cd tp-dsw-backendapp
 ```
 
-2. Instala las dependencias:
+3. Instala las dependencias:
 
 ```
 npm install
@@ -73,8 +73,10 @@ ng test
 
 ### Ejecutar tests end-to-end
 
+Antes de ejecutar las pruebas E2E, asegúrate de que la aplicación Angular esté en ejecución.
+
 ```
-ng e2e
+npm run e2e
 ```
 
 ## Autores
