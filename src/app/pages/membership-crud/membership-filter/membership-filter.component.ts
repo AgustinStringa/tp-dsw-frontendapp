@@ -15,7 +15,10 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
   standalone: true,
   imports: [MatSlideToggleModule, FormsModule],
   templateUrl: './membership-filter.component.html',
-  styleUrls: ['./membership-filter.component.css'],
+  styleUrls: [
+    '../../../../assets/styles/filter-container.css',
+    './membership-filter.component.css',
+  ],
 })
 export class MembershipFilterComponent implements OnChanges {
   @Output() filterMemberships = new EventEmitter<IMembership[]>();

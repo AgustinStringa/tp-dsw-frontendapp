@@ -1,60 +1,6 @@
-.daily-routine-container {
-  padding: 20px;
-  background-color: #3a3a3a;
-  border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-  max-width: 1000px;
-  margin: 0 auto;
-  font-family: Arial, sans-serif;
-  color: white;
-}
-
-.routine-info {
-  margin-bottom: 20px;
-}
-
-.routine-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-bottom: 20px;
-}
-
-.routine-table td {
-  padding: 10px;
-  border: 1px solid #555;
-}
-
-.routine-table strong {
-  color: #F7CE68;
-}
-
-.exercises-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-top: 20px;
-}
-
-.exercises-table th,
-.exercises-table td {
-  padding: 10px;
-  text-align: left;
-  border: 1px solid #555;
-}
-
-.exercises-table th {
-  background-color: #4a4a4a;
-  color: #F7CE68;
-  font-weight: bold;
-}
-
-.exercises-table td {
-  background-color: #5a5a5a;
-  color: #F7CE68;
-}
-
 .exercises-table td button {
   padding: 8px 12px;
-  background-color: #FBAB7E;
+  background-color: #fbab7e;
   color: white;
   border: none;
   border-radius: 5px;
@@ -63,7 +9,7 @@
 }
 
 .exercises-table td button:hover {
-  background-color: #F7CE68;
+  background-color: #f7ce68;
 }
 
 button {
@@ -72,20 +18,12 @@ button {
   border: none;
   border-radius: 5px;
   cursor: pointer;
-  background-color: #FBAB7E;
+  background-color: #fbab7e;
   color: white;
 }
 
 button:hover {
-  background-color: #F7CE68;
-}
-
-.alert {
-  padding: 10px;
-  background-color: #f44336;
-  color: white;
-  border-radius: 5px;
-  margin-bottom: 20px;
+  background-color: #f7ce68;
 }
 
 .exercise-card {
@@ -94,7 +32,7 @@ button:hover {
   padding: 15px;
   margin: 15px 0;
   background-color: #6a6a6a;
-  color: #F7CE68;
+  color: #f7ce68;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
   transition: background-color 0.3s;
 }
@@ -104,5 +42,5 @@ button:hover {
 }
 
 .exercise-card strong {
-  color: #F7CE68;
+  color: #f7ce68;
 }

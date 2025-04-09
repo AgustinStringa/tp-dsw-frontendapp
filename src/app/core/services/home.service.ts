@@ -12,6 +12,14 @@ export interface IClientHomeInformation {
   currentMembership: IMembership | null;
 }
 
+export interface ITrainerHomeInformation {
+  incomeLast30Days: number;
+  stripeIncomeLast30Days: number;
+  activeClassesCount: number;
+  activeMembershipsCount: number;
+  clientClassRegistrationsCount: number;
+}
+
 @Injectable({
   providedIn: 'root',
 })
@@ -21,5 +29,10 @@ export class HomeService {
   getInformationForClient(): Observable<ApiResponse<IClientHomeInformation>> {
     const url = `${environment.clientsUrl}/home`;
     return this.http.get<ApiResponse<IClientHomeInformation>>(`${url}`);
+  }
+
+  getInformationForTrainer(): Observable<ApiResponse<ITrainerHomeInformation>> {
+    const url = `${environment.trainersUrl}/home`;
+    return this.http.get<ApiResponse<ITrainerHomeInformation>>(`${url}`);
   }
 }

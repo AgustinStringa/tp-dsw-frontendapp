@@ -1,0 +1,38 @@
+<div class="summary-container">
+  <div class="row">
+    <div class="col-12 col-md-6 col-xl-3">
+      ${{ trainerInformation?.incomeLast30Days?.toLocaleString('es-ES') }}
+      <p class="summary-title">
+        {{ 'Ingresos en los últimos 30 días ' }}
+      </p>
+    </div>
+
+    <div class="col-12 col-md-6 col-xl-3">
+      ${{ trainerInformation?.stripeIncomeLast30Days?.toLocaleString('es-ES') }}
+      <p class="summary-title">
+        {{ 'Ingresos mediante Stripe en los últimos 30 días' }}
+      </p>
+    </div>
+
+    <div class="col-12 col-md-4 col-xl-2">
+      {{ trainerInformation?.activeClassesCount }}
+      <p class="summary-title">
+        {{ 'Clases activas' }}
+      </p>
+    </div>
+
+    <div class="col-12 col-md-4 col-xl-2">
+      {{ trainerInformation?.activeMembershipsCount }}
+      <p class="summary-title">
+        {{ 'Membresías activas' }}
+      </p>
+    </div>
+
+    <div class="col-12 col-md-4 col-xl-2">
+      {{ trainerInformation?.clientClassRegistrationsCount }}
+      <p class="summary-title">
+        {{ 'Clientes inscriptos en alguna clase' }}
+      </p>
+    </div>
+  </div>
+</div>

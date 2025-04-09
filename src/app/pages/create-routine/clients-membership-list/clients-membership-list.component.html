@@ -1,10 +1,14 @@
 <div class="table-container">
   @if (clientForRoutineList.length > 0) { @if(!this.selectedClient()) {
 
-  <div class="mx-auto w-75 my-5">
+  <div class="mx-auto w-75 my-3">
     <p class="fw-bold fs-4 text-start">
       Seleccione un cliente para asignar la rutina
     </p>
+      <div class="mb-3">
+        <input type="text" class="form-control" placeholder="Buscar por nombre o apellido..." [(ngModel)]="searchTerm"
+          (input)="filterClients()">
+      </div>
   </div>
   <table class="table align-middle mb-0 bg-white">
     <thead class="bg-light">
@@ -16,7 +20,7 @@
       </tr>
     </thead>
     <tbody>
-      @for (c of clientForRoutineList; track c) {
+      @for (c of filteredClients; track c) {
       <tr
         (click)="toggleSelected(c)"
         [class.selected]="selectedClient()?.id === c.id"

@@ -4,7 +4,7 @@ import {
 } from '../../../core/services/class-type.service';
 import { Component, Inject } from '@angular/core';
 import {
-FormControl,
+  FormControl,
   FormGroup,
   FormsModule,
   ReactiveFormsModule,
@@ -58,7 +58,10 @@ export class ClassTypeDialogComponent {
 
   form = new FormGroup({
     name: new FormControl<string>('', [Validators.required, trimValidator()]),
-    description: new FormControl<string>(''),
+    description: new FormControl<string>('', [
+      Validators.required,
+      trimValidator(),
+    ]),
   });
 
   constructor(

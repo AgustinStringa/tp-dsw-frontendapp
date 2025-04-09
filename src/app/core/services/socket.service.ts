@@ -1,5 +1,5 @@
 import { io, Socket } from 'socket.io-client';
-import IMessage from '../interfaces/IMessage.interface.js';
+import { IMessage } from '../interfaces/message.interface';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
@@ -14,14 +14,6 @@ export class SocketService {
       withCredentials: true,
       transports: ['websocket', 'polling'],
     });
-
-    this.socket.on('connect', () => {
-      console.log('Conectado al servidor Socket.io');
-    });
-
-    this.socket.on('disconnect', () => {
-      console.log('Desconectado del servidor');
-    });
   }
 
   sendMessage(event: string, message: IMessage) {
@@ -35,6 +27,7 @@ export class SocketService {
       });
     });
   }
+
   connect() {
     if (this.socket) {
       this.socket.disconnect();

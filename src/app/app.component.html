@@ -3,5 +3,9 @@
 <main class="main">
   <router-outlet></router-outlet>
 </main>
-<app-chat-window></app-chat-window>
+@if(showChat) {
+  <div class="chat-window-container">
+    <app-chat-window></app-chat-window>
+  </div>
+}
 <app-footer></app-footer>

@@ -8,9 +8,7 @@
       name="name-filter"
       id="name-filter"
     />
-    <button class="btn" (click)="clearFilters()">Limpiar filtros</button>
-  </div>
-  <div>
+    <div class="m-1">
     <p class="user-select-none my-3">
       <mat-slide-toggle
         [(ngModel)]="showOnlyPayPending"
@@ -18,5 +16,9 @@
         >Visualizar solo pendientes de pago</mat-slide-toggle
       >
     </p>
+    </div>
+    <button class="btn" (click)="clearFilters()">Limpiar filtros</button>
+  </div>
+  <div>
   </div>
 </div>

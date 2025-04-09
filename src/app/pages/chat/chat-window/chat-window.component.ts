@@ -9,7 +9,7 @@ import {
 import { AuthService } from '../../../core/services/auth.service.js';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import IMessage from '../../../core/interfaces/IMessage.interface.js';
+import { IMessage } from '../../../core/interfaces/message.interface.js';
 import { IUser } from '../../../core/interfaces/user.interface.js';
 import { MessageService } from '../../../core/services/message.service.js';
 import { SnackbarService } from '../../../core/services/snackbar.service.js';
@@ -37,11 +37,11 @@ export class ChatWindowComponent
   message = '';
   messages: IMessage[] = [];
   userId: string;
-  isClient: boolean;
   unreadMessages: Record<string, number> = {};
   users: IUser[] = [];
   search = '';
   filteredUsers: IUser[] = [];
+
   constructor(
     private socketService: SocketService,
     private messageService: MessageService,
@@ -50,7 +50,6 @@ export class ChatWindowComponent
   ) {
     const user = this.authService.getUser();
     this.userId = user ? user.id : '';
-    this.isClient = user ? user.isClient : false;
   }
 
   async ngOnInit() {
@@ -64,36 +63,32 @@ export class ChatWindowComponent
   }
 
   private setupSocketListeners() {
-    this.socketService.onMessage('respuesta').subscribe((data: IMessage) => {
-      const isMessageForCurrentUser = data.receiver === this.userId;
-      const isFromSelectedChat = data.sender === this.selectedUser?.id;
-      const isMessageSentByMe = data.sender === this.userId;
-
-      if (
-        isMessageForCurrentUser &&
-        !isFromSelectedChat &&
-        this.soundsEnabled
-      ) {
-        SoundUtils.notification();
-      } else if (this.soundsEnabled) {
+    this.socketService
+      .onMessage('message-sent')
+      .subscribe((message: IMessage) => {
         SoundUtils.sendMessage();
-      }
-      if (
-        data.sender === this.selectedUser?.id ||
-        data.receiver === this.selectedUser?.id
-      ) {
-        this.messages.push(data);
-      }
-      if (
-        isMessageForCurrentUser &&
-        !isMessageSentByMe &&
-        !isFromSelectedChat
-      ) {
-        this.unreadMessages[data.sender] =
-          (this.unreadMessages[data.sender] || 0) + 1;
-        this.calculateTotalUnread();
-      }
-    });
+        this.messages.push(message);
+      });
+
+    this.socketService
+      .onMessage('message-received')
+      .subscribe((message: IMessage) => {
+        const isFromSelectedChat = message.sender === this.selectedUser?.id;
+
+        if (!isFromSelectedChat && this.soundsEnabled)
+          SoundUtils.notification();
+
+        if (isFromSelectedChat) {
+          this.messages.push(message);
+          this.messageService.markMessagesAsRead(message.sender).subscribe();
+        }
+
+        if (!isFromSelectedChat) {
+          this.unreadMessages[message.sender] =
+            (this.unreadMessages[message.sender] || 0) + 1;
+          this.calculateTotalUnread();
+        }
+      });
   }
 
   scrollToBottom(): void {
@@ -115,22 +110,29 @@ export class ChatWindowComponent
         );
         this.filterUsers();
       },
-      error: (error) => {
-        console.error('Error al cargar los usuarios:', error);
+      error: (err) => {
+        if (err.error.isUserFriendly)
+          this.snackbarService.showError(err.error.message);
+        else this.snackbarService.showError('Error al cargar los usuarios.');
       },
     });
   }
 
   async filterUsers() {
-    if (!this.search) {
-      this.filteredUsers = this.users ? [...this.users] : [];
-      return;
+    let usersToFilter = this.users ? [...this.users] : [];
+
+    if (this.search) {
+      usersToFilter = usersToFilter.filter((user) => {
+        const fullName = `${user.firstName} ${user.lastName}`.toLowerCase();
+        const searchTerm = this.search.toLowerCase();
+        return fullName.includes(searchTerm);
+      });
     }
 
-    this.filteredUsers = this.users.filter((user) => {
-      const fullName = `${user.firstName} ${user.lastName}`.toLowerCase();
-      const searchTerm = this.search.toLowerCase();
-      return fullName.includes(searchTerm);
+    this.filteredUsers = usersToFilter.sort((a, b) => {
+      const unreadA = this.unreadMessages[a.id] || 0;
+      const unreadB = this.unreadMessages[b.id] || 0;
+      return unreadB - unreadA;
     });
   }
 
@@ -157,20 +159,21 @@ export class ChatWindowComponent
   async loadUnreadMessages() {
     this.messageService.getUnreadMessages().subscribe({
       next: (response) => {
-        if (response && Array.isArray(response.data)) {
-          response.data.forEach((msg: IMessage) => {
-            if (msg.sender !== this.userId) {
-              this.unreadMessages[msg.sender] =
-                (this.unreadMessages[msg.sender] || 0) + 1;
-            }
-          });
-          this.calculateTotalUnread();
-        } else {
-          console.error('La respuesta no contiene un array válido:', response);
-        }
+        response.data.forEach((msg: IMessage) => {
+          if (msg.sender !== this.userId) {
+            this.unreadMessages[msg.sender] =
+              (this.unreadMessages[msg.sender] || 0) + 1;
+          }
+        });
+        this.calculateTotalUnread();
       },
-      error: (error) => {
-        console.error('Error cargando mensajes no leídos:', error);
+      error: (err) => {
+        if (err.error.isUserFriendly)
+          this.snackbarService.showError(err.error.message);
+        else
+          this.snackbarService.showError(
+            'Error al cargar los mensajes no leídos.'
+          );
       },
     });
   }
@@ -186,21 +189,16 @@ export class ChatWindowComponent
     this.selectedUser = user;
     this.unreadMessages[user.id] = 0;
 
-    this.messageService.markMessagesAsRead(user.id).subscribe({
-      next: () => {
-        //
-      },
-      error: (error) => {
-        console.error('Error marcando mensajes como leídos:', error);
-      },
-    });
+    this.messageService.markMessagesAsRead(user.id).subscribe();
 
     this.messageService.getMessagesFrom(this.selectedUser.id).subscribe({
       next: (response) => {
         this.messages = response.data;
       },
-      error: (error) => {
-        console.error('Error obteniendo mensajes:', error);
+      error: (err) => {
+        if (err.error.isUserFriendly)
+          this.snackbarService.showError(err.error.message);
+        else this.snackbarService.showError('Error al cargar los mensajes.');
       },
     });
     this.calculateTotalUnread();
@@ -211,7 +209,7 @@ export class ChatWindowComponent
 
     if (this.message.length > this.maxMessageLength) {
       this.snackbarService.showError(
-        `El mensaje excede el límite de ${this.maxMessageLength} caracteres permitidos`
+        `El mensaje excede el límite de ${this.maxMessageLength} caracteres permitidos.`
       );
       return;
     }
@@ -221,9 +219,6 @@ export class ChatWindowComponent
         content: this.message,
         sender: this.userId,
         receiver: this.selectedUser.id,
-        createdAt: new Date(),
-        readAt: undefined,
-        entity: this.isClient ? 'client' : 'trainer',
       };
       this.socketService.sendMessage('message', messageData);
       this.message = '';

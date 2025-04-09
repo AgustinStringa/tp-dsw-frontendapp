@@ -1,25 +1,36 @@
-<div class="modal-overlay" (click)="onClose()">
-  <div class="modal-content" (click)="$event.stopPropagation()">
+<div
+  class="modal-overlay"
+  (click)="onClose()"
+  (keydown)="onClose()"
+  tabindex="0"
+>
+  <div
+    class="modal-content"
+    (click)="$event.stopPropagation()"
+    (keydown)="$event.stopPropagation()"
+    tabindex="0"
+  >
     <h2>Registrar Peso</h2>
 
-    <label for="weight">Peso:</label>
-    <input
-      id="weight"
-      type="number"
-      [(ngModel)]="selectedWeight"
-      placeholder="Ingrese el peso"
-      [disabled]="withoutWeight"
-    />
+    <form [formGroup]="form" (submit)="onSave()">
+      <label for="weight">Peso:</label>
+      <input
+        formControlName="weight"
+        id="weight"
+        type="number"
+        placeholder="Ingrese el peso"
+      />
 
-    <label for="withoutWeight">Sin peso</label>
-    <input
-      type="checkbox"
-      id="withoutWeight"
-      [(ngModel)]="withoutWeight"
-      (click)="selectedWeight = null"
-    />
+      <label for="withoutWeight">Sin peso</label>
+      <input
+        formControlName="withoutWeight"
+        type="checkbox"
+        id="withoutWeight"
+        (click)="selectWithoutWeight()"
+      />
 
-    <button (click)="onSave()">Guardar</button>
-    <button (click)="onClose()">Cancelar</button>
+      <button type="submit">Guardar</button>
+      <button (click)="onClose()">Cancelar</button>
+    </form>
   </div>
 </div>

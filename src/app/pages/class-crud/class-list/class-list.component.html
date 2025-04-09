@@ -10,15 +10,10 @@
   </div>
 
   @if (classes && classes.length > 0) {
-
+  
   <div class="filter-container">
     <label for="dayFilter">Filtrar por día:</label>
-    <select
-      class="day-filter"
-      id="dayFilter"
-      [(ngModel)]="dayFilter"
-      (ngModelChange)="applyFilter()"
-    >
+    <select class="day-filter" id="dayFilter" [(ngModel)]="dayFilter" (ngModelChange)="applyFilter()">
       <option value="">Todos</option>
       <option value="Lunes">Lunes</option>
       <option value="Martes">Martes</option>
@@ -28,25 +23,17 @@
       <option value="Sábado">Sábado</option>
       <option value="Domingo">Domingo</option>
     </select>
-
+  
     <label for="classTypeFilter">Filtrar por tipo de clase:</label>
-    <select
-      id="classTypeFilter"
-      [(ngModel)]="classTypeFilter"
-      (ngModelChange)="applyFilter()"
-    >
+    <select id="classTypeFilter" [(ngModel)]="classTypeFilter" (ngModelChange)="applyFilter()">
       <option value="">Todos</option>
       <option *ngFor="let classType of classTypes" [value]="classType.name">
         {{ classType.name }}
       </option>
     </select>
-
+  
     <label for="trainerFilter">Filtrar por entrenador:</label>
-    <select
-      id="classTypeFilter"
-      [(ngModel)]="trainerFilter"
-      (ngModelChange)="applyFilter()"
-    >
+    <select id="classTypeFilter" [(ngModel)]="trainerFilter" (ngModelChange)="applyFilter()">
       <option value="">Todos</option>
       <option *ngFor="let trainer of trainers" [value]="trainer.firstName">
         {{ trainer.firstName + " " + trainer.lastName }}
@@ -54,72 +41,65 @@
     </select>
     <button class="btn" (click)="clearFilters()">Limpiar filtros</button>
   </div>
+  
+  }
 
-  } @if (filteredClasses && filteredClasses.length > 0) {
+  @if (filteredClasses && filteredClasses.length > 0) {
   <div class="table-container">
-    <table>
-      <thead>
-        <tr>
-          <th>Tipo de clase</th>
-          <th>Día</th>
-          <th>Hora inicio</th>
-          <th>Hora fin</th>
-          <th>
-            Capacidad<br />
-            personas
-          </th>
-          <th>Ubicación</th>
-          <th>Entrenador</th>
-          <th>Activa</th>
-          <th>Acciones</th>
-        </tr>
-      </thead>
-
-      <tbody>
-        @for (c of filteredClasses; track c) {
-        <tr>
-          <td>{{ c.classType.name }}</td>
-          <td>{{ getDayName(c.day) }}</td>
-          <td>{{ c.startTime }}</td>
-          <td>{{ c.endTime }}</td>
-          <td>{{ c.maxCapacity }}</td>
-          <td>{{ c.location }}</td>
-          <td>{{ c.trainer.firstName + " " + c.trainer.lastName }}</td>
-          <td>{{ c.active ? "Sí" : "No" }}</td>
-
-          <td class="td-actions">
-            <button
-              (click)="deleteClass(c.id)"
-              aria-label="Example icon button with a delete icon"
-            >
-              <mat-icon>delete</mat-icon>
-            </button>
-            <button
-              (click)="updateClass(c)"
-              aria-label="Example icon button with an edit icon"
-            >
-              <mat-icon>edit</mat-icon>
-            </button>
-          </td>
-        </tr>
-        }
-      </tbody>
-    </table>
+    <div class="table-responsive">
+      <table>
+        <thead>
+          <tr>
+            <th>Tipo de clase</th>
+            <th>Día</th>
+            <th>Hora inicio</th>
+            <th>Hora fin</th>
+            <th>Capacidad</th>
+            <th>Ubicación</th>
+            <th>Entrenador</th>
+            <th>Activa</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+  
+        <tbody>
+          @for (c of filteredClasses; track c) {
+          <tr>
+            <td data-label="Tipo de clase">{{ c.classType.name }}</td>
+            <td data-label="Día">{{ getDayName(c.day) }}</td>
+            <td data-label="Hora inicio">{{ c.startTime }}</td>
+            <td data-label="Hora fin">{{ c.endTime }}</td>
+            <td data-label="Capacidad">{{ c.maxCapacity }}</td>
+            <td data-label="Ubicación">{{ c.location }}</td>
+            <td data-label="Entrenador">{{ c.trainer.firstName + " " + c.trainer.lastName }}</td>
+            <td data-label="Activa">{{ c.active ? "Sí" : "No" }}</td>
+            <td class="td-actions" data-label="Acciones">
+              <button (click)="deleteClass(c.id)" aria-label="Eliminar clase" class="action-btn">
+                <mat-icon>delete</mat-icon>
+              </button>
+              <button (click)="updateClass(c)" aria-label="Editar clase" class="action-btn">
+                <mat-icon>edit</mat-icon>
+              </button>
+            </td>
+          </tr>
+          }
+        </tbody>
+      </table>
+    </div>
   </div>
-
+  
   } @else if (classes === null) {
   <div class="alert alert-danger fs-6" role="alert">
     No se pudieron cargar las clases.
   </div>
-
+  
   } @else if (classes.length === 0){
   <div class="alert alert-warning fs-6" role="alert">
     No hay clases cargadas. Crea una para comenzar.
   </div>
-
+  
   } @else {
   <div class="alert alert-warning fs-6" role="alert">
     Ninguna clase cumple con los criterios del filtro.
   </div>
   }
-</div>

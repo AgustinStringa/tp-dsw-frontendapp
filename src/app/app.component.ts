@@ -1,5 +1,6 @@
+import { Component, effect } from '@angular/core';
+import { AuthService } from './core/services/auth.service.js';
 import { ChatWindowComponent } from './pages/chat/chat-window/chat-window.component';
-import { Component } from '@angular/core';
 import { FooterComponent } from './layout/footer/footer.component';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
@@ -26,4 +27,20 @@ import { RouterOutlet } from '@angular/router';
 })
 export class AppComponent {
   title = 'app-gimnasio';
+  showChat = false;
+
+  constructor(private authService: AuthService) {
+    this.updateChatVisibility();
+
+    effect(() => {
+      this.updateChatVisibility();
+    });
+  }
+
+  private updateChatVisibility(): void {
+    const user = this.authService.userSignal();
+    if (user != null) {
+      this.showChat = true;
+    }
+  }
 }

@@ -1,13 +1,17 @@
 @if (users && users.length > 0) {
 <div class="filter-container">
-  <label for="name-filter">Filtrar por nombre y apellido:</label>
-  <input
-    type="text"
-    name="name-filter"
-    id="name-filter"
-    [(ngModel)]="nameFilter"
-    (ngModelChange)="applyFilter()"
-  />
+  <div class="filter-group">
+    <label for="name-filter">Filtrar por nombre:</label>
+    <input type="text" name="name-filter" id="name-filter" [(ngModel)]="nameFilter" (ngModelChange)="applyFilter()"
+      placeholder="Nombre o apellido" />
+  </div>
+
+  <div class="filter-group">
+    <label for="dni-filter">Filtrar por DNI:</label>
+    <input type="text" name="dni-filter" id="dni-filter" [(ngModel)]="dniFilter" (ngModelChange)="applyFilter()"
+      placeholder="Número de DNI" />
+  </div>
+
   <button class="btn" (click)="clearFilters()">Limpiar filtros</button>
 </div>
 }

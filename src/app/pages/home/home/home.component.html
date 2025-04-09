@@ -1,4 +1,8 @@
 <section style="background-color: #eee">
+  @if (this.userSignal()?.isClient === false) {
+  <app-trainer-home></app-trainer-home>
+  }
+
   <div class="container py-5">
     <div class="row">
       <div class="col-lg-4">
@@ -15,7 +19,7 @@
         </div>
 
         @if (this.userSignal()?.isClient) {
-        <app-client-home [clientId]="this.userSignal()?.id"></app-client-home>
+        <app-client-home></app-client-home>
         }
       </div>
       <div class="col-lg-8">
