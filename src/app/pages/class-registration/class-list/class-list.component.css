@@ -49,3 +49,8 @@
 .class-panel.mat-expanded {
   border: 1px solid #3a3a3a;
 }
+
+td {
+  text-align: right !important;
+
+}

@@ -16,11 +16,12 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MembershipService } from '../../../core/services/membership.service';
 import { SnackbarService } from '../../../core/services/snackbar.service';
+import { MatIcon } from '@angular/material/icon';
 
 @Component({
   selector: 'app-class-list',
   standalone: true,
-  imports: [MatExpansionModule],
+  imports: [MatExpansionModule, MatIcon],
   templateUrl: './class-list.component.html',
   styleUrls: [
     './class-list.component.css',

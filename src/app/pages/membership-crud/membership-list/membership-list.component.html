@@ -40,13 +40,13 @@
       <tbody>
         @for (m of filteredMemberships; track m) {
         <tr>
-          <td>{{ m.dateFrom | date : 'dd/MM/yyyy' }}</td>
-          <td>{{ m.dateTo | date : 'dd/MM/yyyy' }}</td>
-          <td>{{ m.type.name }}</td>
-          <td>{{ m.client.firstName + ' ' + m.client.lastName }}</td>
-          <td>${{ m.debt?.toLocaleString('es-AR') }}</td>
+          <td data-label="Fecha Desde">{{ m.dateFrom | date : 'dd/MM/yyyy' }}</td>
+          <td data-label="Fecha Hasta">{{ m.dateTo | date : 'dd/MM/yyyy' }}</td>
+          <td data-label="Tipo de Membresía">{{ m.type.name }}</td>
+          <td data-label="Cliente">{{ m.client.firstName + ' ' + m.client.lastName }}</td>
+          <td data-label="Deuda">${{ m.debt?.toLocaleString('es-AR') }}</td>
 
-          <td class="td-actions">
+          <td data-label="Acciones" class="td-actions">
             <button
               [disabled]="m.debt === 0"
               (click)="addPayment(m)"

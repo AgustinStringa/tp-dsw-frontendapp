@@ -29,11 +29,11 @@
       <tbody>
         @for (p of progresses; track p) {
         <tr>
-          <td>{{ p.date | date : 'dd/MM/yyyy' }}</td>
-          <td>{{ p.weight }} kg</td>
-          <td>{{ p.fatPercentage }}%</td>
-          <td>{{ p.bodyMeasurements }}</td>
-          <td class="td-actions">
+          <td data-label="Fecha">{{ p.date | date : 'dd/MM/yyyy' }}</td>
+          <td data-label="Peso">{{ p.weight }} kg</td>
+          <td data-label="Porcentaje Graso">{{ p.fatPercentage }}%</td>
+          <td data-label="Medidas Corporales">{{ p.bodyMeasurements }}</td>
+          <td data-label="Acciones" class="td-actions">
             <button
               (click)="deleteProgress(p.id)"
               aria-label="Example icon button with a delete icon"
