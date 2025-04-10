@@ -2,10 +2,12 @@ import {
   HomeService,
   IClientHomeInformation,
 } from '../../../core/services/home.service';
+import { ActivatedRoute } from '@angular/router';
 import { Component } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
 import { MatDialog } from '@angular/material/dialog';
 import { PayMembershipDialogComponent } from '../../client-payment/pay-membership-dialog/pay-membership-dialog.component';
+import { PaymentService } from '../../../core/services/payment.service';
 import { SnackbarService } from '../../../core/services/snackbar.service';
 
 @Component({
@@ -22,9 +24,26 @@ export class ClientHomeComponent {
   constructor(
     private homeService: HomeService,
     private dialog: MatDialog,
-    private snackbarService: SnackbarService
+    private snackbarService: SnackbarService,
+    private activatedRoute: ActivatedRoute,
+    private paymentService: PaymentService
   ) {
     this.getInformation();
+    this.getQueryParams();
+  }
+
+  getQueryParams() {
+    this.activatedRoute.queryParams.subscribe((params) => {
+      const stripeId = params['stripe_id'] || null;
+
+      if (stripeId) {
+        this.paymentService.checkPaymentStatus(stripeId).subscribe({
+          next: (res) => {
+            if (res.status === 200) this.getInformation();
+          },
+        });
+      }
+    });
   }
 
   getInformation() {
@@ -57,10 +76,6 @@ export class ClientHomeComponent {
   }
 
   openPayMembershipModal() {
-    const dialogRef = this.dialog.open(PayMembershipDialogComponent);
-
-    dialogRef.afterClosed().subscribe(() => {
-      //TODO llamar a webhooj o a getInformation??
-    });
+    this.dialog.open(PayMembershipDialogComponent);
   }
 }

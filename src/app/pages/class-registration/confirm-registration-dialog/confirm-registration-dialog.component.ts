@@ -11,6 +11,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 
 interface DialogData {
+  className: string;
   trainer: string;
   day: string;
   startTime: string;

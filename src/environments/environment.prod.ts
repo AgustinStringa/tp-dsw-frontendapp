@@ -1,4 +1,4 @@
-const apiUrl = 'https://api.gimnasio.com';
+const apiUrl = 'https://gimnasio-iron-haven.onrender.com/api';
 
 export const environment = {
   production: true,
@@ -20,7 +20,7 @@ export const environment = {
   progressesUrl: apiUrl + '/clients/progresses',
   registrationUrl: apiUrl + '/classes/registration',
   routinesUrl: apiUrl + '/routines',
-  socketUrl: 'https://api.gimnasio.com',
+  socketUrl: 'https://gimnasio-iron-haven.onrender.com/',
   trainersUrl: apiUrl + '/trainers',
   userPaymentUrl: apiUrl + '/user-payment/',
 };

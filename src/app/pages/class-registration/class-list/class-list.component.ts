@@ -108,7 +108,9 @@ export class ClassListComponent {
 
     const dialogRef = this.dialog.open(ConfirmRegistrationDialogComponent, {
       data: {
-        className: classItem.classType.name, //TODO enviar nombre de la clase
+        className: this.classTypes.find(
+          (type) => type.id === (classItem.classType as unknown as string)
+        )?.name,
         trainer: classItem.trainer.firstName + ' ' + classItem.trainer.lastName,
         day: this.getDayNameFromNumber(classItem.day),
         startTime: classItem.startTime,

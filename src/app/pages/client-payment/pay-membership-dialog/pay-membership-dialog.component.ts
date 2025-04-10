@@ -58,7 +58,7 @@ export class PayMembershipDialogComponent {
     private snackbarService: SnackbarService
   ) {
     this.getMembershipTypes();
-    this.clientId = this.authService.getUser()!.id; //TODO ver qué puedo hacer para mejorarlo
+    this.clientId = this.authService.getUser()!.id;
   }
 
   onSubmit(): void {
