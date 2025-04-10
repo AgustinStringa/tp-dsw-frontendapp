@@ -1,3 +1,8 @@
+mat-expansion-panel-header {
+  margin: 10px 0;
+  height: auto;
+}
+
 .exercise-card {
   border: 1px solid #555;
   border-radius: 5px;

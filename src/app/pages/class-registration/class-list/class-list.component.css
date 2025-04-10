@@ -2,6 +2,11 @@
   margin-top: 2rem !important;
 }
 
+.expansion-header {
+  margin: 10px 0;
+  height: auto;
+}
+
 .registrations-table {
   border-collapse: collapse;
   margin-bottom: 20px;

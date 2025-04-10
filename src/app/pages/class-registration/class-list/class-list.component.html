@@ -64,9 +64,6 @@
           <mat-panel-title>
             {{ classType.name }}
           </mat-panel-title>
-          <mat-panel-description>
-            {{ classType.description }}
-          </mat-panel-description>
         </mat-expansion-panel-header>
 
         <!-- Detalles del ClassType -->
@@ -84,8 +81,7 @@
           >
             <mat-expansion-panel-header class="class-header">
               <mat-panel-title>
-                {{ getDayNameFromNumber(i.day) }} - {{ i.trainer.firstName }}
-                {{ i.trainer.lastName }}
+                {{ getDayNameFromNumber(i.day) }}
               </mat-panel-title>
               <mat-panel-description>
                 {{ i.startTime }} - {{ i.endTime }} | {{ i.location }}
@@ -93,12 +89,14 @@
             </mat-expansion-panel-header>
 
             <div class="class-details">
-              <p><strong>Capacidad máxima:</strong> {{ i.maxCapacity }}</p>
-              <p><strong>Ubicación:</strong> {{ i.location }}</p>
               <p>
                 <strong>Entrenador:</strong> {{ i.trainer.firstName }}
                 {{ i.trainer.lastName }}
               </p>
+              <p>
+                <strong>Capacidad máxima:</strong> {{ i.maxCapacity }} personas
+              </p>
+              <p><strong>Ubicación:</strong> {{ i.location }}</p>
               <button
                 type="button"
                 class="btn btn-primary btn-success"
