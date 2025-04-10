@@ -62,7 +62,7 @@
         (click)="onUserSelected(user)"
       >
         <div class="contact-name">{{ user.firstName }} {{ user.lastName }}</div>
-        @if (user.entity === 'trainer') {
+        @if (user.userType === 'trainer') {
         <i class="fas fa-dumbbell" title="Entrenador"></i>
         } @else {
         <i class="fas fa-user" title="Cliente"></i>

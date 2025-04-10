@@ -4,6 +4,6 @@ export interface IUser {
   firstName: string;
   dni: string;
   email: string;
-  entity?: 'client' | 'trainer';
+  userType?: 'client' | 'trainer';
   password?: string;
 }
