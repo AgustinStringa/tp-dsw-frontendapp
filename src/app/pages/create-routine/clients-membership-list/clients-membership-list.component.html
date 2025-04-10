@@ -25,7 +25,7 @@
         (click)="toggleSelected(c)"
         [class.selected]="selectedClient()?.id === c.id"
       >
-        <td>
+        <td class="text-center">
           <div class="d-flex align-items-center">
             <img
               src="https://mdbootstrap.com/img/new/avatars/8.jpg"
@@ -34,12 +34,12 @@
               class="rounded-circle"
             />
             <div class="ms-3">
-              <p class="fw-bold mb-1">{{ c.firstName + ' ' + c.lastName }}</p>
+              <p class=" fw-bold mb-1">{{ c.firstName + ' ' + c.lastName }}</p>
               <p class="text-muted mb-0">{{ c.email }}</p>
             </div>
           </div>
         </td>
-        <td>
+        <td >
           <p class="fw-normal mb-1">{{ c.dni || 'there is no dni yet' }}</p>
         </td>
         <td>{{ formatDate(c.currentMembership.dateFrom) }}</td>

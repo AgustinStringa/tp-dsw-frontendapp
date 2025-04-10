@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, effect } from '@angular/core';
+import { AuthService } from '../../core/services/auth.service';
 import { MdbFormsModule } from 'mdb-angular-ui-kit/forms';
 import { MdbRippleModule } from 'mdb-angular-ui-kit/ripple';
 
@@ -9,4 +10,14 @@ import { MdbRippleModule } from 'mdb-angular-ui-kit/ripple';
   templateUrl: './footer.component.html',
   styleUrl: './footer.component.css',
 })
-export class FooterComponent {}
+export class FooterComponent {
+  isClient = true;
+
+  constructor(private authService: AuthService) {
+    effect(() => {
+      const user = this.authService.userSignal();
+      if (user == null) return;
+      this.isClient = user.isClient;
+    });
+  }
+}

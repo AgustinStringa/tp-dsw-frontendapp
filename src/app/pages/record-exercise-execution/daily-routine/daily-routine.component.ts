@@ -3,16 +3,18 @@ import { AddWeightDialogComponent } from '../add-weight-dialog/add-weight-dialog
 import { AuthService } from '../../../core/services/auth.service';
 import { Component } from '@angular/core';
 import { differenceInWeeks } from 'date-fns';
+import { FormsModule } from '@angular/forms';
 import { HttpErrorResponse } from '@angular/common/http';
 import { IExerciseRoutine } from '../../../core/interfaces/exercise-routine.inteface';
 import { IRoutine } from '../../../core/interfaces/routine.interface';
+import { MatIconModule } from '@angular/material/icon';
 import { RoutineService } from '../../../core/services/routine.service';
 import { SnackbarService } from '../../../core/services/snackbar.service';
 
 @Component({
   selector: 'app-daily-routine',
   standalone: true,
-  imports: [AddWeightDialogComponent, NgStyle],
+  imports: [AddWeightDialogComponent, FormsModule, MatIconModule, NgStyle],
   templateUrl: './daily-routine.component.html',
   styleUrls: [
     './daily-routine.component.css',

@@ -30,6 +30,7 @@
 .registrations-table td {
   background-color: #34495e;
   color: #ecf0f1;
+  text-align: right;
 }
 
 .registrations-table td button {
@@ -48,4 +49,10 @@
 
 .class-panel.mat-expanded {
   border: 1px solid #3a3a3a;
+}
+
+@media (min-width: 768px) {
+  .registrations-table td {
+    text-align: left;
+  }
 }

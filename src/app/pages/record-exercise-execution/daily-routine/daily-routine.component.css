@@ -17,3 +17,7 @@
   background-color: #d3d3d3;
   cursor: default;
 }
+
+td {
+  text-align: center;
+}

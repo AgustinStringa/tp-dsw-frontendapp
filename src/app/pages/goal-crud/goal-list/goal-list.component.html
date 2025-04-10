@@ -30,17 +30,17 @@
       <tbody>
         @for (g of goals; track g) {
         <tr>
-          <td>{{ g.createdAt | date : 'dd/MM/yyyy' }}</td>
-          <td>{{ g.fatPercentage }}%</td>
-          <td>{{ g.bodyMeasurements }}</td>
-          <td>
+          <td data-label="Fecha Creacion">{{ g.createdAt | date : 'dd/MM/yyyy' }}</td>
+          <td data-label="Porcentaje Graso">{{ g.fatPercentage }}%</td>
+          <td data-label="Medidas Corporales">{{ g.bodyMeasurements }}</td>
+          <td data-label="Completada">
             <input
               type="checkbox"
               [(ngModel)]="g.done"
               (change)="toggleGoalDone(g)"
             />
           </td>
-          <td class="td-actions">
+          <td data-label="Acciones" class="td-actions">
             <button
               (click)="deleteGoal(g.id)"
               aria-label="Example icon button with a delete icon"

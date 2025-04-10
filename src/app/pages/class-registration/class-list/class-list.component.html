@@ -12,23 +12,23 @@
           <th>Entrenador</th>
           <th>Horario</th>
           <th>Ubicación</th>
-          <th style="text-align: center">Acción</th>
+          <th>Acción</th>
         </tr>
       </thead>
       <tbody>
         @for (registration of clientRegistrations; track registration) {
         <tr>
-          <td>{{ registration.class.classType.name }}</td>
-          <td>
+          <td data-label="Clase">{{ registration.class.classType.name }}</td>
+          <td data-label="Entrenador">
             {{ registration.class.trainer.firstName }}
             {{ registration.class.trainer.lastName }}
           </td>
-          <td>
+          <td data-label="Horario">
             {{ registration.class.startTime }} a
             {{ registration.class.endTime }}
           </td>
-          <td>{{ registration.class.location }}</td>
-          <td style="text-align: center">
+          <td data-label="Ubicacion">{{ registration.class.location }}</td>
+          <td data-label="Accion">
             <button
               class="btn btn-danger"
               (click)="cancelRegistration(registration)"

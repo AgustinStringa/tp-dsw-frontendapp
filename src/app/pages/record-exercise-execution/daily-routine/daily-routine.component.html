@@ -52,10 +52,11 @@
           selectedDay && exerciseRoutine.week === selectedWeek) {
 
           <tr>
-            <td>{{ exerciseRoutine.exercise.name }}</td>
-            <td>{{ exerciseRoutine.series }}</td>
-            <td>{{ exerciseRoutine.repetitions }}</td>
+            <td data-label="Ejercicio">{{ exerciseRoutine.exercise.name }}</td>
+            <td data-label="Series">{{ exerciseRoutine.series }}</td>
+            <td data-label="Repeticiones">{{ exerciseRoutine.repetitions }}</td>
             <td
+              data-label="Estado"
               [ngStyle]="{
                 border:
                   getExerciseStatus(exerciseRoutine) === 'No realizado'
@@ -67,13 +68,28 @@
             </td>
 
             <td
+              data-label="Acciones"
               style="
-                display: flex;
-                justify-content: center;
+                justify-content: right;
+                text-align: right;
                 gap: 1rem;
                 flex-wrap: wrap;
               "
             >
+              <button
+                class="btn btn-secondary"
+                [ngStyle]="{
+                  opacity: exerciseRoutine.exercise.urlVideo ? 1 : 0
+                }"
+              >
+                <a
+                  target="_blank"
+                  style="color: #285192"
+                  href="{{ exerciseRoutine.exercise.urlVideo }}"
+                >
+                  Ver Video</a
+                >
+              </button>
               @if (exerciseRoutine.weight === null) {
               <button
                 class="btn btn-success"
@@ -90,21 +106,6 @@
                 Editar estado
               </button>
               }
-
-              <button
-                class="btn btn-secondary"
-                [ngStyle]="{
-                  opacity: exerciseRoutine.exercise.urlVideo ? 1 : 0
-                }"
-              >
-                <a
-                  target="_blank"
-                  style="color: #285192"
-                  href="{{ exerciseRoutine.exercise.urlVideo }}"
-                >
-                  Ver Video</a
-                >
-              </button>
             </td>
           </tr>
           }}
