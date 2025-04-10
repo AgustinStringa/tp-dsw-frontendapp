@@ -37,6 +37,10 @@ export class ClientHomeComponent {
       const stripeId = params['stripe_id'] || null;
 
       if (stripeId) {
+        const url = new URL(window.location.href);
+        url.searchParams.delete('stripe_id');
+        window.history.replaceState({}, '', url.toString());
+
         this.paymentService.checkPaymentStatus(stripeId).subscribe({
           next: (res) => {
             if (res.status === 200) this.getInformation();
