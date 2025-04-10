@@ -1,4 +1,5 @@
 import { io, Socket } from 'socket.io-client';
+import { environment } from '../../../environments/environment';
 import { IMessage } from '../interfaces/message.interface';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
@@ -8,13 +9,6 @@ import { Observable } from 'rxjs';
 })
 export class SocketService {
   private socket: Socket | null = null;
-
-  constructor() {
-    this.socket = io('http://localhost:3000', {
-      withCredentials: true,
-      transports: ['websocket', 'polling'],
-    });
-  }
 
   sendMessage(event: string, message: IMessage) {
     this.socket?.emit(event, message);
@@ -29,10 +23,9 @@ export class SocketService {
   }
 
   connect() {
-    if (this.socket) {
-      this.socket.disconnect();
-    }
-    this.socket = io('http://localhost:3000', {
+    if (this.socket) this.socket.disconnect();
+
+    this.socket = io(environment.socketUrl, {
       withCredentials: true,
       transports: ['websocket', 'polling'],
     });

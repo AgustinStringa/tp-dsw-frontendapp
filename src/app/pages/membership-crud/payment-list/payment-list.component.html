@@ -6,7 +6,11 @@
 
         @if (membership.debt !== 0) {
         <div class="add-payment-btn">
-          <button type="button" class="btn btn-primary btn-lg" (click)="addPayment(membership)">
+          <button
+            type="button"
+            class="btn btn-primary btn-lg"
+            (click)="addPayment(membership)"
+          >
             Nuevo pago
           </button>
         </div>
@@ -28,18 +32,30 @@
             <tbody>
               @for (p of payments; track p) {
               <tr>
-                <td data-label="Fecha y hora">{{ p.dateTime | date : 'dd/MM/yyyy hh:mm' }}</td>
+                <td data-label="Fecha y hora">
+                  {{ p.dateTime | date : 'dd/MM/yyyy hh:mm' }}
+                </td>
                 <td data-label="Método">{{ p.paymentMethod }}</td>
-                <td data-label="Monto">{{ p.amount.toLocaleString("es-ES") }}</td>
+                <td data-label="Monto">
+                  ${{ p.amount.toLocaleString('es-AR') }}
+                </td>
 
                 <td class="td-actions" data-label="Acciones">
-                  <button [disabled]="isPaymentEditable(p)" (click)="deletePayment(p.id)" aria-label="Eliminar pago"
-                    class="action-btn">
+                  <button
+                    [disabled]="isPaymentEditable(p)"
+                    (click)="deletePayment(p.id)"
+                    aria-label="Eliminar pago"
+                    class="action-btn"
+                  >
                     <mat-icon>delete</mat-icon>
                   </button>
 
-                  <button [disabled]="isPaymentEditable(p)" (click)="updatePayment(p)" aria-label="Editar pago"
-                    class="action-btn">
+                  <button
+                    [disabled]="isPaymentEditable(p)"
+                    (click)="updatePayment(p)"
+                    aria-label="Editar pago"
+                    class="action-btn"
+                  >
                     <mat-icon>edit</mat-icon>
                   </button>
                 </td>
@@ -50,7 +66,7 @@
         </div>
       </div>
 
-      <button class ="btn mt-3" (click)="closeComponent()">Volver</button>
+      <button class="btn mt-3" (click)="closeComponent()">Volver</button>
     </div>
   </div>
 </div>

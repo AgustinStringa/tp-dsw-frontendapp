@@ -53,8 +53,9 @@ export class ChatWindowComponent
   }
 
   async ngOnInit() {
-    await this.loadUsers();
+    this.socketService.connect();
     this.setupSocketListeners();
+    await this.loadUsers();
     await this.loadUnreadMessages();
   }
 
@@ -154,6 +155,7 @@ export class ChatWindowComponent
     }
 
     this.showSettingsMenu = false;
+    if (!this.isChatConnected) this.toggleChat();
   }
 
   async loadUnreadMessages() {

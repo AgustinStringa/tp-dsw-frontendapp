@@ -5,8 +5,27 @@
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
-    "watch": "ng build --watch --configuration development"
+    "watch": "ng build --watch --configuration development",
+    "e2e": "playwright test e2e-playwright/"
   },
+  "authors": [
+    {
+      "name": "Aarón De Bernardo",
+      "email": "aarondebernardo@gmail.com"
+    },
+    {
+      "name": "Agustín Stringa",
+      "email": "stringaagustin1@gmail.com"
+    },
+    {
+      "name": "Elías Danteo",
+      "email": "elias.danteo.tomas@hotmail.com"
+    },
+    {
+      "name": "Francisca Gramaglia",
+      "email": "franciscagramaglia714@gmail.com"
+    }
+  ],
   "private": true,
   "dependencies": {
     "@angular/animations": "^17.3.0",
@@ -34,6 +53,7 @@
     "@angular-devkit/build-angular": "^17.3.7",
     "@angular/cli": "^17.3.7",
     "@angular/compiler-cli": "^17.3.0",
+    "@playwright/test": "^1.51.1",
     "@types/jasmine": "~5.1.0",
     "angular-eslint": "19.3.0",
     "eslint": "^9.23.0",

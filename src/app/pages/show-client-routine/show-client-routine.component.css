@@ -1,44 +1,12 @@
-.exercises-table td button {
-  padding: 8px 12px;
-  background-color: #fbab7e;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  font-size: 0.9rem;
-}
-
-.exercises-table td button:hover {
-  background-color: #f7ce68;
-}
-
-button {
-  padding: 10px 20px;
-  font-size: 1rem;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  background-color: #fbab7e;
-  color: white;
-}
-
-button:hover {
-  background-color: #f7ce68;
-}
-
 .exercise-card {
   border: 1px solid #555;
   border-radius: 5px;
   padding: 15px;
   margin: 15px 0;
-  background-color: #6a6a6a;
+  background-color: #5a5a5a;
   color: #f7ce68;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
   transition: background-color 0.3s;
-}
-
-.exercise-card:hover {
-  background-color: #7a7a7a;
 }
 
 .exercise-card strong {

@@ -39,8 +39,8 @@ export class AppComponent {
 
   private updateChatVisibility(): void {
     const user = this.authService.userSignal();
-    if (user != null) {
-      this.showChat = true;
-    }
+
+    if (user !== null) this.showChat = true;
+    else this.showChat = false;
   }
 }

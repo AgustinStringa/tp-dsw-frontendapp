@@ -1,27 +1,87 @@
-# AppGimnasio
+# Frontend Gimnasio IronHaven
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.3.7.
+Este es un proyecto desarrollado con Angular para la materia Desarrollo de Software de la Universidad Tecnológica Nacional Facultad Regional Rosario.
+Se trata de un sitio web que dispone de información para visitantes (potenciales clientes) y cuenta con 2 niveles de acceso: uno para entrenadores y otro para clientes.
 
-## Development server
+## Entrenadores
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+Cumplen el rol de administradores del sistema. Pueden gestionar y administrar usuarios, clases, membresías y crear rutinas para los clientes. Tienen acceso a estadísticas valiosas para la empresa, como lo son los ingresos del último mes, cantidad de membresías activas, clases que se brindan, entre otros.
 
-## Code scaffolding
+## Clientes
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+A través de la autogestión pueden comprar membresías para asistir al gimnasio (mediante la plataforma de pagos Stripe), inscribirse a clases y registrar la ejecución de los ejercicios asignados. Disponen de secciones exclusivas para establecer metas y registrar progresos.
 
-## Build
+## Características generales
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+Los usuarios de cualquier tipo, pueden comunicarse a través de un chat. El sistema notifica mediante correos electrónicos la proximidad del vencimiento de una membresía, la disponibilidad de una nueva clase y el registro correcto en la plataforma. Por otra parte, se ejecutan tareas diarias automáticamente, que se encargan de enviar notificaciones al cliente y liberar cupos en las diferentes clases (ocupados por clienes que dejaron de asistir al gimnasio).
 
-## Running unit tests
+A continuación se detallan los pasos para instalar y ejecutar el proyecto de manera sencilla.
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+## Requisitos
 
-## Running end-to-end tests
+- **Node.js**: Asegúrate de tener instalada la versión 20.19.0 (LTS) de Node.js. Puedes descargarla desde [nodejs.org](https://nodejs.org/).
+- **npm**: npm se instala automáticamente con Node.js, pero si necesitas actualizarlo, puedes hacerlo ejecutando el siguiente comando:
+  ```
+  npm install -g npm
+  ```
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+## Instalación
 
-## Further help
+1. Clona este repositorio en tu computadora:
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+```
+git clone https://github.com/AgustinStringa/tp-dsw-backendapp.git
+```
+
+2. Accede al directorio del proyecto:
+
+```
+cd tp-dsw-backendapp
+```
+
+3. Instala las dependencias:
+
+```
+npm install
+```
+
+## Ejecución
+
+Puedes elegir cualquiera de los siguientes modos según tus necesidades. Sólo ejecuta la el comando mostrado.
+
+### Modo de Desarrollo
+
+```
+ng serve
+```
+
+Luego abre `http://localhost:4200/` en tu navegador.
+
+### Modo de Producción
+
+```
+ng build
+```
+
+Los archivos generados se encontrarán en el directorio `dist/`
+
+### Ejecutar tests unitarios
+
+```
+ng test
+```
+
+### Ejecutar tests end-to-end
+
+Antes de ejecutar las pruebas E2E, asegúrate de que la aplicación Angular esté en ejecución.
+
+```
+npm run e2e
+```
+
+## Autores
+
+- **Colaborador 1** - _Aarón De Bernardo_ - [aarondebernardo@gmail.com]
+- **Colaborador 2** - _Agustín Stringa_ - [stringaagustin1@gmail.com]
+- **Colaborador 3** - _Elías Danteo_ - [elias.danteo.tomas@hotmail.com]
+- **Colaborador 4** - _Francisca Gramaglia_ - [franciscagramaglia714@gmail.com]

@@ -14,8 +14,13 @@
   <form [formGroup]="form" (ngSubmit)="onSubmit()">
     <mat-dialog-content class="common-dialog">
       <div class="client-info">
-        <p class="text-center"><strong>Cliente:</strong> {{ membership.client.firstName + membership.client.lastName }}</p>
-        <p class = "text-center"><strong>Tipo de Membresía:</strong> {{ membership.type.name }}</p>
+        <p class="text-center">
+          <strong>Cliente:</strong>
+          {{ membership.client.firstName + ' ' + membership.client.lastName }}
+        </p>
+        <p class="text-center">
+          <strong>Tipo de Membresía:</strong> {{ membership.type.name }}
+        </p>
       </div>
 
       <mat-form-field>
