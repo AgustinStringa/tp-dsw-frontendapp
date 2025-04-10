@@ -12,6 +12,7 @@ import { MembershipFilterComponent } from '../membership-filter/membership-filte
 import { MembershipService } from '../../../core/services/membership.service';
 import { PaymentDialogComponent } from '../payment-dialog/payment-dialog.component';
 import { PaymentListComponent } from '../payment-list/payment-list.component';
+import { SnackbarService } from '../../../core/services/snackbar.service';
 
 @Component({
   selector: 'app-membership-list',
@@ -37,7 +38,8 @@ export class MembershipListComponent {
 
   constructor(
     private dialog: MatDialog,
-    private membershipService: MembershipService
+    private membershipService: MembershipService,
+    private snackbarService: SnackbarService
   ) {
     this.getActiveMemberships();
     this.getOutstandingMemberships();
@@ -114,9 +116,22 @@ export class MembershipListComponent {
   openDialog(dialog: ComponentType<unknown>, data: object): void {
     const dialogRef = this.dialog.open(dialog, data);
 
-    dialogRef.afterClosed().subscribe(() => {
-      this.getActiveMemberships();
-      this.getOutstandingMemberships();
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result !== 'none') {
+        this.getActiveMemberships();
+        this.getOutstandingMemberships();
+        if (result === 'created') {
+          if (dialogRef.componentInstance instanceof PaymentDialogComponent) {
+            this.snackbarService.showSuccess('Pago registrado.');
+          } else {
+            this.snackbarService.showSuccess('Membresía creada.');
+          }
+        } else if (result === 'updated') {
+          this.snackbarService.showSuccess('Membresía actualizada.');
+        } else if (result === 'deleted') {
+          this.snackbarService.showError('Membresía eliminada.');
+        }
+      }
     });
   }
 

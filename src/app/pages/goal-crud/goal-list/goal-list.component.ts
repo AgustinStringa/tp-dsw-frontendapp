@@ -24,7 +24,7 @@ import { SnackbarService } from '../../../core/services/snackbar.service';
 export class GoalListComponent {
   userSignal = this.authService.userSignal;
   goals: IGoal[] = [];
-  userId: string = '';
+  userId = '';
   client: IUser | undefined | null;
   achievedGoalsCount = 0;
   proposedGoalsCount = 0;
@@ -119,7 +119,16 @@ export class GoalListComponent {
     const dialogRef = this.dialog.open(dialog, { data });
 
     dialogRef.afterClosed().subscribe((result) => {
-      if (result !== 'none') this.getClientGoals();
+      if (result !== 'none') {
+        this.getClientGoals();
+        if (result === 'created') {
+          this.snackbarService.showSuccess('Meta registrada.');
+        } else if (result === 'updated') {
+          this.snackbarService.showSuccess('Meta actualizada.');
+        } else if (result === 'deleted') {
+          this.snackbarService.showError('Meta eliminada.');
+        }
+      }
     });
   }
 }

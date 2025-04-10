@@ -7,6 +7,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { MembershipTypeDialogComponent } from '../membership-type-dialog/membership-type-dialog.component';
 import { MembershipTypeService } from '../../../core/services/membership-type.service';
+import { SnackbarService } from '../../../core/services/snackbar.service';
 
 @Component({
   selector: 'app-membership-types-list',
@@ -25,7 +26,8 @@ export class MembershipTypeListComponent {
 
   constructor(
     private membershipTypeService: MembershipTypeService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private snackbarService: SnackbarService
   ) {
     this.getMembershipTypes();
   }
@@ -99,6 +101,13 @@ export class MembershipTypeListComponent {
     dialogRef.afterClosed().subscribe((result) => {
       if (result !== 'none') {
         this.getMembershipTypes();
+        if (result === 'created') {
+          this.snackbarService.showSuccess('Tipo de membresía registrado.');
+        } else if (result === 'updated') {
+          this.snackbarService.showSuccess('Tipo de membresía actualizado.');
+        } else if (result === 'deleted') {
+          this.snackbarService.showError('Tipo de membresía eliminado.');
+        }
       }
     });
   }

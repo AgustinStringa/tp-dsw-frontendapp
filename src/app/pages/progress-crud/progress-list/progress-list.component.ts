@@ -23,7 +23,7 @@ import { SnackbarService } from '../../../core/services/snackbar.service';
 export class ProgressListComponent {
   userSignal = this.authService.userSignal;
   progresses: IProgress[] = [];
-  userId: string = '';
+  userId = '';
   client: IUser | undefined | null;
 
   constructor(
@@ -85,8 +85,17 @@ export class ProgressListComponent {
   openDialog(dialog: ComponentType<unknown>, data: object): void {
     const dialogRef = this.dialog.open(dialog, { data });
 
-    dialogRef.afterClosed().subscribe((res) => {
-      if (res !== 'none') this.getClientProgresses();
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result !== 'none') {
+        this.getClientProgresses();
+        if (result === 'created') {
+          this.snackbarService.showSuccess('Progreso registrado.');
+        } else if (result === 'updated') {
+          this.snackbarService.showSuccess('Progreso actualizado.');
+        } else if (result === 'deleted') {
+          this.snackbarService.showError('Progreso eliminado.');
+        }
+      }
     });
   }
 }

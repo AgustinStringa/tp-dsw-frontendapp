@@ -30,13 +30,13 @@ A continuación se detallan los pasos para instalar y ejecutar el proyecto de ma
 1. Clona este repositorio en tu computadora:
 
 ```
-git clone https://github.com/AgustinStringa/tp-dsw-backendapp.git
+git clone https://github.com/AgustinStringa/tp-dsw-frontendapp.git
 ```
 
 2. Accede al directorio del proyecto:
 
 ```
-cd tp-dsw-backendapp
+cd tp-dsw-frontendapp
 ```
 
 3. Instala las dependencias:
@@ -81,7 +81,7 @@ npm run e2e
 
 ## Autores
 
-- **Colaborador 1** - _Aarón De Bernardo_ - [aarondebernardo@gmail.com]
-- **Colaborador 2** - _Agustín Stringa_ - [stringaagustin1@gmail.com]
-- **Colaborador 3** - _Elías Danteo_ - [elias.danteo.tomas@hotmail.com]
-- **Colaborador 4** - _Francisca Gramaglia_ - [franciscagramaglia714@gmail.com]
+- **Aarón De Bernardo** - [aarondebernardo@gmail.com]
+- **Agustín Stringa** - [stringaagustin1@gmail.com]
+- **Elías Danteo** - [elias.danteo.tomas@hotmail.com]
+- **Francisca Gramaglia** - [franciscagramaglia714@gmail.com]

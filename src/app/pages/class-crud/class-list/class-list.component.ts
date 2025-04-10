@@ -119,7 +119,16 @@ export class ClassListComponent {
     const dialogRef = this.dialog.open(dialog, { data });
 
     dialogRef.afterClosed().subscribe((result) => {
-      if (result !== 'none') this.getClasses();
+      if (result !== 'none') {
+        this.getClasses();
+        if (result === 'created') {
+          this.snackbarService.showSuccess('Clase registrada.');
+        } else if (result === 'updated') {
+          this.snackbarService.showSuccess('Clase actualizada.');
+        } else if (result === 'deleted') {
+          this.snackbarService.showError('Clase eliminada.');
+        }
+      }
     });
   }
 

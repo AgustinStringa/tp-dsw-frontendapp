@@ -16,12 +16,11 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MembershipService } from '../../../core/services/membership.service';
 import { SnackbarService } from '../../../core/services/snackbar.service';
-import { MatIcon } from '@angular/material/icon';
 
 @Component({
   selector: 'app-class-list',
   standalone: true,
-  imports: [MatExpansionModule, MatIcon],
+  imports: [MatExpansionModule],
   templateUrl: './class-list.component.html',
   styleUrls: [
     './class-list.component.css',
@@ -158,6 +157,7 @@ export class ClassListComponent {
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result === 'deleted') {
+        this.snackbarService.showError('Inscripción cancelada.');
         this.getClassTypesAndRegistrations();
       } else {
         this.snackbarService.showError('No se eliminó la inscripción.');

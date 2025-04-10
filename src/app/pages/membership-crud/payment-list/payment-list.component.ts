@@ -9,6 +9,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { PaymentDialogComponent } from '../payment-dialog/payment-dialog.component';
 import { PaymentMethodEnum } from '../../../core/enums/payment-method.enum';
 import { PaymentService } from '../../../core/services/payment.service';
+import { SnackbarService } from '../../../core/services/snackbar.service';
 
 @Component({
   selector: 'app-payment-list',
@@ -25,7 +26,8 @@ export class PaymentListComponent implements OnInit {
 
   constructor(
     private dialog: MatDialog,
-    private paymentService: PaymentService
+    private paymentService: PaymentService,
+    private snackbarService: SnackbarService
   ) {}
 
   ngOnInit() {
@@ -77,8 +79,17 @@ export class PaymentListComponent implements OnInit {
   openDialog(dialog: ComponentType<unknown>, data: object): void {
     const dialogRef = this.dialog.open(dialog, data);
 
-    dialogRef.afterClosed().subscribe(() => {
-      this.getMembershipPayments();
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result !== 'none') {
+        this.getMembershipPayments();
+        if (result === 'created') {
+          this.snackbarService.showSuccess('Pago registrado.');
+        } else if (result === 'updated') {
+          this.snackbarService.showSuccess('Pago actualizado.');
+        } else if (result === 'deleted') {
+          this.snackbarService.showError('Pago eliminado.');
+        }
+      }
     });
   }
 

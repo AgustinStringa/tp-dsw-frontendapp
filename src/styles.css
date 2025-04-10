@@ -235,6 +235,11 @@ mat-dialog-actions.common-dialog button.btn-secondary:hover {
   font-size: 1.1rem !important;
 }
 
+.snackbar_success,
+.snackbar_success * {
+  background-color: #4ccb59 !important;
+}
+
 /* Dialogs */
 .dialog-container {
   width: 400px;

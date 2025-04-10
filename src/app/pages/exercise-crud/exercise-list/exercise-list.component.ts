@@ -45,6 +45,13 @@ export class ExerciseListComponent {
     dialogRef.afterClosed().subscribe((result) => {
       if (result !== 'none') {
         this.getExercises();
+        if (result === 'created') {
+          this.snackbarService.showSuccess('Ejercicio registrado.');
+        } else if (result === 'updated') {
+          this.snackbarService.showSuccess('Ejercicio actualizado.');
+        } else if (result === 'deleted') {
+          this.snackbarService.showError('Ejercicio eliminado.');
+        }
       }
     });
   }

@@ -7,6 +7,7 @@ import { IUser } from '../../../core/interfaces/user.interface';
 import { MatDialog } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { MatPaginatorIntl } from '@angular/material/paginator';
+import { SnackbarService } from '../../../core/services/snackbar.service';
 import { TrainerService } from '../../../core/services/trainer.service';
 import { UserDialogComponent } from '../../../shared/user-dialog/user-dialog.component';
 import { UsersFilterComponent } from '../../../shared/users-filter/users-filter.component';
@@ -29,7 +30,8 @@ export class TrainerListComponent {
 
   constructor(
     public trainerService: TrainerService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private snackbarService: SnackbarService
   ) {}
 
   receiveTrainers(data: { users: IUser[]; usersExist: boolean } | null) {
@@ -110,6 +112,13 @@ export class TrainerListComponent {
     dialogRef.afterClosed().subscribe((result) => {
       if (result !== 'none') {
         this.filter.getUsers();
+        if (result === 'created') {
+          this.snackbarService.showSuccess('Entrenador registrado.');
+        } else if (result === 'updated') {
+          this.snackbarService.showSuccess('Entrenador actualizado.');
+        } else if (result === 'deleted') {
+          this.snackbarService.showError('Entrenador eliminado.');
+        }
       }
     });
   }

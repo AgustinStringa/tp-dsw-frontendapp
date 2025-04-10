@@ -81,7 +81,9 @@ export class ExerciseDialogComponent {
     if (this.data.action == 'post') {
       this.exerciseService.create(exerciseCreate).subscribe({
         next: () => {
-          this.snackbarService.showSuccess('Ejercicio creado correctamente.');
+          this.snackbarService.showSuccess(
+            'Ejercicio registrado correctamente.'
+          );
           this.dialogRef.close('created');
         },
         error: (err: HttpErrorResponse) => {

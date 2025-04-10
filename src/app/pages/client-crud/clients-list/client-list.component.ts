@@ -12,6 +12,7 @@ import { FormsModule } from '@angular/forms';
 import { IUser } from '../../../core/interfaces/user.interface';
 import { MatDialog } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
+import { SnackbarService } from '../../../core/services/snackbar.service';
 import { UserDialogComponent } from '../../../shared/user-dialog/user-dialog.component';
 import { UsersFilterComponent } from '../../../shared/users-filter/users-filter.component';
 
@@ -36,7 +37,11 @@ export class ClientListComponent {
   clientsPage: IUser[] | null = null;
   pageSize = 50;
 
-  constructor(private dialog: MatDialog, public clientService: ClientService) {}
+  constructor(
+    private dialog: MatDialog,
+    public clientService: ClientService,
+    private snackbarService: SnackbarService
+  ) {}
 
   addUser(): void {
     this.openDialog(UserDialogComponent, {
@@ -75,6 +80,13 @@ export class ClientListComponent {
     dialogRef.afterClosed().subscribe((result) => {
       if (result !== 'none') {
         this.filter.getUsers();
+        if (result === 'created') {
+          this.snackbarService.showSuccess('Cliente registrado.');
+        } else if (result === 'updated') {
+          this.snackbarService.showSuccess('Cliente actualizado.');
+        } else if (result === 'deleted') {
+          this.snackbarService.showError('Cliente eliminado.');
+        }
       }
     });
   }

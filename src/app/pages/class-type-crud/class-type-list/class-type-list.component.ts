@@ -7,6 +7,7 @@ import { FormsModule } from '@angular/forms';
 import { IClassType } from '../../../core/interfaces/class-type.interface';
 import { MatDialog } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
+import { SnackbarService } from '../../../core/services/snackbar.service';
 
 @Component({
   selector: 'app-class-type-list',
@@ -24,7 +25,10 @@ export class ClassTypeListComponent {
   filteredClassTypes: IClassType[] | null = null;
   nameFilter = '';
 
-  constructor(private classTypeService: ClassTypeService) {
+  constructor(
+    private classTypeService: ClassTypeService,
+    private snackbarService: SnackbarService
+  ) {
     this.getClassTypes();
   }
 
@@ -91,6 +95,13 @@ export class ClassTypeListComponent {
     dialogRef.afterClosed().subscribe((result) => {
       if (result !== 'none') {
         this.getClassTypes();
+        if (result === 'created') {
+          this.snackbarService.showSuccess('Tipo de clase registrado.');
+        } else if (result === 'updated') {
+          this.snackbarService.showSuccess('Tipo de clase actualizado.');
+        } else if (result === 'deleted') {
+          this.snackbarService.showError('Tipo de clase eliminado.');
+        }
       }
     });
   }
