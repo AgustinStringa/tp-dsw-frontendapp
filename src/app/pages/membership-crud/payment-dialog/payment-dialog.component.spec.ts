@@ -15,26 +15,30 @@ describe('PaymentDialogComponent', () => {
       providers: [
         {
           provide: MatDialogRef,
-          useValue: {},
+          useValue: MatDialogRef<PaymentDialogComponent>,
         },
         {
           provide: MAT_DIALOG_DATA,
           useValue: {
-            title: 'string;',
-            action: ' string;',
+            title: 'Nuevo Pago',
+            action: 'post',
             membership: {
-              id: 'string',
-              dateFrom: new Date(),
-              dateTo: new Date(),
-              type: 'IMembershipType;',
-              client: 'ICliente',
-            },
-            payment: {
-              id: ' string;',
-              dateTime: new Date(),
-              paymentMethod: 'PaymentMethodEnum',
-              amount: 0,
-              membership: {},
+              dateFrom: '2025-03-29T03:00:00.000Z',
+              dateTo: '2025-04-29T03:00:00.000Z',
+              debt: 1500,
+              type: {
+                id: '67cc593900b230069796bdeb',
+                name: 'premium',
+                description: 'premium',
+                price: 1500,
+              },
+              client: {
+                id: '67e80839ed95d3a4fad842cc',
+                lastName: 'cliente',
+                firstName: 'cliente',
+                dni: '23232323',
+              },
+              id: '67e8097eed95d3a4fad842cd',
             },
           },
         },

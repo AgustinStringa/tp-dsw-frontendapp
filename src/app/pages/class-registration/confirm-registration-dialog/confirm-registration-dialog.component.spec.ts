@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { ConfirmRegistrationDialogComponent } from './confirm-registration-dialog.component';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { ConfirmRegistrationDialogComponent } from './confirm-registration-dialog.component';
 
 describe('ConfirmRegistrationDialogComponent', () => {
   let component: ConfirmRegistrationDialogComponent;
@@ -12,14 +12,14 @@ describe('ConfirmRegistrationDialogComponent', () => {
       providers: [
         {
           provide: MatDialogRef,
-          useValue: {},
+          useValue: MatDialogRef<ConfirmRegistrationDialogComponent>,
         },
         {
           provide: MAT_DIALOG_DATA,
           useValue: {
-            trainer: 'string;',
-            day: 'string;',
-            startTime: 'string;',
+            trainer: '67c245acc6a960406b0c17b7',
+            day: 'Martes',
+            startTime: '9:00',
           },
         },
       ],

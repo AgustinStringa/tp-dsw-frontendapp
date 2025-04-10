@@ -15,22 +15,23 @@ describe('PaymentListComponent', () => {
     fixture = TestBed.createComponent(PaymentListComponent);
     component = fixture.componentInstance;
     component.membership = {
-      id: 'string;',
-      dateFrom: new Date(),
-      dateTo: new Date(),
+      dateFrom: new Date('2025-04-08T03:00:00.000Z'),
+      dateTo: new Date('2025-05-08T03:00:00.000Z'),
+      debt: 0,
       type: {
-        id: '',
-        name: '',
-        price: 0,
-        description: '',
+        id: '67cc593900b230069796bdeb',
+        name: 'premium',
+        description: 'premium',
+        price: 1500,
       },
       client: {
-        id: '',
-        firstName: '',
-        lastName: '',
-        dni: '',
-        email: '',
+        email: 'stringaagu@hotmail.com',
+        id: '67cc591c00b230069796bde9',
+        lastName: 'stri',
+        firstName: 'agu',
+        dni: '44607086',
       },
+      id: '67f586cd869cf958064a86ac',
     };
     fixture.detectChanges();
   });

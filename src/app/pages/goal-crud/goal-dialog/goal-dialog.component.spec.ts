@@ -15,15 +15,21 @@ describe('GoalDialogComponent', () => {
       providers: [
         {
           provide: MatDialogRef,
-          useValue: {},
+          useValue: MatDialogRef<GoalDialogComponent>,
         },
         {
           provide: MAT_DIALOG_DATA,
           useValue: {
-            title: 'string;',
-            action: 'string;',
-            client: 'IUser;',
-            goal: undefined,
+            title: 'Nueva Meta',
+            action: 'post',
+            client: {
+              id: '67e80839ed95d3a4fad842cc',
+              firstName: 'cliente',
+              lastName: 'cliente',
+              dni: '23232323',
+              email: 'cliente@yopmail.com',
+              isClient: true,
+            },
           },
         },
       ],

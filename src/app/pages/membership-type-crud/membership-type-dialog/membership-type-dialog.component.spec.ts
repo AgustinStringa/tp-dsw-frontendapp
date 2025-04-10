@@ -1,9 +1,9 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { MembershipTypeDialogComponent } from './membership-type-dialog.component';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { HttpClientModule } from '@angular/common/http';
+import { MembershipTypeDialogComponent } from './membership-type-dialog.component';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 describe('MembershipTypeDialogComponent', () => {
   let component: MembershipTypeDialogComponent;
@@ -19,14 +19,13 @@ describe('MembershipTypeDialogComponent', () => {
       providers: [
         {
           provide: MatDialogRef,
-          useValue: {},
+          useValue: MatDialogRef<MembershipTypeDialogComponent>,
         },
         {
           provide: MAT_DIALOG_DATA,
           useValue: {
-            title: ' string;',
-            action: ' string;',
-            membershipType: undefined,
+            title: 'Nuevo Tipo de Membresía',
+            action: 'post',
           },
         },
       ],

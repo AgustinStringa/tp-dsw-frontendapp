@@ -19,7 +19,7 @@ describe('PayMembershipDialogComponent', () => {
       providers: [
         {
           provide: MatDialogRef,
-          useValue: {},
+          useValue: MatDialogRef<PayMembershipDialogComponent>,
         },
         {
           provide: AuthService,

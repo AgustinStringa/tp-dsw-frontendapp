@@ -4,6 +4,11 @@ import { DeleteDialogComponent } from './delete-dialog.component';
 import { HttpClientModule } from '@angular/common/http';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
+const goalServiceMock = {
+  delete: jasmine.createSpy('delete').and.returnValue({
+    id: '67f09780f310cfec10c6ce50',
+  }),
+};
 describe('DeleteDialogComponent', () => {
   let component: DeleteDialogComponent;
   let fixture: ComponentFixture<DeleteDialogComponent>;
@@ -14,14 +19,14 @@ describe('DeleteDialogComponent', () => {
       providers: [
         {
           provide: MatDialogRef,
-          useValue: {},
+          useValue: MatDialogRef<DeleteDialogComponent>,
         },
         {
           provide: MAT_DIALOG_DATA,
           useValue: {
-            id: 'string;',
-            title: 'string;',
-            service: 'mockService', //TODO se puede mejorar el tipo del service
+            id: '"67f09780f310cfec10c6ce50"',
+            title: 'Eliminar Meta',
+            service: goalServiceMock,
           },
         },
       ],

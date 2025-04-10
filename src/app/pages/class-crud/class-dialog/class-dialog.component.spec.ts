@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ClassDialogComponent } from './class-dialog.component';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { ClassDialogComponent } from './class-dialog.component';
 import { HttpClientModule } from '@angular/common/http';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
@@ -20,8 +20,8 @@ describe('ClassDialogComponent', () => {
         {
           provide: MAT_DIALOG_DATA,
           useValue: {
-            title: 'title',
-            action: 'aCTION',
+            title: 'Crear Clase',
+            action: 'post',
             trainers: [],
             classTypes: [],
             class_a: undefined,

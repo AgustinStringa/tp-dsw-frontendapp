@@ -18,13 +18,13 @@ describe('MembershipDialogComponent', () => {
       providers: [
         {
           provide: MatDialogRef,
-          useValue: {},
+          useValue: MatDialogRef<MembershipDialogComponent>,
         },
         {
           provide: MAT_DIALOG_DATA,
           useValue: {
-            title: 'string',
-            action: 'put',
+            title: 'Nueva Membresía',
+            action: 'post',
             membership: undefined,
           },
         },

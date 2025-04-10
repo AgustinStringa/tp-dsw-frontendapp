@@ -19,21 +19,20 @@ describe('ProgressDialogComponent', () => {
       providers: [
         {
           provide: MatDialogRef,
-          useValue: {},
+          useValue: MatDialogRef<ProgressDialogComponent>,
         },
         {
           provide: MAT_DIALOG_DATA,
           useValue: {
-            title: 'string;',
-            action: 'string;',
-            client: 'IUser;',
-            progress: {
-              id: 'string;',
-              date: 'Date;',
-              weight: 'number;',
-              fatPercentage: 'number;',
-              bodyMeasurements: 'string;',
-              client: 'IUser;',
+            title: 'Nuevo Progreso',
+            action: 'post',
+            client: {
+              id: '67e80839ed95d3a4fad842cc',
+              firstName: 'cliente',
+              lastName: 'cliente',
+              dni: '23232323',
+              email: 'cliente@yopmail.com',
+              isClient: true,
             },
           },
         },
