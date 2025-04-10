@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { MembershipTypeListComponent } from './membership-type-list.component';
 import { HttpClientModule } from '@angular/common/http';
+import { MembershipTypeListComponent } from './membership-type-list.component';
 
 describe('MembershipTypeListComponent', () => {
   let component: MembershipTypeListComponent;

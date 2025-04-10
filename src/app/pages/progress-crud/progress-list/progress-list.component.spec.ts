@@ -1,5 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
+import { HttpClientModule } from '@angular/common/http';
 import { ProgressListComponent } from './progress-list.component';
 
 describe('ProgressListComponent', () => {
@@ -8,10 +9,9 @@ describe('ProgressListComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [ProgressListComponent]
-    })
-    .compileComponents();
-    
+      imports: [ProgressListComponent, HttpClientModule],
+    }).compileComponents();
+
     fixture = TestBed.createComponent(ProgressListComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

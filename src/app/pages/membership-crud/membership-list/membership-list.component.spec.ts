@@ -17,7 +17,7 @@ describe('MembershipListComponent', () => {
         },
         {
           provide: MatDialogRef,
-          useValue: {},
+          useValue: MatDialogRef<MembershipListComponent>,
         },
       ],
     }).compileComponents();

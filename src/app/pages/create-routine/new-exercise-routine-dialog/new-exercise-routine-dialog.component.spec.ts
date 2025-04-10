@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { NewExerciseRoutineDialogComponent } from './new-exercise-routine-dialog.component';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { NewExerciseRoutineDialogComponent } from './new-exercise-routine-dialog.component';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 describe('NewExerciseRoutineDialogComponent', () => {
@@ -14,7 +14,7 @@ describe('NewExerciseRoutineDialogComponent', () => {
       providers: [
         {
           provide: MatDialogRef,
-          useValue: {},
+          useValue: MatDialogRef<NewExerciseRoutineDialogComponent>,
         },
         {
           provide: MAT_DIALOG_DATA,

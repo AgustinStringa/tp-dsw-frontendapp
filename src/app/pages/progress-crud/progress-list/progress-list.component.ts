@@ -11,7 +11,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { ProgressChartComponent } from '../progress-chart/progress-chart.component';
 import { ProgressDialogComponent } from '../progress-dialog/progress-dialog.component';
 import { ProgressService } from '../../../core/services/progress.service';
-import { SnackbarService } from '../../../core/services/snackbar.service.js';
+import { SnackbarService } from '../../../core/services/snackbar.service';
 
 @Component({
   selector: 'app-progress-list',
@@ -37,7 +37,7 @@ export class ProgressListComponent {
       this.client = user;
       this.getClientProgresses();
     } else {
-      console.error('No user found in session.');
+      return;
     }
   }
 

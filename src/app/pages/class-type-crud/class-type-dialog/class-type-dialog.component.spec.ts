@@ -1,8 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { HttpClientModule } from '@angular/common/http';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { ClassTypeDialogComponent } from './class-type-dialog.component';
+import { HttpClientModule } from '@angular/common/http';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 describe('ClassTypeDialogComponent', () => {
   let component: ClassTypeDialogComponent;
@@ -18,13 +18,13 @@ describe('ClassTypeDialogComponent', () => {
       providers: [
         {
           provide: MatDialogRef,
-          useValue: {},
+          useValue: MatDialogRef<ClassTypeDialogComponent>,
         },
         {
           provide: MAT_DIALOG_DATA,
           useValue: {
-            title: 'string;',
-            action: 'string;',
+            title: 'Crear Tipo de clase',
+            action: 'post',
             classType: undefined,
           },
         },

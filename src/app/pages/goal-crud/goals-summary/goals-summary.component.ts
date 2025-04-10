@@ -1,5 +1,5 @@
 import {
-  AfterViewInit,
+  AfterContentInit,
   Component,
   Input,
   OnChanges,
@@ -17,8 +17,8 @@ import {
   templateUrl: './goals-summary.component.html',
   styleUrl: './goals-summary.component.css',
 })
-export class GoalsSummaryComponent implements AfterViewInit, OnChanges {
-  ngAfterViewInit(): void {
+export class GoalsSummaryComponent implements OnChanges, AfterContentInit {
+  ngAfterContentInit(): void {
     this.generateRenderingParams();
   }
 

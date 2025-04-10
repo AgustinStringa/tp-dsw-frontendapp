@@ -14,7 +14,7 @@ describe('AuthService', () => {
     expect(service).toBeTruthy();
   });
 
-  it('getUser should return an IUser', () => {
-    expect(service.getUser()).not.toBeFalsy();
+  it('getUser should return null. In this enviroment does not exist session storage', () => {
+    expect(service.getUser()).toBeNull();
   });
 });

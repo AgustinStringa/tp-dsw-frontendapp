@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { TrainerListComponent } from './trainer-list.component';
 import { HttpClientModule } from '@angular/common/http';
+import { TrainerListComponent } from './trainer-list.component';
 
 describe('TrainerListComponent', () => {
   let component: TrainerListComponent;

@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { GoalListComponent } from './goal-list.component';
+import { HttpClientModule } from '@angular/common/http';
 
 describe('GoalListComponent', () => {
   let component: GoalListComponent;
@@ -8,10 +9,9 @@ describe('GoalListComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [GoalListComponent]
-    })
-    .compileComponents();
-    
+      imports: [GoalListComponent, HttpClientModule],
+    }).compileComponents();
+
     fixture = TestBed.createComponent(GoalListComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
