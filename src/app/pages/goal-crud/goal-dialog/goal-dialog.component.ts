@@ -47,7 +47,6 @@ interface DialogData {
     MatDialogActions,
   ],
   templateUrl: './goal-dialog.component.html',
-  styleUrl: './goal-dialog.component.css',
 })
 export class GoalDialogComponent {
   readonly title: string;

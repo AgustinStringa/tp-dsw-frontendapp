@@ -14,7 +14,6 @@ import { IProgress } from '../../../core/interfaces/progress.interface.js';
   standalone: true,
   imports: [],
   templateUrl: './progress-chart.component.html',
-  styleUrl: './progress-chart.component.css',
 })
 export class ProgressChartComponent implements AfterViewInit, OnChanges {
   @Input() progresses: IProgress[] = [];

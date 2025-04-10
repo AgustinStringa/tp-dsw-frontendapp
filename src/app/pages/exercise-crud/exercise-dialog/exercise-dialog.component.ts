@@ -37,7 +37,6 @@ import { trimValidator } from '../../../core/functions/trim-validator';
     ReactiveFormsModule,
   ],
   templateUrl: './exercise-dialog.component.html',
-  styleUrl: './exercise-dialog.component.css',
 })
 export class ExerciseDialogComponent {
   title = '';

@@ -19,7 +19,6 @@ import { SnackbarService } from '../../../core/services/snackbar.service';
   standalone: true,
   imports: [CommonModule, MatIconModule, FormsModule, GoalsSummaryComponent],
   templateUrl: './goal-list.component.html',
-  styleUrl: './goal-list.component.css',
 })
 export class GoalListComponent {
   userSignal = this.authService.userSignal;

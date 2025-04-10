@@ -6,8 +6,6 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { MatButtonModule } from '@angular/material/button';
-import { MatSelectModule } from '@angular/material/select';
 import {
   MAT_DIALOG_DATA,
   MatDialogActions,
@@ -16,10 +14,13 @@ import {
   MatDialogRef,
   MatDialogTitle,
 } from '@angular/material/dialog';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
 import { DialogData } from '../create-routine-page/create-routine-page.component.js';
 import { IExercise } from '../../../core/interfaces/exercise.interface.js';
+import { MatButtonModule } from '@angular/material/button';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
+
 @Component({
   selector: 'app-dialog-new-exercise-routine',
   standalone: true,
@@ -36,7 +37,6 @@ import { IExercise } from '../../../core/interfaces/exercise.interface.js';
     ReactiveFormsModule,
   ],
   templateUrl: './new-exercise-routine-dialog.component.html',
-  styleUrl: './new-exercise-routine-dialog.component.css',
 })
 export class NewExerciseRoutineDialogComponent {
   readonly dialogRef = inject(MatDialogRef<NewExerciseRoutineDialogComponent>);

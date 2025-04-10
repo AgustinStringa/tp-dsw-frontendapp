@@ -26,7 +26,6 @@ interface DialogData {
     MatButtonModule,
   ],
   templateUrl: './delete-dialog.component.html',
-  styleUrl: './delete-dialog.component.css',
 })
 export class DeleteDialogComponent {
   id: string;

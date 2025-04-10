@@ -53,7 +53,6 @@ interface DialogData {
     MatNativeDateModule,
   ],
   templateUrl: './progress-dialog.component.html',
-  styleUrl: './progress-dialog.component.css',
   providers: [provideNativeDateAdapter()],
 })
 export class ProgressDialogComponent {

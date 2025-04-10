@@ -14,10 +14,7 @@ import { SnackbarService } from '../../../core/services/snackbar.service';
   standalone: true,
   imports: [MatIconModule, FormsModule],
   templateUrl: './membership-type-list.component.html',
-  styleUrls: [
-    './membership-type-list.component.css',
-    '../../../../assets/styles/filter-container.css',
-  ],
+  styleUrls: ['../../../../assets/styles/filter-container.css'],
 })
 export class MembershipTypeListComponent {
   membershipTypes: IMembershipType[] | null = null;

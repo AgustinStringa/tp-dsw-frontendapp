@@ -14,10 +14,7 @@ import { SnackbarService } from '../../../core/services/snackbar.service';
   standalone: true,
   imports: [MatIconModule, FormsModule],
   templateUrl: './class-type-list.component.html',
-  styleUrls: [
-    './class-type-list.component.css',
-    '../../../../assets/styles/filter-container.css',
-  ],
+  styleUrl: '../../../../assets/styles/filter-container.css',
 })
 export class ClassTypeListComponent {
   readonly dialog = inject(MatDialog);

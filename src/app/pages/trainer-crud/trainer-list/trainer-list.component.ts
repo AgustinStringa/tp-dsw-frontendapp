@@ -18,7 +18,6 @@ import { UsersFilterComponent } from '../../../shared/users-filter/users-filter.
   imports: [MatIconModule, MatPaginatorModule, UsersFilterComponent],
   providers: [{ provide: MatPaginatorIntl, useClass: CustomPaginatorIntl }],
   templateUrl: './trainer-list.component.html',
-  styleUrl: './trainer-list.component.css',
 })
 export class TrainerListComponent {
   @ViewChild(UsersFilterComponent) filter!: UsersFilterComponent;

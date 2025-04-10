@@ -27,7 +27,6 @@ import { UsersFilterComponent } from '../../../shared/users-filter/users-filter.
   ],
   providers: [{ provide: MatPaginatorIntl, useClass: CustomPaginatorIntl }],
   templateUrl: './client-list.component.html',
-  styleUrl: './client-list.component.css',
 })
 export class ClientListComponent {
   @ViewChild(UsersFilterComponent) filter!: UsersFilterComponent;

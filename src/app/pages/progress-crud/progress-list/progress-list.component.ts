@@ -18,7 +18,6 @@ import { SnackbarService } from '../../../core/services/snackbar.service';
   standalone: true,
   imports: [MatIconModule, CommonModule, ProgressChartComponent],
   templateUrl: './progress-list.component.html',
-  styleUrl: './progress-list.component.css',
 })
 export class ProgressListComponent {
   userSignal = this.authService.userSignal;

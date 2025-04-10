@@ -29,7 +29,6 @@ interface DialogData {
     MatDialogTitle,
   ],
   templateUrl: './confirm-registration-dialog.component.html',
-  styleUrl: './confirm-registration-dialog.component.css',
 })
 export class ConfirmRegistrationDialogComponent {
   constructor(

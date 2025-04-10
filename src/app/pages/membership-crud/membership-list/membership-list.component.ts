@@ -24,7 +24,6 @@ import { SnackbarService } from '../../../core/services/snackbar.service';
     MembershipFilterComponent,
   ],
   templateUrl: './membership-list.component.html',
-  styleUrl: './membership-list.component.css',
 })
 export class MembershipListComponent {
   memberships: IMembership[] | null = null;

@@ -47,7 +47,6 @@ interface DialogData {
     MatDialogTitle,
   ],
   templateUrl: './user-dialog.component.html',
-  styleUrl: './user-dialog.component.css',
 })
 export class UserDialogComponent {
   title: string;

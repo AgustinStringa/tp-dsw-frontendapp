@@ -14,12 +14,12 @@
     [proposedGoals]="this.goals.length"
     [achievedGoals]="this.achievedGoalsCount"
   ></app-goals-summary>
-  <h3>Administra tus metas</h3>
+
   <div class="table-container">
     <table>
       <thead>
         <tr>
-          <th>Fecha creacion</th>
+          <th>Fecha creación</th>
           <th>Porcentaje graso</th>
           <th>Medidas corporales</th>
           <th>Completada</th>
@@ -30,7 +30,9 @@
       <tbody>
         @for (g of goals; track g) {
         <tr>
-          <td data-label="Fecha Creacion">{{ g.createdAt | date : 'dd/MM/yyyy' }}</td>
+          <td data-label="Fecha Creacion">
+            {{ g.createdAt | date : 'dd/MM/yyyy' }}
+          </td>
           <td data-label="Porcentaje Graso">{{ g.fatPercentage }}%</td>
           <td data-label="Medidas Corporales">{{ g.bodyMeasurements }}</td>
           <td data-label="Completada">

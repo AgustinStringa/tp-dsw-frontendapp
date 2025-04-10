@@ -49,7 +49,6 @@ interface DialogData {
     NgClass,
   ],
   templateUrl: './class-type-dialog.component.html',
-  styleUrl: './class-type-dialog.component.css',
 })
 export class ClassTypeDialogComponent {
   readonly action;

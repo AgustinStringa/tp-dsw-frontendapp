@@ -9,10 +9,7 @@ import { TrainerService } from '../../core/services/trainer.service';
   standalone: true,
   imports: [FormsModule],
   templateUrl: './users-filter.component.html',
-  styleUrls: [
-    '../../../assets/styles/filter-container.css',
-    './users-filter.component.css',
-  ],
+  styleUrls: ['../../../assets/styles/filter-container.css'],
 })
 export class UsersFilterComponent implements OnInit {
   @Input({ required: true }) crudService!: TrainerService | ClientService;
