@@ -1,17 +1,29 @@
 <footer class="text-white py-5" style="background-color: #312b29;">
   <div class="container">
-
     <div class="d-flex flex-wrap justify-content-center border-bottom border-secondary pb-4 mb-4">
       <a href="/home" class="nav-link text-white mx-3 position-relative hover-animate">PERFIL</a>
-      <a href="/registration" class="nav-link text-white mx-3 position-relative hover-animate">CLASES</a>
-      <a href="/showClientRoutine" class="nav-link text-white mx-3 position-relative hover-animate">MI RUTINA</a>
+
+      @if(isClient) {
+      <ng-container >
+        <a href="/registration" class="nav-link text-white mx-3 position-relative hover-animate">CLASES</a>
+        <a href="/showClientRoutine" class="nav-link text-white mx-3 position-relative hover-animate">MI RUTINA</a>
+      </ng-container>
+    }
+      @if(!isClient) {
+      <ng-container >
+        <a href="/create-routine" class="nav-link text-white mx-3 position-relative hover-animate">CREAR RUTINA</a>
+        <a href="/memberships" class="nav-link text-white mx-3 position-relative hover-animate">MEMBRESIAS</a>
+      </ng-container>
+}
       <a href="#" class="nav-link text-white mx-3 position-relative hover-animate logo-link">
         <span class="fw-bold">Iron</span><span class="text-muted">Haven</span>
       </a>
-      <a href="https://www.instagram.com/" target="_blank" class="nav-link text-white mx-3 position-relative hover-animate">INSTAGRAM</a>
-      <a href="https://github.com/AgustinStringa/tp-dsw-proposal" target="_blank" class="nav-link text-white mx-3 position-relative hover-animate">GITHUB</a>
-    </div>
 
+      <a href="https://www.instagram.com/" target="_blank"
+        class="nav-link text-white mx-3 position-relative hover-animate">INSTAGRAM</a>
+      <a href="https://github.com/AgustinStringa/tp-dsw-proposal" target="_blank"
+        class="nav-link text-white mx-3 position-relative hover-animate">GITHUB</a>
+    </div>
 
     <div class="text-center pt-3">
       <p class="mb-0 text-muted animate-fade-in">© 2025 IronHaven. All rights reserved.</p>
