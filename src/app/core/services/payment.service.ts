@@ -1,6 +1,6 @@
+import { HttpClient, HttpResponse } from '@angular/common/http';
 import { ApiResponse } from '../interfaces/api-response.interface';
 import { environment } from '../../../environments/environment';
-import { HttpClient } from '@angular/common/http';
 import { ICrudService } from '../interfaces/crud-service.interface';
 import { Injectable } from '@angular/core';
 import { IPayment } from '../interfaces/payment.interface';
@@ -42,6 +42,14 @@ export class PaymentService implements ICrudService<IPayment, IPaymentCreate> {
 
   startUserPayment(userPayment: IUserPaymentCreate): Observable<string> {
     return this.http.post<string>(environment.userPaymentUrl, userPayment);
+  }
+
+  checkPaymentStatus(stripeId: string): Observable<HttpResponse<unknown>> {
+    return this.http.post<HttpResponse<unknown>>(
+      `${environment.userPaymentUrl}${stripeId}`,
+      {},
+      { observe: 'response' }
+    );
   }
 
   create(payment: IPaymentCreate): Observable<ApiResponse<IPayment>> {
