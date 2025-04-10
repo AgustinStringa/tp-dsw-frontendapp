@@ -55,7 +55,8 @@
             <td data-label="Ejercicio">{{ exerciseRoutine.exercise.name }}</td>
             <td data-label="Series">{{ exerciseRoutine.series }}</td>
             <td data-label="Repeticiones">{{ exerciseRoutine.repetitions }}</td>
-            <td data-label="Estado"
+            <td
+              data-label="Estado"
               [ngStyle]="{
                 border:
                   getExerciseStatus(exerciseRoutine) === 'No realizado'
@@ -66,7 +67,8 @@
               {{ getExerciseStatus(exerciseRoutine) }}
             </td>
 
-            <td data-label="Acciones"
+            <td
+              data-label="Acciones"
               style="
                 justify-content: right;
                 text-align: right;
@@ -74,11 +76,19 @@
                 flex-wrap: wrap;
               "
             >
-              <button class="btn btn-secondary" [ngStyle]="{
-                                opacity: exerciseRoutine.exercise.urlVideo ? 1 : 0
-                              }">
-                <a target="_blank" style="color: #285192" href="{{ exerciseRoutine.exercise.urlVideo }}">
-                  Ver Video</a>
+              <button
+                class="btn btn-secondary"
+                [ngStyle]="{
+                  opacity: exerciseRoutine.exercise.urlVideo ? 1 : 0
+                }"
+              >
+                <a
+                  target="_blank"
+                  style="color: #285192"
+                  href="{{ exerciseRoutine.exercise.urlVideo }}"
+                >
+                  Ver Video</a
+                >
               </button>
               @if (exerciseRoutine.weight === null) {
               <button
@@ -96,8 +106,6 @@
                 Editar estado
               </button>
               }
-
-            
             </td>
           </tr>
           }}

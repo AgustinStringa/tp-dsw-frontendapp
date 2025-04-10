@@ -12,7 +12,7 @@
           <th>Entrenador</th>
           <th>Horario</th>
           <th>Ubicación</th>
-          <th style="text-align: center">Acción</th>
+          <th>Acción</th>
         </tr>
       </thead>
       <tbody>
@@ -28,7 +28,7 @@
             {{ registration.class.endTime }}
           </td>
           <td data-label="Ubicacion">{{ registration.class.location }}</td>
-          <td data-label="Accion" style="text-align: center !important">
+          <td data-label="Accion">
             <button
               class="btn btn-danger"
               (click)="cancelRegistration(registration)"
