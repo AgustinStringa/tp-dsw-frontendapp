@@ -94,7 +94,7 @@ td:before {
 .list-container td,
 .list-container th {
   border: 1px solid #ddd;
-  padding: 10px;
+  padding: 10px 10px 10px 95px;
   text-align: right;
 }
 
@@ -135,7 +135,12 @@ mat-paginator {
 }
 
 /* Media queries */
-@media (min-width: 768px) {
+@media (width < 768px) {
+  .long-td-label {
+    padding-left: 150px !important;
+  }
+}
+@media (width >= 768px) {
   .title-div {
     flex-direction: row;
     justify-content: space-between;

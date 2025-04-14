@@ -40,10 +40,16 @@
       <tbody>
         @for (m of filteredMemberships; track m) {
         <tr>
-          <td data-label="Fecha Desde">{{ m.dateFrom | date : 'dd/MM/yyyy' }}</td>
+          <td data-label="Fecha Desde">
+            {{ m.dateFrom | date : 'dd/MM/yyyy' }}
+          </td>
           <td data-label="Fecha Hasta">{{ m.dateTo | date : 'dd/MM/yyyy' }}</td>
-          <td data-label="Tipo de Membresía">{{ m.type.name }}</td>
-          <td data-label="Cliente">{{ m.client.firstName + ' ' + m.client.lastName }}</td>
+          <td data-label="Tipo de Membresía" class="long-td-label">
+            {{ m.type.name }}
+          </td>
+          <td data-label="Cliente">
+            {{ m.client.firstName + ' ' + m.client.lastName }}
+          </td>
           <td data-label="Deuda">${{ m.debt?.toLocaleString('es-AR') }}</td>
 
           <td data-label="Acciones" class="td-actions">
