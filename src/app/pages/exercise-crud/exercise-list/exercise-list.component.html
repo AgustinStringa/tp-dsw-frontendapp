@@ -44,7 +44,7 @@
         <tr>
           <td data-label="Nombre">{{ e.name }}</td> 
           <td data-label="Descripción">{{ e.description }}</td>
-          <td data-label="Video">
+          <td data-label="Video" class="td-actions">
             @if (e.urlVideo !== ""){
             <a href="{{ e.urlVideo }}" target="_blank">Enlace al video</a>
             } @else {

@@ -35,7 +35,7 @@
           </td>
           <td data-label="Porcentaje Graso">{{ g.fatPercentage }}%</td>
           <td data-label="Medidas Corporales">{{ g.bodyMeasurements }}</td>
-          <td data-label="Completada">
+          <td data-label="Completada" class="td-actions">
             <input
               type="checkbox"
               [(ngModel)]="g.done"
@@ -43,13 +43,13 @@
             />
           </td>
           <td data-label="Acciones" class="td-actions">
-            <button
+            <button class="action-btn"
               (click)="deleteGoal(g.id)"
               aria-label="Example icon button with a delete icon"
             >
               <mat-icon>delete</mat-icon>
             </button>
-            <button
+            <button class="action-btn"
               (click)="updateGoal(g)"
               aria-label="Example icon button with a delete icon"
             >

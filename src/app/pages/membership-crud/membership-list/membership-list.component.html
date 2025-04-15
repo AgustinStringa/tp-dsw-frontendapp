@@ -53,7 +53,7 @@
           <td data-label="Deuda">${{ m.debt?.toLocaleString('es-AR') }}</td>
 
           <td data-label="Acciones" class="td-actions">
-            <button
+            <button class="action-btn"
               [disabled]="m.debt === 0"
               (click)="addPayment(m)"
               aria-label="Example icon button with a new payment icon"
@@ -61,21 +61,21 @@
               <mat-icon>payments</mat-icon>
             </button>
 
-            <button
+            <button class="action-btn"
               (click)="listPayments(m)"
               aria-label="Example icon button with a payment list icon"
             >
               <mat-icon>list</mat-icon>
             </button>
-
-            <button
+ 
+            <button class="action-btn"
               (click)="deleteMembership(m.id)"
               aria-label="Example icon button with a delete icon"
             >
               <mat-icon>delete</mat-icon>
             </button>
 
-            <button
+            <button class="action-btn"
               (click)="updateMembership(m)"
               aria-label="Example icon button with an edit icon"
             >

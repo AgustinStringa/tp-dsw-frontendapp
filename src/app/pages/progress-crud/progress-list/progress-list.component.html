@@ -34,13 +34,13 @@
           <td data-label="Porcentaje Graso">{{ p.fatPercentage }}%</td>
           <td data-label="Medidas Corporales">{{ p.bodyMeasurements }}</td>
           <td data-label="Acciones" class="td-actions">
-            <button
+            <button class="action-btn"
               (click)="deleteProgress(p.id)"
               aria-label="Example icon button with a delete icon"
             >
               <mat-icon>delete</mat-icon>
             </button>
-            <button
+            <button class="action-btn"
               (click)="updateProgress(p)"
               aria-label="Example icon button with a delete icon"
             >

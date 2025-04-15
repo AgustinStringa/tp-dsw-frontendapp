@@ -56,6 +56,10 @@
   border: 1px solid #3a3a3a;
 }
 
+td:before {
+  color: #f7ce68;
+}
+
 @media (min-width: 768px) {
   .registrations-table td {
     text-align: left;

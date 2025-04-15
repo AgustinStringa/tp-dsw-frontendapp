@@ -22,6 +22,10 @@ td {
   text-align: center;
 }
 
+td:before {
+  color: #f7ce68;
+}
+
 .btn {
   margin: 0 0.5rem 0 0.5rem;
 }
